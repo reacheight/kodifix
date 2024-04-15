@@ -73,8 +73,8 @@ function App() {
     console.log(`Got a new message: ${lastJsonMessage}`)
 
     if (lastJsonMessage && lastJsonMessage.event === 'levelInit') {
-      updateHeroPosition(lastJsonMessage.heroX, lastJsonMessage.heroY)
       updateFinishPosition(lastJsonMessage.finishX, lastJsonMessage.finishY)
+      updateHeroPosition(lastJsonMessage.heroX, lastJsonMessage.heroY)
       setGems(lastJsonMessage.gems)
       setLevelInited(true)
     }
@@ -109,6 +109,7 @@ function App() {
       <div>
         <textarea className='userCode' onChange={e => setUserCode(e.target.value)} />
         <button onClick={() => onRun()}>run</button>
+        <button onClick={() => restart()}>restart</button>
       </div>
 
       {levelInited &&
