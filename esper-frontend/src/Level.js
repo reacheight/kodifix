@@ -94,6 +94,7 @@ const Level = ({ id }) => {
     
     sendJsonMessage({
       event: 'run',
+      levelId: id,
       code: userCode
     })
     setIsFirstRun(false)

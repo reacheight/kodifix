@@ -9,21 +9,10 @@ const app = express()
 app.use(express.json())
 
 app.use(function (req, res, next) {
-
-  // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-
-  // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
   res.setHeader('Access-Control-Allow-Credentials', true);
-
-  // Pass to next layer of middleware
   next();
 });
 
@@ -57,36 +46,17 @@ wsServer.on('connection', ws => {
       let engine = esper({
         language: 'python'
       });
-    
-      const finish = [7, 9]
-      const hero_start = [3, 0]
-      const gems = [
-        {
-          x: 1,
-          y: 4,
-          taken: false,
-        },
-        {
-          x: 2,
-          y: 6,
-          taken: false,
-        },
-        {
-          x: 8,
-          y: 3,
-          taken: false,
-        }
-      ]
+
+      const level = structuredClone(levels[message.levelId])
+      var currentHeroPosition = structuredClone(level.hero)
   
-      var hero_current_pos = hero_start
-  
-      const updateHeroPos = (new_hero_pos) => {
-        hero_current_pos = new_hero_pos
+      const updateHeroPos = (newHeroPosition) => {
+        currentHeroPosition = structuredClone(newHeroPosition)
         var collectedGem = null
 
-        gems.forEach((gem, i) => {
-          if (gem.x === new_hero_pos[0] && gem.y === new_hero_pos[1] && !gem.taken) {
-            gems[i].taken = true
+        level.gems.forEach((gem, i) => {
+          if (gem.x === newHeroPosition.x && gem.y === newHeroPosition.y && !gem.taken) {
+            level.gems[i].taken = true
             collectedGem = gem
           }
         })
@@ -94,10 +64,7 @@ wsServer.on('connection', ws => {
         setTimeout(() => {
           ws.send(JSON.stringify({
             event: 'updateHero',
-            hero: {
-              x: new_hero_pos[0],
-              y: new_hero_pos[1]
-            }
+            hero: newHeroPosition
           }))
 
           if (collectedGem)
@@ -105,7 +72,7 @@ wsServer.on('connection', ws => {
               event: 'gemCollected'
             }))
         }, currentTimeout)
-        currentTimeout += eventsTimeDiffMS;
+        currentTimeout += eventsTimeDiffMS
       }
   
       const objectMethodCalled = (methodName) => {
@@ -117,32 +84,32 @@ wsServer.on('connection', ws => {
   
       const hero = {
         moveUp: function () {
-          var new_hero_pos = [...hero_current_pos]
-          new_hero_pos[0] -= 1
+          var new_hero_pos = structuredClone(currentHeroPosition)
+          new_hero_pos.x -= 1
           updateHeroPos(new_hero_pos)
 
           objectMethodCalled('moveUp')
         },
   
         moveDown: function () {
-          var new_hero_pos = [...hero_current_pos]
-          new_hero_pos[0] += 1
+          var new_hero_pos = structuredClone(currentHeroPosition)
+          new_hero_pos.x += 1
           updateHeroPos(new_hero_pos)
           
           objectMethodCalled('moveDown')
         },
   
         moveRight: function () {
-          var new_hero_pos = [...hero_current_pos]
-          new_hero_pos[1] += 1
+          var new_hero_pos = structuredClone(currentHeroPosition)
+          new_hero_pos.y += 1
           updateHeroPos(new_hero_pos)
   
           objectMethodCalled('moveRight')
         },
   
         moveLeft: function () {
-          var new_hero_pos = [...hero_current_pos]
-          new_hero_pos[1] -= 1
+          var new_hero_pos = structuredClone(currentHeroPosition)
+          new_hero_pos.y -= 1
           updateHeroPos(new_hero_pos)
   
           objectMethodCalled('moveLeft')
@@ -154,26 +121,15 @@ wsServer.on('connection', ws => {
   
       engine.runSync()
 
-      let finishEvent = (hero_current_pos[0] == finish[0] && hero_current_pos[1] == finish[1]) ? 'success' : 'failure'
+      let finishEvent = (currentHeroPosition.x == level.finish.x && currentHeroPosition.y == level.finish.y) ? 'success' : 'failure'
       setTimeout(() => ws.send(JSON.stringify({ event: finishEvent })), currentTimeout)
     }
   });
 });
 
-
 app.get('/level/:id', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({
-    height: 10,
-    width: 10,
-    hero: { x: 3, y: 0 },
-    finish: { x: 7, y: 9 },
-    gems: [
-      { x: 1, y: 4 },
-      { x: 2, y: 6 },
-      { x: 8, y: 3 }
-    ]
-  }))
+  res.send(JSON.stringify(levels[req.params.id]))
 })
 
 server.listen(port, () => console.log(`Server started on ${port}`))
