@@ -2,7 +2,6 @@ import './Level.css'
 import { useEffect, useState, useCallback } from 'react'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 import CodeMirror from '@uiw/react-codemirror';
-import { StreamLanguage } from '@codemirror/language';
 import { python } from '@codemirror/lang-python';
 
 const Level = ({ id }) => {
@@ -12,11 +11,6 @@ const Level = ({ id }) => {
   const [gemsCollected, setGemsCollected] = useState(0)
   const [levelInited, setLevelInited] = useState(false)
 
-  const [userCode, setUserCode] = useState('')
-  const onUserCodeChange = useCallback((val, _) => setUserCode(val), [])
-
-  const [isFirstRun, setIsFirstRun] = useState(true)
-
   const [gemsGoal, setGemsGoal] = useState(0)
   const [linesGoal, setLinesGoal] = useState(0)
   
@@ -24,17 +18,27 @@ const Level = ({ id }) => {
   const [gemsGoalSatisfy, setGemsGoalSatisfy] = useState(false)
   const [linesGoalSatisfy, setLinesGoalSatisfy] = useState(false)
 
+  const [userCode, setUserCode] = useState('')
+  const onUserCodeChange = useCallback((val, _) => setUserCode(val), [])
+
+  const [isFirstRun, setIsFirstRun] = useState(true)
+
+  const createLevelCell = char => <div className='levelCell'>{char}</div>
+  const emptyLevelCell = createLevelCell()
+  const heroLevelCell = createLevelCell('🧙‍♂️')
+  const finishLevelCell = createLevelCell('🏁')
+  const gemLevelCell = createLevelCell('💎')
+
   const initLevel = async () => {
     setLevelInited(false)
 
     let levelInitData = await fetch(`http://localhost:9000/level/${id}`).then(res => res.json())
-
-    let newLevel = Array(levelInitData.height).fill().map(_ => Array(levelInitData.width).fill(' # '))
-    newLevel[levelInitData.hero.x][levelInitData.hero.y] = ' h '
-    newLevel[levelInitData.finish.x][levelInitData.finish.y] = ' F '
+    let newLevel = Array(levelInitData.height).fill().map(_ => Array(levelInitData.width).fill(emptyLevelCell))
+    newLevel[levelInitData.hero.x][levelInitData.hero.y] = heroLevelCell
+    newLevel[levelInitData.finish.x][levelInitData.finish.y] = finishLevelCell
     if (levelInitData.gems) {
       setGemsGoal(levelInitData.gems.length)
-      levelInitData.gems.forEach(gem => newLevel[gem.x][gem.y] = ' G ')
+      levelInitData.gems.forEach(gem => newLevel[gem.x][gem.y] = gemLevelCell)
     }
 
     if (levelInitData.linesGoal) {
@@ -75,18 +79,11 @@ const Level = ({ id }) => {
   }
 
   const updateHeroPosition = newPosition => {
-    let prevPositionValue = (heroPosition.x === finishPosition.x && heroPosition.y == finishPosition.y) ? ' F ' : ' # '
-    updateLevelPoint(heroPosition.x, heroPosition.y, prevPositionValue)
+    let prevPositionCell = (heroPosition.x === finishPosition.x && heroPosition.y == finishPosition.y) ? finishLevelCell : emptyLevelCell
+    updateLevelPoint(heroPosition.x, heroPosition.y, prevPositionCell)
 
-    updateLevelPoint(newPosition.x, newPosition.y, ' h ')
+    updateLevelPoint(newPosition.x, newPosition.y, heroLevelCell)
     setHeroPosition(newPosition)
-  }
-
-  const updateFinishPosition = newPosition => {
-    updateLevelPoint(finishPosition.x, finishPosition.y, ' # ')
-
-    updateLevelPoint(newPosition.x, newPosition.y, ' F ')
-    setFinishPosition(newPosition)
   }
 
   const collectGem = () => {
@@ -142,7 +139,7 @@ const Level = ({ id }) => {
       {levelInited &&
       <div>
         <ul>
-          {level.map((line, i) => <li key={i}>{line}</li>)}
+          {level.map((line, i) => <li className='levelLine' key={i}>{line}</li>)}
         </ul>
       </div>
       }
