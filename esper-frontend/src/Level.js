@@ -1,6 +1,9 @@
 import './Level.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
+import CodeMirror from '@uiw/react-codemirror';
+import { StreamLanguage } from '@codemirror/language';
+import { python } from '@codemirror/lang-python';
 
 const Level = ({ id }) => {
   const [level, setLevel] = useState([])
@@ -10,6 +13,7 @@ const Level = ({ id }) => {
   const [levelInited, setLevelInited] = useState(false)
 
   const [userCode, setUserCode] = useState('')
+  const onUserCodeChange = useCallback((val, _) => setUserCode(val), [])
 
   const [isFirstRun, setIsFirstRun] = useState(true)
 
@@ -99,12 +103,6 @@ const Level = ({ id }) => {
     if (lastJsonMessage.event === 'gemCollected')
       collectGem()
 
-    // if (lastJsonMessage.event === 'success')
-    //   window.alert("Success! Hero reached the finish!")
-
-    // if (lastJsonMessage.event === 'failure')
-    //   window.alert("Failure! Hero didn't reach the finish!")
-
     if (lastJsonMessage.event === 'end') {
       setFinishedGoalSatisfy(lastJsonMessage.hasFinished)
       setGemsGoalSatisfy(lastJsonMessage.allGemsCollected)
@@ -127,7 +125,16 @@ const Level = ({ id }) => {
   return (
     <div className="level">
       <div>
-        <textarea className='codeEditor' onChange={e => setUserCode(e.target.value)} />
+        <CodeMirror
+          value={userCode} onChange={onUserCodeChange}
+          height='300px' width='300px'
+          extensions={[python()]}
+          basicSetup={{
+            autocompletion: false
+          }}
+
+          className='codeEditor'
+        />
         <button onClick={() => onRun()}>run</button>
         <button onClick={() => initLevel()}>restart</button>
       </div>
@@ -146,7 +153,7 @@ const Level = ({ id }) => {
         </div>
       }
 
-      <dvi>
+      <div>
         Goals:
         <ul>
           {gemsGoal !== 0 &&
@@ -157,7 +164,7 @@ const Level = ({ id }) => {
             <li>Use {linesGoal} lines of code or less {linesGoalSatisfy && '✅'}</li>
           }
         </ul>
-      </dvi>
+      </div>
     </div>
   )
 }
