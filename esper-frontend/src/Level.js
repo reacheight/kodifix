@@ -13,6 +13,13 @@ const Level = ({ id }) => {
 
   const [isFirstRun, setIsFirstRun] = useState(true)
 
+  const [gemsGoal, setGemsGoal] = useState(0)
+  const [linesGoal, setLinesGoal] = useState(0)
+  
+  const [finishedGoalSatisfy, setFinishedGoalSatisfy] = useState(false)
+  const [gemsGoalSatisfy, setGemsGoalSatisfy] = useState(false)
+  const [linesGoalSatisfy, setLinesGoalSatisfy] = useState(false)
+
   const initLevel = async () => {
     setLevelInited(false)
 
@@ -21,12 +28,23 @@ const Level = ({ id }) => {
     let newLevel = Array(levelInitData.height).fill().map(_ => Array(levelInitData.width).fill(' # '))
     newLevel[levelInitData.hero.x][levelInitData.hero.y] = ' h '
     newLevel[levelInitData.finish.x][levelInitData.finish.y] = ' F '
-    levelInitData.gems.forEach(gem => newLevel[gem.x][gem.y] = ' G ')
+    if (levelInitData.gems) {
+      setGemsGoal(levelInitData.gems.length)
+      levelInitData.gems.forEach(gem => newLevel[gem.x][gem.y] = ' G ')
+    }
+
+    if (levelInitData.linesGoal) {
+      setLinesGoal(levelInitData.linesGoal)
+    }
 
     setGemsCollected(0)
     setHeroPosition(levelInitData.hero)
     setFinishPosition(levelInitData.finish)
     setLevel(newLevel)
+
+    setFinishedGoalSatisfy(false)
+    setGemsGoalSatisfy(false)
+    setLinesGoalSatisfy(false)
 
     setLevelInited(true)
   }
@@ -81,16 +99,22 @@ const Level = ({ id }) => {
     if (lastJsonMessage.event === 'gemCollected')
       collectGem()
 
-    if (lastJsonMessage.event === 'success')
-      window.alert("Success! Hero reached the finish!")
+    // if (lastJsonMessage.event === 'success')
+    //   window.alert("Success! Hero reached the finish!")
 
-    if (lastJsonMessage.event === 'failure')
-      window.alert("Failure! Hero didn't reach the finish!")
+    // if (lastJsonMessage.event === 'failure')
+    //   window.alert("Failure! Hero didn't reach the finish!")
+
+    if (lastJsonMessage.event === 'end') {
+      setFinishedGoalSatisfy(lastJsonMessage.hasFinished)
+      setGemsGoalSatisfy(lastJsonMessage.allGemsCollected)
+      setLinesGoalSatisfy(lastJsonMessage.numberOfLinesSatisfy)
+    }
   }, [lastJsonMessage])
 
-  const onRun = () => {
+  const onRun = async () => {
     if (!isFirstRun)
-      initLevel()
+      await initLevel()
     
     sendJsonMessage({
       event: 'run',
@@ -116,9 +140,24 @@ const Level = ({ id }) => {
       </div>
       }
 
-      <div>
-        Gems collected: {gemsCollected}
-      </div>
+      {gemsGoal !== 0 &&
+        <div>
+          Gems collected: {gemsCollected}
+        </div>
+      }
+
+      <dvi>
+        Goals:
+        <ul>
+          {gemsGoal !== 0 &&
+            <li>Collect {gemsGoal} gems {gemsGoalSatisfy && '✅'}</li>
+          }
+          <li>Reach the finish {finishedGoalSatisfy && '✅'}</li>
+          {linesGoal !== 0 &&
+            <li>Use {linesGoal} lines of code or less {linesGoalSatisfy && '✅'}</li>
+          }
+        </ul>
+      </dvi>
     </div>
   )
 }

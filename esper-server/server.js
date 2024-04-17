@@ -20,6 +20,12 @@ const server = require('http').createServer(app)
 const wsServer = new ws.Server({ server })
 
 const levels = {
+  [0]: {
+    height: 2,
+    width: 4,
+    hero: { x: 0, y: 0 },
+    finish: { x: 1, y: 3 },
+  },
   [1]: {
     height: 10,
     width: 10,
@@ -31,6 +37,14 @@ const levels = {
       { x: 8, y: 3 }
     ]
   },
+  [2]: {
+    height: 15,
+    width: 7,
+    hero: { x: 12, y: 6 },
+    finish: { x: 1, y: 2 },
+    gems: [ { x: 5, y: 3 } ],
+    linesGoal: 10,
+  }
 }
 
 wsServer.on('connection', ws => {
@@ -49,17 +63,20 @@ wsServer.on('connection', ws => {
 
       const level = structuredClone(levels[message.levelId])
       var currentHeroPosition = structuredClone(level.hero)
+      var gemsCollected = 0
   
       const updateHeroPos = (newHeroPosition) => {
         currentHeroPosition = structuredClone(newHeroPosition)
         var collectedGem = null
 
-        level.gems.forEach((gem, i) => {
-          if (gem.x === newHeroPosition.x && gem.y === newHeroPosition.y && !gem.taken) {
-            level.gems[i].taken = true
-            collectedGem = gem
-          }
-        })
+        if (level.gems)
+          level.gems.forEach((gem, i) => {
+            if (gem.x === newHeroPosition.x && gem.y === newHeroPosition.y && !gem.taken) {
+              level.gems[i].taken = true
+              collectedGem = gem
+              gemsCollected += 1
+            }
+          })
 
         setTimeout(() => {
           ws.send(JSON.stringify({
@@ -84,45 +101,50 @@ wsServer.on('connection', ws => {
   
       const hero = {
         moveUp: function () {
-          var new_hero_pos = structuredClone(currentHeroPosition)
-          new_hero_pos.x -= 1
-          updateHeroPos(new_hero_pos)
+          var newHeroPos = structuredClone(currentHeroPosition)
+          newHeroPos.x -= 1
+          updateHeroPos(newHeroPos)
 
           objectMethodCalled('moveUp')
         },
   
         moveDown: function () {
-          var new_hero_pos = structuredClone(currentHeroPosition)
-          new_hero_pos.x += 1
-          updateHeroPos(new_hero_pos)
+          var newHeroPos = structuredClone(currentHeroPosition)
+          newHeroPos.x += 1
+          updateHeroPos(newHeroPos)
           
           objectMethodCalled('moveDown')
         },
   
         moveRight: function () {
-          var new_hero_pos = structuredClone(currentHeroPosition)
-          new_hero_pos.y += 1
-          updateHeroPos(new_hero_pos)
+          var newHeroPos = structuredClone(currentHeroPosition)
+          newHeroPos.y += 1
+          updateHeroPos(newHeroPos)
   
           objectMethodCalled('moveRight')
         },
   
         moveLeft: function () {
-          var new_hero_pos = structuredClone(currentHeroPosition)
-          new_hero_pos.y -= 1
-          updateHeroPos(new_hero_pos)
+          var newHeroPos = structuredClone(currentHeroPosition)
+          newHeroPos.y -= 1
+          updateHeroPos(newHeroPos)
   
           objectMethodCalled('moveLeft')
         }
       };
+
       engine.addGlobal('hero', hero);
-  
       engine.load(message.code);
   
       engine.runSync()
 
-      let finishEvent = (currentHeroPosition.x == level.finish.x && currentHeroPosition.y == level.finish.y) ? 'success' : 'failure'
-      setTimeout(() => ws.send(JSON.stringify({ event: finishEvent })), currentTimeout)
+      let endEvent = {
+        event: 'end',
+        hasFinished: currentHeroPosition.x === level.finish.x && currentHeroPosition.y === level.finish.y,
+        allGemsCollected: !level.gems || gemsCollected === level.gems.length,
+        numberOfLinesSatisfy: !level.linesGoal || message.code.split(/\r\n|\r|\n/).length <= level.linesGoal
+      }
+      setTimeout(() => ws.send(JSON.stringify(endEvent)), currentTimeout)
     }
   });
 });
