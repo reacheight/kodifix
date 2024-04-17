@@ -44,6 +44,13 @@ const levels = {
     finish: { x: 1, y: 2 },
     gems: [ { x: 5, y: 3 } ],
     linesGoal: 10,
+  },
+  [3]: {
+    height: 1,
+    width: 10,
+    hero: { x: 0, y: 0 },
+    finish: { x: 0, y: 9 },
+    linesGoal: 2
   }
 }
 
