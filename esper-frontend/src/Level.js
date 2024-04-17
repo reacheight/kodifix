@@ -21,6 +21,7 @@ const Level = ({ id }) => {
   const [userCode, setUserCode] = useState('')
   const onUserCodeChange = useCallback((val, _) => setUserCode(val), [])
 
+  const [isProgramRunning, setIsProgramRunning] = useState(false)
   const [isFirstRun, setIsFirstRun] = useState(true)
 
   const createLevelCell = char => <div className='levelCell'>{char}</div>
@@ -104,10 +105,14 @@ const Level = ({ id }) => {
       setFinishedGoalSatisfy(lastJsonMessage.hasFinished)
       setGemsGoalSatisfy(lastJsonMessage.allGemsCollected)
       setLinesGoalSatisfy(lastJsonMessage.numberOfLinesSatisfy)
+      setIsProgramRunning(false)
     }
   }, [lastJsonMessage])
 
   const onRun = async () => {
+    if (isProgramRunning)
+      return
+
     if (!isFirstRun)
       await initLevel()
     
@@ -116,15 +121,16 @@ const Level = ({ id }) => {
       levelId: id,
       code: userCode
     })
+    setIsProgramRunning(true)
     setIsFirstRun(false)
   }
 
   return (
-    <div className="level">
+    <div className='level'>
       <div>
         <CodeMirror
           value={userCode} onChange={onUserCodeChange}
-          height='500px' width='400px'
+          height='700px' width='600px'
           extensions={[python()]}
           basicSetup={{
             autocompletion: false
@@ -132,8 +138,7 @@ const Level = ({ id }) => {
 
           className='codeEditor'
         />
-        <button onClick={() => onRun()}>run</button>
-        <button onClick={() => initLevel()}>restart</button>
+        <button className='runButton' onClick={() => onRun()}>Запуск</button>
       </div>
 
       {levelInited &&
@@ -148,17 +153,26 @@ const Level = ({ id }) => {
       </div>
       }
 
-      <div>
-        Goals:
-        <ul>
+      <div className='goals'>
+        <div className='header'>Цели</div>
+        <div className='list'>
           {gemsGoal !== 0 &&
-            <li>Collect {gemsGoal} gems {gemsGoalSatisfy && '✅'}</li>
+            <div className='goal'>
+              <div>Соберите {gemsGoal} 💎</div>
+              <div>{gemsGoalSatisfy ? '✅' : '❌'}</div>
+            </div>
           }
-          <li>Reach the finish {finishedGoalSatisfy && '✅'}</li>
+          <div className='goal'>
+            <div>Достигните финиша</div>
+            <div>{finishedGoalSatisfy ? '✅' : '❌'}</div>
+          </div>
           {linesGoal !== 0 &&
-            <li>Use {linesGoal} lines of code or less {linesGoalSatisfy && '✅'}</li>
+            <div className='goal'>
+              <div>Используйте {linesGoal} или меньше строк кода</div>
+              <div>{linesGoalSatisfy ? '✅' : '❌'}</div>
+            </div>
           }
-        </ul>
+        </div>
       </div>
     </div>
   )
