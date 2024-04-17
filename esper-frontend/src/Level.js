@@ -124,7 +124,7 @@ const Level = ({ id }) => {
       <div>
         <CodeMirror
           value={userCode} onChange={onUserCodeChange}
-          height='300px' width='300px'
+          height='500px' width='400px'
           extensions={[python()]}
           basicSetup={{
             autocompletion: false
@@ -137,17 +137,15 @@ const Level = ({ id }) => {
       </div>
 
       {levelInited &&
-      <div>
-        <ul>
-          {level.map((line, i) => <li className='levelLine' key={i}>{line}</li>)}
-        </ul>
-      </div>
-      }
+      <div className='playfield'>
+        {level.map((line, i) => <li className='levelLine' key={i}>{line}</li>)}
 
-      {gemsGoal !== 0 &&
-        <div>
-          Gems collected: {gemsCollected}
-        </div>
+        {gemsGoal !== 0 &&
+          <div>
+            💎 ⨯ {gemsCollected}
+          </div>
+        }
+      </div>
       }
 
       <div>

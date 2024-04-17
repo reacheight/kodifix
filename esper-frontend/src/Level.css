@@ -1,14 +1,13 @@
 .level {
     display: flex;
     gap: 50px;
+    padding: 10px;
 }
 
 .codeEditor {
     border-radius: 6px;
     box-shadow: rgba(16, 22, 26, 0.1) 0px 0px 0px 1px, rgba(16, 22, 26, 0) 0px 0px 0px, rgba(16, 22, 26, 0.2) 0px 1px 1px;
-    /* border: 1px solid rgba(16, 22, 26, 0.4); */
     overflow: auto;
-    margin: 10px;
 }
 
 .levelCell {
@@ -24,6 +23,9 @@
     display: flex;
     gap: 2px;
     padding-bottom: 2px;
+}
+
+.playfield {
 }
 
 ul {
