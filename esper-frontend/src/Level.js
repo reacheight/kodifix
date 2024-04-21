@@ -3,8 +3,10 @@ import { useEffect, useState, useCallback } from 'react'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 import CodeMirror from '@uiw/react-codemirror';
 import { python } from '@codemirror/lang-python';
+import { useParams } from 'react-router-dom';
 
-const Level = ({ id }) => {
+const Level = () => {
+  const { id } = useParams()
   const [level, setLevel] = useState([])
   const [heroPosition, setHeroPosition] = useState({})
   const [finishPosition, setFinishPosition] = useState({})

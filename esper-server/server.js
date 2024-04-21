@@ -20,13 +20,23 @@ const server = require('http').createServer(app)
 const wsServer = new ws.Server({ server })
 
 const levels = {
-  [0]: {
+  [1]: {
     height: 2,
     width: 4,
     hero: { x: 0, y: 0 },
     finish: { x: 1, y: 3 },
+    gems: [
+      { x: 0, y: 2 }
+    ]
   },
-  [1]: {
+  [2]: {
+    height: 1,
+    width: 10,
+    hero: { x: 0, y: 0 },
+    finish: { x: 0, y: 9 },
+    linesGoal: 2
+  },
+  [3]: {
     height: 10,
     width: 10,
     hero: { x: 3, y: 0 },
@@ -37,7 +47,7 @@ const levels = {
       { x: 8, y: 3 }
     ]
   },
-  [2]: {
+  [4]: {
     height: 15,
     width: 7,
     hero: { x: 12, y: 6 },
@@ -45,13 +55,6 @@ const levels = {
     gems: [ { x: 5, y: 3 } ],
     linesGoal: 10,
   },
-  [3]: {
-    height: 1,
-    width: 10,
-    hero: { x: 0, y: 0 },
-    finish: { x: 0, y: 9 },
-    linesGoal: 2
-  }
 }
 
 wsServer.on('connection', ws => {
