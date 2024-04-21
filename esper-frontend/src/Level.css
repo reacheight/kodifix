@@ -11,6 +11,23 @@
     overflow: auto;
 }
 
+.codeEditorContainer {
+    width: 600px;
+}
+
+.instructions {
+    margin-top: 10px;
+    border: solid 1px black;
+    border-radius: 6px;
+    padding-left: 5px;
+
+    .list {
+    }
+    .instruction {
+        padding-bottom: 5px;
+    }
+}
+
 .runButton {
     margin-top: 10px;
     font-size: 20px;

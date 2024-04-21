@@ -21,7 +21,10 @@ const Level = () => {
   const [gemsGoalSatisfy, setGemsGoalSatisfy] = useState(false)
   const [linesGoalSatisfy, setLinesGoalSatisfy] = useState(false)
 
-  const [userCode, setUserCode] = useState('')
+  const [userCode, setUserCode] = useState(`# пиши код ниже, чтобы управлять своим персонажем
+# нажми Запуск, когда закончишь
+
+hero.moveRight()`)
   const onUserCodeChange = useCallback((val, _) => setUserCode(val), [])
 
   const [isProgramRunning, setIsProgramRunning] = useState(false)
@@ -133,7 +136,7 @@ const Level = () => {
 
   return (
     <div className='level'>
-      <div>
+      <div className='codeEditorContainer'>
         <CodeMirror
           value={userCode} onChange={onUserCodeChange}
           height='700px' width='600px'
@@ -145,6 +148,14 @@ const Level = () => {
           className='codeEditor'
         />
         <button className='runButton' onClick={() => onRun()}>Запуск</button>
+        <div className='instructions'>
+          <div className='list'>
+            <div className='instruction'>hero.moveUp() — пойти на одну клетку вверх</div>
+            <div className='instruction'>hero.moveDown() — пойти на одну клетку вниз</div>
+            <div className='instruction'>hero.moveRight() — пойти на одну клетку вправо</div>
+            <div className='instruction'>hero.moveLeft() — пойти на одну клетку влево</div>
+          </div>
+        </div>
       </div>
 
       {levelInited &&
