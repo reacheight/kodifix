@@ -106,6 +106,9 @@ const Level = ({ id }) => {
       setGemsGoalSatisfy(lastJsonMessage.allGemsCollected)
       setLinesGoalSatisfy(lastJsonMessage.numberOfLinesSatisfy)
       setIsProgramRunning(false)
+
+      if (lastJsonMessage.heroRanInWall === true)
+        setTimeout(() => alert('Герой врезался в стену!'), 0)
     }
   }, [lastJsonMessage])
 

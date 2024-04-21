@@ -6,6 +6,6 @@ import Level from './Level';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Level id={3} />
+    <Level id={1} />
   </React.StrictMode>
 );

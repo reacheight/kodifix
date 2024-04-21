@@ -68,12 +68,21 @@ wsServer.on('connection', ws => {
         language: 'python'
       });
 
+
       const level = structuredClone(levels[message.levelId])
       var currentHeroPosition = structuredClone(level.hero)
       var gemsCollected = 0
+
+      let heroRanInWall = false
   
       const updateHeroPos = (newHeroPosition) => {
         currentHeroPosition = structuredClone(newHeroPosition)
+
+        if (newHeroPosition.x >= level.height || newHeroPosition.y >= level.width || newHeroPosition.x < 0 || newHeroPosition.y < 0) {
+          heroRanInWall = true
+          return
+        }
+
         var collectedGem = null
 
         if (level.gems)
@@ -143,13 +152,20 @@ wsServer.on('connection', ws => {
       engine.addGlobal('hero', hero);
       engine.load(message.code);
   
-      engine.runSync()
+      let steps = 0;
+      let value = engine.evloop.next();
+      while (!value.done && !heroRanInWall) {
+        value = engine.evloop.next();
+        if ( value.value && value.value.then ) throw new Error('Can\'t deal with futures when running in sync mode');
+        if ( ++steps > engine.options.executionLimit ) throw new Error('Execution Limit Reached');
+      }
 
       let endEvent = {
         event: 'end',
         hasFinished: currentHeroPosition.x === level.finish.x && currentHeroPosition.y === level.finish.y,
         allGemsCollected: !level.gems || gemsCollected === level.gems.length,
-        numberOfLinesSatisfy: !level.linesGoal || message.code.split(/\r\n|\r|\n/).length <= level.linesGoal
+        numberOfLinesSatisfy: !level.linesGoal || message.code.split(/\r\n|\r|\n/).length <= level.linesGoal,
+        heroRanInWall
       }
       setTimeout(() => ws.send(JSON.stringify(endEvent)), currentTimeout)
     }
