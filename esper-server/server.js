@@ -57,6 +57,12 @@ const levels = {
   },
 }
 
+const calculateCodeLines = (userCode) => userCode
+  .split(/\r\n|\r|\n/)
+  .filter(s => !s.startsWith('#'))
+  .filter(s => /\S/.test(s))
+  .length
+
 wsServer.on('connection', ws => {
   console.log('Connection opened')
 
@@ -167,7 +173,7 @@ wsServer.on('connection', ws => {
         event: 'end',
         hasFinished: currentHeroPosition.x === level.finish.x && currentHeroPosition.y === level.finish.y,
         allGemsCollected: !level.gems || gemsCollected === level.gems.length,
-        numberOfLinesSatisfy: !level.linesGoal || message.code.split(/\r\n|\r|\n/).length <= level.linesGoal,
+        numberOfLinesSatisfy: !level.linesGoal || calculateCodeLines(message.code) <= level.linesGoal,
         heroRanInWall
       }
       setTimeout(() => ws.send(JSON.stringify(endEvent)), currentTimeout)
