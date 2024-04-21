@@ -181,7 +181,7 @@ const Level = () => {
         </div>
         {(gemsGoalSatisfy && finishedGoalSatisfy && linesGoalSatisfy) &&
             <div>
-              <Link to={`/level/${id + 1}`}>Следующий уровень</Link> ➡️
+              <a href={`/level/${Number(id) + 1}`}>Следующий уровень</a> ➡️
             </div>
           }
       </div>
