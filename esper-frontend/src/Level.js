@@ -1,9 +1,10 @@
 import './Level.css'
 import { useEffect, useState, useCallback } from 'react'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
-import CodeMirror from '@uiw/react-codemirror';
-import { python } from '@codemirror/lang-python';
-import { useParams } from 'react-router-dom';
+import CodeMirror from '@uiw/react-codemirror'
+import { python } from '@codemirror/lang-python'
+import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Level = () => {
   const { id } = useParams()
@@ -178,6 +179,11 @@ const Level = () => {
             </div>
           }
         </div>
+        {(gemsGoalSatisfy && finishedGoalSatisfy && linesGoalSatisfy) &&
+            <div>
+              <Link to={`/level/${id + 1}`}>Следующий уровень</Link> ➡️
+            </div>
+          }
       </div>
     </div>
   )
