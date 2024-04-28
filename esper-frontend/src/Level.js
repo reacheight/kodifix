@@ -36,6 +36,7 @@ hero.moveRight()`)
   const gemLevelCell = createLevelCell('💎')
   const wallLevelCell = createLevelCell('🚧')
   const fireballCell = createLevelCell('🔥')
+  const enemyCell = createLevelCell('🧌')
 
   const initLevel = async () => {
     setLevelInited(false)
@@ -51,6 +52,9 @@ hero.moveRight()`)
 
     if (levelInitData.walls)
       levelInitData.walls.forEach(wall => newLevel[wall.x][wall.y] = wallLevelCell)
+
+    if (levelInitData.enemies)
+      levelInitData.enemies.forEach(enemy => newLevel[enemy.x][enemy.y] = enemyCell)
 
     if (levelInitData.linesGoal) {
       setLinesGoal(levelInitData.linesGoal)
@@ -117,8 +121,11 @@ hero.moveRight()`)
       setLinesGoalSatisfy(lastJsonMessage.numberOfLinesSatisfy)
       setIsProgramRunning(false)
 
-      if (lastJsonMessage.heroRanInWall === true)
+      if (lastJsonMessage.heroRanInWall)
         setTimeout(() => alert('Герой врезался в стену!'), 0)
+
+      if (lastJsonMessage.heroRanInEnemy)
+        setTimeout(() => alert('Троль затоптал героя!'), 0)
     }
 
     if (lastJsonMessage.event === 'createFireball') {
