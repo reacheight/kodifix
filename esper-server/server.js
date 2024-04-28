@@ -45,6 +45,10 @@ const levels = {
       { x: 1, y: 4 },
       { x: 2, y: 6 },
       { x: 8, y: 3 }
+    ],
+    walls: [
+      { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 }, { x: 5, y: 3 }, { x: 6, y: 3 }, { x: 7, y: 3 },
+      { x: 7, y: 4 }, { x: 8, y: 4 }
     ]
   },
   [4]: {
@@ -88,6 +92,11 @@ wsServer.on('connection', ws => {
         currentHeroPosition = structuredClone(newHeroPosition)
 
         if (newHeroPosition.x >= level.height || newHeroPosition.y >= level.width || newHeroPosition.x < 0 || newHeroPosition.y < 0) {
+          heroRanInWall = true
+          return
+        }
+
+        if (level.walls && level.walls.some(w => w.x == newHeroPosition.x && w.y == newHeroPosition.y)) {
           heroRanInWall = true
           return
         }

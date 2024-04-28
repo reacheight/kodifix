@@ -34,6 +34,7 @@ hero.moveRight()`)
   const heroLevelCell = createLevelCell('🧙‍♂️')
   const finishLevelCell = createLevelCell('🏁')
   const gemLevelCell = createLevelCell('💎')
+  const wallLevelCell = createLevelCell('🚧')
 
   const initLevel = async () => {
     setLevelInited(false)
@@ -46,6 +47,9 @@ hero.moveRight()`)
       setGemsGoal(levelInitData.gems.length)
       levelInitData.gems.forEach(gem => newLevel[gem.x][gem.y] = gemLevelCell)
     }
+
+    if (levelInitData.walls)
+      levelInitData.walls.forEach(wall => newLevel[wall.x][wall.y] = wallLevelCell)
 
     if (levelInitData.linesGoal) {
       setLinesGoal(levelInitData.linesGoal)
