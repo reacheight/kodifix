@@ -35,6 +35,7 @@ hero.moveRight()`)
   const finishLevelCell = createLevelCell('🏁')
   const gemLevelCell = createLevelCell('💎')
   const wallLevelCell = createLevelCell('🚧')
+  const fireballCell = createLevelCell('🔥')
 
   const initLevel = async () => {
     setLevelInited(false)
@@ -118,6 +119,24 @@ hero.moveRight()`)
 
       if (lastJsonMessage.heroRanInWall === true)
         setTimeout(() => alert('Герой врезался в стену!'), 0)
+    }
+
+    if (lastJsonMessage.event === 'createFireball') {
+      updateLevelPoint(lastJsonMessage.fireball.x, lastJsonMessage.fireball.y, fireballCell)
+    }
+
+    if (lastJsonMessage.event === 'clearFireball') {
+      let fireball = lastJsonMessage.fireball
+      if (fireball.x === finishPosition.x && fireball.y === finishPosition.y)
+        updateLevelPoint(fireball.x, fireball.y, finishLevelCell)
+      else if (level[fireball.x][fireball.y] === gemLevelCell)
+        updateLevelPoint(fireball.x, fireball.y, gemLevelCell)
+      else
+        updateLevelPoint(fireball.x, fireball.y, emptyLevelCell)
+    }
+
+    if (lastJsonMessage.event === 'showGem') {
+      updateLevelPoint(lastJsonMessage.gem.x, lastJsonMessage.gem.y, gemLevelCell)
     }
   }, [lastJsonMessage])
 

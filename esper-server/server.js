@@ -125,6 +125,45 @@ wsServer.on('connection', ws => {
         }, currentTimeout)
         currentTimeout += eventsTimeDiffMS
       }
+
+      const createFireball = point => {
+        ws.send(JSON.stringify({
+          event: 'createFireball',
+          fireball: point
+        }))
+      }
+
+      const clearFireball = point => {
+        ws.send(JSON.stringify({
+          event: 'clearFireball',
+          fireball: point
+        }))
+      }
+
+      const showGem = point => {
+        ws.send(JSON.stringify({
+          event: 'showGem',
+          gem: point
+        }))
+      }
+
+      const runFireball = path => {
+        path.forEach(point => {
+          if (point.x >= level.height || point.x < 0 || point.y >= level.width || point.y < 0)
+            return
+
+          if (level.walls && level.walls.some(wall => wall.x === point.x && wall.y === point.y))
+            return
+
+          
+
+          setTimeout(() => createFireball(point), currentTimeout)
+          currentTimeout += eventsTimeDiffMS
+          setTimeout(() => clearFireball(point), currentTimeout)
+          if (level.gems && level.gems.some(gem => !gem.taken && gem.x === point.x && gem.y === point.y))
+            setTimeout(() => showGem(point), currentTimeout)
+        })
+      }
   
       const objectMethodCalled = (methodName) => {
         let callExpression = engine.evaluator.lastASTNodeProcessed.parent.parent
@@ -164,7 +203,31 @@ wsServer.on('connection', ws => {
           updateHeroPos(newHeroPos)
   
           objectMethodCalled('moveLeft')
-        }
+        },
+
+        shootUp: function () {
+          let fireballPath = [{x: currentHeroPosition.x - 1, y: currentHeroPosition.y}, {x: currentHeroPosition.x - 2, y: currentHeroPosition.y}, {x: currentHeroPosition.x - 3, y: currentHeroPosition.y}]
+          runFireball(fireballPath)
+          objectMethodCalled('shootUp')
+        },
+
+        shootDown: function () {
+          let fireballPath = [{x: currentHeroPosition.x + 1, y: currentHeroPosition.y}, {x: currentHeroPosition.x + 2, y: currentHeroPosition.y}, {x: currentHeroPosition.x + 3, y: currentHeroPosition.y}]
+          runFireball(fireballPath)
+          objectMethodCalled('shootDown')
+        },
+
+        shootRight: function () {
+          let fireballPath = [{x: currentHeroPosition.x, y: currentHeroPosition.y + 1}, {x: currentHeroPosition.x, y: currentHeroPosition.y + 2}, {x: currentHeroPosition.x, y: currentHeroPosition.y + 3}]
+          runFireball(fireballPath)
+          objectMethodCalled('shootRight')
+        },
+
+        shootLeft: function () {
+          let fireballPath = [{x: currentHeroPosition.x, y: currentHeroPosition.y - 1}, {x: currentHeroPosition.x, y: currentHeroPosition.y - 2}, {x: currentHeroPosition.x, y: currentHeroPosition.y - 3}]
+          runFireball(fireballPath)
+          objectMethodCalled('shootLeft')
+        },
       };
 
       engine.addGlobal('hero', hero);
