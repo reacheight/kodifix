@@ -4,4 +4,7 @@ const calculateCodeLines = (userCode) => userCode
   .filter(s => /\S/.test(s))
   .length
 
+const arePointsEqual = (first, second) => first.x === second.x && first.y === second.y
+
 module.exports.calculateCodeLines = calculateCodeLines
+module.exports.arePointsEqual = arePointsEqual

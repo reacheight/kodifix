@@ -46,46 +46,50 @@ wsServer.on('connection', ws => {
       let heroRanInEnemy = false
   
       const updateHeroPos = (newHeroPosition) => {
-        currentHeroPosition = structuredClone(newHeroPosition)
+        while (!utils.arePointsEqual(newHeroPosition, currentHeroPosition)) {
+          currentHeroPosition.x += Math.sign(newHeroPosition.x - currentHeroPosition.x)
+          currentHeroPosition.y += Math.sign(newHeroPosition.y - currentHeroPosition.y)
 
-        if (newHeroPosition.x >= level.height || newHeroPosition.y >= level.width || newHeroPosition.x < 0 || newHeroPosition.y < 0) {
-          heroRanInWall = true
-          return
-        }
-
-        if (level.walls && level.walls.some(w => w.x === newHeroPosition.x && w.y === newHeroPosition.y)) {
-          heroRanInWall = true
-          return
-        }
-
-        if (level.enemies && level.enemies.some(enemy => enemy.alive && enemy.x === newHeroPosition.x && enemy.y === newHeroPosition.y)) {
-          heroRanInEnemy = true
-          return
-        }
-
-        let collectedGem = null
-
-        if (level.gems)
-          level.gems.forEach((gem, i) => {
-            if (gem.x === newHeroPosition.x && gem.y === newHeroPosition.y && !gem.taken) {
-              level.gems[i].taken = true
-              collectedGem = gem
-              gemsCollected += 1
-            }
-          })
-
-        setTimeout(() => {
-          ws.send(JSON.stringify({
-            event: 'updateHero',
-            hero: newHeroPosition
-          }))
-
-          if (collectedGem)
+          if (currentHeroPosition.x >= level.height || currentHeroPosition.y >= level.width || currentHeroPosition.x < 0 || currentHeroPosition.y < 0) {
+            heroRanInWall = true
+            return
+          }
+  
+          if (level.walls && level.walls.some(wall => utils.arePointsEqual(wall, currentHeroPosition))) {
+            heroRanInWall = true
+            return
+          }
+  
+          if (level.enemies && level.enemies.some(enemy => enemy.alive && utils.arePointsEqual(enemy, currentHeroPosition))) {
+            heroRanInEnemy = true
+            return
+          }
+  
+          let collectedGem = null
+  
+          if (level.gems)
+            level.gems.forEach((gem, i) => {
+              if (utils.arePointsEqual(gem, currentHeroPosition) && !gem.taken) {
+                level.gems[i].taken = true
+                collectedGem = gem
+                gemsCollected += 1
+              }
+            })
+  
+          let closureCurrentHeroPosition = structuredClone(currentHeroPosition)
+          setTimeout(() => {
             ws.send(JSON.stringify({
-              event: 'gemCollected'
+              event: 'updateHero',
+              hero: closureCurrentHeroPosition
             }))
-        }, currentTimeout)
-        currentTimeout += eventsTimeDiffMS
+  
+            if (collectedGem)
+              ws.send(JSON.stringify({
+                event: 'gemCollected'
+              }))
+          }, currentTimeout)
+          currentTimeout += eventsTimeDiffMS
+        }
       }
 
       const createFireball = point => {
@@ -109,24 +113,24 @@ wsServer.on('connection', ws => {
         }))
       }
 
-      const runFireball = path => {
-        for (const point of path) {
-          if (point.x >= level.height || point.x < 0 || point.y >= level.width || point.y < 0)
+      const runFireball = fireballPath => {
+        for (const currentFireballPoint of fireballPath) {
+          if (currentFireballPoint.x >= level.height || currentFireballPoint.x < 0 || currentFireballPoint.y >= level.width || currentFireballPoint.y < 0)
             break
 
-          if (level.walls && level.walls.some(wall => wall.x === point.x && wall.y === point.y))
+          if (level.walls && level.walls.some(wall => utils.arePointsEqual(wall, currentFireballPoint)))
             break
 
-          setTimeout(() => createFireball(point), currentTimeout)
+          setTimeout(() => createFireball(currentFireballPoint), currentTimeout)
           currentTimeout += eventsTimeDiffMS
-          setTimeout(() => clearFireball(point), currentTimeout)
-          if (level.gems && level.gems.some(gem => !gem.taken && gem.x === point.x && gem.y === point.y))
-            setTimeout(() => showGem(point), currentTimeout)
+          setTimeout(() => clearFireball(currentFireballPoint), currentTimeout)
+          if (level.gems && level.gems.some(gem => !gem.taken && utils.arePointsEqual(gem, currentFireballPoint)))
+            setTimeout(() => showGem(currentFireballPoint), currentTimeout)
 
           if (level.enemies) {
             let hitEnemy = false
             level.enemies.forEach((enemy, i) => {
-              if (enemy.x === point.x && enemy.y === point.y && enemy.alive) {
+              if (utils.arePointsEqual(enemy, currentFireballPoint) && enemy.alive) {
                 level.enemies[i].alive = false
                 hitEnemy = true
                 return
@@ -148,45 +152,33 @@ wsServer.on('connection', ws => {
   
       const hero = {
         moveUp(steps = 1) {
-          while (steps !== 0) {
-            let newHeroPos = structuredClone(currentHeroPosition)
-            newHeroPos.x -= 1
-            updateHeroPos(newHeroPos)
-            steps -= 1
-          }
+          let newHeroPos = structuredClone(currentHeroPosition)
+          newHeroPos.x -= steps
+          updateHeroPos(newHeroPos)
 
           objectMethodCalled('moveUp')
         },
   
         moveDown(steps = 1) {
-          while (steps !== 0) {
-            let newHeroPos = structuredClone(currentHeroPosition)
-            newHeroPos.x += 1
-            updateHeroPos(newHeroPos)
-            steps -= 1
-          }
+          let newHeroPos = structuredClone(currentHeroPosition)
+          newHeroPos.x += steps
+          updateHeroPos(newHeroPos)
           
           objectMethodCalled('moveDown')
         },
   
         moveRight(steps = 1) {
-          while (steps !== 0) {
-            let newHeroPos = structuredClone(currentHeroPosition)
-            newHeroPos.y += 1
-            updateHeroPos(newHeroPos)
-            steps -= 1
-          }
+          let newHeroPos = structuredClone(currentHeroPosition)
+          newHeroPos.y += steps
+          updateHeroPos(newHeroPos)
   
           objectMethodCalled('moveRight')
         },
   
         moveLeft(steps = 1) {
-          while (steps !== 0) {
-            let newHeroPos = structuredClone(currentHeroPosition)
-            newHeroPos.y -= 1
-            updateHeroPos(newHeroPos)
-            steps -= 1
-          }
+          let newHeroPos = structuredClone(currentHeroPosition)
+          newHeroPos.y -= steps
+          updateHeroPos(newHeroPos)
   
           objectMethodCalled('moveLeft')
         },
@@ -229,7 +221,7 @@ wsServer.on('connection', ws => {
 
       let endEvent = {
         event: 'end',
-        hasFinished: currentHeroPosition.x === level.finish.x && currentHeroPosition.y === level.finish.y,
+        hasFinished: utils.arePointsEqual(level.finish, currentHeroPosition),
         allGemsCollected: !level.gems || gemsCollected === level.gems.length,
         numberOfLinesSatisfy: !level.linesGoal || utils.calculateCodeLines(message.code) <= level.linesGoal,
         heroRanInWall,
