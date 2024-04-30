@@ -192,34 +192,46 @@ wsServer.on('connection', ws => {
       }
   
       const hero = {
-        moveUp: function () {
-          var newHeroPos = structuredClone(currentHeroPosition)
-          newHeroPos.x -= 1
-          updateHeroPos(newHeroPos)
+        moveUp(steps = 1) {
+          while (steps !== 0) {
+            var newHeroPos = structuredClone(currentHeroPosition)
+            newHeroPos.x -= 1
+            updateHeroPos(newHeroPos)
+            steps -= 1
+          }
 
           objectMethodCalled('moveUp')
         },
   
-        moveDown: function () {
-          var newHeroPos = structuredClone(currentHeroPosition)
-          newHeroPos.x += 1
-          updateHeroPos(newHeroPos)
+        moveDown(steps = 1) {
+          while (steps !== 0) {
+            var newHeroPos = structuredClone(currentHeroPosition)
+            newHeroPos.x += 1
+            updateHeroPos(newHeroPos)
+            steps -= 1
+          }
           
           objectMethodCalled('moveDown')
         },
   
-        moveRight: function () {
-          var newHeroPos = structuredClone(currentHeroPosition)
-          newHeroPos.y += 1
-          updateHeroPos(newHeroPos)
+        moveRight(steps = 1) {
+          while (steps !== 0) {
+            var newHeroPos = structuredClone(currentHeroPosition)
+            newHeroPos.y += 1
+            updateHeroPos(newHeroPos)
+            steps -= 1
+          }
   
           objectMethodCalled('moveRight')
         },
   
-        moveLeft: function () {
-          var newHeroPos = structuredClone(currentHeroPosition)
-          newHeroPos.y -= 1
-          updateHeroPos(newHeroPos)
+        moveLeft(steps = 1) {
+          while (steps !== 0) {
+            var newHeroPos = structuredClone(currentHeroPosition)
+            newHeroPos.y -= 1
+            updateHeroPos(newHeroPos)
+            steps -= 1
+          }
   
           objectMethodCalled('moveLeft')
         },
