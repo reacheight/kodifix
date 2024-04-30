@@ -4,6 +4,8 @@ esper.plugin('lang-python')
 const express = require('express')
 const ws = require('ws')
 
+const utils = require('./utils.js')
+
 const port = 9000
 const app = express()
 app.use(express.json())
@@ -19,64 +21,17 @@ app.use(function (req, res, next) {
 const server = require('http').createServer(app)
 const wsServer = new ws.Server({ server })
 
-const levels = {
-  [1]: {
-    height: 2,
-    width: 4,
-    hero: { x: 0, y: 0 },
-    finish: { x: 1, y: 3 },
-    gems: [
-      { x: 0, y: 2 }
-    ]
-  },
-  [2]: {
-    height: 1,
-    width: 10,
-    hero: { x: 0, y: 0 },
-    finish: { x: 0, y: 9 },
-    linesGoal: 2
-  },
-  [3]: {
-    height: 10,
-    width: 10,
-    hero: { x: 3, y: 0 },
-    finish: { x: 7, y: 9 },
-    gems: [
-      { x: 1, y: 4 },
-      { x: 2, y: 6 },
-      { x: 8, y: 3 }
-    ],
-    walls: [
-      { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 }, { x: 5, y: 3 }, { x: 6, y: 3 }, { x: 7, y: 3 },
-      { x: 7, y: 4 }, { x: 8, y: 4 }
-    ],
-    enemies: [ { x: 9, y: 5, alive: true }]
-  },
-  [4]: {
-    height: 15,
-    width: 7,
-    hero: { x: 12, y: 6 },
-    finish: { x: 1, y: 2 },
-    gems: [ { x: 5, y: 3 } ],
-    linesGoal: 10,
-  },
-}
-
-const calculateCodeLines = (userCode) => userCode
-  .split(/\r\n|\r|\n/)
-  .filter(s => !s.startsWith('#'))
-  .filter(s => /\S/.test(s))
-  .length
+const levels = require('./levels.js')
 
 wsServer.on('connection', ws => {
   console.log('Connection opened')
 
   ws.on('message', data => {
-    var message = JSON.parse(data)
+    let message = JSON.parse(data)
 
     if (message.event === 'run') {
       const eventsTimeDiffMS = 150;
-      var currentTimeout = 0;
+      let currentTimeout = 0;
 
       let engine = esper({
         language: 'python'
@@ -84,8 +39,8 @@ wsServer.on('connection', ws => {
 
 
       const level = structuredClone(levels[message.levelId])
-      var currentHeroPosition = structuredClone(level.hero)
-      var gemsCollected = 0
+      let currentHeroPosition = structuredClone(level.hero)
+      let gemsCollected = 0
 
       let heroRanInWall = false
       let heroRanInEnemy = false
@@ -108,7 +63,7 @@ wsServer.on('connection', ws => {
           return
         }
 
-        var collectedGem = null
+        let collectedGem = null
 
         if (level.gems)
           level.gems.forEach((gem, i) => {
@@ -194,7 +149,7 @@ wsServer.on('connection', ws => {
       const hero = {
         moveUp(steps = 1) {
           while (steps !== 0) {
-            var newHeroPos = structuredClone(currentHeroPosition)
+            let newHeroPos = structuredClone(currentHeroPosition)
             newHeroPos.x -= 1
             updateHeroPos(newHeroPos)
             steps -= 1
@@ -205,7 +160,7 @@ wsServer.on('connection', ws => {
   
         moveDown(steps = 1) {
           while (steps !== 0) {
-            var newHeroPos = structuredClone(currentHeroPosition)
+            let newHeroPos = structuredClone(currentHeroPosition)
             newHeroPos.x += 1
             updateHeroPos(newHeroPos)
             steps -= 1
@@ -216,7 +171,7 @@ wsServer.on('connection', ws => {
   
         moveRight(steps = 1) {
           while (steps !== 0) {
-            var newHeroPos = structuredClone(currentHeroPosition)
+            let newHeroPos = structuredClone(currentHeroPosition)
             newHeroPos.y += 1
             updateHeroPos(newHeroPos)
             steps -= 1
@@ -227,7 +182,7 @@ wsServer.on('connection', ws => {
   
         moveLeft(steps = 1) {
           while (steps !== 0) {
-            var newHeroPos = structuredClone(currentHeroPosition)
+            let newHeroPos = structuredClone(currentHeroPosition)
             newHeroPos.y -= 1
             updateHeroPos(newHeroPos)
             steps -= 1
@@ -236,25 +191,25 @@ wsServer.on('connection', ws => {
           objectMethodCalled('moveLeft')
         },
 
-        shootUp: function () {
+        shootUp() {
           let fireballPath = [{x: currentHeroPosition.x - 1, y: currentHeroPosition.y}, {x: currentHeroPosition.x - 2, y: currentHeroPosition.y}, {x: currentHeroPosition.x - 3, y: currentHeroPosition.y}]
           runFireball(fireballPath)
           objectMethodCalled('shootUp')
         },
 
-        shootDown: function () {
+        shootDown() {
           let fireballPath = [{x: currentHeroPosition.x + 1, y: currentHeroPosition.y}, {x: currentHeroPosition.x + 2, y: currentHeroPosition.y}, {x: currentHeroPosition.x + 3, y: currentHeroPosition.y}]
           runFireball(fireballPath)
           objectMethodCalled('shootDown')
         },
 
-        shootRight: function () {
+        shootRight() {
           let fireballPath = [{x: currentHeroPosition.x, y: currentHeroPosition.y + 1}, {x: currentHeroPosition.x, y: currentHeroPosition.y + 2}, {x: currentHeroPosition.x, y: currentHeroPosition.y + 3}]
           runFireball(fireballPath)
           objectMethodCalled('shootRight')
         },
 
-        shootLeft: function () {
+        shootLeft() {
           let fireballPath = [{x: currentHeroPosition.x, y: currentHeroPosition.y - 1}, {x: currentHeroPosition.x, y: currentHeroPosition.y - 2}, {x: currentHeroPosition.x, y: currentHeroPosition.y - 3}]
           runFireball(fireballPath)
           objectMethodCalled('shootLeft')
@@ -276,7 +231,7 @@ wsServer.on('connection', ws => {
         event: 'end',
         hasFinished: currentHeroPosition.x === level.finish.x && currentHeroPosition.y === level.finish.y,
         allGemsCollected: !level.gems || gemsCollected === level.gems.length,
-        numberOfLinesSatisfy: !level.linesGoal || calculateCodeLines(message.code) <= level.linesGoal,
+        numberOfLinesSatisfy: !level.linesGoal || utils.calculateCodeLines(message.code) <= level.linesGoal,
         heroRanInWall,
         heroRanInEnemy
       }
