@@ -14,10 +14,22 @@ const levels = {
     width: 10,
     hero: { x: 0, y: 0 },
     finish: { x: 0, y: 9 },
-    linesGoal: 2
+    linesGoal: 1
   },
 
   [3]: {
+    height: 3,
+    width: 5,
+    hero: { x: 0, y: 0 },
+    finish: { x: 2, y: 4 },
+    walls: [
+      { x: 0, y: 1 }, { x: 1, y: 1 },
+      { x: 2, y: 3 },
+    ],
+    gems: [ { x: 0, y: 4 }]
+  },
+
+  [4]: {
     height: 10,
     width: 10,
     hero: { x: 3, y: 0 },
@@ -34,7 +46,7 @@ const levels = {
     enemies: [ { x: 9, y: 5, alive: true }]
   },
 
-  [4]: {
+  [5]: {
     height: 15,
     width: 7,
     hero: { x: 12, y: 6 },
