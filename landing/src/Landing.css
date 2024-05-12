@@ -1,0 +1,20 @@
+.container {
+    padding: 10px 20%;
+}
+
+.logo {
+    font-family: 'Pixelify Sans';
+    src: local('PixelifySans'), url(./fonts/PixelifySans.ttf) format('truetype');
+    font-size: 42px;
+    letter-spacing: 1px;
+}
+
+.description {
+    padding: 50px 100px;
+    font-size: 26px;
+    text-align: center;
+}
+
+.purpleSpan {
+    font-weight: 500;
+}
