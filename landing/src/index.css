@@ -6,8 +6,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
   color: white;
-  /* background-image: url('./images/background.png'); */
-  background-position: top;
+  background-image: url('./images/background.png');
+  background-size: 95%;
+  background-position-y: -150px;
   background-repeat: no-repeat;
 }
 
