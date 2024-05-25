@@ -7,14 +7,46 @@
     src: local('PixelifySans'), url(./fonts/PixelifySans.ttf) format('truetype');
     font-size: 42px;
     letter-spacing: 1px;
+    color: #0AA1E2;
 }
 
 .description {
-    padding: 50px 100px;
-    font-size: 26px;
+    padding: 50px 50px;
+    font-size: 40px;
     text-align: center;
 }
 
-.purpleSpan {
+.highlight {
+    font-weight: 600;
+    color: #0AA1E2;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ctaButton {
+    background-color: #0AA1E2;
+    border-radius: 7px;
+    padding: 3px 30px;
+    text-align: center;
+    align-content: center;
     font-weight: 500;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    user-select: none;
+    height: 40px;
+    width: 130px;
+    font-size: 16px;
+}
+
+.ctaButton:hover {
+    background-color: rgba(10, 161, 226, 0.8);
+}
+
+.buttonUnderDescription {
+    margin: 0 auto;
+    width: 190px;
 }

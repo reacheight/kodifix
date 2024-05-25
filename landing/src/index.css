@@ -4,6 +4,8 @@ body {
   src: local('Raleway'), url(./fonts/Raleway.ttf) format('truetype');
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: black;
+  color: white;
 }
 
 code {
