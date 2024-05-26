@@ -3,8 +3,8 @@ import { TypeAnimation } from 'react-type-animation'
 
 const Landing = () => {
   const ctaButton = (
-    <div className='ctaButton'>
-      Оставить заявку
+    <div className='ctaButton' onClick={() => document.getElementById('form').scrollIntoView()}>
+        Оставить заявку
     </div>
   )
 
@@ -18,12 +18,15 @@ const Landing = () => {
         Стань{' '}
         <span className='highlight'>
           <TypeAnimation
-            sequence={['магом', 2000, 'рыцарем', 2000, 'шпионом', 2000, 'ведьмой', 2000, 'ниндзя', 2000]}
+            sequence={['волшебником', 2000, 'рыцарем', 2000, 'шпионом', 2000, 'ниндзя', 2000]}
             repeat={Infinity}
           />
         </span>
         и изучи
         <div>программирование на Python.</div>
+      </div>
+      <div className='subDescription'>
+        <div>Погрузись в увлекательный мир, в котором сказочные герои оживут благодаря твоему коду!</div>
       </div>
       <div className='buttonUnderDescription'>
         {ctaButton}

@@ -12,9 +12,17 @@
 
 .description {
     margin-top: 100px;
-    padding: 50px 50px;
-    font-size: 40px;
+    margin-bottom: 20px;
+    font-size: 60px;
     text-align: center;
+}
+
+.subDescription {
+    text-align: center;
+    color: #B4B4B4;
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 18px;
 }
 
 .highlight {
