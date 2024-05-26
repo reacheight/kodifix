@@ -23,3 +23,15 @@ code {
   margin-bottom: 100px;
   width: 500px;
 }
+
+@media only screen and (max-width: 1300px) {
+  body {
+    background-position: top;
+    background-position-y: -100px;
+    background-size: 230%;
+  }
+
+  .form {
+    width: 700px;
+  }
+}

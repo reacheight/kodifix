@@ -59,3 +59,34 @@
     margin: 0 auto;
     width: 190px;
 }
+
+@media only screen and (max-width: 1300px) {
+    .container {
+        padding: 10px;
+    }
+
+    .logo {
+        font-size: 60px;
+    }
+
+    .ctaButton {
+        font-size: 30px;
+        height: 80px;
+        width: 260px;
+        padding: 0px 20px;
+    }
+
+    .buttonUnderDescription {
+        margin: 0 auto;
+        width: 320px;
+    }
+
+    .description {
+        margin-top: 200px;
+    }
+
+    .subDescription {
+        font-size: 16px;
+        font-weight: 400;
+    }
+}

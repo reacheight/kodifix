@@ -12,7 +12,6 @@ const Landing = () => {
     <div className='container'>
       <div className='header'>
         <div className='logo'>kodifix</div>
-        {ctaButton}
       </div>
       <div className='description'>
         Стань{' '}
