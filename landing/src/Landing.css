@@ -4,7 +4,6 @@
 
 .logo {
     font-family: 'Pixelify Sans';
-    src: local('PixelifySans'), url(./fonts/PixelifySans.ttf) format('truetype');
     font-size: 42px;
     letter-spacing: 1px;
     color: #0AA1E2;

@@ -1,7 +1,16 @@
+@font-face {
+  font-family: 'Raleway';
+  src: local('Raleway'), url(./fonts/Raleway.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Pixelify Sans';
+  src: local('Pixelify Sans'), url(./fonts/PixelifySans.ttf) format('truetype');
+}
+
 body {
   margin: 0;
   font-family: 'Raleway';
-  src: local('Raleway'), url(./fonts/Raleway.ttf) format('truetype');
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
