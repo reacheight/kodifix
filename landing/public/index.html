@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta
-      name="description"
-      content="Игры для изучения программирования на Python"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Игры для изучения программирования на Python" />
+    <meta name="keywords" content="python, games" />
     <title>kodifix - Игры для изучения программирования на Python</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <div id="form" class="form">
-      <div data-fillout-id="uHMytUZUpYus" data-fillout-embed-type="standard" data-fillout-inherit-parameters data-fillout-dynamic-resize></div>
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="stylesheet" href="../src/main.css" />
+    <script src="../libs/typewriter-effect/core.js"></script>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1 class='header__logo'>kodifix</h1>
+    </header>
+    <div class="description">
+        Стань <span id='typewriter-effect' class="description__highlight"></span> и изучи <div>программирование на Python.</div>
     </div>
-    <script src="https://server.fillout.com/embed/v1/"></script>
-  </body>
+    <div class="sub-description">
+        <div>Погрузись в увлекательный мир, в котором сказочные герои оживут благодаря твоему коду!</div>
+    </div>
+    <div class="cta-button-container">
+        <button type="button" class="cta-button-container__cta-button">
+            Оставить заявку
+        </button>
+    </div>
+</div>
+<div class="application-form">
+    <div data-fillout-id="uHMytUZUpYus" data-fillout-embed-type="standard" data-fillout-inherit-parameters data-fillout-dynamic-resize></div>
+</div>
+<script src="../src/main.js"></script>
+<script src="https://server.fillout.com/embed/v1/"></script>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+</body>
 </html>
