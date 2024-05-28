@@ -1,0 +1,126 @@
+@import url('./libs/normalize.css/normalize.css');
+
+@font-face {
+  font-family: 'Raleway';
+  src: local('Raleway'), url(assets/fonts/Raleway.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Pixelify Sans';
+  src: local('Pixelify Sans'), url(assets/fonts/PixelifySans.ttf) format('truetype');
+}
+
+body {
+  margin: 0;
+  font-family: Raleway, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: black;
+  color: white;
+  background-image: url('assets/images/background.png');
+  background-size: 95%;
+  background-position-y: -150px;
+  background-repeat: no-repeat;
+}
+
+.container {
+  padding: 10px 20%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo {
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #0AA1E2;
+  margin: 0;
+}
+
+.application-form {
+  margin-inline: auto;
+  margin-top: 400px;
+  margin-bottom: 100px;
+  width: 500px;
+}
+
+.description {
+  margin-top: 100px;
+  margin-bottom: 20px;
+  font-size: 60px;
+  text-align: center;
+}
+
+.description__highlight {
+  font-weight: 600;
+  color: #0AA1E2;
+}
+
+.sub-description {
+  text-align: center;
+  color: #B4B4B4;
+  margin-bottom: 30px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.cta-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.cta-button-container__cta-button {
+  cursor: pointer;
+  color: #FFF;
+  background-color: #0AA1E2;
+  border-radius: 7px;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  transition-duration: 0.4s;
+  border: none;
+  outline: none;
+}
+
+.cta-button-container__cta-button:hover {
+  background-color: rgba(10, 161, 226, 0.8);
+}
+
+@media only screen and (max-width: 1300px) {
+  body {
+    background-position: top;
+    background-position-y: -100px;
+    background-size: 230%;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header__logo {
+    font-size: 60px;
+  }
+
+  .description {
+    margin-top: 200px;
+  }
+
+  .sub-description {
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  .cta-button-container__cta-button {
+    font-size: 30px;
+    padding: 23px 34px;
+  }
+
+  .application-form {
+    width: 700px;
+  }
+}
