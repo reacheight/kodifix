@@ -1,30 +1,19 @@
-const utils = require('./utils.js')
-const esper = require('esper.js')
+const utils = require('./utils.js');
+const Direction = utils.Direction;
+const esper = require('esper.js');
 
 class LevelRunner {
   hero = {
-    moveUp: (steps = 1) => {
-      let newHeroPos = structuredClone(this.level.hero);
-      newHeroPos.x -= steps;
-      this.updateHeroPos(newHeroPos, 'moveUp');
-    },
+    move_up: (steps = 1) => this.hero.move(Direction.UP, steps, 'move_up'),
+    move_down: (steps = 1) => this.hero.move(Direction.DOWN, steps, 'move_down'),
+    move_right: (steps = 1) => this.hero.move(Direction.RIGHT, steps, 'move_right'),
+    move_left: (steps = 1) => this.hero.move(Direction.LEFT, steps, 'move_left'),
 
-    moveDown: (steps = 1) => {
+    move: (direction, steps, methodName) => {
       let newHeroPos = structuredClone(this.level.hero);
-      newHeroPos.x += steps;
-      this.updateHeroPos(newHeroPos, 'moveDown');
-    },
-
-    moveRight: (steps = 1) => {
-      let newHeroPos = structuredClone(this.level.hero);
-      newHeroPos.y += steps;
-      this.updateHeroPos(newHeroPos, 'moveRight');
-    },
-
-    moveLeft: (steps = 1) => {
-      let newHeroPos = structuredClone(this.level.hero);
-      newHeroPos.y -= steps;
-      this.updateHeroPos(newHeroPos, 'moveLeft');
+      newHeroPos.x += direction.x * steps;
+      newHeroPos.y += direction.y * steps;
+      this.updateHeroPos(newHeroPos, methodName);
     },
   };
 
