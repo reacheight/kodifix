@@ -9,12 +9,48 @@ class LevelRunner {
     move_right: (steps = 1) => this.hero.move(Direction.RIGHT, steps, 'move_right'),
     move_left: (steps = 1) => this.hero.move(Direction.LEFT, steps, 'move_left'),
 
+    shoot_up: () => this.hero.shoot(Direction.UP, 'shoot_up'),
+    shoot_down: () => this.hero.shoot(Direction.DOWN, 'shoot_down'),
+    shoot_right: () => this.hero.shoot(Direction.RIGHT, 'shoot_right'),
+    shoot_left: () => this.hero.shoot(Direction.LEFT, 'shoot_left'),
+
     move: (direction, steps, methodName) => {
       let newHeroPos = structuredClone(this.level.hero);
       newHeroPos.x += direction.x * steps;
       newHeroPos.y += direction.y * steps;
       this.updateHeroPos(newHeroPos, methodName);
     },
+
+    shoot: (direction, commandName) => {
+      this.pushNewCommand(commandName);
+
+      const shootingRange = 3;
+      for (let i = 1; i < shootingRange + 1; i++) {
+        const projectilePoint = structuredClone(this.level.hero);
+        projectilePoint.x += direction.x * i;
+        projectilePoint.y += direction.y * i;
+
+        if (projectilePoint.x >= this.level.height || projectilePoint.x < 0 || projectilePoint.y >= this.level.width || projectilePoint.y < 0)
+          break;
+
+        if (this.level.walls && this.level.walls.some(wall => utils.arePointsEqual(wall, projectilePoint)))
+          break;
+
+        if (this.level.enemies) {
+          let hitEnemy = false;
+          this.level.enemies.forEach((enemy, i) => {
+            if (utils.arePointsEqual(enemy, projectilePoint) && enemy.alive) {
+              this.level.enemies[i].alive = false;
+              hitEnemy = true;
+              return;
+            }
+          });
+
+          if (hitEnemy)
+            break;
+        }
+      }
+    }
   };
 
   gemsCollected = 0;
@@ -53,15 +89,9 @@ class LevelRunner {
     };
   }
 
-  updateHeroPos(newHeroPosition, methodName) {
+  updateHeroPos(newHeroPosition, commandName) {
     while (!utils.arePointsEqual(newHeroPosition, this.level.hero)) {
-      let codeInterval = this.getCurrentCommandCodeInterval();
-      let command = {
-        name: methodName,
-        start: codeInterval.start,
-        end: codeInterval.end
-      };
-      this.commands.push(command);
+      this.pushNewCommand(commandName);
 
       this.level.hero.x += Math.sign(newHeroPosition.x - this.level.hero.x);
       this.level.hero.y += Math.sign(newHeroPosition.y - this.level.hero.y);
@@ -91,14 +121,16 @@ class LevelRunner {
     }
   }
 
-  getCurrentCommandCodeInterval() {
+  pushNewCommand(commandName) {
     let callExpression = this.engine.evaluator.lastASTNodeProcessed.parent.parent;
     let start = callExpression.loc.start;
     let end = callExpression.loc.end;
-    return {
+    let command = {
+      name: commandName,
       start: { line: start.line, column: start.column },
       end: { line: end.line, column: end.column }
     };
+    this.commands.push(command);
   }
 }
 
