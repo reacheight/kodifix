@@ -32,6 +32,18 @@ class LevelRunner {
       this.pushNewCommand(`attack ${targetName}`);
     },
 
+    find_nearest_enemy: () => {
+      if (!this.level.enemies || this.level.enemies.length === 0)
+        return;
+
+      let sortedAliveEnemies = this.level.enemies
+        .filter(e => e.alive)
+        .toSorted((a, b) => utils.getDistance(this.level.hero, a) - utils.getDistance(this.level.hero, b));
+      
+      if (sortedAliveEnemies.length > 0)
+        return sortedAliveEnemies[0].name;
+    },
+
     move: (direction, steps, methodName) => {
       let newHeroPos = structuredClone(this.level.hero);
       newHeroPos.x += direction.x * steps;

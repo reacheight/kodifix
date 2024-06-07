@@ -6,6 +6,8 @@ const calculateCodeLines = (userCode) => userCode
 
 const arePointsEqual = (first, second) => first.x === second.x && first.y === second.y
 
+const getDistance = (first, second) => Math.abs(first.x - second.x) + Math.abs(first.y - second.y)
+
 const Direction = {
   UP: { x: -1, y: 0 },
   DOWN: { x: 1, y: 0 },
@@ -16,3 +18,4 @@ const Direction = {
 module.exports.calculateCodeLines = calculateCodeLines
 module.exports.arePointsEqual = arePointsEqual
 module.exports.Direction = Direction
+module.exports.getDistance = getDistance
