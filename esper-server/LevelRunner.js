@@ -14,6 +14,25 @@ class LevelRunner {
     shoot_right: () => this.hero.shoot(Direction.RIGHT, 'shoot_right'),
     shoot_left: () => this.hero.shoot(Direction.LEFT, 'shoot_left'),
 
+    attack: (targetName) => {
+      this.pushNewCommand(`attack ${targetName}`);
+
+      if (!this.level.enemies || this.level.enemies.length === 0) {
+        throw new Error('Нет врагов рядом!');
+      }
+      
+      let target = this.level.enemies.find(e => e.name === targetName);
+      if (!target) {
+        throw new Error(`Нет врага по имени ${targetName}!`);
+      }
+
+      if (Math.abs(target.x - this.level.hero.x) > 1 || Math.abs(target.y - this.level.hero.y) > 1) {
+        throw new Error(`Враг ${targetName} находится слишком далеко!`)
+      }
+
+      target.alive = false;
+    },
+
     move: (direction, steps, methodName) => {
       let newHeroPos = structuredClone(this.level.hero);
       newHeroPos.x += direction.x * steps;

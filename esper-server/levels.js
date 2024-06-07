@@ -43,7 +43,7 @@ const levels = {
       { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 }, { x: 5, y: 3 }, { x: 6, y: 3 }, { x: 7, y: 3 },
       { x: 7, y: 4 }, { x: 8, y: 4 }
     ],
-    enemies: [ { x: 9, y: 5, alive: true }]
+    enemies: [ { x: 9, y: 5, alive: true, name: "John" }]
   },
 
   [5]: {
