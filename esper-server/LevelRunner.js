@@ -15,8 +15,6 @@ class LevelRunner {
     shoot_left: () => this.hero.shoot(Direction.LEFT, 'shoot_left'),
 
     attack: (targetName) => {
-      this.pushNewCommand(`attack ${targetName}`);
-
       if (!this.level.enemies || this.level.enemies.length === 0) {
         throw new Error('Нет врагов рядом!');
       }
@@ -31,6 +29,7 @@ class LevelRunner {
       }
 
       target.alive = false;
+      this.pushNewCommand(`attack ${targetName}`);
     },
 
     move: (direction, steps, methodName) => {
