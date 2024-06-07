@@ -129,13 +129,13 @@ class LevelRunner {
         return;
       }
 
-      if (this.level.gems)
-        this.level.gems.forEach((gem, i) => {
-          if (utils.arePointsEqual(gem, this.level.hero) && !gem.taken) {
-            this.level.gems[i].taken = true;
-            this.gemsCollected += 1;
-          }
-        });
+      if (this.level.gems) {
+        let takenGem = this.level.gems.find(g => utils.arePointsEqual(g, this.level.hero) && !g.taken)
+        if (takenGem) {
+          takenGem.taken = true;
+          this.gemsCollected += 1;
+        }
+      }
     }
   }
 
