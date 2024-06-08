@@ -1,9 +1,10 @@
 import { levels } from './levels.js';
-import { LevelRunner } from './LevelRunner.js';
+import LevelRunner from './LevelRunner.js';
 import { createServer } from 'http';
 import esper from 'esper.js';
 import express from 'express';
 import { cors } from './middlewares.js';
+import CodeAnalyzer from './CodeAnalyzer.js';
 
 esper.plugin('lang-python');
 
@@ -18,10 +19,25 @@ app.get('/level/:id', (req, res) => {
 })
 
 app.post('/level/:id/run', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  const analyzer = new CodeAnalyzer();
+  const errors = analyzer.analyze(req.body.code);
+  if (errors.length > 0) {
+    res.statusCode = 400; // стоит ли возвращать 400?
+    res.send(JSON.stringify({ errors }));
+    return;
+  }
+
   let runner = new LevelRunner(levels[req.params.id]);
   let result = runner.run(req.body.code);
 
-  res.setHeader('Content-Type', 'application/json');
+  if (result.errors) {
+    res.statusCode = 400;
+    res.send(JSON.stringify(result));
+    return;
+  }
+
   res.send(JSON.stringify(result));
 })
 

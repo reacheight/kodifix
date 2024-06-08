@@ -1,7 +1,7 @@
 import { getDistance, arePointsEqual, calculateCodeLines, Direction } from './utils.js';
 import esper from 'esper.js';
 
-export class LevelRunner {
+export default class LevelRunner {
   hero = {
     move_up: (steps = 1) => this.hero.move(Direction.UP, steps, 'move_up'),
     move_down: (steps = 1) => this.hero.move(Direction.DOWN, steps, 'move_down'),
@@ -87,14 +87,24 @@ export class LevelRunner {
   }
 
   run(code) {
-    this.engine.load(code);
-
-    let steps = 0;
-    let value = this.engine.evloop.next();
-    while (!value.done && !this.heroRanInWall && !this.heroRanInEnemy) {
-      value = this.engine.evloop.next();
-      if ( value.value && value.value.then ) throw new Error('Can\'t deal with futures when running in sync mode');
-      if ( ++steps > this.engine.options.executionLimit ) throw new Error('Execution Limit Reached');
+    try {
+      this.engine.load(code);
+      let steps = 0;
+      let value = this.engine.evloop.next();
+      while (!value.done && !this.heroRanInWall && !this.heroRanInEnemy) {
+        value = this.engine.evloop.next();
+        if ( value.value && value.value.then ) throw new Error('Can\'t deal with futures when running in sync mode');
+        if ( ++steps > this.engine.options.executionLimit ) throw new Error('Execution Limit Reached');
+      }
+    } catch (e) {
+      return {
+        errors: [
+          {
+            message: e.message,
+            start: e.pos,
+          }
+        ]
+      }
     }
 
     return {
