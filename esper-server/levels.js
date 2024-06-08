@@ -1,4 +1,4 @@
-const levels = {
+export const levels = {
   [1]: {
     height: 2,
     width: 4,
@@ -55,5 +55,3 @@ const levels = {
     linesGoal: 10,
   },
 }
-
-module.exports = levels

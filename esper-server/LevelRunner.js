@@ -1,8 +1,7 @@
-const utils = require('./utils.js');
-const Direction = utils.Direction;
-const esper = require('esper.js');
+import { getDistance, arePointsEqual, calculateCodeLines, Direction } from './utils.js';
+import esper from 'esper.js';
 
-class LevelRunner {
+export class LevelRunner {
   hero = {
     move_up: (steps = 1) => this.hero.move(Direction.UP, steps, 'move_up'),
     move_down: (steps = 1) => this.hero.move(Direction.DOWN, steps, 'move_down'),
@@ -38,7 +37,7 @@ class LevelRunner {
 
       let sortedAliveEnemies = this.level.enemies
         .filter(e => e.alive)
-        .toSorted((a, b) => utils.getDistance(this.level.hero, a) - utils.getDistance(this.level.hero, b));
+        .toSorted((a, b) => getDistance(this.level.hero, a) - getDistance(this.level.hero, b));
       
       if (sortedAliveEnemies.length > 0)
         return sortedAliveEnemies[0].name;
@@ -63,13 +62,13 @@ class LevelRunner {
         if (projectilePoint.x >= this.level.height || projectilePoint.x < 0 || projectilePoint.y >= this.level.width || projectilePoint.y < 0)
           break;
 
-        if (this.level.walls && this.level.walls.some(wall => utils.arePointsEqual(wall, projectilePoint)))
+        if (this.level.walls && this.level.walls.some(wall => arePointsEqual(wall, projectilePoint)))
           break;
 
         if (this.level.enemies) {
           let hitEnemy = false;
           this.level.enemies.forEach((enemy, i) => {
-            if (utils.arePointsEqual(enemy, projectilePoint) && enemy.alive) {
+            if (arePointsEqual(enemy, projectilePoint) && enemy.alive) {
               this.level.enemies[i].alive = false;
               hitEnemy = true;
               return;
@@ -110,9 +109,9 @@ class LevelRunner {
     }
 
     return {
-      hasFinished: utils.arePointsEqual(this.level.finish, this.level.hero),
+      hasFinished: arePointsEqual(this.level.finish, this.level.hero),
       allGemsCollected: !this.level.gems || this.gemsCollected === this.level.gems.length,
-      numberOfLinesSatisfy: !this.level.linesGoal || utils.calculateCodeLines(code) <= this.level.linesGoal,
+      numberOfLinesSatisfy: !this.level.linesGoal || calculateCodeLines(code) <= this.level.linesGoal,
       heroRanInWall: this.heroRanInWall,
       heroRanInEnemy: this.heroRanInEnemy,
       commands: this.commands,
@@ -120,7 +119,7 @@ class LevelRunner {
   }
 
   updateHeroPos(newHeroPosition, commandName) {
-    while (!utils.arePointsEqual(newHeroPosition, this.level.hero)) {
+    while (!arePointsEqual(newHeroPosition, this.level.hero)) {
       this.pushNewCommand(commandName);
 
       this.level.hero.x += Math.sign(newHeroPosition.x - this.level.hero.x);
@@ -131,18 +130,18 @@ class LevelRunner {
         return;
       }
 
-      if (this.level.walls && this.level.walls.some(wall => utils.arePointsEqual(wall, this.level.hero))) {
+      if (this.level.walls && this.level.walls.some(wall => arePointsEqual(wall, this.level.hero))) {
         this.heroRanInWall = true;
         return;
       }
 
-      if (this.level.enemies && this.level.enemies.some(enemy => enemy.alive && utils.arePointsEqual(enemy, this.level.hero))) {
+      if (this.level.enemies && this.level.enemies.some(enemy => enemy.alive && arePointsEqual(enemy, this.level.hero))) {
         this.heroRanInEnemy = true;
         return;
       }
 
       if (this.level.gems) {
-        let takenGem = this.level.gems.find(g => utils.arePointsEqual(g, this.level.hero) && !g.taken)
+        let takenGem = this.level.gems.find(g => arePointsEqual(g, this.level.hero) && !g.taken)
         if (takenGem) {
           takenGem.taken = true;
           this.gemsCollected += 1;
@@ -163,5 +162,3 @@ class LevelRunner {
     this.commands.push(command);
   }
 }
-
-module.exports.LevelRunner = LevelRunner;

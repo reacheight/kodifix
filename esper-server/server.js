@@ -1,10 +1,10 @@
-const levels = require('./levels.js');
-const LevelRunner = require('./LevelRunner.js').LevelRunner;
+import { levels } from './levels.js';
+import { LevelRunner } from './LevelRunner.js';
+import { createServer } from 'http';
+import esper from 'esper.js';
+import express from 'express';
 
-const esper = require('esper.js');
 esper.plugin('lang-python');
-
-const express = require('express');
 
 const port = 9000;
 const app = express();
@@ -31,6 +31,5 @@ app.post('/level/:id/run', (req, res) => {
   res.send(JSON.stringify(result));
 })
 
-const server = require('http').createServer(app);
-
+const server = createServer(app);
 server.listen(port, () => console.log(`Server started on ${port}`));
