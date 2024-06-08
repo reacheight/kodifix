@@ -59,24 +59,13 @@ export class LevelRunner {
         projectilePoint.x += direction.x * i;
         projectilePoint.y += direction.y * i;
 
-        if (projectilePoint.x >= this.level.height || projectilePoint.x < 0 || projectilePoint.y >= this.level.width || projectilePoint.y < 0)
+        if (this.isPointOutOfMap(projectilePoint) || this.isPointHitWall(projectilePoint))
           break;
 
-        if (this.level.walls && this.level.walls.some(wall => arePointsEqual(wall, projectilePoint)))
+        let hitEnemy = this.getAliveEnemyAtPoint(projectilePoint);
+        if (hitEnemy) {
+          hitEnemy.alive = false;
           break;
-
-        if (this.level.enemies) {
-          let hitEnemy = false;
-          this.level.enemies.forEach((enemy, i) => {
-            if (arePointsEqual(enemy, projectilePoint) && enemy.alive) {
-              this.level.enemies[i].alive = false;
-              hitEnemy = true;
-              return;
-            }
-          });
-
-          if (hitEnemy)
-            break;
         }
       }
     }
@@ -125,17 +114,12 @@ export class LevelRunner {
       this.level.hero.x += Math.sign(newHeroPosition.x - this.level.hero.x);
       this.level.hero.y += Math.sign(newHeroPosition.y - this.level.hero.y);
 
-      if (this.level.hero.x >= this.level.height || this.level.hero.y >= this.level.width || this.level.hero.x < 0 || this.level.hero.y < 0) {
+      if (this.isPointOutOfMap(this.level.hero) || this.isPointHitWall(this.level.hero)) {
         this.heroRanInWall = true;
         return;
       }
 
-      if (this.level.walls && this.level.walls.some(wall => arePointsEqual(wall, this.level.hero))) {
-        this.heroRanInWall = true;
-        return;
-      }
-
-      if (this.level.enemies && this.level.enemies.some(enemy => enemy.alive && arePointsEqual(enemy, this.level.hero))) {
+      if (this.getAliveEnemyAtPoint(this.level.hero)) {
         this.heroRanInEnemy = true;
         return;
       }
@@ -160,5 +144,20 @@ export class LevelRunner {
       end: { line: end.line, column: end.column }
     };
     this.commands.push(command);
+  }
+
+  isPointOutOfMap(point) {
+    return point.x >= this.level.height || point.y >= this.level.width || point.x < 0 || point.y < 0;
+  }
+
+  isPointHitWall(point) {
+    return this.level.walls && this.level.walls.some(wall => arePointsEqual(wall, point));
+  }
+
+  getAliveEnemyAtPoint(point) {
+    if (!this.level.enemies || this.level.enemies.length === 0)
+      return;
+
+    return this.level.enemies.find(e => e.alive && arePointsEqual(e, point));
   }
 }
