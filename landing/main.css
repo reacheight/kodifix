@@ -161,7 +161,7 @@ body {
 
   .description {
     margin-top: 10px;
-    font-size: 38px;
+    font-size: 32px;
   }
 
   .sub-description {
@@ -198,6 +198,6 @@ body {
   }
 
   .application-form {
-    width: 700px;
+    width: 330px;
   }
 }
