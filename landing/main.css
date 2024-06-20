@@ -169,7 +169,7 @@ body {
   }
 
   .description-mobile {
-    display: inline;
+    display: block;
     margin-top: 10px;
     font-size: 32px;
   }
@@ -209,7 +209,7 @@ body {
   }
 
   .application-form {
-    width: 330px;
+    width: 350;
     margin-inline: 0;
   }
 }
