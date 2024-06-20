@@ -181,6 +181,19 @@ body {
       height: 216px;
     }
   }
+  
+  .content__item {
+    font-size: 18px;
+
+    .title,
+    .title-right {
+      font-size: 24px;
+    }
+
+    img {
+      width: 150px;
+    }
+  }
 
   .application-form {
     width: 700px;
