@@ -102,6 +102,38 @@ body {
   }
 }
 
+.content {
+  margin-top: 200px;
+}
+
+.content__item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22px;
+
+  .text {
+    align-content: center;
+  }
+
+  .title,
+  .title-right {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .title-right {
+    text-align: right;
+  }
+
+  .highlight {
+    color: #0AA1E2;
+  }
+
+  img {
+    filter: drop-shadow(0px 0px 50px rgb(68, 68, 68))
+  }
+}
+
 @media only screen and (max-width: 1300px) {
   body {
     background-position: top;
