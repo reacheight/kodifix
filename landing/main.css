@@ -50,11 +50,16 @@ body {
   width: 500px;
 }
 
-.description {
+.description-desktop,
+.description-mobile {
   margin-top: 30px;
   margin-bottom: 20px;
   font-size: 60px;
   text-align: center;
+}
+
+.description-mobile {
+  display: none;
 }
 
 .description__highlight {
@@ -148,6 +153,7 @@ body {
   body {
     background-position: top;
     background-position-y: -100px;
+    background-position-x: -100px;
     background-size: 230%;
   }
 
@@ -159,7 +165,12 @@ body {
     font-size: 60px;
   }
 
-  .description {
+  .description-desktop {
+    display: none;
+  }
+
+  .description-mobile {
+    display: block;
     margin-top: 10px;
     font-size: 32px;
   }
