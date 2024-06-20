@@ -209,8 +209,8 @@ body {
   }
 
   .application-form {
-    width: 300;
-    margin-inline: 0;
+    width: 350px;
+    margin-inline: auto;
   }
 
   .form-cta {
