@@ -91,6 +91,16 @@ body {
   background-color: rgba(10, 161, 226, 0.8);
 }
 
+.preview {
+  text-align: center;
+  margin-top: 20px;
+  img {
+    border-radius: 10px;
+    width: 960px;
+    height: 540px;
+  }
+}
+
 @media only screen and (max-width: 1300px) {
   body {
     background-position: top;
