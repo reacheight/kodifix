@@ -134,6 +134,16 @@ body {
   }
 }
 
+.form-cta {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 26px;
+
+  .highlight {
+    color: #0AA1E2;
+  }
+}
+
 @media only screen and (max-width: 1300px) {
   body {
     background-position: top;
