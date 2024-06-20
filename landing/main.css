@@ -184,6 +184,7 @@ body {
   
   .content__item {
     font-size: 18px;
+    margin-bottom: 30px;
 
     .title,
     .title-right {
@@ -192,7 +193,7 @@ body {
 
     img {
       width: 150px;
-      height: 200px;
+      height: 170px;
     }
   }
 
