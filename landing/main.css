@@ -209,6 +209,7 @@ body {
   }
 
   .application-form {
-    width: 300;
+    width: 350;
+    margin-inline: 0;
   }
 }
