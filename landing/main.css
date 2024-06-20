@@ -62,7 +62,7 @@ body {
   display: none;
 }
 
-.description__highlight {
+.description-highlight {
   font-weight: 600;
   color: #0AA1E2;
 }
@@ -152,7 +152,7 @@ body {
 @media only screen and (max-width: 1300px) {
   body {
     background-position: top;
-    background-position-y: -200px;
+    background-position-y: 100px;
     background-size: 230%;
   }
 
