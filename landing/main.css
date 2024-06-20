@@ -212,4 +212,8 @@ body {
     width: 350;
     margin-inline: 0;
   }
+
+  .form-cta {
+    font-size: 18px;
+  }
 }
