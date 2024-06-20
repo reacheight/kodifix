@@ -152,8 +152,7 @@ body {
 @media only screen and (max-width: 1300px) {
   body {
     background-position: top;
-    background-position-y: -100px;
-    background-position-x: -100px;
+    background-position-y: -200px;
     background-size: 230%;
   }
 
@@ -170,7 +169,7 @@ body {
   }
 
   .description-mobile {
-    display: block;
+    display: inline;
     margin-top: 10px;
     font-size: 32px;
   }
