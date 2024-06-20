@@ -18,8 +18,9 @@ body {
   background-color: black;
   color: white;
   background-image: url('assets/images/background.png');
-  background-size: 95%;
-  background-position-y: -150px;
+  background-size: 200%;
+  background-position-y: -500px;
+  background-position-x: -1000px;
   background-repeat: no-repeat;
 }
 
@@ -44,13 +45,13 @@ body {
 
 .application-form {
   margin-inline: auto;
-  margin-top: 400px;
+  margin-top: 30px;
   margin-bottom: 100px;
   width: 500px;
 }
 
 .description {
-  margin-top: 100px;
+  margin-top: 30px;
   margin-bottom: 20px;
   font-size: 60px;
   text-align: center;
