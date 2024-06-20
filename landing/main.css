@@ -160,7 +160,8 @@ body {
   }
 
   .description {
-    margin-top: 200px;
+    margin-top: 10px;
+    font-size: 48px;
   }
 
   .sub-description {
@@ -171,6 +172,14 @@ body {
   .cta-button-container__cta-button {
     font-size: 30px;
     padding: 23px 34px;
+  }
+
+  .preview {
+    img {
+      border-radius: 10px;
+      width: 384px;
+      height: 216;
+    }
   }
 
   .application-form {
