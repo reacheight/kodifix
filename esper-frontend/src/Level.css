@@ -1,71 +1,116 @@
-.level {
+.container {
     display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    font-size: 20px;
+    justify-content: center; /* Center align content horizontally */
+    margin-top: 20px;
 }
 
-.codeEditor {
+.level-section {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align items vertically */
+}
+
+.level {
+    display: inline-block;
+}
+
+.row {
+    display: flex;
+    position: relative;
+}
+
+.row:first-child .cell:first-child {
+    border-top-left-radius: 20px; /* Adjust radius as needed */
+}
+
+.row:first-child .cell:last-child {
+    border-top-right-radius: 20px; /* Adjust radius as needed */
+}
+
+.cell {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    align-content: center;
+    line-height: 40px;
+    border: 2px solid #657E03;
+    font-family: monospace;
+    font-size: 40px;
+    background-color: #99B213; /* Default background color */
+    overflow: visible; /* Allow overflow */
+    position: relative; /* For absolute positioning of hero image */
+}
+
+.hero-image {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: -20px; /* Adjust to center the image */
+    left: -15px; /* Adjust to center the image */
+    z-index: 1; /* Ensure the hero image is on top */
+}
+
+.wall-image {
+    height: 120px;
+    width: 95px;
+    position: absolute;
+    top: -46px; /* Adjust to center the image */
+    left: -12px; /* Adjust to center the image */
+    z-index: 1; /* Ensure the hero image is on top */
+}
+
+.run-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #C41D06;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0px 5px #8d1303;
+}
+
+.run-button:disabled {
+    background-color: #d1685b;
+    box-shadow: 0px 5px #944d42;
+    cursor: not-allowed;
+}
+
+.codeInputContainer {
+    display: inline-block;
+    vertical-align: top; /* Align with the level grid */
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.codeInput {
+    font-size: 20px;
     border-radius: 6px;
-    box-shadow: rgba(16, 22, 26, 0.1) 0px 0px 0px 1px, rgba(16, 22, 26, 0) 0px 0px 0px, rgba(16, 22, 26, 0.2) 0px 1px 1px;
     overflow: auto;
 }
 
-.codeEditorContainer {
-    width: 600px;
-}
-
-.instructions {
-    margin-top: 10px;
-    border: solid 1px black;
-    border-radius: 6px;
-    padding-left: 5px;
-
-    .instruction {
-        padding-bottom: 5px;
-    }
-}
-
-.runButton {
-    margin-top: 10px;
-    font-size: 20px;
-    padding-inline: 10px;
-    padding-block: 5px;
-}
-
-.levelCell {
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border: 2px solid;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 30px;
-}
-
-.levelLine {
-    display: flex;
-    gap: 2px;
-    padding-bottom: 2px;
-}
 
 .goals {
+    margin-left: 20px;
+    margin-right: auto;
     width: 300px;
-    .header {
-        font-size: 20px;
-    }
-
-    .list {
-        padding-left: 20px;
-    }
-
-    .goal {
-        display: flex;
-        justify-content: space-between;
-        padding-bottom: 10px;
-    }
 }
 
-ul {
+.goals h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.goals ul {
     list-style-type: none;
+    padding: 0;
+}
+
+.goals li {
+    font-size: 16px;
+    margin-bottom: 5px;
 }
