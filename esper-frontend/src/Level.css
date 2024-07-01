@@ -28,6 +28,10 @@
     border-top-right-radius: 20px; /* Adjust radius as needed */
 }
 
+.row:last-child {
+    box-shadow: 0px 35px #394000, 0px 40px #272325;
+}
+
 .cell {
     display: inline-block;
     width: 70px;
@@ -41,6 +45,10 @@
     background-color: #99B213; /* Default background color */
     overflow: visible; /* Allow overflow */
     position: relative; /* For absolute positioning of hero image */
+}
+
+.cell.F {
+    background-color: #FFDEAB;
 }
 
 .hero-image {
@@ -61,8 +69,12 @@
     z-index: 1; /* Ensure the hero image is on top */
 }
 
+.finish-image {
+    height: 70px;
+}
+
 .run-button {
-    margin-top: 20px;
+    margin-top: 55px;
     margin-bottom: 20px;
     padding: 10px 20px;
     font-size: 16px;

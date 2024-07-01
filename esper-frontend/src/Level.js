@@ -2,13 +2,14 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import CodeMirror from '@uiw/react-codemirror';
 import { python } from '@codemirror/lang-python';
+import { useParams } from 'react-router-dom'
 import './Level.css';
 
 const Level = () => {
+    const { id } = useParams()
     const [initialLevelData, setInitialLevelData] = useState(null);
     const [levelData, setLevelData] = useState(null);
     const [code, setCode] = useState('');
-    const [commands, setCommands] = useState([]);
     const [isRunning, setIsRunning] = useState(false);
     const [goals, setGoals] = useState([]);
 
@@ -17,14 +18,17 @@ const Level = () => {
     }, []);
 
     const initializeLevel = () => {
-        axios.get('http://localhost:9000/level/3')
+        axios.get(`http://localhost:9000/level/${id}`)
             .then(response => {
                 setInitialLevelData(response.data);
                 setLevelData(response.data);
                 
-                const initialGoals = ['Достигнуть финиша'];
+                const initialGoals = [{ name: 'finish', value: 'Достигнуть финиша', satisfied: false }];
                 if (response.data.gems.length > 0) {
-                    initialGoals.push('Собрать все алмазы');
+                    initialGoals.push({ name: 'gems', value: 'Собрать все алмазы', satisfied: false });
+                }
+                if (response.data.linesGoal) {
+                    initialGoals.push({ name: 'lines', value: `Использовать не более ${response.data.linesGoal} строк кода`, satisfied: false })
                 }
                 setGoals(initialGoals);
             })
@@ -40,20 +44,21 @@ const Level = () => {
 
         initializeLevel();
 
-        axios.post('http://localhost:9000/level/3/run', { code })
+        axios.post(`http://localhost:9000/level/${id}/run`, { code })
             .then(async response => {
                 console.log('Run response:', response.data);
                 if (response.data.commands) {
-                    setCommands(response.data.commands);
                     await executeCommands(response.data.commands);
                 }
 
                 const updatedGoals = goals.map(goal => {
-                    switch (goal) {
-                        case 'Достигнуть финиша':
-                            return response.data.hasFinished ? `${goal} ✅` : goal;
-                        case 'Собрать все алмазы':
-                            return response.data.allGemsCollected ? `${goal} ✅` : goal;
+                    switch (goal.name) {
+                        case 'finish':
+                            return { ...goal, satisfied: response.data.hasFinished };
+                        case 'gems':
+                            return  { ...goal, satisfied: response.data.allGemsCollected };
+                        case 'lines':
+                            return  { ...goal, satisfied: response.data.numberOfLinesSatisfy };
                         default:
                             return goal;
                     }
@@ -121,14 +126,14 @@ const Level = () => {
 
                     updatedGrid[updatedHero.x][updatedHero.y] = 'H';
 
-                    updatedGrid[prev.finish.x][prev.finish.y] = '🏁'; // Set finish emoji
+                    updatedGrid[prev.finish.x][prev.finish.y] = 'F';
 
                     prev.walls.forEach(wall => {
                         updatedGrid[wall.x][wall.y] = 'W';
                     });
 
                     updatedGems.forEach(gem => {
-                        updatedGrid[gem.x][gem.y] = '💎'; // Set gem emoji
+                        updatedGrid[gem.x][gem.y] = 'G';
                     });
 
                     return { ...updatedLevelData, gems: updatedGems, grid: updatedGrid };
@@ -150,14 +155,14 @@ const Level = () => {
 
     const grid = Array.from({ length: height }, () => Array(width).fill('default'));
 
-    grid[finish.x][finish.y] = '🏁'; // Set finish emoji in the grid
+    grid[finish.x][finish.y] = 'F';
 
     walls.forEach(wall => {
         grid[wall.x][wall.y] = 'W';
     });
 
     gems.forEach(gem => {
-        grid[gem.x][gem.y] = '💎'; // Set gem emoji in the grid
+        grid[gem.x][gem.y] = 'G';
     });
 
     grid[hero.x][hero.y] = 'H';
@@ -168,9 +173,10 @@ const Level = () => {
               <h3>Цели:</h3>
               <ul>
                   {goals.map((goal, index) => (
-                      <li key={index}>{goal}</li>
+                      <li key={index}>{goal.satisfied ? `${goal.value} ✅` : goal.value}</li>
                   ))}
               </ul>
+              {goals.every(g => g.satisfied) && <a href={`/level/${Number(id) + 1}`}>Следующий уровень</a>}
           </div>
             <div className="level-section">
                 <div className="level">
@@ -179,9 +185,9 @@ const Level = () => {
                             {row.map((cell, cellIndex) => (
                                 <span key={cellIndex} className={`cell ${cell}`}>
                                     {cell === 'W' && <img src="/images/wall.png" alt="Wall" className="wall-image" />}
+                                    {cell === 'F' && <img src='/images/finish.png' alt='Finish' className='finish-image' />}
                                     {cell === 'H' && <img src="/images/hero.png" alt="Hero" className="hero-image" />}
-                                    {cell === '🏁' && '🏁'}
-                                    {cell === '💎' && '💎'}
+                                    {cell === 'G' && <img src='/images/gem.png' alt='Gem' className='gem-image' />}
                                 </span>
                             ))}
                         </div>

@@ -6,7 +6,9 @@ export const levels = {
     finish: { x: 1, y: 3 },
     gems: [
       { x: 0, y: 2 }
-    ]
+    ],
+    walls: [],
+    enemies: [],
   },
 
   [2]: {
@@ -14,7 +16,10 @@ export const levels = {
     width: 10,
     hero: { x: 0, y: 0 },
     finish: { x: 0, y: 9 },
-    linesGoal: 1
+    linesGoal: 1,
+    walls: [],
+    gems: [],
+    enemies: [],
   },
 
   [3]: {
@@ -26,7 +31,8 @@ export const levels = {
       { x: 0, y: 1 }, { x: 1, y: 1 },
       { x: 2, y: 3 },
     ],
-    gems: [ { x: 0, y: 4 }]
+    gems: [ { x: 0, y: 4 }],
+    enemies: [],
   },
 
   [4]: {
@@ -53,5 +59,7 @@ export const levels = {
     finish: { x: 1, y: 2 },
     gems: [ { x: 5, y: 3 } ],
     linesGoal: 10,
+    walls: [],
+    enemies: [],
   },
 }
