@@ -1,4 +1,5 @@
 import { levels } from './levels.js';
+import { instructions } from './instructions.js';
 import LevelRunner from './LevelRunner.js';
 import { createServer } from 'http';
 import esper from 'esper.js';
@@ -16,6 +17,11 @@ app.use(cors);
 app.get('/level/:id', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(levels[req.params.id]));
+})
+
+app.get('/level/:id/instructions', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(instructions[req.params.id]));
 })
 
 app.post('/level/:id/run', (req, res) => {
