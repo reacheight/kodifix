@@ -1,3 +1,4 @@
+import ErrorMessageMapper from './ErrorMessageMapper.js';
 import { getDistance, arePointsEqual, calculateCodeLines, Direction } from './utils.js';
 import esper from 'esper.js';
 
@@ -97,11 +98,12 @@ export default class LevelRunner {
         if ( ++steps > this.engine.options.executionLimit ) throw new Error('Execution Limit Reached');
       }
     } catch (e) {
+      let message = ErrorMessageMapper.map(e.message);
       return {
         errors: [
           {
-            message: e.message,
-            start: e.pos,
+            message,
+            loc: e.loc,
           }
         ]
       }
