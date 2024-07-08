@@ -199,12 +199,13 @@ const Level = () => {
             </div>
             <div className='codeInputContainer'>
               <CodeMirror
+                autoFocus
                 value={code} onChange={handleCodeChange}
                 disabled={isRunning}
                 height='100vh' width='700px'
                 extensions={[python()]}
                 basicSetup={{
-                  autocompletion: false
+                  autocompletion: true,
                 }}
                 theme={'dark'}
                 className='codeInput'

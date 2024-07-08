@@ -5,9 +5,10 @@ export const useRefState = (initValue) => {
   const ref = useRef(initValue);
 
   const setRefState = (state) => {
-    setRefState(state);
+    setState(state);
+    console.log(state.isPaused)
     ref.current = state;
   }
 
-  return [ref.current, setRefState];
+  return [ref, setRefState, state];
 }

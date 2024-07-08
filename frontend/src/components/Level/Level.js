@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -16,7 +16,7 @@ import {
   CodeMirrorWrapper,
   Button,
   LeftButtons,
-  Controls
+  Controls,
 } from './styled';
 import CodeMirror from '@uiw/react-codemirror';
 import { python } from '@codemirror/lang-python';
@@ -24,22 +24,22 @@ import playIcon from '../../assets/play.svg'
 import pauseIcon from '../../assets/pause.svg'
 import speedUpIcon from '../../assets/speed-up.svg'
 import questionIcon from '../../assets/question.svg'
-import { computeStart } from './utils';
+import arrowIcon from '../../assets/arrow.svg'
 import axios from 'axios';
-import level from '../../Level';
 
 import { useRefState } from '../../hooks/useRefState';
+import { AvailableCommands } from '../AvailableCommands/AvailableCommands';
 
 const height = window.innerHeight;
 
 export const Level = () => {
   const { id } = useParams();
-  const [levelData , setLevelData] = useState(null);
-  const levelDataRef = useRef(null)
+  const [levelData, setLevelData] = useRefState(null);
+  const [isRunning, setIsRunning] = useRefState(false);
+  const [isPaused, setIsPaused] = useRefState(false);
+  const [restCommands, setRestCommands] = useRefState(null);
   const [goals, setGoals] = useState(null);
-  const [code, setCode] = useState('');
-  const [isRunning, setIsRunning] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const [code, setCode] = useState(`# пиши код ниже, что бы управлять своим персонажем\n# Нажми запуск, когда закончишь\n`);
 
   useEffect(() => {
     axios.get(`http://localhost:9000/level/${id}`)
@@ -64,25 +64,22 @@ export const Level = () => {
           },
         };
 
-        levelDataRef.current = data;
         setLevelData(data);
         setGoals(initialGoals);
       })
       .catch(error => {
         console.error('Error fetching level data:', error);
       });
+
+    axios.get('http://localhost:9000/level/${id}/instructions').then(response => {
+
+    })
   }, []);
 
-  const isWall = ({ x, y }) => {
-    console.log(x, y)
-
-    return levelData.walls.some(wall => wall.x === x && wall.y === y)
-  };
-
   const moveHero = async (command) => {
-    const updatedLevelData = { ...levelDataRef.current };
-    const updatedHeroShift = { ...levelDataRef.current.heroShift };
-    const updatedHero = { ...levelDataRef.current.hero };
+    const updatedLevelData = { ...levelData.current };
+    const updatedHeroShift = { ...levelData.current.heroShift };
+    const updatedHero = { ...levelData.current.hero };
 
     switch (command) {
       case 'move_up':
@@ -107,7 +104,6 @@ export const Level = () => {
 
     updatedLevelData.heroShift = updatedHeroShift;
 
-    levelDataRef.current = updatedLevelData;
     setLevelData(updatedLevelData);
 
     await new Promise(resolve => setTimeout(resolve, 300));
@@ -117,19 +113,13 @@ export const Level = () => {
     updatedLevelData.hero = updatedHero;
     updatedLevelData.gems = updatedGems;
 
-    levelDataRef.current = updatedLevelData;
     setLevelData(updatedLevelData);
   };
 
-  const start = async () => {
+  const startGame = async () => {
     setIsRunning(true);
-    levelDataRef.current.isPaused = false;
-    const updatedHeroShift = {
-      right: 0,
-      bottom: 0
-    };
-    levelDataRef.current.heroShift = updatedHeroShift
-    setLevelData({  ...levelDataRef.current, updatedHeroShift: updatedHeroShift });
+
+    setLevelData({ ...levelData.current, heroShift: { right: 0, bottom: 0 }})
 
     await new Promise((resolve) => setTimeout(() => resolve(), 300));
 
@@ -138,10 +128,13 @@ export const Level = () => {
       // мега костыль
       const updatedCommands = heroRanInWall ? commands.slice(0, -1) : commands;
 
-      for (const command of updatedCommands) {
-        if (levelDataRef.current.isPaused) break;
+      for (let i = 0; i < updatedCommands.length; i++) {
+        if (isPaused.current) {
+          setRestCommands(updatedCommands.slice(i, -1))
+          break;
+        }
 
-        await moveHero(command.name)
+        await moveHero(updatedCommands[i].name)
       }
     } catch (error) {
       console.error('Error running code:', error)
@@ -150,22 +143,35 @@ export const Level = () => {
     }
   }
 
-  const pause = () => {
-    levelDataRef.current.isPaused = true;
-    setIsPaused(true);
+  const continueGame = async () => {
+    setIsPaused(false)
+    setIsRunning(true);
+
+    for (let i = 0; i < restCommands.current.length; i++) {
+      if (isPaused.current) {
+        setRestCommands(restCommands.current.slice(i, -1))
+        break;
+      }
+
+      await moveHero(restCommands.current[i].name)
+    }
+
+    setIsRunning(false)
   }
 
+  const pauseGame = () => {
+    setIsRunning(false);
+    setIsPaused(true)
+  }
 
-  if (!levelData) {
+  if (!levelData.current) {
     return null;
   }
 
-  const trees = levelData.walls.filter((wall) => wall.type === 'tree');
-  const rocks = levelData.walls.filter((wall) => wall.type === 'rock');
-  const gems = levelData.gems;
+  const trees = levelData.current.walls.filter((wall) => wall.type === 'tree');
+  const rocks = levelData.current.walls.filter((wall) => wall.type === 'rock');
+  const gems = levelData.current.gems;
 
-
-  console.log(levelData.heroShift);
   return (
     <Wrapper>
       <MainWrapper>
@@ -180,7 +186,7 @@ export const Level = () => {
             {gems.map((gem) => (
               <Gem key={`x-${gem.x}, y-${gem.y}`} x={gem.x} y={gem.y} />
             ))}
-            <Wizard x={levelData.initialHero.x} y={levelData.initialHero.y} shift={levelData.heroShift} />
+            <Wizard x={levelData.current.initialHero.x} y={levelData.current.initialHero.y} shift={levelData.current.heroShift} />
           </MapField>
           <MapBottom />
         </MapWrapper>
@@ -188,21 +194,33 @@ export const Level = () => {
 
         <Controls>
          <LeftButtons>
-           {isRunning ? (
-             <Button onClick={pause}>
-               <ButtonTop color="#7C2828" />
-               <ButtonFront color="#B93C3C">
-                 <img alt="play" src={pauseIcon} />
-               </ButtonFront>
-             </Button>
-           ) : (
-             <Button onClick={start}>
+           {!isRunning.current && !isPaused.current && (
+             <Button onClick={startGame}>
                <ButtonTop color="#1E9029" />
                <ButtonFront color="#3CB949">
                  <img alt="play" src={playIcon} />
                </ButtonFront>
              </Button>
            )}
+
+           {isRunning.current && (
+             <Button onClick={pauseGame}>
+               <ButtonTop color="#7C2828" />
+               <ButtonFront color="#B93C3C">
+                 <img alt="play" src={pauseIcon} />
+               </ButtonFront>
+             </Button>
+           )}
+
+           {isPaused.current && (
+             <Button onClick={continueGame}>
+               <ButtonTop color="#D69C00" />
+               <ButtonFront color="#FFBA00">
+                 <img alt="play" src={playIcon} />
+               </ButtonFront>
+             </Button>
+           )}
+
            <Button>
              <ButtonTop color="#626763" />
              <ButtonFront color="#868A86">
@@ -221,17 +239,15 @@ export const Level = () => {
 
       <CodeMirrorWrapper>
         <CodeMirror
-          value=""
+          value={code}
           disabled={false}
           width="529px"
           height={`${height - 20}px`}
           theme="dark"
           extensions={[python()]}
-          basicSetup={{
-            autocompletion: false
-          }}
           onChange={setCode}
         />
+        <AvailableCommands />
       </CodeMirrorWrapper>
     </Wrapper>
   )

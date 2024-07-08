@@ -151,7 +151,7 @@ export const Wizard = styled.div`
         bottom: ${45 + shift.bottom}px;
         right: ${12 + shift.right}px;
     `}
-    transition: top linear 300ms, right linear 300ms, bottom linear 300ms, left linear 300ms;
+    transition: linear 300ms;
 
     ${({ x, y}) => css`
         grid-row-start: ${x + 1};
@@ -161,8 +161,11 @@ export const Wizard = styled.div`
     `}
 `;
 
+
 export const CodeMirrorWrapper = styled.div`
-  margin: 20px 20px 0 0;
+    margin: 20px 20px 0 0;
+    overflow: hidden;
+    
     .cm-editor {
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
@@ -175,3 +178,4 @@ export const CodeMirrorWrapper = styled.div`
         overflow: hidden;
     }
 `;
+
