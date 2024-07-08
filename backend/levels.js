@@ -1,13 +1,27 @@
 export const levels = {
   [1]: {
-    height: 2,
-    width: 4,
-    hero: { x: 0, y: 0 },
-    finish: { x: 1, y: 3 },
+    height: 11,
+    width: 11,
+    hero: { x: 11, y: 6 },
+    finish: { x: 2, y: 0 },
     gems: [
-      { x: 0, y: 2 }
+      { x: 1, y: 6 },
+      { x: 3, y: 4 },
+      { x: 7, y: 8 }
     ],
-    walls: [],
+    walls: [
+      { x: 0, y: 9, type: 'tree' },
+      { x: 1, y: 2, type: 'tree' },
+      { x: 9, y: 1, type: 'tree' },
+      { x: 10, y: 0, type: 'tree' },
+      { x: 5, y: 10, type: 'tree' },
+      { x: 11, y: 1, type: 'tree' },
+      { x: 11, y: 9, type: 'tree' },
+      { x: 3, y: 5, type: 'rock' },
+      { x: 5, y: 1, type: 'rock' },
+      { x: 5, y: 9, type: 'rock' },
+      { x: 11, y: 5, type: 'rock' },
+    ],
     enemies: [],
   },
 

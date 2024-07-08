@@ -201,7 +201,7 @@ const Level = () => {
               <CodeMirror
                 value={code} onChange={handleCodeChange}
                 disabled={isRunning}
-                height='890px' width='700px'
+                height='100vh' width='700px'
                 extensions={[python()]}
                 basicSetup={{
                   autocompletion: false
