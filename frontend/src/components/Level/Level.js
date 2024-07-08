@@ -172,6 +172,8 @@ export const Level = () => {
   const rocks = levelData.current.walls.filter((wall) => wall.type === 'rock');
   const gems = levelData.current.gems;
 
+  console.log(isRunning)
+
   return (
     <Wrapper>
       <MainWrapper>
@@ -186,7 +188,7 @@ export const Level = () => {
             {gems.map((gem) => (
               <Gem key={`x-${gem.x}, y-${gem.y}`} x={gem.x} y={gem.y} />
             ))}
-            <Wizard x={levelData.current.initialHero.x} y={levelData.current.initialHero.y} shift={levelData.current.heroShift} />
+            <Wizard x={levelData.current.initialHero.x} y={levelData.current.initialHero.y} shift={levelData.current.heroShift} animated={isRunning.current} />
           </MapField>
           <MapBottom />
         </MapWrapper>

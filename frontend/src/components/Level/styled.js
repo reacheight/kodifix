@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css , keyframes } from "styled-components";
 
 import level1Map from '../../assets/level-1-map.svg'
 import level1MapBottom from '../../assets/level-1-map-bottom.svg'
@@ -7,6 +7,27 @@ import rock from '../../assets/rock.svg'
 import gem from '../../assets/gem.svg'
 import wizard from '../../assets/wizard.svg'
 import { computeStart, computeEnd } from './utils';
+
+const shaking = keyframes`
+  0% {
+    transform: rotate(2deg);
+  }
+  100% {
+    transform: rotate(-2deg);
+  }
+    0% {
+        transform: rotate(2deg);
+    }
+`
+
+const pulsation = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+`
 
 export const Wrapper = styled.div`
   height: 100%;
@@ -131,8 +152,9 @@ export const Gem = styled.div`
     height: 84px;
     background: url(${gem}) no-repeat center;
     position: relative;
-    bottom: 25px;
+    bottom: 20px;
     left: 5px;
+    animation: 2s ${pulsation} linear infinite alternate;
 
     ${({ x, y}) => css`
         grid-row-start: ${x + 1};
@@ -153,11 +175,16 @@ export const Wizard = styled.div`
     `}
     transition: linear 300ms;
 
-    ${({ x, y}) => css`
+    ${({ x, y }) => css`
         grid-row-start: ${x + 1};
         grid-row-end: ${x + 2};
         grid-column-start: ${y + 1};
         grid-column-end: ${y + 2};
+
+    `}
+
+    ${({ animated }) => animated && css`
+        animation: 300ms ${shaking} infinite alternate;
     `}
 `;
 
