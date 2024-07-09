@@ -32,7 +32,7 @@ export const Level = () => {
   const [isPaused, setIsPaused] = useRefState(false);
   const [executionData, setExecutionData] = useRefState(null);
   const [pausedCommand, setPausedCommand] = useRefState(null);
-  const [instructions, setInstructions] = useState([]);
+  const [instructions, setInstructions] = useState(null);
   const [heroTexts, setHeroTexts] = useState([]);
   const [code, setCode] = useState(
     `# пиши код ниже, что бы управлять своим персонажем\n# Нажми запуск, когда закончишь\n`,
@@ -112,11 +112,7 @@ export const Level = () => {
   const execCommands = async () => {
     const { commands, heroRanInWall } = executionData.current;
 
-    for (
-      let i = pausedCommand.current || 0;
-      i < commands.length;
-      i++
-    ) {
+    for (let i = pausedCommand.current || 0; i < commands.length; i++) {
       if (isPaused.current) {
         setPausedCommand(i);
         break;
@@ -226,9 +222,14 @@ export const Level = () => {
           extensions={[python()]}
           onChange={setCode}
         />
-        <AvailableCommands
-          commands={[...instructions.newCommands, ...instructions.prevCommands]}
-        />
+        {instructions && (
+          <AvailableCommands
+            commands={[
+              ...instructions.newCommands,
+              ...instructions.prevCommands,
+            ]}
+          />
+        )}
       </CodeMirrorWrapper>
     </Wrapper>
   );
