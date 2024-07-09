@@ -2,6 +2,20 @@ export const levels = {
   [1]: {
     height: 12,
     width: 12,
+    grid: [
+      ["lawn","lawn","lawn","lawn","lawn","sand","sand","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","sand","sand","sand","sand","sand","lawn","lawn","grass","lawn",],
+      ["lawn","lawn","lawn","sand","lawn","lawn","lawn","sand","lawn","lawn","lawn","lawn",],
+      ["lawn","grass","lawn","sand","sand","sand","sand","sand","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","sand","sand","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","sand","sand","sand","sand","sand","sand","sand","sand","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","sand","sand","sand",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","sand","sand","sand","sand","lawn","lawn",],
+      ["lawn","lawn","lawn","sand","sand","sand","sand","sand","sand","sand","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","grass","sand","sand","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","sand","sand","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","sand","sand","sand","sand","lawn","lawn","lawn","lawn",],
+    ],
     hero: { x: 11, y: 6 },
     finish: { x: 2, y: 0 },
     linesGoal: 3,
@@ -29,6 +43,7 @@ export const levels = {
   [2]: {
     height: 1,
     width: 10,
+    grid: ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
     hero: { x: 0, y: 0 },
     finish: { x: 0, y: 9 },
     linesGoal: 1,
@@ -40,6 +55,11 @@ export const levels = {
   [3]: {
     height: 3,
     width: 5,
+    grid: [
+      ["lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn",],
+    ],
     hero: { x: 0, y: 0 },
     finish: { x: 2, y: 4 },
     walls: [
@@ -54,6 +74,18 @@ export const levels = {
   [4]: {
     height: 10,
     width: 10,
+    grid: [
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+    ],
     hero: { x: 3, y: 0 },
     finish: { x: 7, y: 9 },
     gems: [
@@ -74,16 +106,5 @@ export const levels = {
       { x: 8, y: 4, type: "tree" },
     ],
     enemies: [{ x: 9, y: 5, alive: true, name: "John" }],
-  },
-
-  [5]: {
-    height: 15,
-    width: 7,
-    hero: { x: 12, y: 6 },
-    finish: { x: 1, y: 2 },
-    gems: [{ x: 5, y: 3 }],
-    linesGoal: 10,
-    walls: [],
-    enemies: [],
   },
 };

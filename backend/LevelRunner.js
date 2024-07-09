@@ -113,16 +113,14 @@ export default class LevelRunner {
       hasFinished: arePointsEqual(this.level.finish, this.level.hero),
       allGemsCollected: !this.level.gems || this.gemsCollected === this.level.gems.length,
       numberOfLinesSatisfy: !this.level.linesGoal || calculateCodeLines(code) <= this.level.linesGoal,
-      heroRanInWall: this.heroRanInWall,
-      heroRanInEnemy: this.heroRanInEnemy,
+      heroRanInWall: this.heroRanInWall ? this.level.hero : null,
+      heroRanInEnemy: this.heroRanInEnemy ? this.level.hero : null,
       commands: this.commands,
     };
   }
 
   updateHeroPos(newHeroPosition, commandName) {
     while (!arePointsEqual(newHeroPosition, this.level.hero)) {
-      this.pushNewCommand(commandName);
-
       this.level.hero.x += Math.sign(newHeroPosition.x - this.level.hero.x);
       this.level.hero.y += Math.sign(newHeroPosition.y - this.level.hero.y);
 
@@ -135,6 +133,8 @@ export default class LevelRunner {
         this.heroRanInEnemy = true;
         return;
       }
+
+      this.pushNewCommand(commandName);
 
       if (this.level.gems) {
         let takenGem = this.level.gems.find(g => arePointsEqual(g, this.level.hero) && !g.taken)
