@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Collapse, CollapseContent, CollapseIcon, CollapseTitle } from './styled';
+import React, { useState } from 'react';
+import {
+  Collapse,
+  CollapseContent,
+  CollapseIcon,
+  CollapseTitle,
+  Command,
+} from './styled';
 import arrowIcon from '../../assets/arrow.svg';
-import axios from 'axios';
 
-export const AvailableCommands = () => {
+export const AvailableCommands = ({ commands }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  // useEffect(() => {
-  //   axios.get(`http://localhost:9000/level/${id}`)
-  // }, []);
 
   return (
     <Collapse isOpen={isOpen}>
@@ -19,11 +20,13 @@ export const AvailableCommands = () => {
         </CollapseIcon>
       </CollapseTitle>
       <CollapseContent>
-        <div>hero.get_loot()</div>
-        <div>hero.use()</div>
-        <div>hero.has_enemies_around()</div>
-        <div>hero.shot_fireball()</div>
+        {commands.map((command) => (
+          <Command key={command.code}>
+            {command.code.slice(0, -2)}
+            <span>()</span>
+          </Command>
+        ))}
       </CollapseContent>
     </Collapse>
-  )
-}
+  );
+};

@@ -11,15 +11,13 @@ import {
 const router = createBrowserRouter([
   {
     path: '/level/:id',
-    element: <Level />
+    element: <Level />,
   },
   {
     path: '*',
-    element: <Navigate to='/level/1' />
+    element: <Navigate to="/level/1" />,
   },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <RouterProvider router={router} />
-);
+root.render(<RouterProvider router={router} />);

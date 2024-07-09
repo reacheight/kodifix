@@ -6,9 +6,8 @@ export const useRefState = (initValue) => {
 
   const setRefState = (state) => {
     setState(state);
-    console.log(state.isPaused)
     ref.current = state;
-  }
+  };
 
   return [ref, setRefState, state];
-}
+};

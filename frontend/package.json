@@ -9,12 +9,17 @@
     "@testing-library/user-event": "^13.5.0",
     "@uiw/react-codemirror": "^4.21.25",
     "axios": "^1.7.2",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.34.3",
     "normalize.css": "^8.0.1",
-    "prettier": "^3.3.2",
+    "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
+    "react-tooltip": "^5.27.1",
     "react-use-websocket": "^4.8.1",
     "styled-components": "^6.1.11",
     "web-vitals": "^2.1.4"
@@ -24,12 +29,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -42,5 +41,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.6.0",
+    "globals": "^15.8.0"
   }
 }

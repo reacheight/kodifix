@@ -9,76 +9,69 @@ import {
   Tree,
   Rock,
   Gem,
-  Wizard,
   MapBottom,
-  ButtonTop,
-  ButtonFront,
   CodeMirrorWrapper,
-  Button,
-  LeftButtons,
-  Controls,
 } from './styled';
 import CodeMirror from '@uiw/react-codemirror';
 import { python } from '@codemirror/lang-python';
-import playIcon from '../../assets/play.svg'
-import pauseIcon from '../../assets/pause.svg'
-import speedUpIcon from '../../assets/speed-up.svg'
-import questionIcon from '../../assets/question.svg'
-import arrowIcon from '../../assets/arrow.svg'
 import axios from 'axios';
 
 import { useRefState } from '../../hooks/useRefState';
 import { AvailableCommands } from '../AvailableCommands/AvailableCommands';
+import { Controls } from '../Controls/Controls';
+import { Hero } from '../Hero/Hero';
 
 const height = window.innerHeight;
 
 export const Level = () => {
   const { id } = useParams();
+  const [initialLevelData, setInitialLevelData] = useRefState(null);
   const [levelData, setLevelData] = useRefState(null);
+  const [heroShift, setHeroShift] = useRefState({ right: 0, bottom: 0 });
   const [isRunning, setIsRunning] = useRefState(false);
   const [isPaused, setIsPaused] = useRefState(false);
-  const [restCommands, setRestCommands] = useRefState(null);
-  const [goals, setGoals] = useState(null);
-  const [code, setCode] = useState(`# пиши код ниже, что бы управлять своим персонажем\n# Нажми запуск, когда закончишь\n`);
+  const [executionData, setExecutionData] = useRefState(null);
+  const [pausedCommand, setPausedCommand] = useRefState(null);
+  const [instructions, setInstructions] = useState([]);
+  const [heroTexts, setHeroTexts] = useState([]);
+  const [code, setCode] = useState(
+    `# пиши код ниже, что бы управлять своим персонажем\n# Нажми запуск, когда закончишь\n`,
+  );
+
+  const fetchLevelData = async () => {
+    const { data } = await axios.get(`http://localhost:9000/level/${id}`);
+
+    const initialGoals = ['Я должен пройти\nпо этой дороге '];
+
+    if (data.gems.length > 0) {
+      initialGoals.push('Неплохо было бы собрать\nалмазы по пути');
+    }
+
+    if (data.linesGoal) {
+      initialGoals.push(`Использовать не более\n${data.linesGoal} строк кода`);
+    }
+
+    setInitialLevelData({ ...data });
+    setLevelData({ ...data });
+    setHeroTexts(initialGoals);
+  };
+
+  const fetchInstructions = async () => {
+    const { data } = await axios.get(
+      `http://localhost:9000/level/${id}/instructions`,
+    );
+
+    setInstructions(data);
+  };
 
   useEffect(() => {
-    axios.get(`http://localhost:9000/level/${id}`)
-      .then(response => {
-
-        const initialGoals = [{ name: 'finish', value: 'Достигнуть финиша', satisfied: false }];
-
-        if (response.data.gems.length > 0) {
-          initialGoals.push({ name: 'gems', value: 'Собрать все алмазы', satisfied: false });
-        }
-
-        if (response.data.linesGoal) {
-          initialGoals.push({ name: 'lines', value: `Использовать не более ${response.data.linesGoal} строк кода`, satisfied: false })
-        }
-
-        const data = {
-          ...response.data,
-          initialHero: response.data.hero,
-          heroShift: {
-            right: 0,
-            bottom: 0,
-          },
-        };
-
-        setLevelData(data);
-        setGoals(initialGoals);
-      })
-      .catch(error => {
-        console.error('Error fetching level data:', error);
-      });
-
-    axios.get('http://localhost:9000/level/${id}/instructions').then(response => {
-
-    })
+    fetchLevelData();
+    fetchInstructions();
   }, []);
 
   const moveHero = async (command) => {
     const updatedLevelData = { ...levelData.current };
-    const updatedHeroShift = { ...levelData.current.heroShift };
+    const updatedHeroShift = { ...heroShift.current };
     const updatedHero = { ...levelData.current.hero };
 
     switch (command) {
@@ -102,13 +95,13 @@ export const Level = () => {
         break;
     }
 
-    updatedLevelData.heroShift = updatedHeroShift;
+    setHeroShift(updatedHeroShift);
 
-    setLevelData(updatedLevelData);
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
-    await new Promise(resolve => setTimeout(resolve, 300));
-
-    const updatedGems = updatedLevelData.gems.filter(gem => !(gem.x === updatedHero.x && gem.y === updatedHero.y));
+    const updatedGems = updatedLevelData.gems.filter(
+      (gem) => !(gem.x === updatedHero.x && gem.y === updatedHero.y),
+    );
 
     updatedLevelData.hero = updatedHero;
     updatedLevelData.gems = updatedGems;
@@ -116,55 +109,68 @@ export const Level = () => {
     setLevelData(updatedLevelData);
   };
 
+  const execCommands = async () => {
+    const { commands, heroRanInWall } = executionData.current;
+
+    for (
+      let i = pausedCommand.current || 0;
+      i < commands.length;
+      i++
+    ) {
+      if (isPaused.current) {
+        setPausedCommand(i);
+        break;
+      }
+
+      if (i === commands.length - 1 && heroRanInWall) {
+        setHeroTexts(['Ой, здесь я не могу пройти']);
+      } else {
+        await moveHero(commands[i].name);
+      }
+    }
+  };
+
   const startGame = async () => {
     setIsRunning(true);
-
-    setLevelData({ ...levelData.current, heroShift: { right: 0, bottom: 0 }})
+    setHeroTexts([]);
+    setHeroShift({ right: 0, bottom: 0 });
+    setLevelData({ ...initialLevelData.current });
+    setExecutionData(null);
+    setPausedCommand(null);
 
     await new Promise((resolve) => setTimeout(() => resolve(), 300));
 
     try {
-      const { data: { commands, heroRanInWall } } = await axios.post(`http://localhost:9000/level/${id}/run`, { code });
-      // мега костыль
-      const updatedCommands = heroRanInWall ? commands.slice(0, -1) : commands;
+      const { data } = await axios.post(
+        `http://localhost:9000/level/${id}/run`,
+        { code },
+      );
 
-      for (let i = 0; i < updatedCommands.length; i++) {
-        if (isPaused.current) {
-          setRestCommands(updatedCommands.slice(i, -1))
-          break;
-        }
+      setExecutionData(data);
 
-        await moveHero(updatedCommands[i].name)
-      }
+      await execCommands();
     } catch (error) {
-      console.error('Error running code:', error)
+      console.error('Error running code:', error);
     } finally {
-      setIsRunning(false)
+      setIsRunning(false);
     }
-  }
+  };
 
   const continueGame = async () => {
-    setIsPaused(false)
+    setIsPaused(false);
     setIsRunning(true);
 
-    for (let i = 0; i < restCommands.current.length; i++) {
-      if (isPaused.current) {
-        setRestCommands(restCommands.current.slice(i, -1))
-        break;
-      }
+    await execCommands();
 
-      await moveHero(restCommands.current[i].name)
-    }
-
-    setIsRunning(false)
-  }
+    setIsRunning(false);
+  };
 
   const pauseGame = () => {
     setIsRunning(false);
-    setIsPaused(true)
-  }
+    setIsPaused(true);
+  };
 
-  if (!levelData.current) {
+  if (!initialLevelData.current && !levelData.current) {
     return null;
   }
 
@@ -172,15 +178,18 @@ export const Level = () => {
   const rocks = levelData.current.walls.filter((wall) => wall.type === 'rock');
   const gems = levelData.current.gems;
 
-  console.log(isRunning)
-
   return (
     <Wrapper>
       <MainWrapper>
         <MapWrapper>
           <MapField>
             {trees.map((tree) => (
-              <Tree key={`x-${tree.x}, y-${tree.y}`} x={tree.x} y={tree.y} />
+              <Tree
+                key={`x-${tree.x}, y-${tree.y}`}
+                x={tree.x}
+                y={tree.y}
+                hero={levelData.current.hero}
+              />
             ))}
             {rocks.map((rock) => (
               <Rock key={`x-${rock.x}, y-${rock.y}`} x={rock.x} y={rock.y} />
@@ -188,55 +197,23 @@ export const Level = () => {
             {gems.map((gem) => (
               <Gem key={`x-${gem.x}, y-${gem.y}`} x={gem.x} y={gem.y} />
             ))}
-            <Wizard x={levelData.current.initialHero.x} y={levelData.current.initialHero.y} shift={levelData.current.heroShift} animated={isRunning.current} />
+            <Hero
+              x={initialLevelData.current.hero.x}
+              y={initialLevelData.current.hero.y}
+              texts={heroTexts}
+              shift={heroShift.current}
+              animated={isRunning.current}
+            />
           </MapField>
           <MapBottom />
         </MapWrapper>
-
-
-        <Controls>
-         <LeftButtons>
-           {!isRunning.current && !isPaused.current && (
-             <Button onClick={startGame}>
-               <ButtonTop color="#1E9029" />
-               <ButtonFront color="#3CB949">
-                 <img alt="play" src={playIcon} />
-               </ButtonFront>
-             </Button>
-           )}
-
-           {isRunning.current && (
-             <Button onClick={pauseGame}>
-               <ButtonTop color="#7C2828" />
-               <ButtonFront color="#B93C3C">
-                 <img alt="play" src={pauseIcon} />
-               </ButtonFront>
-             </Button>
-           )}
-
-           {isPaused.current && (
-             <Button onClick={continueGame}>
-               <ButtonTop color="#D69C00" />
-               <ButtonFront color="#FFBA00">
-                 <img alt="play" src={playIcon} />
-               </ButtonFront>
-             </Button>
-           )}
-
-           <Button>
-             <ButtonTop color="#626763" />
-             <ButtonFront color="#868A86">
-               <img alt="play" src={speedUpIcon} />
-             </ButtonFront>
-           </Button>
-         </LeftButtons>
-          <Button>
-            <ButtonTop color="#626763" />
-            <ButtonFront color="#868A86">
-              <img alt="play" src={questionIcon} />
-            </ButtonFront>
-          </Button>
-        </Controls>
+        <Controls
+          isRunning={isRunning.current}
+          isPaused={isPaused.current}
+          onStart={startGame}
+          onPause={pauseGame}
+          onContinue={continueGame}
+        />
       </MainWrapper>
 
       <CodeMirrorWrapper>
@@ -249,8 +226,10 @@ export const Level = () => {
           extensions={[python()]}
           onChange={setCode}
         />
-        <AvailableCommands />
+        <AvailableCommands
+          commands={[...instructions.newCommands, ...instructions.prevCommands]}
+        />
       </CodeMirrorWrapper>
     </Wrapper>
-  )
-}
+  );
+};
