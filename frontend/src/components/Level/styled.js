@@ -1,7 +1,10 @@
 import styled, { css, keyframes } from 'styled-components';
 
-import level1Map from '../../assets/level-1-map.svg';
-import level1MapBottom from '../../assets/level-1-map-bottom.svg';
+import lawn from '../../assets/lawn.svg';
+import grass from '../../assets/grass.svg';
+import sand from '../../assets/sand.svg';
+import lawnBottom from '../../assets/lawn-bottom.svg';
+import sandBottom from '../../assets/sand-bottom.svg';
 import tree from '../../assets/tree.svg';
 import rock from '../../assets/rock.svg';
 import gem from '../../assets/gem.svg';
@@ -42,13 +45,65 @@ export const MapField = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 49px);
   grid-template-rows: repeat(12, 49px);
-  background: url(${level1Map}) no-repeat center;
 `;
 
 export const MapBottom = styled.div`
   width: 589px;
   height: 35px;
-  background: url(${level1MapBottom}) no-repeat center;
+  display: grid;
+  grid-template-columns: repeat(12, 49px);
+  grid-template-rows: repeat(1, 35px);
+`;
+
+export const Lawn = styled.div`
+  height: 50px;
+  width: 50px;
+  background: url(${lawn}) no-repeat center;
+
+  ${({ x, y }) => css`
+    grid-row-start: ${x + 1};
+    grid-row-end: ${x + 2};
+    grid-column-start: ${y + 1};
+    grid-column-end: ${y + 2};
+  `}
+`;
+
+export const Grass = styled.div`
+  height: 50px;
+  width: 50px;
+  background: url(${grass}) no-repeat center;
+
+  ${({ x, y }) => css`
+    grid-row-start: ${x + 1};
+    grid-row-end: ${x + 2};
+    grid-column-start: ${y + 1};
+    grid-column-end: ${y + 2};
+  `}
+`;
+
+export const Sand = styled.div`
+  height: 50px;
+  width: 50px;
+  background: url(${sand}) no-repeat center;
+
+  ${({ x, y }) => css`
+    grid-row-start: ${x + 1};
+    grid-row-end: ${x + 2};
+    grid-column-start: ${y + 1};
+    grid-column-end: ${y + 2};
+  `}
+`;
+
+export const LawnBottom = styled.div`
+  height: 35px;
+  width: 50px;
+  background: url(${lawnBottom}) no-repeat center;
+`;
+
+export const SandBottom = styled.div`
+  height: 35px;
+  width: 50px;
+  background: url(${sandBottom}) no-repeat center;
 `;
 
 export const Tree = styled.div`

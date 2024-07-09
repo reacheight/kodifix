@@ -6,6 +6,11 @@ import {
   MainWrapper,
   MapWrapper,
   MapField,
+  Lawn,
+  Grass,
+  Sand,
+  LawnBottom,
+  SandBottom,
   Tree,
   Rock,
   Gem,
@@ -118,10 +123,10 @@ export const Level = () => {
         break;
       }
 
+      await moveHero(commands[i].name);
+
       if (i === commands.length - 1 && heroRanInWall) {
         setHeroTexts(['Ой, здесь я не могу пройти']);
-      } else {
-        await moveHero(commands[i].name);
       }
     }
   };
@@ -170,6 +175,19 @@ export const Level = () => {
     return null;
   }
 
+  const cells = [];
+  const cellsBottom = [];
+
+  for (let x = 0; x < levelData.current.grid.length; x++) {
+    for (let y = 0; y < levelData.current.grid[x].length; y++) {
+      cells.push({ x, y, type: levelData.current.grid[x][y] });
+
+      if (x === levelData.current.grid.length - 1) {
+        cellsBottom.push(levelData.current.grid[x][y]);
+      }
+    }
+  }
+
   const trees = levelData.current.walls.filter((wall) => wall.type === 'tree');
   const rocks = levelData.current.walls.filter((wall) => wall.type === 'rock');
   const gems = levelData.current.gems;
@@ -179,6 +197,44 @@ export const Level = () => {
       <MainWrapper>
         <MapWrapper>
           <MapField>
+            {cells.map((cell) => {
+              if (cell.type === 'lawn') {
+                return (
+                  <Lawn
+                    key={`x-${cell.x}, y-${cell.y}`}
+                    x={cell.x}
+                    y={cell.y}
+                  />
+                );
+              }
+              if (cell.type === 'grass') {
+                return (
+                  <Grass
+                    key={`x-${cell.x}, y-${cell.y}`}
+                    x={cell.x}
+                    y={cell.y}
+                  />
+                );
+              }
+              if (cell.type === 'sand') {
+                return (
+                  <Sand
+                    key={`x-${cell.x}, y-${cell.y}`}
+                    x={cell.x}
+                    y={cell.y}
+                  />
+                );
+              }
+            })}
+            {cellsBottom.map((cellBottom, i) => {
+              if (cellBottom === 'lawn' || cellBottom === 'grass') {
+                return <LawnBottom key={i} />
+              }
+
+              if (cellBottom === 'sand') {
+                return <SandBottom key={i} />
+              }
+            })}
             {trees.map((tree) => (
               <Tree
                 key={`x-${tree.x}, y-${tree.y}`}
