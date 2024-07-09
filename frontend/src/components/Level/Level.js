@@ -196,7 +196,10 @@ export const Level = () => {
     <Wrapper>
       <MainWrapper>
         <MapWrapper>
-          <MapField>
+          <MapField
+            width={levelData.current.width}
+            height={levelData.current.height}
+          >
             {cells.map((cell) => {
               if (cell.type === 'lawn') {
                 return (
@@ -257,7 +260,7 @@ export const Level = () => {
               animated={isRunning.current}
             />
           </MapField>
-          <MapBottom />
+          <MapBottom width={levelData.current.width} />
         </MapWrapper>
         <Controls
           isRunning={isRunning.current}

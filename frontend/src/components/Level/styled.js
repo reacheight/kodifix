@@ -43,16 +43,22 @@ export const MapField = styled.div`
   width: 589px;
   height: 589px;
   display: grid;
-  grid-template-columns: repeat(12, 49px);
-  grid-template-rows: repeat(12, 49px);
+
+  ${({ width, height }) => css`
+    grid-template-columns: repeat(${width}, 49px);
+    grid-template-rows: repeat(${height}, 49px);
+  `}
 `;
 
 export const MapBottom = styled.div`
   width: 589px;
   height: 35px;
   display: grid;
-  grid-template-columns: repeat(12, 49px);
-  grid-template-rows: repeat(1, 35px);
+
+  ${({ width }) => css`
+    grid-template-columns: repeat(${width}, 49px);
+    grid-template-rows: repeat(1, 35px);
+  `}
 `;
 
 export const Lawn = styled.div`
