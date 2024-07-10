@@ -15,19 +15,18 @@ import {
   Rock,
   Gem,
   MapBottom,
-  CodeMirrorWrapper,
   Finish,
 } from './styled';
-import CodeMirror from '@uiw/react-codemirror';
-import { python } from '@codemirror/lang-python';
 import axios from 'axios';
 
 import { useRefState } from '../../hooks/useRefState';
-import { AvailableCommands } from '../AvailableCommands/AvailableCommands';
 import { Controls } from '../Controls/Controls';
 import { Hero } from '../Hero/Hero';
+import { CodeEditor } from '../CodeEditor/CodeEditor';
 
-const height = window.innerHeight;
+const initialCode =
+  localStorage.getItem('lastCode') ||
+  `# пиши код ниже, что бы управлять своим персонажем\n# нажми запуск, когда закончишь\n`;
 
 export const Level = () => {
   const { id } = useParams();
@@ -41,9 +40,7 @@ export const Level = () => {
   const [pausedCommand, setPausedCommand] = useRefState(null);
   const [instructions, setInstructions] = useState(null);
   const [heroTexts, setHeroTexts] = useState([]);
-  const [code, setCode] = useState(
-    `# пиши код ниже, что бы управлять своим персонажем\n# Нажми запуск, когда закончишь\n`,
-  );
+  const [code, setCode] = useState(initialCode);
 
   const fetchLevelData = async () => {
     const { data } = await axios.get(`http://localhost:9000/level/${id}`);
@@ -154,6 +151,7 @@ export const Level = () => {
     setLevelData({ ...initialLevelData.current });
     setExecutionData(null);
     setPausedCommand(null);
+    localStorage.setItem('lastCode', code);
 
     await new Promise((resolve) => setTimeout(() => resolve(), 300));
 
@@ -177,6 +175,7 @@ export const Level = () => {
     setIsPaused(false);
     setIsRunning(true);
 
+    // подумоть
     await execCommands();
 
     setIsRunning(false);
@@ -303,29 +302,14 @@ export const Level = () => {
           onContinue={continueGame}
         />
       </MainWrapper>
-
-      <CodeMirrorWrapper
-        highlightFocusedLine={!isRunning.current && !isPaused.current}
+      <CodeEditor
+        code={code}
+        isRunning={isRunning.current}
+        isPaused={isPaused.current}
         executingLine={executingCommand.current?.start.line}
-      >
-        <CodeMirror
-          value={code}
-          width="529px"
-          readOnly={isRunning.current}
-          height={`${height - 20}px`}
-          theme="dark"
-          extensions={[python()]}
-          onChange={setCode}
-        />
-        {instructions && (
-          <AvailableCommands
-            commands={[
-              ...instructions.newCommands,
-              ...instructions.prevCommands,
-            ]}
-          />
-        )}
-      </CodeMirrorWrapper>
+        instructions={instructions}
+        onChange={setCode}
+      />
     </Wrapper>
   );
 };
