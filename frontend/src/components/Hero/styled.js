@@ -1,11 +1,23 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import wizard from '../../assets/wizard.svg';
+
+const shaking = keyframes`
+  0% {
+    transform: translateX(2px) translateY(-2px);
+  }
+  100% {
+    transform: translateX(-2px) translateY(2px);
+  }
+  0% {
+     transform: translateX(2px) translateY(-2px);
+  }
+`;
 
 export const Wrapper = styled.div`
   width: 74px;
   height: 80px;
   background: url(${wizard}) no-repeat center;
-  transition: ease-in-out 300ms;
+  transition: linear 300ms;
   position: relative;
   z-index: 1;
 
@@ -20,4 +32,10 @@ export const Wrapper = styled.div`
     grid-column-start: ${y + 1};
     grid-column-end: ${y + 2};
   `}
+
+  ${({ animated }) =>
+    animated &&
+    css`
+      animation: 300ms ${shaking} infinite alternate;
+    `}
 `;

@@ -135,7 +135,7 @@ export const Level = () => {
         levelData.current.hero.x === levelData.current.finish.x &&
         levelData.current.hero.y === levelData.current.finish.y
       ) {
-        setHeroTexts(['Победа']);
+        setHeroTexts(['Отлично, \n мы можем идти дальше']);
       }
     }
   };

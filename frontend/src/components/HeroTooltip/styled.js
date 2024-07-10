@@ -13,7 +13,7 @@ export const StyledTooltip = styled(Tooltip)`
   border-radius: 8px !important;
   white-space: break-spaces !important;
   transform: translateX(14px);
-  z-index: 1;
+  z-index: 3;
 
   > div {
     transform: rotate(45deg) translate(-13px, 13px) !important;
