@@ -116,7 +116,7 @@ export const Level = () => {
   };
 
   const execCommands = async () => {
-    const { commands, heroRanInWall } = executionData.current;
+    const { commands, heroRanInWall, hasFinished } = executionData.current;
 
     for (let i = pausedCommand.current || 0; i < commands.length; i++) {
       if (isPaused.current) {
@@ -129,19 +129,13 @@ export const Level = () => {
       if (i === commands.length - 1) {
         setExecutingCommand(null);
       }
-
-      if (i === commands.length - 1 && heroRanInWall) {
-        setHeroTexts(['Ой, здесь я не могу пройти']);
-      }
-
-      if (
-        i === commands.length - 1 &&
-        levelData.current.hero.x === levelData.current.finish.x &&
-        levelData.current.hero.y === levelData.current.finish.y
-      ) {
-        setHeroTexts(['Отлично, \n мы можем идти дальше']);
-      }
     }
+    
+    if (hasFinished)
+      setHeroTexts(['Отлично, \n мы можем идти дальше']);
+
+    if (heroRanInWall)
+      setHeroTexts(['Ой, здесь я не могу пройти']);
   };
 
   const startGame = async () => {
