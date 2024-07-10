@@ -43,7 +43,7 @@ export const levels = {
   [2]: {
     height: 1,
     width: 10,
-    grid: ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+    grid: [["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",]],
     hero: { x: 0, y: 0 },
     finish: { x: 0, y: 9 },
     linesGoal: 1,
