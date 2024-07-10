@@ -119,14 +119,11 @@ export const Tree = styled.div`
   position: relative;
   bottom: 80px;
   right: 8px;
-  z-index: 2;
 
-  ${({ x, y, hero }) =>
-    x - hero.x === 1 &&
-    y === hero.y &&
-    css`
-      opacity: 0.5;
-    `}
+  opacity: ${({ x, y, heroX, heroY }) =>
+    x - heroX === 1 && y === heroY ? 0.5 : 1};
+
+  z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
@@ -142,7 +139,8 @@ export const Rock = styled.div`
   background: url(${rock}) no-repeat center;
   position: relative;
   bottom: 20px;
-  z-index: 2;
+
+  z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
@@ -160,6 +158,8 @@ export const Gem = styled.div`
   bottom: 20px;
   left: 5px;
   animation: 2s ${pulsation} linear infinite alternate;
+
+  z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
@@ -219,4 +219,25 @@ export const CodeMirrorWrapper = styled.div`
     background: #2f2b29;
     overflow: hidden;
   }
+
+  ${({ highlightFocusedLine }) => {
+    return !highlightFocusedLine
+      ? css`
+          .cm-activeLine,
+          .cm-activeLineGutter {
+            background: none;
+          }
+        `
+      : null;
+  }}
+
+  ${({ executingLine }) => {
+    return executingLine
+      ? css`
+          .cm-line:nth-child(${executingLine}) {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+        `
+      : null;
+  }}
 `;

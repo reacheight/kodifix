@@ -37,6 +37,7 @@ export const Level = () => {
   const [isRunning, setIsRunning] = useRefState(false);
   const [isPaused, setIsPaused] = useRefState(false);
   const [executionData, setExecutionData] = useRefState(null);
+  const [executingCommand, setExecutingCommand] = useRefState(null);
   const [pausedCommand, setPausedCommand] = useRefState(null);
   const [instructions, setInstructions] = useState(null);
   const [heroTexts, setHeroTexts] = useState([]);
@@ -80,7 +81,9 @@ export const Level = () => {
     const updatedHeroShift = { ...heroShift.current };
     const updatedHero = { ...levelData.current.hero };
 
-    switch (command) {
+    setExecutingCommand(command);
+
+    switch (command.name) {
       case 'move_up':
         updatedHeroShift.bottom += 49;
         updatedHero.x -= 1;
@@ -124,7 +127,11 @@ export const Level = () => {
         break;
       }
 
-      await moveHero(commands[i].name);
+      await moveHero(commands[i]);
+
+      if (i === commands.length - 1) {
+        setExecutingCommand(null);
+      }
 
       if (i === commands.length - 1 && heroRanInWall) {
         setHeroTexts(['Ой, здесь я не могу пройти']);
@@ -252,14 +259,27 @@ export const Level = () => {
                 key={`x-${tree.x}, y-${tree.y}`}
                 x={tree.x}
                 y={tree.y}
-                hero={levelData.current.hero}
+                heroX={levelData.current.hero.x}
+                heroY={levelData.current.hero.y}
               />
             ))}
             {rocks.map((rock) => (
-              <Rock key={`x-${rock.x}, y-${rock.y}`} x={rock.x} y={rock.y} />
+              <Rock
+                key={`x-${rock.x}, y-${rock.y}`}
+                x={rock.x}
+                y={rock.y}
+                heroX={levelData.current.hero.x}
+                heroY={levelData.current.hero.y}
+              />
             ))}
             {gems.map((gem) => (
-              <Gem key={`x-${gem.x}, y-${gem.y}`} x={gem.x} y={gem.y} />
+              <Gem
+                key={`x-${gem.x}, y-${gem.y}`}
+                x={gem.x}
+                y={gem.y}
+                heroX={levelData.current.hero.x}
+                heroY={levelData.current.hero.y}
+              />
             ))}
             <Hero
               x={initialLevelData.current.hero.x}
@@ -284,11 +304,14 @@ export const Level = () => {
         />
       </MainWrapper>
 
-      <CodeMirrorWrapper>
+      <CodeMirrorWrapper
+        highlightFocusedLine={!isRunning.current && !isPaused.current}
+        executingLine={executingCommand.current?.start.line}
+      >
         <CodeMirror
           value={code}
-          disabled={false}
           width="529px"
+          readOnly={isRunning.current}
           height={`${height - 20}px`}
           theme="dark"
           extensions={[python()]}
