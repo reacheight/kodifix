@@ -17,7 +17,7 @@ export const levels = {
       ["lawn","lawn","lawn","lawn","sand","sand","sand","sand","lawn","lawn","lawn","lawn",],
     ],
     hero: { x: 11, y: 6 },
-    finish: { x: 2, y: 0 },
+    finish: { x: 0, y: 6 },
     linesGoal: 3,
     gems: [
       { x: 1, y: 6 },
