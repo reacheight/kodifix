@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@codemirror/autocomplete": "^6.17.0",
     "@codemirror/lang-python": "^6.1.5",
     "@lezer/highlight": "^1.2.0",
     "@testing-library/jest-dom": "^5.17.0",

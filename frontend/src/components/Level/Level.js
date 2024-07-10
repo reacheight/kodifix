@@ -26,7 +26,7 @@ import { CodeEditor } from '../CodeEditor/CodeEditor';
 
 const initialCode =
   localStorage.getItem('lastCode') ||
-  `# пиши код ниже, что бы управлять своим персонажем\n# нажми запуск, когда закончишь\n`;
+  `# пиши код ниже, что бы управлять своим персонажем\n# нажми запуск, когда закончишь\n\n`;
 
 export const Level = () => {
   const { id } = useParams();
