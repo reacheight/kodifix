@@ -16,6 +16,7 @@ import {
   Gem,
   MapBottom,
   CodeMirrorWrapper,
+  Finish,
 } from './styled';
 import CodeMirror from '@uiw/react-codemirror';
 import { python } from '@codemirror/lang-python';
@@ -128,6 +129,14 @@ export const Level = () => {
       if (i === commands.length - 1 && heroRanInWall) {
         setHeroTexts(['Ой, здесь я не могу пройти']);
       }
+
+      if (
+        i === commands.length - 1 &&
+        levelData.current.hero.x === levelData.current.finish.x &&
+        levelData.current.hero.y === levelData.current.finish.y
+      ) {
+        setHeroTexts(['Победа']);
+      }
     }
   };
 
@@ -231,11 +240,11 @@ export const Level = () => {
             })}
             {cellsBottom.map((cellBottom, i) => {
               if (cellBottom === 'lawn' || cellBottom === 'grass') {
-                return <LawnBottom key={i} />
+                return <LawnBottom key={i} />;
               }
 
               if (cellBottom === 'sand') {
-                return <SandBottom key={i} />
+                return <SandBottom key={i} />;
               }
             })}
             {trees.map((tree) => (
@@ -258,6 +267,10 @@ export const Level = () => {
               texts={heroTexts}
               shift={heroShift.current}
               animated={isRunning.current}
+            />
+            <Finish
+              x={initialLevelData.current.finish.x}
+              y={initialLevelData.current.finish.y}
             />
           </MapField>
           <MapBottom width={levelData.current.width} />

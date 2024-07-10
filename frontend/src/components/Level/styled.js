@@ -119,7 +119,7 @@ export const Tree = styled.div`
   position: relative;
   bottom: 80px;
   right: 8px;
-  z-index: 1;
+  z-index: 2;
 
   ${({ x, y, hero }) =>
     x - hero.x === 1 &&
@@ -142,6 +142,7 @@ export const Rock = styled.div`
   background: url(${rock}) no-repeat center;
   position: relative;
   bottom: 20px;
+  z-index: 2;
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
@@ -159,6 +160,41 @@ export const Gem = styled.div`
   bottom: 20px;
   left: 5px;
   animation: 2s ${pulsation} linear infinite alternate;
+
+  ${({ x, y }) => css`
+    grid-row-start: ${x + 1};
+    grid-row-end: ${x + 2};
+    grid-column-start: ${y + 1};
+    grid-column-end: ${y + 2};
+  `}
+`;
+
+export const Finish = styled.div`
+  width: 49px;
+  height: 21px;
+  position: relative;
+  top: 14px;
+  background-color: white;
+  background-image: linear-gradient(
+      45deg,
+      #000 25%,
+      transparent 25%,
+      transparent 74%,
+      #000 75%,
+      #000
+    ),
+    linear-gradient(
+      45deg,
+      #000 25%,
+      transparent 25%,
+      transparent 74%,
+      #000 75%,
+      #000
+    );
+  background-size: 14px 14px;
+  background-position:
+    0 0,
+    7px 7px;
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
