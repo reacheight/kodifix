@@ -78,7 +78,7 @@ export const Level = () => {
     const updatedLevelData = { ...levelData.current };
     const updatedHeroShift = { ...heroShift.current };
     const updatedHero = { ...levelData.current.hero };
-    const updatedEnemies = [ ...levelData.current.enemies ];
+    const updatedEnemies = [...levelData.current.enemies];
 
     setExecutingCommand(command);
 
@@ -100,8 +100,13 @@ export const Level = () => {
         updatedHero.y -= 1;
         break;
       case 'attack': {
-        const targetIndex = updatedEnemies.findIndex((enemy) => enemy.name === command.target);
-        updatedEnemies[targetIndex] = { ...updatedEnemies[targetIndex], alive: false };
+        const targetIndex = updatedEnemies.findIndex(
+          (enemy) => enemy.name === command.target,
+        );
+        updatedEnemies[targetIndex] = {
+          ...updatedEnemies[targetIndex],
+          alive: false,
+        };
         break;
       }
       default:
@@ -124,19 +129,24 @@ export const Level = () => {
   };
 
   const execCommands = async () => {
-    const { commands, heroRanInWall, heroRanInEnemy, hasFinished } = executionData.current;
+    const { commands, heroRanInWall, heroRanInEnemy, hasFinished } =
+      executionData.current;
 
     if (commands.length === 0 && heroRanInWall) {
       setHeroTexts(['Ой, здесь я не могу пройти']);
     }
 
     if (commands.length === 0 && heroRanInEnemy) {
-      setHeroTexts(['Я не могу туда идти, \n этот злой рыцарь меня побьёт'])
+      setHeroTexts(['Я не могу туда идти, \n этот злой рыцарь меня побьёт']);
     }
 
     for (let i = pausedCommand.current || 0; i < commands.length; i++) {
       if (isPaused.current) {
         setPausedCommand(i);
+        break;
+      }
+
+      if (!isRunning.current) {
         break;
       }
 
@@ -151,7 +161,7 @@ export const Level = () => {
       }
 
       if (i === commands.length - 1 && heroRanInEnemy) {
-        setHeroTexts(['Я не могу туда идти, \n этот злой рыцарь меня побьёт'])
+        setHeroTexts(['Я не могу туда идти, \n этот злой рыцарь меня побьёт']);
       }
 
       if (i === commands.length - 1 && hasFinished) {
@@ -160,13 +170,17 @@ export const Level = () => {
     }
   };
 
-  const startGame = async () => {
-    setIsRunning(true);
+  const resetData = () => {
     setHeroTexts([]);
     setHeroShift({ right: 0, bottom: 0 });
     setLevelData({ ...initialLevelData.current });
     setExecutionData(null);
     setPausedCommand(null);
+  };
+
+  const startGame = async () => {
+    resetData();
+    setIsRunning(true);
     localStorage.setItem('lastCode', code);
 
     await new Promise((resolve) => setTimeout(() => resolve(), 300));
@@ -202,7 +216,13 @@ export const Level = () => {
     setIsPaused(true);
   };
 
-  if (!initialLevelData.current && !levelData.current || !instructions) {
+  const stopGame = () => {
+    setIsRunning(false);
+    setIsPaused(false);
+    resetData();
+  };
+
+  if ((!initialLevelData.current && !levelData.current) || !instructions) {
     return null;
   }
 
@@ -328,6 +348,7 @@ export const Level = () => {
           onStart={startGame}
           onPause={pauseGame}
           onContinue={continueGame}
+          onStop={stopGame}
         />
       </MainWrapper>
       <CodeEditor

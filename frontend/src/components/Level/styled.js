@@ -186,8 +186,9 @@ export const Enemy = styled.div`
     font-weight: bold;
     font-size: 20px;
     font-family: 'Raleway', sans-serif;
-    color: #FF0000;
+    color: #ff0000;
     text-shadow: 0px 0px 3px black;
+    user-select: none;
   }
 
   z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};

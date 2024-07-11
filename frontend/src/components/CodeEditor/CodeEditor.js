@@ -2,7 +2,7 @@ import { CodeMirrorWrapper } from './styled';
 import CodeMirror from '@uiw/react-codemirror';
 import { autocompletion } from '@codemirror/autocomplete';
 import { tags as t } from '@lezer/highlight';
-import { python, globalCompletion } from '@codemirror/lang-python';
+import { python } from '@codemirror/lang-python';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { AvailableCommands } from '../AvailableCommands/AvailableCommands';
 import React from 'react';
@@ -19,9 +19,9 @@ const basicSetup = {
 
 const getCompletions = (options) => {
   return (context) => {
-    const word = context.matchBefore(/\w*/);
+    const word = context.matchBefore(/(\w|\.|\(|\))+/);
 
-    if (word.from == word.to && !context.explicit) {
+    if (!word || (word.from == word.to && !context.explicit)) {
       return null;
     }
 
@@ -50,7 +50,7 @@ export const CodeEditor = ({
   const extensions = [
     python(),
     autocompletion({
-      override: [globalCompletion, getCompletions(options)],
+      override: [getCompletions(options)],
     }),
   ];
   const width = '529px';
