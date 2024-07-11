@@ -19,6 +19,30 @@ const pulsation = keyframes`
   }
 `;
 
+const fall = keyframes`
+  0% {
+    transform: rotate(0) translateX(0);
+  }
+
+
+  100% {
+    transform: rotate(-60deg) translateX(-40px) translateY(-25px);
+    opacity: 0;
+  }
+`;
+
+const fade = keyframes`
+  0% {
+    opacity:  1;
+  }
+
+
+  100% {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+`;
+
 export const Wrapper = styled.div`
   height: 100%;
   background-color: #353736;
@@ -159,7 +183,14 @@ export const Gem = styled.div`
   position: relative;
   bottom: 20px;
   left: 5px;
-  animation: 2s ${pulsation} linear infinite alternate;
+  ${({ collected }) =>
+    collected
+      ? css`
+          animation: 200ms ${fade} linear forwards;
+        `
+      : css`
+          animation: 2s ${pulsation} linear infinite alternate;
+        `}
 
   z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
 
@@ -178,6 +209,12 @@ export const Enemy = styled.div`
   position: relative;
   bottom: 50px;
   right: 5px;
+
+  ${({ dead }) =>
+    dead &&
+    css`
+      animation: ${fall} 1s ease-out forwards;
+    `}
 
   text-align: center;
 

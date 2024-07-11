@@ -79,6 +79,8 @@ export const Command = styled.span`
   }
 
   img {
+    width: 12px;
+    height: 18px;
     cursor: pointer;
 
     &:hover {

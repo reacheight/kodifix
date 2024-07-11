@@ -20,16 +20,44 @@ import {
 } from './styled';
 import axios from 'axios';
 
+import gemSound from '../../assets/sounds/gem.mp3';
+import walkingSound from '../../assets/sounds/walking.mp3';
+import hitSound from '../../assets/sounds/hit.mp3';
 import { useRefState } from '../../hooks/useRefState';
 import { Controls } from '../Controls/Controls';
 import { Hero } from '../Hero/Hero';
 import { CodeEditor } from '../CodeEditor/CodeEditor';
+import { delay } from '../../utils/delay';
+import { copy } from '../../utils/copy';
 
 const getInitialCode = (level) =>
   localStorage.getItem(`code-level-${level}`) ||
   `# пиши код ниже, что бы управлять своим персонажем\n# нажми запуск, когда закончишь\n\n`;
 
-const setInitialCode = (level, code) => localStorage.setItem(`code-level-${level}`, code)
+const setInitialCode = (level, code) =>
+  localStorage.setItem(`code-level-${level}`, code);
+
+const prepareCells = (grid) => {
+  const cells = [];
+  const cellsBottom = [];
+
+  for (let x = 0; x < grid.length; x++) {
+    for (let y = 0; y < grid[x].length; y++) {
+      cells.push({ x, y, type: grid[x][y] });
+
+      if (x === grid.length - 1) {
+        cellsBottom.push(grid[x][y]);
+      }
+    }
+  }
+
+  return {
+    cells,
+    cellsBottom,
+  };
+};
+
+const walkingAudio = new Audio(walkingSound);
 
 export const Level = () => {
   const { id } = useParams();
@@ -38,6 +66,7 @@ export const Level = () => {
   const [heroShift, setHeroShift] = useRefState({ right: 0, bottom: 0 });
   const [isRunning, setIsRunning] = useRefState(false);
   const [isPaused, setIsPaused] = useRefState(false);
+  const [isMoving, setIsMoving] = useRefState(false);
   const [executionData, setExecutionData] = useRefState(null);
   const [executingCommand, setExecutingCommand] = useRefState(null);
   const [pausedCommand, setPausedCommand] = useRefState(null);
@@ -77,55 +106,69 @@ export const Level = () => {
   }, []);
 
   const executeCommand = async (command) => {
-    const updatedLevelData = { ...levelData.current };
-    const updatedHeroShift = { ...heroShift.current };
-    const updatedHero = { ...levelData.current.hero };
-    const updatedEnemies = [...levelData.current.enemies];
+    const updatedLevelData = copy(levelData.current);
 
     setExecutingCommand(command);
 
-    switch (command.name) {
-      case 'move_up':
-        updatedHeroShift.bottom += 49;
-        updatedHero.x -= 1;
-        break;
-      case 'move_down':
-        updatedHeroShift.bottom -= 49;
-        updatedHero.x += 1;
-        break;
-      case 'move_right':
-        updatedHeroShift.right -= 49;
-        updatedHero.y += 1;
-        break;
-      case 'move_left':
-        updatedHeroShift.right += 49;
-        updatedHero.y -= 1;
-        break;
-      case 'attack': {
-        const targetIndex = updatedEnemies.findIndex(
-          (enemy) => enemy.name === command.target,
-        );
-        updatedEnemies[targetIndex] = {
-          ...updatedEnemies[targetIndex],
-          alive: false,
-        };
-        break;
+    if (
+      ['move_up', 'move_down', 'move_right', 'move_left'].includes(command.name)
+    ) {
+      const updatedHeroShift = copy(heroShift.current);
+      const updatedHero = copy(levelData.current.hero);
+      const updatedGems = copy(levelData.current.gems);
+
+      switch (command.name) {
+        case 'move_up':
+          updatedHeroShift.bottom += 49;
+          updatedHero.x -= 1;
+          break;
+        case 'move_down':
+          updatedHeroShift.bottom -= 49;
+          updatedHero.x += 1;
+          break;
+        case 'move_right':
+          updatedHeroShift.right -= 49;
+          updatedHero.y += 1;
+          break;
+        case 'move_left':
+          updatedHeroShift.right += 49;
+          updatedHero.y -= 1;
+          break;
       }
-      default:
-        break;
+
+      setIsMoving(true);
+      setHeroShift(updatedHeroShift);
+      walkingAudio.play();
+
+      await delay(300);
+
+      setIsMoving(false);
+      walkingAudio.pause();
+
+      const collectedGemIndex = updatedLevelData.gems.findIndex(
+        (gem) => gem.x === updatedHero.x && gem.y === updatedHero.y,
+      );
+
+      if (collectedGemIndex !== -1) {
+        updatedGems[collectedGemIndex].collected = true;
+        new Audio(gemSound).play();
+      }
+
+      updatedLevelData.hero = updatedHero;
+      updatedLevelData.gems = updatedGems;
+    } else if (command.name === 'attack') {
+      const updatedEnemies = [...levelData.current.enemies];
+
+      const targetIndex = updatedEnemies.findIndex(
+        (enemy) => enemy.name === command.target,
+      );
+
+      updatedEnemies[targetIndex].alive = false;
+      new Audio(hitSound).play();
+      await delay(500);
+
+      updatedLevelData.enemies = updatedEnemies;
     }
-
-    setHeroShift(updatedHeroShift);
-
-    await new Promise((resolve) => setTimeout(resolve, 300));
-
-    const updatedGems = updatedLevelData.gems.filter(
-      (gem) => !(gem.x === updatedHero.x && gem.y === updatedHero.y),
-    );
-
-    updatedLevelData.hero = updatedHero;
-    updatedLevelData.gems = updatedGems;
-    updatedLevelData.enemies = updatedEnemies;
 
     setLevelData(updatedLevelData);
   };
@@ -156,6 +199,7 @@ export const Level = () => {
 
       if (i === commands.length - 1) {
         setExecutingCommand(null);
+        walkingAudio.currentTime = 0;
       }
 
       if (i === commands.length - 1 && heroRanInWall) {
@@ -185,7 +229,7 @@ export const Level = () => {
     setIsRunning(true);
     setInitialCode(id, code);
 
-    await new Promise((resolve) => setTimeout(() => resolve(), 300));
+    await delay(300);
 
     try {
       const { data } = await axios.post(
@@ -228,58 +272,39 @@ export const Level = () => {
     return null;
   }
 
-  const cells = [];
-  const cellsBottom = [];
-
-  for (let x = 0; x < levelData.current.grid.length; x++) {
-    for (let y = 0; y < levelData.current.grid[x].length; y++) {
-      cells.push({ x, y, type: levelData.current.grid[x][y] });
-
-      if (x === levelData.current.grid.length - 1) {
-        cellsBottom.push(levelData.current.grid[x][y]);
-      }
-    }
-  }
-
-  const trees = levelData.current.walls.filter((wall) => wall.type === 'tree');
-  const rocks = levelData.current.walls.filter((wall) => wall.type === 'rock');
-  const gems = levelData.current.gems;
-  const enemies = levelData.current.enemies.filter((enemy) => enemy.alive);
+  const { hero, gems, enemies } = levelData.current;
+  const {
+    width,
+    height,
+    hero: initialHero,
+    walls,
+    grid,
+    finish,
+  } = initialLevelData.current;
+  const trees = walls.filter((wall) => wall.type === 'tree');
+  const rocks = walls.filter((wall) => wall.type === 'rock');
+  const executingLine = executingCommand.current?.start.line;
+  const { cells, cellsBottom } = prepareCells(grid);
 
   return (
     <Wrapper>
       <MainWrapper>
         <MapWrapper>
-          <MapField
-            width={levelData.current.width}
-            height={levelData.current.height}
-          >
+          <MapField width={width} height={height}>
             {cells.map((cell) => {
               if (cell.type === 'lawn') {
                 return (
-                  <Lawn
-                    key={`x-${cell.x}, y-${cell.y}`}
-                    x={cell.x}
-                    y={cell.y}
-                  />
+                  <Lawn key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y} />
                 );
               }
               if (cell.type === 'grass') {
                 return (
-                  <Grass
-                    key={`x-${cell.x}, y-${cell.y}`}
-                    x={cell.x}
-                    y={cell.y}
-                  />
+                  <Grass key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y} />
                 );
               }
               if (cell.type === 'sand') {
                 return (
-                  <Sand
-                    key={`x-${cell.x}, y-${cell.y}`}
-                    x={cell.x}
-                    y={cell.y}
-                  />
+                  <Sand key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y} />
                 );
               }
             })}
@@ -294,55 +319,54 @@ export const Level = () => {
             })}
             {trees.map((tree) => (
               <Tree
-                key={`x-${tree.x}, y-${tree.y}`}
+                key={`${tree.x}${tree.y}`}
                 x={tree.x}
                 y={tree.y}
-                heroX={levelData.current.hero.x}
-                heroY={levelData.current.hero.y}
+                heroX={hero.x}
+                heroY={hero.y}
               />
             ))}
             {rocks.map((rock) => (
               <Rock
-                key={`x-${rock.x}, y-${rock.y}`}
+                key={`${rock.x}${rock.y}`}
                 x={rock.x}
                 y={rock.y}
-                heroX={levelData.current.hero.x}
-                heroY={levelData.current.hero.y}
+                heroX={hero.x}
+                heroY={hero.y}
               />
             ))}
             {gems.map((gem) => (
               <Gem
-                key={`x-${gem.x}, y-${gem.y}`}
+                key={`${gem.x}${gem.y}`}
                 x={gem.x}
                 y={gem.y}
-                heroX={levelData.current.hero.x}
-                heroY={levelData.current.hero.y}
+                heroX={hero.x}
+                heroY={hero.y}
+                collected={gem.collected}
               />
             ))}
             {enemies.map((enemy) => (
               <Enemy
-                key={`x-${enemy.x}, y-${enemy.y}`}
+                key={`${enemy.x}${enemy.y}`}
                 x={enemy.x}
                 y={enemy.y}
-                heroX={levelData.current.hero.x}
-                heroY={levelData.current.hero.y}
+                heroX={hero.x}
+                heroY={hero.y}
+                dead={!enemy.alive}
               >
                 <span>{enemy.name}</span>
               </Enemy>
             ))}
             <Hero
-              x={initialLevelData.current.hero.x}
-              y={initialLevelData.current.hero.y}
+              x={initialHero.x}
+              y={initialHero.y}
               texts={heroTexts}
               shift={heroShift.current}
-              animated={isRunning.current}
+              animated={isMoving.current}
             />
-            <Finish
-              x={initialLevelData.current.finish.x}
-              y={initialLevelData.current.finish.y}
-            />
+            <Finish x={finish.x} y={finish.y} />
           </MapField>
-          <MapBottom width={levelData.current.width} />
+          <MapBottom width={width} />
         </MapWrapper>
         <Controls
           isRunning={isRunning.current}
@@ -357,7 +381,7 @@ export const Level = () => {
         code={code}
         isRunning={isRunning.current}
         isPaused={isPaused.current}
-        executingLine={executingCommand.current?.start.line}
+        executingLine={executingLine}
         instructions={instructions}
         onChange={setCode}
       />
