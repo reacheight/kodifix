@@ -14,6 +14,7 @@ import {
   Tree,
   Rock,
   Gem,
+  Enemy,
   MapBottom,
   Finish,
 } from './styled';
@@ -73,10 +74,11 @@ export const Level = () => {
     fetchInstructions();
   }, []);
 
-  const moveHero = async (command) => {
+  const executeCommand = async (command) => {
     const updatedLevelData = { ...levelData.current };
     const updatedHeroShift = { ...heroShift.current };
     const updatedHero = { ...levelData.current.hero };
+    const updatedEnemies = [ ...levelData.current.enemies ];
 
     setExecutingCommand(command);
 
@@ -97,6 +99,11 @@ export const Level = () => {
         updatedHeroShift.right += 49;
         updatedHero.y -= 1;
         break;
+      case 'attack': {
+        const targetIndex = updatedEnemies.findIndex((enemy) => enemy.name === command.target);
+        updatedEnemies[targetIndex] = { ...updatedEnemies[targetIndex], alive: false };
+        break;
+      }
       default:
         break;
     }
@@ -111,15 +118,20 @@ export const Level = () => {
 
     updatedLevelData.hero = updatedHero;
     updatedLevelData.gems = updatedGems;
+    updatedLevelData.enemies = updatedEnemies;
 
     setLevelData(updatedLevelData);
   };
 
   const execCommands = async () => {
-    const { commands, heroRanInWall, hasFinished } = executionData.current;
+    const { commands, heroRanInWall, heroRanInEnemy, hasFinished } = executionData.current;
 
     if (commands.length === 0 && heroRanInWall) {
       setHeroTexts(['Ой, здесь я не могу пройти']);
+    }
+
+    if (commands.length === 0 && heroRanInEnemy) {
+      setHeroTexts(['Я не могу туда идти, \n этот злой рыцарь меня побьёт'])
     }
 
     for (let i = pausedCommand.current || 0; i < commands.length; i++) {
@@ -128,7 +140,7 @@ export const Level = () => {
         break;
       }
 
-      await moveHero(commands[i]);
+      await executeCommand(commands[i]);
 
       if (i === commands.length - 1) {
         setExecutingCommand(null);
@@ -136,6 +148,10 @@ export const Level = () => {
 
       if (i === commands.length - 1 && heroRanInWall) {
         setHeroTexts(['Ой, здесь я не могу пройти']);
+      }
+
+      if (i === commands.length - 1 && heroRanInEnemy) {
+        setHeroTexts(['Я не могу туда идти, \n этот злой рыцарь меня побьёт'])
       }
 
       if (i === commands.length - 1 && hasFinished) {
@@ -206,6 +222,7 @@ export const Level = () => {
   const trees = levelData.current.walls.filter((wall) => wall.type === 'tree');
   const rocks = levelData.current.walls.filter((wall) => wall.type === 'rock');
   const gems = levelData.current.gems;
+  const enemies = levelData.current.enemies.filter((enemy) => enemy.alive);
 
   return (
     <Wrapper>
@@ -276,6 +293,15 @@ export const Level = () => {
                 key={`x-${gem.x}, y-${gem.y}`}
                 x={gem.x}
                 y={gem.y}
+                heroX={levelData.current.hero.x}
+                heroY={levelData.current.hero.y}
+              />
+            ))}
+            {enemies.map((enemy) => (
+              <Enemy
+                key={`x-${enemy.x}, y-${enemy.y}`}
+                x={enemy.x}
+                y={enemy.y}
                 heroX={levelData.current.hero.x}
                 heroY={levelData.current.hero.y}
               />

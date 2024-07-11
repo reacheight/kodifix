@@ -37,7 +37,7 @@ export const levels = {
       { x: 5, y: 9, type: "rock" },
       { x: 11, y: 5, type: "rock" },
     ],
-    enemies: [],
+    enemies: [{ x: 5, y: 2, alive: true, name: "Vlad" }],
   },
 
   [2]: {
