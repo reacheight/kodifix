@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { Tooltip } from 'react-tooltip';
 
 export const StyledTooltip = styled(Tooltip)`
-  font-family: 'Raleway', sans-serif !important;
+  font-family: 'ProstoOne', sans-serif !important;
   font-size: 14px !important;
   line-height: 18px !important;
   color: #000 !important;

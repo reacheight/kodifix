@@ -1,6 +1,11 @@
 @font-face {
-    font-family: 'Raleway';
-    src: local('Raleway'), url(assets/fonts/Raleway.ttf) format('truetype');
+  font-family: 'ProstoOne';
+  src: local('ProstoOne'), url(assets/fonts/ProstoOne.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(assets/fonts/Inter.ttf) format('truetype');
 }
 
 * {

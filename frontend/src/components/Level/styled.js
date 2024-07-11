@@ -23,6 +23,7 @@ export const Wrapper = styled.div`
   height: 100%;
   background-color: #353736;
   display: flex;
+  overflow: hidden;
 `;
 
 export const MainWrapper = styled.div`
@@ -185,7 +186,7 @@ export const Enemy = styled.div`
     bottom: 10px;
     font-weight: bold;
     font-size: 20px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'ProstoOne', sans-serif;
     color: #ff0000;
     text-shadow: 0px 0px 3px black;
     user-select: none;

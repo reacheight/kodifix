@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 
 export const CodeMirrorWrapper = styled.div`
   margin: 20px 20px 0 0;
-  overflow: hidden;
   font-size: 18px;
 
   .cm-editor {

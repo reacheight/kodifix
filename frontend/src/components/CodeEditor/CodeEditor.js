@@ -56,6 +56,8 @@ export const CodeEditor = ({
   const width = '529px';
   const height = `${innerHeight - 20}px`;
 
+  const addCommand = (command) => onChange(code + '\n' + command);
+
   return (
     <CodeMirrorWrapper
       highlightFocusedLine={!isRunning && !isPaused}
@@ -71,9 +73,11 @@ export const CodeEditor = ({
         extensions={extensions}
         basicSetup={basicSetup}
         onChange={onChange}
-        selection={{  anchor: code.length }}
+        selection={{ anchor: code.length }}
       />
-      {instructions && <AvailableCommands commands={commands} />}
+      {instructions && (
+        <AvailableCommands commands={commands} onAdd={addCommand} />
+      )}
     </CodeMirrorWrapper>
   );
 };

@@ -6,10 +6,10 @@ export const instructions = {
     example: `hero.move_down()
 hero.move_right()`,
     newCommands: [
-      { code: 'hero.move_up()', description: 'перемещает героя на 1 шаг вверх' },
-      { code: 'hero.move_down()', description: 'перемещает героя на 1 шаг вниз' },
-      { code: 'hero.move_right()', description: 'перемещает героя на 1 шаг вправо' },
-      { code: 'hero.move_left()', description: 'перемещает героя на 1 шаг влево' },
+      { code: 'hero.move_up()', description: 'перемещает героя на 1 шаг вверх', example: 'hero.move_up()' },
+      { code: 'hero.move_down()', description: 'перемещает героя на 1 шаг вниз', example: 'hero.move_down()' },
+      { code: 'hero.move_right()', description: 'перемещает героя на 1 шаг вправо', example: 'hero_move_right()' },
+      { code: 'hero.move_left()', description: 'перемещает героя на 1 шаг влево', example: 'hero_move_left()'},
     ],
     prevCommands: [],
   },

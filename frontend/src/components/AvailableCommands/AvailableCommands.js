@@ -7,9 +7,12 @@ import {
   Command,
 } from './styled';
 import arrowIcon from '../../assets/arrow.svg';
+import addIcon from '../../assets/add.svg';
+import { CommandDescription } from '../CommandDescription/CommandDescription';
 
-export const AvailableCommands = ({ commands }) => {
-  const [isOpen, setIsOpen] = useState(false);
+export const AvailableCommands = ({ commands, onAdd }) => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [command, setCommand] = useState(null);
 
   return (
     <Collapse isOpen={isOpen}>
@@ -21,12 +24,17 @@ export const AvailableCommands = ({ commands }) => {
       </CollapseTitle>
       <CollapseContent>
         {commands.map((command) => (
-          <Command key={command.code}>
+          <Command
+            key={command.code}
+            onMouseOver={() => setCommand(command)}
+            onMouseLeave={() => setCommand(null)}
+          >
             {command.code.slice(0, -2)}
-            <span>()</span>
+            <img src={addIcon} alt="add" onClick={() => onAdd(command.code)} />
           </Command>
         ))}
       </CollapseContent>
+      <CommandDescription command={command} />
     </Collapse>
   );
 };
