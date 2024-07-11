@@ -29,7 +29,7 @@ export default class LevelRunner {
       }
 
       target.alive = false;
-      this.pushNewCommand(`attack ${targetName}`);
+      this.pushNewCommand(`attack`, { target: targetName });
     },
 
     find_nearest_enemy: () => {
@@ -146,14 +146,15 @@ export default class LevelRunner {
     }
   }
 
-  pushNewCommand(commandName) {
+  pushNewCommand(commandName, additionalInfo = {}) {
     let callExpression = this.engine.evaluator.lastASTNodeProcessed.parent.parent;
     let start = callExpression.loc.start;
     let end = callExpression.loc.end;
     let command = {
       name: commandName,
       start: { line: start.line, column: start.column },
-      end: { line: end.line, column: end.column }
+      end: { line: end.line, column: end.column },
+      ...additionalInfo
     };
     this.commands.push(command);
   }

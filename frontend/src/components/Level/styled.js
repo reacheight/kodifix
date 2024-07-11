@@ -8,6 +8,7 @@ import sandBottom from '../../assets/sand-bottom.svg';
 import tree from '../../assets/tree.svg';
 import rock from '../../assets/rock.svg';
 import gem from '../../assets/gem.svg';
+import enemy from '../../assets/knight-enemy.svg';
 
 const pulsation = keyframes`
   0% {
@@ -158,6 +159,24 @@ export const Gem = styled.div`
   bottom: 20px;
   left: 5px;
   animation: 2s ${pulsation} linear infinite alternate;
+
+  z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
+
+  ${({ x, y }) => css`
+    grid-row-start: ${x + 1};
+    grid-row-end: ${x + 2};
+    grid-column-start: ${y + 1};
+    grid-column-end: ${y + 2};
+  `}
+`;
+
+export const Enemy = styled.div`
+  width: 57px;
+  height: 90px;
+  background: url(${enemy}) no-repeat center;
+  position: relative;
+  bottom: 50px;
+  right: 5px;
 
   z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
 
