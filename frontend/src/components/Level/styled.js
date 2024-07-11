@@ -178,6 +178,18 @@ export const Enemy = styled.div`
   bottom: 50px;
   right: 5px;
 
+  text-align: center;
+
+  span {
+    position: relative;
+    bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Raleway', sans-serif;
+    color: #FF0000;
+    text-shadow: 0px 0px 3px black;
+  }
+
   z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
 
   ${({ x, y }) => css`

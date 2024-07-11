@@ -202,7 +202,7 @@ export const Level = () => {
     setIsPaused(true);
   };
 
-  if (!initialLevelData.current && !levelData.current) {
+  if (!initialLevelData.current && !levelData.current || !instructions) {
     return null;
   }
 
@@ -304,7 +304,9 @@ export const Level = () => {
                 y={enemy.y}
                 heroX={levelData.current.hero.x}
                 heroY={levelData.current.hero.y}
-              />
+              >
+                <span>{enemy.name}</span>
+              </Enemy>
             ))}
             <Hero
               x={initialLevelData.current.hero.x}
