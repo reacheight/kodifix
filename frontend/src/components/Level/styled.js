@@ -186,7 +186,7 @@ export const Enemy = styled.div`
     bottom: 10px;
     font-weight: bold;
     font-size: 20px;
-    font-family: 'ProstoOne', sans-serif;
+    font-family: 'Inter', sans-serif;
     color: #ff0000;
     text-shadow: 0px 0px 3px black;
     user-select: none;

@@ -6,8 +6,7 @@ import { python } from '@codemirror/lang-python';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { AvailableCommands } from '../AvailableCommands/AvailableCommands';
 import React from 'react';
-
-const innerHeight = window.innerHeight;
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 const theme = vscodeDarkInit({
   styles: [{ tag: t.comment, color: 'rgba(255, 255, 255, 0.5)' }],
@@ -40,6 +39,8 @@ export const CodeEditor = ({
   instructions,
   onChange,
 }) => {
+  const { height: innerHeight } = useWindowSize();
+
   const commands = [...instructions.newCommands, ...instructions.prevCommands];
   const options = commands.map((command) => ({
     type: 'text',

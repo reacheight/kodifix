@@ -8,7 +8,6 @@ export const Collapse = styled.div`
   color: #fff;
   position: relative;
   transition: 300ms ease-in-out;
-  font-family: 'ProstoOne', sans-serif;
   z-index: 100;
 
   ${({ isOpen }) =>
@@ -24,6 +23,7 @@ export const Collapse = styled.div`
 export const CollapseTitle = styled.div`
   display: flex;
   justify-content: space-between;
+  font-family: 'ProstoOne', sans-serif;
   font-size: 20px;
   line-height: 24px;
   margin-bottom: 20px;
@@ -45,16 +45,30 @@ export const CollapseIcon = styled.div`
 `;
 
 export const CollapseContent = styled.div`
-  padding: 20px 0;
+  padding: 12px 0;
   display: flex;
   flex-direction: column;
   border-radius: 8px;
   background-color: #2a2623;
+  max-height: 264px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    border: 4px solid transparent;
+    background-clip: content-box;
+  }
 `;
 
 export const Command = styled.span`
   display: flex;
   justify-content: space-between;
+  font-family: 'monospace', sans-serif;
   font-size: 14px;
   line-height: 18px;
   padding: 11px 20px;

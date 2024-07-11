@@ -73,7 +73,7 @@ export const ExampleTitle = styled.div`
 export const ExampleCode = styled.div`
   background-color: #3d3732;
   border-radius: 4px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'monospace', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;

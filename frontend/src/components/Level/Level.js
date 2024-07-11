@@ -25,9 +25,11 @@ import { Controls } from '../Controls/Controls';
 import { Hero } from '../Hero/Hero';
 import { CodeEditor } from '../CodeEditor/CodeEditor';
 
-const initialCode =
-  localStorage.getItem('lastCode') ||
+const getInitialCode = (level) =>
+  localStorage.getItem(`code-level-${level}`) ||
   `# пиши код ниже, что бы управлять своим персонажем\n# нажми запуск, когда закончишь\n\n`;
+
+const setInitialCode = (level, code) => localStorage.setItem(`code-level-${level}`, code)
 
 export const Level = () => {
   const { id } = useParams();
@@ -41,7 +43,7 @@ export const Level = () => {
   const [pausedCommand, setPausedCommand] = useRefState(null);
   const [instructions, setInstructions] = useState(null);
   const [heroTexts, setHeroTexts] = useState([]);
-  const [code, setCode] = useState(initialCode);
+  const [code, setCode] = useState(getInitialCode(id));
 
   const fetchLevelData = async () => {
     const { data } = await axios.get(`http://localhost:9000/level/${id}`);
@@ -181,7 +183,7 @@ export const Level = () => {
   const startGame = async () => {
     resetData();
     setIsRunning(true);
-    localStorage.setItem('lastCode', code);
+    setInitialCode(id, code);
 
     await new Promise((resolve) => setTimeout(() => resolve(), 300));
 

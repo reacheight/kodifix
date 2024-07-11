@@ -29,7 +29,7 @@ export const AvailableCommands = ({ commands, onAdd }) => {
             onMouseOver={() => setCommand(command)}
             onMouseLeave={() => setCommand(null)}
           >
-            {command.code.slice(0, -2)}
+            {command.code}
             <img src={addIcon} alt="add" onClick={() => onAdd(command.code)} />
           </Command>
         ))}

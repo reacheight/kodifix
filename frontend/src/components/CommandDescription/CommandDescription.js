@@ -11,12 +11,11 @@ import {
 } from './styled';
 
 function extract(code) {
-  const regex = /(\w+)\((.*)\)/;
-  const matches = code.match(regex);
+  const index = code.indexOf('(');
 
-  if (matches) {
-    const name = matches[1];
-    const brackets = matches[2];
+  if (index) {
+    const name = code.slice(0, index);
+    const brackets = code.slice(index + 1, -1);
     return { name, brackets: `(${brackets})` };
   }
 
