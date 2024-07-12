@@ -3,36 +3,30 @@ import React, { useEffect } from 'react';
 import { StyledTooltip } from './styled';
 import { useRefState } from '../../hooks/useRefState';
 import smallPlay from '../../assets/small-play.svg';
+import { delay } from '../../utils/delay';
 
-const delay = 3000;
+const defaultDelay = 3000;
 
 export const HeroTooltip = ({ texts }) => {
-  const [intervalId, setIntervalId] = useRefState(null);
-  const [textIndex, setTextIndex] = useRefState(0);
+  const [text, setText] = useRefState(null);
+
+  const showText = async (index) => {
+    setText(texts[index]);
+
+    await delay(texts[index].delay || defaultDelay);
+
+    if (index < texts.length - 1) {
+      showText(index + 1);
+    } else {
+      setText(0);
+    }
+  };
 
   useEffect(() => {
-    if (!texts.length) {
-      return;
-    }
+    showText(0);
+  }, []);
 
-    const id = setInterval(() => {
-      if (textIndex.current === texts.length - 1) {
-        clearInterval(id);
-        setIntervalId(null);
-      } else {
-        setTextIndex(textIndex.current + 1);
-      }
-    }, delay);
-
-    setIntervalId(id);
-
-    return () => {
-      setIntervalId(null);
-      setTextIndex(0);
-    };
-  }, [texts]);
-
-  if (!intervalId.current) {
+  if (!text.current) {
     return null;
   }
 
@@ -40,13 +34,11 @@ export const HeroTooltip = ({ texts }) => {
     <StyledTooltip
       id="wizard-tooltip"
       place="top-start"
-      isOpen={!!intervalId.current}
+      isOpen={!!text}
       content={
         <span>
-          {texts[textIndex.current]}
-          {textIndex.current < texts.length - 1 && (
-            <img src={smallPlay} alt="play" />
-          )}
+          {text.current.value}
+          {texts.length > 1 && <img src={smallPlay} alt="play" />}
         </span>
       }
     />

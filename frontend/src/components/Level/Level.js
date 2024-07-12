@@ -81,14 +81,16 @@ export const Level = () => {
   const fetchLevelData = async () => {
     const { data } = await axios.get(`http://localhost:9000/level/${id}`);
 
-    const initialGoals = ['Я должен пройти\nпо этой дороге '];
+    const initialGoals = [{ value: 'Я должен пройти\nпо этой дороге ' }];
 
     if (data.gems.length > 0) {
-      initialGoals.push('Неплохо было бы собрать\nалмазы по пути');
+      initialGoals.push({ value: 'Неплохо было бы собрать\nалмазы по пути' });
     }
 
     if (data.linesGoal) {
-      initialGoals.push(`Использовать не более\n${data.linesGoal} строк кода`);
+      initialGoals.push({
+        value: `Использовать не более\n${data.linesGoal} строк кода`,
+      });
     }
 
     setInitialLevelData({ ...data });
@@ -111,13 +113,13 @@ export const Level = () => {
     setIsRunning(false);
     setIsPaused(false);
     setIsMoving(false);
-    setIsScoreVisible(false)
+    setIsScoreVisible(false);
     setExecutionData(null);
     setExecutingCommand(null);
     setPausedCommand(null);
     setInstructions(null);
     setHeroTexts([]);
-    setInitialCode(getInitialCode(id));
+    setCode(getInitialCode(id));
   };
 
   useEffect(() => {
@@ -199,11 +201,13 @@ export const Level = () => {
       executionData.current;
 
     if (commands.length === 0 && heroRanInWall) {
-      setHeroTexts(['Ой, здесь я не могу пройти']);
+      setHeroTexts([{ value: 'Ой, здесь я не могу пройти' }]);
     }
 
     if (commands.length === 0 && heroRanInEnemy) {
-      setHeroTexts(['Я не могу туда идти, \n этот злой рыцарь меня побьёт']);
+      setHeroTexts([
+        { value: 'Я не могу туда идти, \n этот злой рыцарь меня побьёт' },
+      ]);
     }
 
     for (let i = pausedCommand.current || 0; i < commands.length; i++) {
@@ -224,16 +228,20 @@ export const Level = () => {
       }
 
       if (i === commands.length - 1 && heroRanInWall) {
-        setHeroTexts(['Ой, здесь я не могу пройти']);
+        setHeroTexts([{ value: 'Ой, здесь я не могу пройти' }]);
       }
 
       if (i === commands.length - 1 && heroRanInEnemy) {
-        setHeroTexts(['Я не могу туда идти, \n этот злой рыцарь меня побьёт']);
+        setHeroTexts([
+          { value: 'Я не могу туда идти, \n этот злой рыцарь меня побьёт' },
+        ]);
       }
 
       if (i === commands.length - 1 && hasFinished) {
-        setHeroTexts(['Отлично,\nмы можем идти дальше']);
-        await delay(3000);
+        setHeroTexts([
+          { value: 'Отлично,\nмы можем идти дальше', delay: 1500 },
+        ]);
+        await delay(1500);
         new Audio(victory).play();
         setIsScoreVisible(true);
       }

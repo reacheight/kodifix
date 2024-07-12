@@ -4,10 +4,7 @@ import { Wrapper } from './styled';
 
 export const Hero = ({ x, y, shift, animated, texts }) => (
   <>
-    <HeroTooltip
-      key={texts.reduce((acc, text) => acc + text, '')}
-      texts={texts}
-    />
+    {texts.length ? <HeroTooltip texts={texts} /> : null}
     <Wrapper
       x={x}
       y={y}

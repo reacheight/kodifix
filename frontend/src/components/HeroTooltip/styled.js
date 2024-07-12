@@ -3,18 +3,24 @@ import { styled } from 'styled-components';
 import { Tooltip } from 'react-tooltip';
 
 export const StyledTooltip = styled(Tooltip)`
-  font-family: 'ProstoOne', sans-serif !important;
-  font-size: 14px !important;
-  line-height: 18px !important;
-  color: #000 !important;
-  background-color: #fff !important;
-  opacity: 1 !important;
-  padding: 16px !important;
-  border-radius: 8px !important;
-  white-space: break-spaces !important;
-  transform: translateX(14px);
-  z-index: 3;
+  &.react-tooltip {
+    font-family: 'ProstoOne', sans-serif;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000;
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    white-space: break-spaces;
+    transform: translateX(14px);
+    z-index: 3;
+  }
 
+  &.react-tooltip__show {
+    opacity: 1;
+  }
+
+  // стрелка
   > div {
     transform: rotate(45deg) translate(-13px, 13px) !important;
   }
