@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   Wrapper,
@@ -23,12 +23,14 @@ import axios from 'axios';
 import gemSound from '../../assets/sounds/gem.mp3';
 import walkingSound from '../../assets/sounds/walking.mp3';
 import hitSound from '../../assets/sounds/hit.mp3';
+import victory from '../../assets/sounds/victory.mp3';
 import { useRefState } from '../../hooks/useRefState';
 import { Controls } from '../Controls/Controls';
 import { Hero } from '../Hero/Hero';
 import { CodeEditor } from '../CodeEditor/CodeEditor';
 import { delay } from '../../utils/delay';
 import { copy } from '../../utils/copy';
+import { LevelScore } from '../LevelScore/LevelScore';
 
 const getInitialCode = (level) =>
   localStorage.getItem(`code-level-${level}`) ||
@@ -61,12 +63,14 @@ const walkingAudio = new Audio(walkingSound);
 
 export const Level = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [initialLevelData, setInitialLevelData] = useRefState(null);
   const [levelData, setLevelData] = useRefState(null);
   const [heroShift, setHeroShift] = useRefState({ right: 0, bottom: 0 });
   const [isRunning, setIsRunning] = useRefState(false);
   const [isPaused, setIsPaused] = useRefState(false);
   const [isMoving, setIsMoving] = useRefState(false);
+  const [isScoreVisible, setIsScoreVisible] = useState(false);
   const [executionData, setExecutionData] = useRefState(null);
   const [executingCommand, setExecutingCommand] = useRefState(null);
   const [pausedCommand, setPausedCommand] = useRefState(null);
@@ -100,10 +104,27 @@ export const Level = () => {
     setInstructions(data);
   };
 
+  const resetAllData = () => {
+    setInitialLevelData(null);
+    setLevelData(null);
+    setHeroShift({ right: 0, bottom: 0 });
+    setIsRunning(false);
+    setIsPaused(false);
+    setIsMoving(false);
+    setIsScoreVisible(false)
+    setExecutionData(null);
+    setExecutingCommand(null);
+    setPausedCommand(null);
+    setInstructions(null);
+    setHeroTexts([]);
+    setInitialCode(getInitialCode(id));
+  };
+
   useEffect(() => {
+    resetAllData();
     fetchLevelData();
     fetchInstructions();
-  }, []);
+  }, [id]);
 
   const executeCommand = async (command) => {
     const updatedLevelData = copy(levelData.current);
@@ -211,7 +232,10 @@ export const Level = () => {
       }
 
       if (i === commands.length - 1 && hasFinished) {
-        setHeroTexts(['Отлично, \n мы можем идти дальше']);
+        setHeroTexts(['Отлично,\nмы можем идти дальше']);
+        await delay(3000);
+        new Audio(victory).play();
+        setIsScoreVisible(true);
       }
     }
   };
@@ -268,6 +292,11 @@ export const Level = () => {
     resetData();
   };
 
+  const openNextLevel = () => {
+    navigate(`/level/${Number(id) + 1}`, { replace: true });
+  };
+
+  // без данных выводить фон и редактор
   if ((!initialLevelData.current && !levelData.current) || !instructions) {
     return null;
   }
@@ -385,6 +414,7 @@ export const Level = () => {
         instructions={instructions}
         onChange={setCode}
       />
+      {isScoreVisible && <LevelScore onContinue={openNextLevel} />}
     </Wrapper>
   );
 };
