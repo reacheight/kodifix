@@ -1,5 +1,5 @@
 export const levels = {
-  [1]: {
+  [0]: {
     height: 12,
     width: 12,
     grid: [
@@ -40,71 +40,117 @@ export const levels = {
     enemies: [{ x: 5, y: 2, alive: true, name: "Vlad" }],
   },
 
+  [1]: {
+    height: 3,
+    width: 5,
+    grid: [
+      ["lawn","grass","lawn","lawn","lawn",],
+      ["sand","sand","sand","lawn","lawn",],
+      ["lawn","sand","sand","sand","sand",],
+    ],
+    hero: { x: 1, y: 0 },
+    finish: { x: 2, y: 4 },
+    linesGoal: 0,
+    walls: [
+      { x: 0, y: 2, type: "tree" },
+      { x: 1, y: 3, type: "tree" },
+      { x: 1, y: 4, type: "tree" },
+    ],
+    gems: [
+      { x: 1, y: 2 },
+    ],
+    enemies: [],
+  },
+
   [2]: {
-    height: 1,
-    width: 10,
-    grid: [["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",]],
-    hero: { x: 0, y: 0 },
-    finish: { x: 0, y: 9 },
-    linesGoal: 1,
-    walls: [],
-    gems: [],
+    height: 4,
+    width: 4,
+    grid: [
+      ["lawn","sand","lawn","grass",],
+      ["lawn","sand","lawn","lawn",],
+      ["lawn","sand","sand","sand",],
+      ["lawn","grass","lawn","sand",],
+    ],
+    hero: { x: 1, y: 2 },
+    finish: { x: 3, y: 3 },
+    linesGoal: 0,
+    walls: [
+      { x: 0, y: 0, type: "tree" },
+      { x: 0, y: 2, type: "tree" },
+    ],
+    gems: [
+      { x: 1, y: 0 },
+      { x: 3, y: 0 },
+    ],
     enemies: [],
   },
 
   [3]: {
-    height: 3,
-    width: 5,
+    height: 2,
+    width: 7,
     grid: [
-      ["lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","sand","lawn","grass","lawn","lawn",],
+      ["grass","lawn","sand","sand","sand","sand","sand",],
     ],
-    hero: { x: 0, y: 0 },
-    finish: { x: 2, y: 4 },
+    hero: { x: 1, y: 0 },
+    finish: { x: 1, y: 6 },
+    linesGoal: 1,
     walls: [
-      { x: 0, y: 1, type: "rock" },
-      { x: 1, y: 1, type: "tree" },
-      { x: 2, y: 3, type: "rock" },
+      { x: 0, y: 1, type: 'tree' }
     ],
-    gems: [{ x: 0, y: 4 }],
+    gems: [ { x: 1, y: 3 }],
     enemies: [],
   },
 
   [4]: {
-    height: 10,
-    width: 10,
+    height: 5,
+    width: 8,
     grid: [
-      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
-      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","grass","lawn","lawn","lawn","sand","lawn"],
+      ["sand","sand","sand","lawn","lawn","lawn","sand","lawn"],
+      ["lawn","lawn","sand","lawn","lawn","sand","sand","grass"],
+      ["grass","lawn","sand","sand","sand","sand","lawn","lawn"],
+      ["lawn","grass","lawn","lawn","lawn","sand","sand","lawn"],
     ],
-    hero: { x: 3, y: 0 },
-    finish: { x: 7, y: 9 },
+    hero: { x: 0, y: 0 },
+    finish: { x: 0, y: 6 },
+    walls: [
+      { x: 0, y: 4, type: 'rock' }, { x: 1, y: 4, type: 'rock' }, { x: 2, y: 4, type: 'rock' },
+      { x: 0, y: 7, type: 'tree' }, { x: 0, y: 5, type: 'tree'},
+      { x: 2, y: 0, type: 'tree'}, { x: 3, y: 1, type: 'tree'}
+    ],
     gems: [
-      { x: 1, y: 4 },
-      { x: 2, y: 6 },
-      { x: 8, y: 3 },
+      { x: 0, y: 3 },
+      { x: 4, y: 3 },
+      { x: 1, y: 7 },
+    ],
+    enemies: [],
+  },
+
+  [5]: {
+    height: 3,
+    width: 8,
+    grid: [
+      ["lawn","lawn","lawn","grass","lawn","lawn","lawn","lawn",],
+      ["sand","sand","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["grass","sand","sand","sand","lawn","lawn","grass","lawn",],
+    ],
+    hero: { x: 0, y: 7 },
+    finish: { x: 2, y: 7 },
+    gems: [
+      { x: 0, y: 0 },
     ],
     walls: [
-      { x: 0, y: 3, type: "rock" },
+      { x: 1, y: 7, type: "rock" },
+      { x: 1, y: 6, type: "rock" },
+      { x: 1, y: 5, type: "rock" },
+      { x: 1, y: 4, type: "rock" },
       { x: 1, y: 3, type: "rock" },
-      { x: 2, y: 3, type: "rock" },
-      { x: 3, y: 3, type: "rock" },
-      { x: 4, y: 3, type: "rock" },
-      { x: 5, y: 3, type: "rock" },
-      { x: 6, y: 3, type: "rock" },
-      { x: 7, y: 3, type: "rock" },
-      { x: 7, y: 4, type: "tree" },
-      { x: 8, y: 4, type: "tree" },
+      { x: 1, y: 2, type: "rock" },
     ],
-    enemies: [{ x: 9, y: 5, alive: true, name: "John" }],
+    enemies: [
+      { x: 0, y: 1, alive: true, name: "John" },
+      { x: 2, y: 5, alive: true, name: "Greg" },
+    ],
   },
 };
