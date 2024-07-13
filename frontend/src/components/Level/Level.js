@@ -128,10 +128,10 @@ export const Level = () => {
     fetchInstructions();
   }, [id]);
 
-  const executeCommand = async (command) => {
+  const executeCommand = async (command, i) => {
     const updatedLevelData = copy(levelData.current);
 
-    setExecutingCommand(command);
+    setExecutingCommand(i);
 
     if (
       ['move_up', 'move_down', 'move_right', 'move_left'].includes(command.name)
@@ -195,6 +195,11 @@ export const Level = () => {
       updatedLevelData.enemies = updatedEnemies;
     }
 
+    // кейс, когда игрок нажал "стоп"
+    if (!isRunning.current && !isPaused.current) {
+      return;
+    }
+
     setLevelData(updatedLevelData);
   };
 
@@ -218,11 +223,12 @@ export const Level = () => {
         break;
       }
 
+      // кейс, когда игрок нажал "стоп"
       if (!isRunning.current) {
         break;
       }
 
-      await executeCommand(commands[i]);
+      await executeCommand(commands[i], i);
 
       if (i === commands.length - 1) {
         setExecutingCommand(null);
@@ -263,8 +269,6 @@ export const Level = () => {
     setIsRunning(true);
     setInitialCode(id, code);
 
-    await delay(300);
-
     try {
       const { data } = await axios.post(
         `http://localhost:9000/level/${id}/run`,
@@ -285,20 +289,30 @@ export const Level = () => {
     setIsPaused(false);
     setIsRunning(true);
 
-    // подумоть
     await execCommands();
 
     setIsRunning(false);
   };
 
   const pauseGame = () => {
-    setIsRunning(false);
-    setIsPaused(true);
+    const isLastCommandExecuting =
+      executingCommand.current === executionData.current.commands.length - 1;
+
+    if (!isLastCommandExecuting) {
+      setIsRunning(false);
+      setIsPaused(true);
+    }
   };
 
-  const stopGame = () => {
-    setIsRunning(false);
-    setIsPaused(false);
+  const stopGame = async () => {
+    if (isRunning.current) {
+      setIsRunning(false);
+    }
+
+    if (isPaused.current) {
+      setIsPaused(false);
+    }
+
     resetData();
   };
 
@@ -322,7 +336,7 @@ export const Level = () => {
   } = initialLevelData.current;
   const trees = walls.filter((wall) => wall.type === 'tree');
   const rocks = walls.filter((wall) => wall.type === 'rock');
-  const executingLine = executingCommand.current?.start.line;
+  const executingLine = executionData.current?.commands[executingCommand.current]?.start.line;
   const { cells, cellsBottom } = prepareCells(grid);
 
   return (
