@@ -151,10 +151,12 @@ export const Level = () => {
           break;
         case 'move_right':
           updatedHeroShift.right -= 49;
+          updatedHeroShift.direction = 'right';
           updatedHero.y += 1;
           break;
         case 'move_left':
           updatedHeroShift.right += 49;
+          updatedHeroShift.direction = 'left';
           updatedHero.y -= 1;
           break;
       }
