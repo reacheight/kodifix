@@ -14,7 +14,6 @@ import {
   Tree,
   Rock,
   Gem,
-  Enemy,
   MapBottom,
   Finish,
 } from './styled';
@@ -27,6 +26,7 @@ import victory from '../../assets/sounds/victory.mp3';
 import { useRefState } from '../../hooks/useRefState';
 import { Controls } from '../Controls/Controls';
 import { Hero } from '../Hero/Hero';
+import { Enemy } from '../Enemy/Enemy';
 import { CodeEditor } from '../CodeEditor/CodeEditor';
 import { delay } from '../../utils/delay';
 import { copy } from '../../utils/copy';
@@ -182,7 +182,7 @@ export const Level = () => {
       updatedLevelData.hero = updatedHero;
       updatedLevelData.gems = updatedGems;
     } else if (command.name === 'attack') {
-      const updatedEnemies = [...levelData.current.enemies];
+      const updatedEnemies = copy(levelData.current.enemies);
 
       const targetIndex = updatedEnemies.findIndex(
         (enemy) => enemy.name === command.target,
@@ -405,10 +405,9 @@ export const Level = () => {
                 y={enemy.y}
                 heroX={hero.x}
                 heroY={hero.y}
-                dead={!enemy.alive}
-              >
-                <span>{enemy.name}</span>
-              </Enemy>
+                name={enemy.name}
+                alive={enemy.alive}
+              />
             ))}
             <Hero
               x={initialHero.x}

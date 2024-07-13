@@ -17,9 +17,6 @@ export const Wrapper = styled.div`
   width: 74px;
   height: 80px;
   background: url(${wizard}) no-repeat center;
-  transition:
-    bottom linear 300ms,
-    right linear 300ms;
   position: relative;
   z-index: 1;
 
@@ -44,6 +41,9 @@ export const Wrapper = styled.div`
   ${({ animated }) =>
     animated &&
     css`
+      transition:
+        bottom linear 300ms,
+        right linear 300ms;
       animation: 300ms ${shaking} infinite alternate;
     `}
 `;

@@ -8,7 +8,6 @@ import sandBottom from '../../assets/sand-bottom.svg';
 import tree from '../../assets/tree.svg';
 import rock from '../../assets/rock.svg';
 import gem from '../../assets/gem.svg';
-import enemy from '../../assets/knight-enemy.svg';
 
 const pulsation = keyframes`
   0% {
@@ -19,19 +18,7 @@ const pulsation = keyframes`
   }
 `;
 
-const fall = keyframes`
-  0% {
-    transform: rotate(0) translateX(0);
-  }
-
-
-  100% {
-    transform: rotate(-60deg) translateX(-40px) translateY(-25px);
-    opacity: 0;
-  }
-`;
-
-const fade = keyframes`
+const gemFade = keyframes`
   0% {
     opacity:  1;
   }
@@ -66,22 +53,22 @@ export const MapWrapper = styled.div`
 `;
 
 export const MapField = styled.div`
-  width: 589px;
-  height: 589px;
   display: grid;
 
   ${({ width, height }) => css`
+    width: ${width * 49}px;
+    height: ${height * 49}px;
     grid-template-columns: repeat(${width}, 49px);
     grid-template-rows: repeat(${height}, 49px);
   `}
 `;
 
 export const MapBottom = styled.div`
-  width: 589px;
   height: 35px;
   display: grid;
 
   ${({ width }) => css`
+    width: ${49 * width}px;
     grid-template-columns: repeat(${width}, 49px);
     grid-template-rows: repeat(1, 35px);
   `}
@@ -149,7 +136,7 @@ export const Tree = styled.div`
   opacity: ${({ x, y, heroX, heroY }) =>
     x - heroX === 1 && y === heroY ? 0.5 : 1};
 
-  z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
+  z-index: ${({ x, heroX }) => (x <= heroX ? 1 : 2)};
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
@@ -166,7 +153,7 @@ export const Rock = styled.div`
   position: relative;
   bottom: 20px;
 
-  z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
+  z-index: ${({ x, heroX }) => (x <= heroX ? 1 : 2)};
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
@@ -186,48 +173,11 @@ export const Gem = styled.div`
   ${({ collected }) =>
     collected
       ? css`
-          animation: 200ms ${fade} linear forwards;
+          animation: 200ms ${gemFade} linear forwards;
         `
       : css`
           animation: 2s ${pulsation} linear infinite alternate;
         `}
-
-  z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
-
-  ${({ x, y }) => css`
-    grid-row-start: ${x + 1};
-    grid-row-end: ${x + 2};
-    grid-column-start: ${y + 1};
-    grid-column-end: ${y + 2};
-  `}
-`;
-
-export const Enemy = styled.div`
-  width: 57px;
-  height: 90px;
-  background: url(${enemy}) no-repeat center;
-  position: relative;
-  bottom: 50px;
-  right: 5px;
-
-  ${({ dead }) =>
-    dead &&
-    css`
-      animation: ${fall} 1s ease-out forwards;
-    `}
-
-  text-align: center;
-
-  span {
-    position: relative;
-    bottom: 10px;
-    font-weight: bold;
-    font-size: 20px;
-    font-family: 'Inter', sans-serif;
-    color: #ff0000;
-    text-shadow: 0px 0px 3px black;
-    user-select: none;
-  }
 
   z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
 
