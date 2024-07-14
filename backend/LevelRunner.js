@@ -1,4 +1,5 @@
 import ErrorMessageMapper from './ErrorMessageMapper.js';
+import GameplayErrorTypes from './gameplayErrorTypes.js';
 import { getDistance, arePointsEqual, calculateCodeLines, Direction } from './utils.js';
 import esper from 'esper.js';
 
@@ -16,16 +17,19 @@ export default class LevelRunner {
 
     attack: (targetName) => {
       if (!this.level.enemies || this.level.enemies.length === 0) {
-        throw new Error('Нет врагов рядом!');
+        this.gameplayError = { type: GameplayErrorTypes.NO_ENEMIES_TO_ATTACK };
+        return;
       }
       
       let target = this.level.enemies.find(e => e.name === targetName);
       if (!target) {
-        throw new Error(`Нет врага по имени ${targetName}!`);
+        this.gameplayError = { type: GameplayErrorTypes.NO_ENEMY_WITH_GIVEN_NAME, name: targetName };
+        return;
       }
 
       if (Math.abs(target.x - this.level.hero.x) > 1 || Math.abs(target.y - this.level.hero.y) > 1) {
-        throw new Error(`Враг ${targetName} находится слишком далеко!`)
+        this.gameplayError = { type: GameplayErrorTypes.ENEMY_TOO_FAR, name: targetName };
+        return;
       }
 
       target.alive = false;
@@ -73,8 +77,7 @@ export default class LevelRunner {
   };
 
   gemsCollected = 0;
-  heroRanInWall = false;
-  heroRanInEnemy = false;
+  gameplayError = null;
 
   commands = [];
   
@@ -92,12 +95,13 @@ export default class LevelRunner {
       this.engine.load(code);
       let steps = 0;
       let value = this.engine.evloop.next();
-      while (!value.done && !this.heroRanInWall && !this.heroRanInEnemy) {
+      while (!value.done && !this.gameplayError) {
         value = this.engine.evloop.next();
         if ( value.value && value.value.then ) throw new Error('Can\'t deal with futures when running in sync mode');
         if ( ++steps > this.engine.options.executionLimit ) throw new Error('Execution Limit Reached');
       }
     } catch (e) {
+
       let message = ErrorMessageMapper.map(e.message);
       return {
         errors: [
@@ -113,9 +117,8 @@ export default class LevelRunner {
       hasFinished: arePointsEqual(this.level.finish, this.level.hero),
       allGemsCollected: !this.level.gems || this.gemsCollected === this.level.gems.length,
       numberOfLinesSatisfy: !this.level.linesGoal || calculateCodeLines(code) <= this.level.linesGoal,
-      heroRanInWall: this.heroRanInWall ? this.level.hero : null,
-      heroRanInEnemy: this.heroRanInEnemy ? this.level.hero : null,
       commands: this.commands,
+      gameplayError: this.gameplayError,
     };
   }
 
@@ -125,12 +128,12 @@ export default class LevelRunner {
       this.level.hero.y += Math.sign(newHeroPosition.y - this.level.hero.y);
 
       if (this.isPointOutOfMap(this.level.hero) || this.isPointHitWall(this.level.hero)) {
-        this.heroRanInWall = true;
+        this.gameplayError = { type: GameplayErrorTypes.HERO_RAN_IN_WALL, wallPosition: this.level.hero };
         return;
       }
 
       if (this.getAliveEnemyAtPoint(this.level.hero)) {
-        this.heroRanInEnemy = true;
+        this.gameplayError = { type: GameplayErrorTypes.HERO_RAN_IN_ENEMY, enemyPosition: this.level.hero };
         return;
       }
 

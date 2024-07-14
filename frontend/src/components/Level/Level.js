@@ -31,6 +31,7 @@ import { CodeEditor } from '../CodeEditor/CodeEditor';
 import { delay } from '../../utils/delay';
 import { copy } from '../../utils/copy';
 import { LevelScore } from '../LevelScore/LevelScore';
+import GameplayErrorTypes from '../../utils/GameplayErrorTypes';
 
 const getInitialCode = (level) =>
   localStorage.getItem(`code-level-${level}`) ||
@@ -204,17 +205,11 @@ export const Level = () => {
   };
 
   const execCommands = async () => {
-    const { commands, heroRanInWall, heroRanInEnemy, hasFinished } =
+    const { commands, gameplayError, hasFinished } =
       executionData.current;
-
-    if (commands.length === 0 && heroRanInWall) {
-      setHeroTexts([{ value: 'Ой, здесь я не могу пройти' }]);
-    }
-
-    if (commands.length === 0 && heroRanInEnemy) {
-      setHeroTexts([
-        { value: 'Я не могу туда идти, \n этот злой рыцарь меня побьёт' },
-      ]);
+    
+    if (commands.length === 0) {
+      setHeroTextsForGameplayError(gameplayError);
     }
 
     for (let i = pausedCommand.current || 0; i < commands.length; i++) {
@@ -233,16 +228,8 @@ export const Level = () => {
       if (i === commands.length - 1) {
         setExecutingCommand(null);
         walkingAudio.currentTime = 0;
-      }
 
-      if (i === commands.length - 1 && heroRanInWall) {
-        setHeroTexts([{ value: 'Ой, здесь я не могу пройти' }]);
-      }
-
-      if (i === commands.length - 1 && heroRanInEnemy) {
-        setHeroTexts([
-          { value: 'Я не могу туда идти, \n этот злой рыцарь меня побьёт' },
-        ]);
+        setHeroTextsForGameplayError(gameplayError);
       }
 
       if (i === commands.length - 1 && hasFinished) {
@@ -255,6 +242,36 @@ export const Level = () => {
       }
     }
   };
+
+  const setHeroTextsForGameplayError = (gameplayError) => {
+    if (gameplayError?.type === GameplayErrorTypes.HERO_RAN_IN_WALL) {
+      setHeroTexts([{ value: 'Ой, здесь я не могу пройти' }]);
+    }
+
+    if (gameplayError?.type === GameplayErrorTypes.HERO_RAN_IN_ENEMY) {
+      setHeroTexts([
+        { value: 'Я не могу туда идти, \n этот злой рыцарь меня побьёт' },
+      ]);
+    }
+
+    if (gameplayError?.type === GameplayErrorTypes.NO_ENEMIES_TO_ATTACK) {
+      setHeroTexts([
+        { value: 'На этом уровне нет врагов, \n мне некого атаковать' },
+      ]);
+    }
+
+    if (gameplayError?.type === GameplayErrorTypes.NO_ENEMY_WITH_GIVEN_NAME) {
+      setHeroTexts([
+        { value: `На этом уровне нет врага по имени ${gameplayError.name}, \n мне некого атаковать` },
+      ]);
+    }
+
+    if (gameplayError?.type === GameplayErrorTypes.ENEMY_TOO_FAR) {
+      setHeroTexts([
+        { value: `Я не могу атаковать ${gameplayError.name}, \n потому что он слишком далеко` },
+      ]);
+    }
+  }
 
   const resetData = () => {
     setHeroTexts([]);
