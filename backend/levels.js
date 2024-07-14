@@ -18,7 +18,6 @@ export const levels = {
     ],
     hero: { x: 11, y: 6 },
     finish: { x: 0, y: 6 },
-    linesGoal: 3,
     gems: [
       { x: 1, y: 6 },
       { x: 3, y: 4 },
@@ -38,6 +37,11 @@ export const levels = {
       { x: 11, y: 5, type: "rock" },
     ],
     enemies: [{ x: 5, y: 2, alive: true, name: "Vlad" }],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Мне нужно добраться до финиша', required: true },
+      { type: 'lines', name: 'Использовать не больше 3 строк кода', heroText: 'Использовать не больше 3 строк кода', linesCount: 3, required: true },
+      { type: 'gems', name: 'Собрать все алмазы', heroText: 'Неплохо было бы собрать алмазы по пути', required: false },
+    ]
   },
 
   [1]: {
@@ -60,6 +64,10 @@ export const levels = {
       { x: 1, y: 2 },
     ],
     enemies: [],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Помоги мне добраться до финиша', required: true },
+      { type: 'gems', name: 'Собрать алмаз', heroText: 'Было бы неплохо собрать алмаз по пути', required: false },
+    ]
   },
 
   [2]: {
@@ -83,6 +91,10 @@ export const levels = {
       { x: 3, y: 0 },
     ],
     enemies: [],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Мне нужно дойти до финиша', required: true },
+      { type: 'gems', name: 'Собрать алмазы', heroText: 'Давай соберём все алмазы', required: false },
+    ]
   },
 
   [3]: {
@@ -100,6 +112,12 @@ export const levels = {
     ],
     gems: [ { x: 1, y: 3 }],
     enemies: [],
+
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Проведи меня до финиша', required: true },
+      { type: 'lines', name: 'Использовать 1 строчку кода', heroText: 'Ты должен использовать только 1 строчку кода', linesCount: 1, required: true },
+      { type: 'gems', name: 'Собрать алмаз', heroText: 'Давай соберём алмаз', required: false },
+    ]
   },
 
   [4]: {
@@ -125,6 +143,10 @@ export const levels = {
       { x: 1, y: 7 },
     ],
     enemies: [],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Мне нужно дойти до финиша', required: true },
+      { type: 'gems', name: 'Собрать алмазы', heroText: 'Давай соберём все алмазы', required: false },
+    ]
   },
 
   [5]: {
@@ -152,5 +174,10 @@ export const levels = {
       { x: 0, y: 1, alive: true, name: "John" },
       { x: 2, y: 5, alive: true, name: "Greg" },
     ],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Проведи меня до финиша', required: true },
+      { type: 'enemies', name: 'Победить всех врагов', heroText: 'Дорогу пригродили враги, надо их уничтожить', required: true },
+      { type: 'gems', name: 'Собрать алмаз', heroText: 'Было бы неплохо собрать алмаз по пути', required: false },
+    ]
   },
 };
