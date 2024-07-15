@@ -82,21 +82,11 @@ export const Level = () => {
   const fetchLevelData = async () => {
     const { data } = await axios.get(`http://localhost:9000/level/${id}`);
 
-    const initialGoals = [{ value: 'Я должен пройти\nпо этой дороге ' }];
-
-    if (data.gems.length > 0) {
-      initialGoals.push({ value: 'Неплохо было бы собрать\nалмазы по пути' });
-    }
-
-    if (data.linesGoal) {
-      initialGoals.push({
-        value: `Использовать не более\n${data.linesGoal} строк кода`,
-      });
-    }
+    const goals = data.goals.map((goal) => ({ value: goal.heroText }));
 
     setInitialLevelData({ ...data });
     setLevelData({ ...data });
-    setHeroTexts(initialGoals);
+    setHeroTexts(goals);
   };
 
   const fetchInstructions = async () => {
@@ -205,9 +195,8 @@ export const Level = () => {
   };
 
   const execCommands = async () => {
-    const { commands, gameplayError, hasFinished } =
-      executionData.current;
-    
+    const { commands, gameplayError, hasFinished } = executionData.current;
+
     if (commands.length === 0) {
       setHeroTextsForGameplayError(gameplayError);
     }
@@ -250,28 +239,32 @@ export const Level = () => {
 
     if (gameplayError?.type === GameplayErrorTypes.HERO_RAN_IN_ENEMY) {
       setHeroTexts([
-        { value: 'Я не могу туда идти, \n этот злой рыцарь меня побьёт' },
+        { value: 'Я не могу туда идти,\nэтот злой рыцарь меня побьёт' },
       ]);
     }
 
     if (gameplayError?.type === GameplayErrorTypes.NO_ENEMIES_TO_ATTACK) {
       setHeroTexts([
-        { value: 'На этом уровне нет врагов, \n мне некого атаковать' },
+        { value: 'На этом уровне нет врагов,\nмне некого атаковать' },
       ]);
     }
 
     if (gameplayError?.type === GameplayErrorTypes.NO_ENEMY_WITH_GIVEN_NAME) {
       setHeroTexts([
-        { value: `На этом уровне нет врага по имени ${gameplayError.name}, \n мне некого атаковать` },
+        {
+          value: `На этом уровне\nнет врага по имени ${gameplayError.name},\nмне некого атаковать`,
+        },
       ]);
     }
 
     if (gameplayError?.type === GameplayErrorTypes.ENEMY_TOO_FAR) {
       setHeroTexts([
-        { value: `Я не могу атаковать ${gameplayError.name}, \n потому что он слишком далеко` },
+        {
+          value: `Я не могу атаковать ${gameplayError.name},\nпотому что он слишком далеко`,
+        },
       ]);
     }
-  }
+  };
 
   const resetData = () => {
     setHeroTexts([]);
@@ -353,7 +346,8 @@ export const Level = () => {
   } = initialLevelData.current;
   const trees = walls.filter((wall) => wall.type === 'tree');
   const rocks = walls.filter((wall) => wall.type === 'rock');
-  const executingLine = executionData.current?.commands[executingCommand.current]?.start.line;
+  const executingLine =
+    executionData.current?.commands[executingCommand.current]?.start.line;
   const { cells, cellsBottom } = prepareCells(grid);
 
   return (

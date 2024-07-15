@@ -38,9 +38,9 @@ export const levels = {
     ],
     enemies: [{ x: 5, y: 2, alive: true, name: "Vlad" }],
     goals: [
-      { type: 'finish', name: 'Добраться до финиша', heroText: 'Мне нужно добраться до финиша', required: true },
-      { type: 'lines', name: 'Использовать не больше 3 строк кода', heroText: 'Использовать не больше 3 строк кода', linesCount: 3, required: true },
-      { type: 'gems', name: 'Собрать все алмазы', heroText: 'Неплохо было бы собрать алмазы по пути', required: false },
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Мне нужно добраться\nдо финиша', required: true },
+      { type: 'lines', name: 'Использовать не больше 3 строк кода', heroText: 'Использовать не больше\n3 строк кода', linesCount: 3, required: true },
+      { type: 'gems', name: 'Собрать все алмазы', heroText: 'Неплохо было бы собрать\nалмазы по пути', required: false },
     ]
   },
 
