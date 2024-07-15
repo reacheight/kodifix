@@ -36,6 +36,30 @@ export default class LevelRunner {
       this.pushNewCommand(`attack`, { target: targetName });
     },
 
+    switch: (leverName) => {
+      if (!this.level.levers || this.level.levers.length === 0) {
+        this.gameplayError = { type: GameplayErrorTypes.NO_LEVERS };
+        return;
+      }
+
+      const lever = this.level.levers.find(l => l.name === leverName);
+      if (!lever) {
+        this.gameplayError = { type: GameplayErrorTypes.NO_LEVER_WITH_GIVEN_NAME, name: leverName };
+        return;
+      }
+
+      if (Math.abs(lever.x - this.level.hero.x) > 1 || Math.abs(lever.y - this.level.hero.y) > 1) {
+        this.gameplayError = { type: GameplayErrorTypes.LEVER_TOO_FAR, name: leverName };
+        return;
+      }
+
+      lever.enabled = !lever.enabled;
+      const bridge = this.level.bridges.find(bridge => bridge.id === lever.activatesId);
+      bridge.activated = lever.enabled;
+
+      this.pushNewCommand("switch", { activatableId: lever.activatesId });
+    },
+
     find_nearest_enemy: () => {
       if (!this.level.enemies || this.level.enemies.length === 0)
         return;
@@ -138,7 +162,7 @@ export default class LevelRunner {
     }
   }
 
-  updateHeroPos(newHeroPosition, commandName) {
+  updateHeroPos(newHeroPosition, moveCommandName) {
     while (!arePointsEqual(newHeroPosition, this.level.hero)) {
       this.level.hero.x += Math.sign(newHeroPosition.x - this.level.hero.x);
       this.level.hero.y += Math.sign(newHeroPosition.y - this.level.hero.y);
@@ -153,7 +177,7 @@ export default class LevelRunner {
         return;
       }
 
-      this.pushNewCommand(commandName);
+      this.pushNewCommand(moveCommandName);
 
       if (this.level.gems) {
         let takenGem = this.level.gems.find(g => arePointsEqual(g, this.level.hero) && !g.taken)
@@ -183,7 +207,17 @@ export default class LevelRunner {
   }
 
   isPointHitWall(point) {
-    return this.level.walls && this.level.walls.some(wall => arePointsEqual(wall, point));
+    return this.level.walls && this.level.walls.some(wall => arePointsEqual(wall, point)) && !this.isActiveBridgePoint(point);
+  }
+
+  isActiveBridgePoint(point) {
+    return this.level.bridges.filter(bridge => bridge.activated).some(bridge => {
+      if (bridge.vertical) {
+        return bridge.start.y === point.y && bridge.start.x <= point.x && point.x <= bridge.end.x;
+      } else {
+        return bridge.start.x === point.x && bridge.start.y <= point.y && point.y <= bridge.end.y;
+      }
+    })
   }
 
   getAliveEnemyAtPoint(point) {

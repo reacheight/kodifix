@@ -15,6 +15,7 @@ import {
   Rock,
   Water,
   Gem,
+  Lever,
   MapBottom,
   Finish,
 } from './styled';
@@ -342,6 +343,7 @@ export const Level = () => {
     height,
     hero: initialHero,
     walls,
+    levers,
     grid,
     finish,
   } = initialLevelData.current;
@@ -418,6 +420,15 @@ export const Level = () => {
                 heroX={hero.x}
                 heroY={hero.y}
                 collected={gem.collected}
+              />
+            ))}
+            {levers.map((lever) => (
+              <Lever
+                key={`${lever.x}${lever.y}`}
+                x={lever.x}
+                y={lever.y}
+                heroX={hero.x}
+                heroY={hero.y}
               />
             ))}
             {enemies.map((enemy) => (
