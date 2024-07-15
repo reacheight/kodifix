@@ -1,5 +1,5 @@
 import ErrorMessageMapper from './ErrorMessageMapper.js';
-import GameplayErrorTypes from './gameplayErrorTypes.js';
+import GameplayErrorTypes from './GameplayErrorTypes.js';
 import { getDistance, arePointsEqual, calculateCodeLines, Direction } from './utils.js';
 import esper from 'esper.js';
 
