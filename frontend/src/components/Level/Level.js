@@ -13,6 +13,7 @@ import {
   SandBottom,
   Tree,
   Rock,
+  Water,
   Gem,
   MapBottom,
   Finish,
@@ -346,6 +347,7 @@ export const Level = () => {
   } = initialLevelData.current;
   const trees = walls.filter((wall) => wall.type === 'tree');
   const rocks = walls.filter((wall) => wall.type === 'rock');
+  const water = walls.filter((wall) => wall.type === 'water');
   const executingLine =
     executionData.current?.commands[executingCommand.current]?.start.line;
   const { cells, cellsBottom } = prepareCells(grid);
@@ -395,6 +397,15 @@ export const Level = () => {
                 key={`${rock.x}${rock.y}`}
                 x={rock.x}
                 y={rock.y}
+                heroX={hero.x}
+                heroY={hero.y}
+              />
+            ))}
+            {water.map((water) => (
+              <Water
+                key={`${water.x}${water.y}`}
+                x={water.x}
+                y={water.y}
                 heroX={hero.x}
                 heroY={hero.y}
               />
