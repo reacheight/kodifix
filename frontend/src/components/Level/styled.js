@@ -8,6 +8,7 @@ import sandBottom from '../../assets/sand-bottom.svg';
 import tree from '../../assets/tree.svg';
 import rock from '../../assets/rock.svg';
 import gem from '../../assets/gem.svg';
+import water from '../../assets/water.svg';
 
 const pulsation = keyframes`
   0% {
@@ -154,6 +155,20 @@ export const Rock = styled.div`
   bottom: 20px;
 
   z-index: ${({ x, heroX }) => (x <= heroX ? 1 : 2)};
+
+  ${({ x, y }) => css`
+    grid-row-start: ${x + 1};
+    grid-row-end: ${x + 2};
+    grid-column-start: ${y + 1};
+    grid-column-end: ${y + 2};
+  `}
+`;
+
+export const Water = styled.div`
+  width: 50px;
+  height: 50px;
+  background: url(${water}) no-repeat center;
+  position: relative;
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};

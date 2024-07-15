@@ -35,6 +35,9 @@ export const levels = {
       { x: 5, y: 1, type: "rock" },
       { x: 5, y: 9, type: "rock" },
       { x: 11, y: 5, type: "rock" },
+
+      { x: 3, y: 6, type: "water" }, { x: 3, y: 7, type: "water" }, { x: 3, y: 8, type: "water" },
+      { x: 4, y: 6, type: "water" }, { x: 4, y: 7, type: "water" }, { x: 4, y: 8, type: "water" },
     ],
     enemies: [{ x: 5, y: 2, alive: true, name: "Vlad" }],
     goals: [
