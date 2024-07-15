@@ -39,6 +39,18 @@ export const levels = {
       { x: 3, y: 6, type: "water" }, { x: 3, y: 7, type: "water" }, { x: 3, y: 8, type: "water" },
       { x: 4, y: 6, type: "water" }, { x: 4, y: 7, type: "water" }, { x: 4, y: 8, type: "water" },
     ],
+    bridges: [
+      {
+        id: "bridge",
+        vertical: true,
+        start: { x: 3, y: 7 },
+        end: { x: 4, y: 7 },
+        activated: false,
+      },
+    ],
+    levers: [
+      { x: 6, y: 8, name: "Мост", activatesId: "bridge", enabled: false },
+    ],
     enemies: [{ x: 5, y: 2, alive: true, name: "Vlad" }],
     goals: [
       { type: 'finish', name: 'Добраться до финиша', heroText: 'Мне нужно добраться\nдо финиша', required: true },
@@ -70,7 +82,8 @@ export const levels = {
     goals: [
       { type: 'finish', name: 'Добраться до финиша', heroText: 'Помоги мне добраться до финиша', required: true },
       { type: 'gems', name: 'Собрать алмаз', heroText: 'Было бы неплохо собрать алмаз по пути', required: false },
-    ]
+    ],
+    levers: [],
   },
 
   [2]: {
@@ -97,7 +110,8 @@ export const levels = {
     goals: [
       { type: 'finish', name: 'Добраться до финиша', heroText: 'Мне нужно дойти до финиша', required: true },
       { type: 'gems', name: 'Собрать алмазы', heroText: 'Давай соберём все алмазы', required: false },
-    ]
+    ],
+    levers: [],
   },
 
   [3]: {
@@ -120,7 +134,8 @@ export const levels = {
       { type: 'finish', name: 'Добраться до финиша', heroText: 'Проведи меня до финиша', required: true },
       { type: 'lines', name: 'Использовать 1 строчку кода', heroText: 'Ты должен использовать только 1 строчку кода', linesCount: 1, required: true },
       { type: 'gems', name: 'Собрать алмаз', heroText: 'Давай соберём алмаз', required: false },
-    ]
+    ],
+    levers: [],
   },
 
   [4]: {
@@ -149,7 +164,8 @@ export const levels = {
     goals: [
       { type: 'finish', name: 'Добраться до финиша', heroText: 'Мне нужно дойти до финиша', required: true },
       { type: 'gems', name: 'Собрать алмазы', heroText: 'Давай соберём все алмазы', required: false },
-    ]
+    ],
+    levers: [],
   },
 
   [5]: {
@@ -181,6 +197,7 @@ export const levels = {
       { type: 'finish', name: 'Добраться до финиша', heroText: 'Проведи меня до финиша', required: true },
       { type: 'enemies', name: 'Победить всех врагов', heroText: 'Дорогу пригродили враги, надо их уничтожить', required: true },
       { type: 'gems', name: 'Собрать алмаз', heroText: 'Было бы неплохо собрать алмаз по пути', required: false },
-    ]
+    ],
+    levers: [],
   },
 };
