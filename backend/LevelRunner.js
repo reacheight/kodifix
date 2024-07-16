@@ -127,11 +127,12 @@ export default class LevelRunner {
     } catch (e) {
 
       let message = ErrorMessageMapper.map(e.message);
+      let line = e.loc.line ?? e.loc.start.line;
       return {
         errors: [
           {
             message,
-            loc: e.loc,
+            line,
           }
         ]
       }
