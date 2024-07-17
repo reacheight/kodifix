@@ -80,6 +80,7 @@ export const Level = () => {
   const [instructions, setInstructions] = useState(null);
   const [heroTexts, setHeroTexts] = useState([]);
   const [code, setCode] = useState(getInitialCode(id));
+  const [codeErrors, setCodeErrors] = useState(null);
 
   const fetchLevelData = async () => {
     const { data } = await axios.get(`http://localhost:9000/level/${id}`);
@@ -274,6 +275,7 @@ export const Level = () => {
     setLevelData({ ...initialLevelData.current });
     setExecutionData(null);
     setPausedCommand(null);
+    setCodeErrors(null);
   };
 
   const startGame = async () => {
@@ -291,7 +293,7 @@ export const Level = () => {
 
       await execCommands();
     } catch (error) {
-      console.error('Error running code:', error);
+      setCodeErrors(error.response.data.errors);
     } finally {
       setIsRunning(false);
     }
@@ -326,6 +328,11 @@ export const Level = () => {
     }
 
     resetData();
+  };
+
+  const changeCode = (value) => {
+    setCode(value);
+    setCodeErrors(null);
   };
 
   const openNextLevel = () => {
@@ -464,11 +471,13 @@ export const Level = () => {
       </MainWrapper>
       <CodeEditor
         code={code}
+        codeErrors={codeErrors}
         isRunning={isRunning.current}
         isPaused={isPaused.current}
         executingLine={executingLine}
         instructions={instructions}
-        onChange={setCode}
+        onCodeChange={changeCode}
+        onErrorsClear={() => setCodeErrors(null)}
       />
       {isScoreVisible && <LevelScore onContinue={openNextLevel} />}
     </Wrapper>

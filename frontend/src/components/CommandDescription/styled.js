@@ -1,4 +1,14 @@
-import styled, { css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const appearance = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
 
 export const Wrapper = styled.div`
   height: 214px;
@@ -15,12 +25,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-
-  ${({ visible }) =>
-    visible &&
-    css`
-      opacity: 1;
-    `}
+  animation: 300ms ${appearance} ease-in-out forwards;
 `;
 
 export const Top = styled.div`

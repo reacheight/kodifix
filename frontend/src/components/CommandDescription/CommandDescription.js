@@ -23,11 +23,11 @@ function extract(code) {
 }
 
 export const CommandDescription = ({ command }) => {
-  const title = command?.code ? extract(command.code) : null;
-  const example = command?.example ? extract(command.example) : null;
+  const title = command.code ? extract(command.code) : null;
+  const example = command.example ? extract(command.example) : null;
 
   return (
-    <Wrapper visible={!!command}>
+    <Wrapper>
       {title && (
         <Top>
           <Title>

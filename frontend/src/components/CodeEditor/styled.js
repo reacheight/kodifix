@@ -36,4 +36,14 @@ export const CodeMirrorWrapper = styled.div`
         `
       : null;
   }}
+
+  ${({ errorLine }) => {
+    return errorLine
+      ? css`
+          .cm-line:nth-child(${errorLine}) {
+            background-color: #9a3c31;
+          }
+        `
+      : null;
+  }}
 `;

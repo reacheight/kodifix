@@ -7,6 +7,7 @@ import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { AvailableCommands } from '../AvailableCommands/AvailableCommands';
 import React from 'react';
 import { useWindowSize } from '../../hooks/useWindowSize';
+import { CodeError } from '../CodeError/CodeError';
 
 const theme = vscodeDarkInit({
   styles: [{ tag: t.comment, color: 'rgba(255, 255, 255, 0.5)' }],
@@ -36,8 +37,10 @@ export const CodeEditor = ({
   isPaused,
   executingLine,
   code,
+  codeErrors,
   instructions,
-  onChange,
+  onCodeChange,
+  onErrorsClear,
 }) => {
   const { height: innerHeight } = useWindowSize();
 
@@ -57,28 +60,34 @@ export const CodeEditor = ({
   const width = '529px';
   const height = `${innerHeight - 20}px`;
 
-  const addCommand = (command) => onChange(code + '\n' + command);
+  const addCommand = (command) => onCodeChange(code + '\n' + command);
 
   return (
-    <CodeMirrorWrapper
-      highlightFocusedLine={!isRunning && !isPaused}
-      executingLine={executingLine}
-    >
-      <CodeMirror
-        autoFocus
-        value={code}
-        width={width}
-        height={height}
-        theme={theme}
-        readOnly={isRunning}
-        extensions={extensions}
-        basicSetup={basicSetup}
-        onChange={onChange}
-        selection={{ anchor: code.length }}
-      />
-      {instructions && (
-        <AvailableCommands commands={commands} onAdd={addCommand} />
+    <>
+      <CodeMirrorWrapper
+        errorLine={codeErrors?.[0].line}
+        highlightFocusedLine={!isRunning && !isPaused}
+        executingLine={executingLine}
+      >
+        <CodeMirror
+          autoFocus
+          value={code}
+          width={width}
+          height={height}
+          theme={theme}
+          readOnly={isRunning}
+          extensions={extensions}
+          basicSetup={basicSetup}
+          onChange={onCodeChange}
+          selection={{ anchor: code.length }}
+        />
+        {instructions && (
+          <AvailableCommands commands={commands} onAdd={addCommand} />
+        )}
+      </CodeMirrorWrapper>
+      {codeErrors && (
+        <CodeError codeErrors={codeErrors} onErrorsClear={onErrorsClear} />
       )}
-    </CodeMirrorWrapper>
+    </>
   );
 };

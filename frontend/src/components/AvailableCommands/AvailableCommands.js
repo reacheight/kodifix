@@ -34,7 +34,7 @@ export const AvailableCommands = ({ commands, onAdd }) => {
           </Command>
         ))}
       </CollapseContent>
-      <CommandDescription command={command} />
+      {command && <CommandDescription command={command} />}
     </Collapse>
   );
 };

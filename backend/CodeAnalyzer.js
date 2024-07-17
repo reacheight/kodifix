@@ -4,7 +4,7 @@ export default class CodeAnalyzer {
     if (noParenthesisMatch) {
       return [
         {
-          message: `Чтобы вызвать \'${noParenthesisMatch[0]}\', нужно добавить \'()\'.`,
+          message: `Чтобы вызвать \`${noParenthesisMatch[0]}\`, нужно добавить \`()\`.`,
           line: this.calculateLine(rawCode, noParenthesisMatch.index),
         }
       ]
@@ -14,7 +14,7 @@ export default class CodeAnalyzer {
     if (dashMatch) {
       return [
         {
-          message: `В методе \'${dashMatch[0]}\' должно быть \`_\` вместо \`-\`.`,
+          message: `В методе \`${dashMatch[0]}\` должно быть \`_\` вместо \`-\`.`,
           line: this.calculateLine(rawCode, dashMatch.index),
         }
       ]
