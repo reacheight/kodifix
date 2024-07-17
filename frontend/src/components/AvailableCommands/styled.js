@@ -7,17 +7,8 @@ export const Collapse = styled.div`
   background-color: #201d1b;
   color: #fff;
   position: relative;
-  transition: 300ms ease-in-out;
   z-index: 100;
-
-  ${({ isOpen }) =>
-    isOpen
-      ? css`
-          transform: translateY(-100%);
-        `
-      : css`
-          transform: translateY(-65px);
-        `}
+  transform: translateY(-20px);
 `;
 
 export const CollapseTitle = styled.div`

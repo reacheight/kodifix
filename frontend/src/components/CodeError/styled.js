@@ -14,13 +14,13 @@ export const Wrapper = styled.div`
   width: 470px;
   border-radius: 12px;
   border: 2px #4b4745 solid;
-  padding: 32px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   position: absolute;
   top: 0;
   right: 0;
-  gap: 24px;
+  gap: 12px;
   transform: translate(-564px, ${({ offset }) => 24 + offset}px);
   z-index: 100;
   background-color: #2a2623;
@@ -60,7 +60,7 @@ export const Message = styled.div`
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 14px;
-  line-height: 42px;
+  line-height: 30px;
 `;
 
 export const Tag = styled.span`

@@ -5,7 +5,7 @@ import { tags as t } from '@lezer/highlight';
 import { python } from '@codemirror/lang-python';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { AvailableCommands } from '../AvailableCommands/AvailableCommands';
-import React from 'react';
+import React, { useState } from 'react';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { CodeError } from '../CodeError/CodeError';
 
@@ -42,6 +42,7 @@ export const CodeEditor = ({
   onCodeChange,
   onErrorsClear,
 }) => {
+  const [isCommandsOpen, setIsCommandsOpen] = useState(false);
   const { height: innerHeight } = useWindowSize();
 
   const commands = [...instructions.newCommands, ...instructions.prevCommands];
@@ -58,9 +59,11 @@ export const CodeEditor = ({
     }),
   ];
   const width = '529px';
-  const height = `${innerHeight - 20}px`;
+  const height = `${innerHeight - (isCommandsOpen ? 268 : 65)}px`;
 
   const addCommand = (command) => onCodeChange(code + '\n' + command);
+
+  const toggleCommands = () => setIsCommandsOpen(!isCommandsOpen);
 
   return (
     <>
@@ -82,12 +85,17 @@ export const CodeEditor = ({
           selection={{ anchor: code.length }}
         />
         {instructions && (
-          <AvailableCommands commands={commands} onAdd={addCommand} />
+          <AvailableCommands
+            isOpen={isCommandsOpen}
+            commands={commands}
+            onAdd={addCommand}
+            onToggle={toggleCommands}
+          />
+        )}
+        {codeErrors && (
+          <CodeError codeErrors={codeErrors} onErrorsClear={onErrorsClear} />
         )}
       </CodeMirrorWrapper>
-      {codeErrors && (
-        <CodeError codeErrors={codeErrors} onErrorsClear={onErrorsClear} />
-      )}
     </>
   );
 };

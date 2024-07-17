@@ -10,13 +10,12 @@ import arrowIcon from '../../assets/arrow.svg';
 import addIcon from '../../assets/add.svg';
 import { CommandDescription } from '../CommandDescription/CommandDescription';
 
-export const AvailableCommands = ({ commands, onAdd }) => {
-  const [isOpen, setIsOpen] = useState(true);
+export const AvailableCommands = ({ isOpen, commands, onAdd, onToggle }) => {
   const [command, setCommand] = useState(null);
 
   return (
     <Collapse isOpen={isOpen}>
-      <CollapseTitle onClick={() => setIsOpen(!isOpen)}>
+      <CollapseTitle onClick={onToggle}>
         Доступные команды
         <CollapseIcon isOpen={isOpen}>
           <img src={arrowIcon} alt="arrow" />

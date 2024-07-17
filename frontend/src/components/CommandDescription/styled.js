@@ -11,9 +11,8 @@ const appearance = keyframes`
 `;
 
 export const Wrapper = styled.div`
-  height: 214px;
   width: 470px;
-  padding: 32px;
+  padding: 16px;
   background-color: #2a2623;
   border-radius: 12px;
   border: 2px #4b4745 solid;

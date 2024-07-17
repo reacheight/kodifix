@@ -8,12 +8,27 @@ export const CodeMirrorWrapper = styled.div`
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     background: #2a2623;
+    padding-bottom: 20px;
+    transition: 0.5s ease-in-out;
   }
 
   .cm-gutters {
     border-top-left-radius: 16px;
     background: #2f2b29;
     overflow: hidden;
+  }
+
+  .cm-scroller {
+    &::-webkit-scrollbar {
+      width: 14px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 20px;
+      border: 4px solid transparent;
+      background-clip: content-box;
+    }
   }
 
   ${({ highlightFocusedLine }) => {
