@@ -9,7 +9,7 @@ import CodeAnalyzer from './CodeAnalyzer.js';
 
 esper.plugin('lang-python');
 
-const port = 9000;
+const port = process.env.KODIFIX_PORT ?? 9000;
 const app = express();
 app.use(express.json());
 app.use(cors);
