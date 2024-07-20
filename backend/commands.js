@@ -1,0 +1,21 @@
+const movingConstants = [['up', 'вверх'], ['down', 'вниз'], ['right', 'вправо'], ['left', 'влево']];
+
+export const shortMovingCommands = movingConstants.map(constants => ({
+    code: `hero.move_${constants[0]}()`,
+    description: `перемещает героя на 1 шаг ${constants[1]}`,
+    example: `hero.move_${constants[0]}()`,
+}));
+
+export const longMovingCommands = movingConstants.map(constants => ({
+    code: `hero.move_${constants[0]}(steps)`,
+    description: `перемещает героя на \`steps\` шагов ${constants[1]}`,
+    example: `hero.move_${constants[0]}()`,
+    autocompleteValue: `hero.move_${constants[0]}(#{1})`,
+}));
+
+export const attackCommand = {
+    code: 'hero.attack(enemy)',
+    description: 'атакует врага по имени `enemy`, если он находится рядом',
+    example: 'hero.attack("John")',
+    autocompleteValue: 'hero.attack(${1})',
+};
