@@ -1,6 +1,6 @@
 import { CodeMirrorWrapper } from './styled';
 import CodeMirror from '@uiw/react-codemirror';
-import { autocompletion } from '@codemirror/autocomplete';
+import { autocompletion, snippetCompletion } from '@codemirror/autocomplete';
 import { tags as t } from '@lezer/highlight';
 import { python } from '@codemirror/lang-python';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
@@ -46,10 +46,8 @@ export const CodeEditor = ({
   const { height: innerHeight } = useWindowSize();
 
   const commands = [...instructions.newCommands, ...instructions.prevCommands];
-  const options = commands.map((command) => ({
-    type: 'text',
+  const options = commands.map((command) => snippetCompletion(command.autocompleteValue ?? command.code, {
     label: command.code,
-    apply: command.code,
     detail: command.description,
   }));
   const extensions = [

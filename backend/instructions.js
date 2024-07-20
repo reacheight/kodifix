@@ -50,33 +50,33 @@ hero.move_right()`,
     example: `hero.move_down(3)
 hero.move_right(2)`,
     newCommands: [
-      { code: 'hero.move_up(steps)', description: 'перемещает героя на `steps` шагов вверх', example: 'hero.move_up(3)' },
-      { code: 'hero.move_down(steps)', description: 'перемещает героя на `steps` шагов вниз', example: 'hero.move_down(3)' },
-      { code: 'hero.move_right(steps)', description: 'перемещает героя на `steps` шагов вправо', example: 'hero.move_right(3)' },
-      { code: 'hero.move_left(steps)', description: 'перемещает героя на `steps` шагов влево', example: 'hero.move_left(3)' },
+      { code: 'hero.move_up(steps)', description: 'перемещает героя на `steps` шагов вверх', example: 'hero.move_up(3)', autocompleteValue: 'hero.move_up(#{1})' },
+      { code: 'hero.move_down(steps)', description: 'перемещает героя на `steps` шагов вниз', example: 'hero.move_down(3)', autocompleteValue: 'hero.move_down(#{1})' },
+      { code: 'hero.move_right(steps)', description: 'перемещает героя на `steps` шагов вправо', example: 'hero.move_right(3)', autocompleteValue: 'hero.move_right(#{1})' },
+      { code: 'hero.move_left(steps)', description: 'перемещает героя на `steps` шагов влево', example: 'hero.move_left(3)', autocompleteValue: 'hero.move_left(#{1})' },
     ],
     prevCommands: [],
   },
   [4]: {
     newCommands: [],
     prevCommands: [
-      { code: 'hero.move_up(steps)', description: 'перемещает героя на `steps` шагов вверх', example: 'hero.move_up(3)' },
-      { code: 'hero.move_down(steps)', description: 'перемещает героя на `steps` шагов вниз', example: 'hero.move_down(3)' },
-      { code: 'hero.move_right(steps)', description: 'перемещает героя на `steps` шагов вправо', example: 'hero.move_right(3)' },
-      { code: 'hero.move_left(steps)', description: 'перемещает героя на `steps` шагов влево', example: 'hero.move_left(3)' },
+      { code: 'hero.move_up(steps)', description: 'перемещает героя на `steps` шагов вверх', example: 'hero.move_up(3)', autocompleteValue: 'hero.move_up(#{1})' },
+      { code: 'hero.move_down(steps)', description: 'перемещает героя на `steps` шагов вниз', example: 'hero.move_down(3)', autocompleteValue: 'hero.move_down(#{1})' },
+      { code: 'hero.move_right(steps)', description: 'перемещает героя на `steps` шагов вправо', example: 'hero.move_right(3)', autocompleteValue: 'hero.move_right(#{1})' },
+      { code: 'hero.move_left(steps)', description: 'перемещает героя на `steps` шагов влево', example: 'hero.move_left(3)', autocompleteValue: 'hero.move_left(#{1})' },
     ],
   },
   [5]: {
     instructions: 'Текст в кавычках называют строкой. Передай строку с именем врага в метод `attack`, чтобы ударить его своим посохом. Но имей в виду, что враг должен находиться на соседней с твоим персонажем клетке.',
     example: `hero.attack("John")`,
     newCommands: [
-      { code: 'hero.attack(enemy)', description: 'атакует врага по имени `enemy`, если он находится рядом', example: 'hero.attack("John")'}
+      { code: 'hero.attack(enemy)', description: 'атакует врага по имени `enemy`, если он находится рядом', example: 'hero.attack("John")', autocompleteValue: 'hero.attack(${1})'}
     ],
     prevCommands: [
-      { code: 'hero.move_up(steps)', description: 'перемещает героя на `steps` шагов вверх', example: 'hero.move_up(3)' },
-      { code: 'hero.move_down(steps)', description: 'перемещает героя на `steps` шагов вниз', example: 'hero.move_down(3)' },
-      { code: 'hero.move_right(steps)', description: 'перемещает героя на `steps` шагов вправо', example: 'hero.move_right(3)' },
-      { code: 'hero.move_left(steps)', description: 'перемещает героя на `steps` шагов влево', example: 'hero.move_left(3)' },
+      { code: 'hero.move_up(steps)', description: 'перемещает героя на `steps` шагов вверх', example: 'hero.move_up(3)', autocompleteValue: 'hero.move_up(#{1})' },
+      { code: 'hero.move_down(steps)', description: 'перемещает героя на `steps` шагов вниз', example: 'hero.move_down(3)', autocompleteValue: 'hero.move_down(#{1})' },
+      { code: 'hero.move_right(steps)', description: 'перемещает героя на `steps` шагов вправо', example: 'hero.move_right(3)', autocompleteValue: 'hero.move_right(#{1})' },
+      { code: 'hero.move_left(steps)', description: 'перемещает героя на `steps` шагов влево', example: 'hero.move_left(3)', autocompleteValue: 'hero.move_left(#{1})' },
     ],
   }
 }
