@@ -122,6 +122,11 @@ body {
   justify-content: space-between;
   font-size: 22px;
 
+  h3 {
+    font-weight: 400;
+    font-size: 22px;
+  }
+
   .text {
     align-content: center;
   }
