@@ -211,6 +211,67 @@ export const levels = {
   },
 
   [6]: {
+    height: 7,
+    width: 9,
+    grid: [
+      ["lawn","lawn","grass","lawn","lawn","lawn","lawn","sand","lawn",],
+      ["sand","sand","sand","lawn","lawn","lawn","sand","sand","lawn",],
+      ["lawn","sand","lawn","lawn","lawn","lawn","grass","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["sand","grass","sand","sand","lawn","sand","sand","sand","grass",],
+      ["lawn","grass","lawn","sand","sand","sand","lawn","lawn","sand",],
+    ],
+    hero: { x: 1, y: 0 },
+    finish: { x: 6, y: 8 },
+    gems: [
+      { x: 1, y: 7 },
+    ],
+    walls: [
+      { x: 0, y: 3, type: 'water' }, { x: 0, y: 4, type: 'water' }, { x: 0, y: 5, type: 'water' },
+      { x: 1, y: 3, type: 'water' }, { x: 1, y: 4, type: 'water' }, { x: 1, y: 5, type: 'water' },  
+      { x: 2, y: 3, type: 'water' }, { x: 2, y: 4, type: 'water' }, { x: 2, y: 5, type: 'water' },
+      { x: 3, y: 0, type: 'water' }, { x: 3, y: 1, type: 'water' }, { x: 3, y: 2, type: 'water' }, { x: 3, y: 3, type: 'water' }, { x: 3, y: 4, type: 'water' }, { x: 3, y: 5, type: 'water' }, { x: 3, y: 6, type: 'water' }, { x: 3, y: 7, type: 'water' }, { x: 3, y: 8, type: 'water' },
+      { x: 4, y: 0, type: 'water' }, { x: 4, y: 1, type: 'water' }, { x: 4, y: 2, type: 'water' }, { x: 4, y: 3, type: 'water' }, { x: 4, y: 4, type: 'water' }, { x: 4, y: 5, type: 'water' }, { x: 4, y: 6, type: 'water' }, { x: 4, y: 7, type: 'water' }, { x: 4, y: 8, type: 'water' },
+
+      { x: 0, y: 6, type: 'tree' }, { x: 0, y: 8, type: 'tree' },
+      { x: 6, y: 0, type: 'tree' }, 
+    ],
+    enemies: [],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша на другом берегу', heroText: 'Мне надо как-то перебраться через реку.\nМожет, этот рычаг мне поможет?', required: true },
+      { type: 'gems', name: 'Собрать алмаз', heroText: 'Было бы неплохо собрать алмаз по пути', required: false },
+    ],
+    levers: [
+      { x: 2, y: 2, name: "Мост1", activatesId: "bridge1", enabled: false },
+      { x: 1, y: 8, name: "Мост2", activatesId: "bridge2", enabled: false },
+    ],
+    bridges: [
+      {
+        id: "bridge1",
+        vertical: false,
+        start: { x: 1, y: 3 },
+        end: { x: 1, y: 5 },
+        activated: false,
+      },
+      {
+        id: "bridge2",
+        vertical: true,
+        start: { x: 3, y: 1 },
+        end: { x: 4, y: 1 },
+        activated: false,
+      },
+      {
+        id: "fakeBridge",
+        vertical: true,
+        start: { x: 3, y: 7 },
+        end: { x: 4, y: 7 },
+        activated: false,
+      },
+    ],
+  },
+
+  [7]: {
     height: 3,
     width: 8,
     grid: [

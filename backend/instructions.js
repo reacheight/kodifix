@@ -48,5 +48,10 @@ hero.move_right(2)`,
     example: `hero.switch("Мост")`,
     newCommands: [ switchCommand ],
     prevCommands: longMovingCommands,
+  },
+
+  [6]: {
+    newCommands: [],
+    prevCommands: longMovingCommands.concat([ switchCommand ]),
   }
 }
