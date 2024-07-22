@@ -19,3 +19,10 @@ export const attackCommand = {
     example: 'hero.attack("John")',
     autocompleteValue: 'hero.attack(${1})',
 };
+
+export const switchCommand = {
+    code: 'hero.switch(lever)',
+    description: 'переключает рычаг с названием `lever`, если он находится рядом',
+    example: 'hero.switch("Рычаг")',
+    autocompleteValue: 'hero.switch(${1})',
+}

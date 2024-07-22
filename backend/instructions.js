@@ -1,4 +1,4 @@
-import { shortMovingCommands, longMovingCommands, attackCommand } from "./commands.js"
+import { shortMovingCommands, longMovingCommands, switchCommand } from "./commands.js"
 
 export const instructions = {
   [0]: {
@@ -44,9 +44,9 @@ hero.move_right(2)`,
     prevCommands: longMovingCommands,
   },
   [5]: {
-    instructions: 'Текст в кавычках называют строкой. Передай строку с именем врага в метод `attack`, чтобы ударить его своим посохом. Но имей в виду, что враг должен находиться на соседней с твоим персонажем клетке.',
-    example: `hero.attack("John")`,
-    newCommands: [ attackCommand ],
+    instructions: 'Текст в кавычках, например "Рычаг", называют строкой. Строки так же можно передавать в методы. Передай строку с названием рычага в метод `switch`, чтобы переключить его, и посмотри, что произойдёт. Но имей в виду: чтобы дотянуться до рычага, герой должен находиться на соседней с ним клетке.',
+    example: `hero.switch("Мост")`,
+    newCommands: [ switchCommand ],
     prevCommands: longMovingCommands,
   }
 }

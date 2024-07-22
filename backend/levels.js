@@ -170,6 +170,48 @@ export const levels = {
 
   [5]: {
     height: 3,
+    width: 9,
+    grid: [
+      ["lawn","lawn","lawn","grass","lawn","lawn","lawn","sand","lawn",],
+      ["sand","sand","grass","lawn","lawn","lawn","lawn","sand","lawn",],
+      ["lawn","sand","sand","sand","lawn","lawn","sand","sand","sand",],
+      ["lawn","grass","lawn","lawn","lawn","lawn","lawn","sand","lawn",],
+    ],
+    hero: { x: 2, y: 0 },
+    finish: { x: 2, y: 8 },
+    gems: [
+      { x: 1, y: 6 },
+    ],
+    walls: [
+      { x: 0, y: 3, type: 'water' }, { x: 0, y: 4, type: 'water' }, { x: 0, y: 5, type: 'water' },
+      { x: 1, y: 3, type: 'water' }, { x: 1, y: 4, type: 'water' }, { x: 1, y: 5, type: 'water' },  
+      { x: 2, y: 3, type: 'water' }, { x: 2, y: 4, type: 'water' }, { x: 2, y: 5, type: 'water' },
+      { x: 3, y: 3, type: 'water' }, { x: 3, y: 4, type: 'water' }, { x: 3, y: 5, type: 'water' },
+
+      { x: 0, y: 0, type: 'tree' }, { x: 0, y: 2, type: 'tree' },
+      { x: 0, y: 7, type: 'tree' }, { x: 1, y: 8, type: 'tree' },
+    ],
+    enemies: [],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша на другом берегу', heroText: 'Мне надо как-то перебраться через реку.\nМожет, этот рычаг мне поможет?', required: true },
+      { type: 'gems', name: 'Собрать алмаз', heroText: 'Было бы неплохо собрать алмаз по пути', required: false },
+    ],
+    levers: [
+      { x: 3, y: 2, name: "Мост", activatesId: "bridge", enabled: false }
+    ],
+    bridges: [
+      {
+        id: "bridge",
+        vertical: false,
+        start: { x: 2, y: 3 },
+        end: { x: 2, y: 5 },
+        activated: false,
+      },
+    ],
+  },
+
+  [6]: {
+    height: 3,
     width: 8,
     grid: [
       ["lawn","lawn","lawn","grass","lawn","lawn","lawn","lawn",],
