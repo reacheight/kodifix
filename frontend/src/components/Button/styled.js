@@ -29,7 +29,7 @@ export const ButtonFront = styled.div`
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-family: 'ProstoOne', sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;

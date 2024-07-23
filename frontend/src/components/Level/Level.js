@@ -34,6 +34,7 @@ import { delay } from '../../utils/delay';
 import { copy } from '../../utils/copy';
 import { LevelScore } from '../LevelScore/LevelScore';
 import GameplayErrorTypes from '../../utils/GameplayErrorTypes';
+import { LevelGuide } from '../LevelGuide/LevelGuide';
 
 const getInitialCode = (level) =>
   localStorage.getItem(`code-level-${level}`) ||
@@ -73,7 +74,8 @@ export const Level = () => {
   const [isRunning, setIsRunning] = useRefState(false);
   const [isPaused, setIsPaused] = useRefState(false);
   const [isMoving, setIsMoving] = useRefState(false);
-  const [isScoreVisible, setIsScoreVisible] = useState(false);
+  const [isLevelGuideOpen, setIsLevelGuideOpen] = useState(false);
+  const [isScoreOpen, setIsScoreOpen] = useState(false);
   const [executionData, setExecutionData] = useRefState(null);
   const [executingCommand, setExecutingCommand] = useRefState(null);
   const [pausedCommand, setPausedCommand] = useRefState(null);
@@ -82,14 +84,18 @@ export const Level = () => {
   const [code, setCode] = useState(getInitialCode(id));
   const [codeErrors, setCodeErrors] = useState(null);
 
+  const hasLevelGuid = (data) => data.instructions || data.example || data.newCommands?.length;
+
+  const showHeroGoals = () => {
+    const goals = initialLevelData.current.goals.map((goal) => ({ value: goal.heroText }));
+    setHeroTexts(goals);
+  }
+
   const fetchLevelData = async () => {
     const { data } = await axios.get(`http://localhost:9000/level/${id}`);
 
-    const goals = data.goals.map((goal) => ({ value: goal.heroText }));
-
     setInitialLevelData({ ...data });
     setLevelData({ ...data });
-    setHeroTexts(goals);
   };
 
   const fetchInstructions = async () => {
@@ -98,6 +104,12 @@ export const Level = () => {
     );
 
     setInstructions(data);
+
+    if (hasLevelGuid(data)) {
+      setIsLevelGuideOpen(true);
+    } else {
+      showHeroGoals();
+    }
   };
 
   const resetAllData = () => {
@@ -107,7 +119,7 @@ export const Level = () => {
     setIsRunning(false);
     setIsPaused(false);
     setIsMoving(false);
-    setIsScoreVisible(false);
+    setIsScoreOpen(false);
     setExecutionData(null);
     setExecutingCommand(null);
     setPausedCommand(null);
@@ -117,9 +129,11 @@ export const Level = () => {
   };
 
   useEffect(() => {
-    resetAllData();
-    fetchLevelData();
-    fetchInstructions();
+    (async () => {
+      resetAllData();
+      await fetchLevelData();
+      await fetchInstructions();
+    })()
   }, [id]);
 
   const executeCommand = async (command, i) => {
@@ -230,7 +244,7 @@ export const Level = () => {
         ]);
         await delay(1500);
         new Audio(victory).play();
-        setIsScoreVisible(true);
+        setIsScoreOpen(true);
       }
     }
   };
@@ -338,6 +352,16 @@ export const Level = () => {
   const openNextLevel = () => {
     navigate(`/level/${Number(id) + 1}`, { replace: true });
   };
+
+  const openLevelGuide = () => {
+    setIsLevelGuideOpen(true);
+    setHeroTexts([]);
+  };
+
+  const closeLevelGuide = () => {
+    setIsLevelGuideOpen(false);
+    showHeroGoals();
+  }
 
   // без данных выводить фон и редактор
   if ((!initialLevelData.current && !levelData.current) || !instructions) {
@@ -467,6 +491,7 @@ export const Level = () => {
           onPause={pauseGame}
           onContinue={continueGame}
           onStop={stopGame}
+          onLevelGuideOpen={hasLevelGuid(instructions) ? openLevelGuide : undefined}
         />
       </MainWrapper>
       <CodeEditor
@@ -479,7 +504,14 @@ export const Level = () => {
         onCodeChange={changeCode}
         onErrorsClear={() => setCodeErrors(null)}
       />
-      {isScoreVisible && <LevelScore onContinue={openNextLevel} />}
+      {isLevelGuideOpen && (
+        <LevelGuide
+          level={id}
+          data={instructions}
+          onClose={closeLevelGuide}
+        />
+      )}
+      {isScoreOpen && <LevelScore onContinue={openNextLevel} />}
     </Wrapper>
   );
 };

@@ -10,17 +10,7 @@ import {
   ExampleCode,
 } from './styled';
 
-function extract(code) {
-  const index = code.indexOf('(');
-
-  if (index) {
-    const name = code.slice(0, index);
-    const brackets = code.slice(index + 1, -1);
-    return { name, brackets: `(${brackets})` };
-  }
-
-  return null;
-}
+import { extract } from '../../utils/extract'
 
 export const CommandDescription = ({ command }) => {
   const title = command.code ? extract(command.code) : null;

@@ -14,9 +14,10 @@ export const Collapse = styled.div`
 export const CollapseTitle = styled.div`
   display: flex;
   justify-content: space-between;
-  font-family: 'ProstoOne', sans-serif;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
   font-size: 20px;
-  line-height: 24px;
+  line-height: 27px;
   margin-bottom: 20px;
   cursor: pointer;
   user-select: none;

@@ -46,10 +46,12 @@ export const CodeEditor = ({
   const { height: innerHeight } = useWindowSize();
 
   const commands = [...instructions.newCommands, ...instructions.prevCommands];
-  const options = commands.map((command) => snippetCompletion(command.autocompleteValue ?? command.code, {
-    label: command.code,
-    detail: command.description,
-  }));
+  const options = commands.map((command) =>
+    snippetCompletion(command.autocompleteValue ?? command.code, {
+      label: command.code,
+      detail: command.description,
+    }),
+  );
   const extensions = [
     python(),
     autocompletion({

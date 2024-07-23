@@ -14,6 +14,7 @@ export const Controls = ({
   onContinue,
   onPause,
   onStop,
+  onLevelGuideOpen,
 }) => {
   return (
     <Wrapper>
@@ -61,10 +62,12 @@ export const Controls = ({
       </LeftButtons>
 
       <Button
+        disabled={!onLevelGuideOpen}
         topColor="#06719F"
         frontColor="#0AA1E2"
         icon={questionsIcon}
         alt="questions"
+        onClick={onLevelGuideOpen}
       />
     </Wrapper>
   );

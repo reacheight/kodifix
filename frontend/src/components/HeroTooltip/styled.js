@@ -4,7 +4,7 @@ import { Tooltip } from 'react-tooltip';
 
 export const StyledTooltip = styled(Tooltip)`
   &.react-tooltip {
-    font-family: 'ProstoOne', sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-size: 14px;
     line-height: 18px;
     color: #000;

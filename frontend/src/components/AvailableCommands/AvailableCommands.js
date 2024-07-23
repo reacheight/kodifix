@@ -6,7 +6,7 @@ import {
   CollapseTitle,
   Command,
 } from './styled';
-import arrowIcon from '../../assets/arrow.svg';
+import arrow1Icon from '../../assets/arrow-1.svg';
 import addIcon from '../../assets/add.svg';
 import { CommandDescription } from '../CommandDescription/CommandDescription';
 
@@ -18,7 +18,7 @@ export const AvailableCommands = ({ isOpen, commands, onAdd, onToggle }) => {
       <CollapseTitle onClick={onToggle}>
         Доступные команды
         <CollapseIcon isOpen={isOpen}>
-          <img src={arrowIcon} alt="arrow" />
+          <img src={arrow1Icon} alt="arrow" />
         </CollapseIcon>
       </CollapseTitle>
       <CollapseContent>

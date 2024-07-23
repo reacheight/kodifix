@@ -1,11 +1,11 @@
 @font-face {
-  font-family: 'ProstoOne';
-  src: local('ProstoOne'), url(assets/fonts/ProstoOne.ttf) format('truetype');
+  font-family: 'Inter';
+  src: local('Inter'), url(assets/fonts/Inter.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: local('Inter'), url(assets/fonts/Inter.ttf) format('truetype');
+  font-family: 'Nunito';
+  src: local('Nunito'), url(assets/fonts/Nunito.ttf) format('truetype');
 }
 
 * {

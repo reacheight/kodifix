@@ -25,7 +25,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Modal = styled.div`
-  font-family: 'ProstoOne', sans-serif;
+  font-family: 'Nunito', sans-serif;
   width: 440px;
   height: 408px;
   padding: 46px 68px;

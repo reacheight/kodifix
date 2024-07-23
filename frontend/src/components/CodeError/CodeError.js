@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Wrapper, Title, Divider, Message, Tag } from './styled';
-import closeIcon from '../../assets/close.svg';
+import close1Icon from '../../assets/close-1.svg';
 
 function splitStringOutsideQuotes(inputString) {
   const parts = [];
@@ -28,7 +28,7 @@ export const CodeError = ({ codeErrors, onErrorsClear }) => {
 
   return (
     <Wrapper offset={(error.line - 1) * 25.19}>
-      <img src={closeIcon} alt="close" onClick={() => onErrorsClear()} />
+      <img src={close1Icon} alt="close" onClick={() => onErrorsClear()} />
       <Title>Исправь свой код</Title>
       <Divider />
       <Message>
