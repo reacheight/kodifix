@@ -1,4 +1,4 @@
-import { shortMovingCommands, longMovingCommands, switchCommand } from "./commands.js"
+import { shortMovingCommands, longMovingCommands, switchCommand, attackCommand } from "./commands.js"
 
 export const instructions = {
   [0]: {
@@ -39,7 +39,14 @@ export const instructions = {
     prevCommands: longMovingCommands,
   },
   [6]: {
+    instructions: 'Отлично, ты уже далеко продвинулся!\n\nКстати, ты можешь крутить колесо мыши, чтобы увеличить или уменьшить уровень.',
     newCommands: [],
+    prevCommands: longMovingCommands.concat([ switchCommand ]),
+  },
+  [7]: {
+    instructions: 'Нам преградили дорогу злые рыцари! Придётся их проучить.\n\nПередай в метод `attack` строку с именем врага, чтобы его ударить. Как и с рычагом, твой герой должен находиться рядом с врагом, которого ты хочешь атаковать.',
+    example: `hero.attack("John")`,
+    newCommands: [ attackCommand ],
     prevCommands: longMovingCommands.concat([ switchCommand ]),
   }
 }
