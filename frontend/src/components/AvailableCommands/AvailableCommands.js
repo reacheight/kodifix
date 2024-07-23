@@ -10,6 +10,8 @@ import arrow1Icon from '../../assets/arrow-1.svg';
 import addIcon from '../../assets/add.svg';
 import { CommandDescription } from '../CommandDescription/CommandDescription';
 
+const formatCode = (code) => code.replace(/\(\w+\)/, '()');
+
 export const AvailableCommands = ({ isOpen, commands, onAdd, onToggle }) => {
   const [command, setCommand] = useState(null);
 
@@ -29,7 +31,11 @@ export const AvailableCommands = ({ isOpen, commands, onAdd, onToggle }) => {
             onMouseLeave={() => setCommand(null)}
           >
             {command.code}
-            <img src={addIcon} alt="add" onClick={() => onAdd(command.code)} />
+            <img
+              src={addIcon}
+              alt="add"
+              onClick={() => onAdd(formatCode(command.code))}
+            />
           </Command>
         ))}
       </CollapseContent>

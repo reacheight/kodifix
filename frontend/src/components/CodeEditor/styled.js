@@ -12,6 +12,10 @@ export const CodeMirrorWrapper = styled.div`
     transition: 0.5s ease-in-out;
   }
 
+  .cm-focused {
+    outline: none;
+  }
+
   .cm-gutters {
     border-top-left-radius: 16px;
     background: #2f2b29;

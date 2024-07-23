@@ -42,7 +42,7 @@ export const CollapseContent = styled.div`
   flex-direction: column;
   border-radius: 8px;
   background-color: #2a2623;
-  max-height: 264px;
+  max-height: 184px;
   overflow: auto;
 
   &::-webkit-scrollbar {

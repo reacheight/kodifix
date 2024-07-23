@@ -74,7 +74,7 @@ export const Level = () => {
   const [isRunning, setIsRunning] = useRefState(false);
   const [isPaused, setIsPaused] = useRefState(false);
   const [isMoving, setIsMoving] = useRefState(false);
-  const [isLevelGuideOpen, setIsLevelGuideOpen] = useState(false);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isScoreOpen, setIsScoreOpen] = useState(false);
   const [executionData, setExecutionData] = useRefState(null);
   const [executingCommand, setExecutingCommand] = useRefState(null);
@@ -84,12 +84,15 @@ export const Level = () => {
   const [code, setCode] = useState(getInitialCode(id));
   const [codeErrors, setCodeErrors] = useState(null);
 
-  const hasLevelGuid = (data) => data.instructions || data.example || data.newCommands?.length;
+  const hasGuid = (data) =>
+    data.instructions || data.example || data.newCommands?.length;
 
   const showHeroGoals = () => {
-    const goals = initialLevelData.current.goals.map((goal) => ({ value: goal.heroText }));
+    const goals = initialLevelData.current.goals.map((goal) => ({
+      value: goal.heroText,
+    }));
     setHeroTexts(goals);
-  }
+  };
 
   const fetchLevelData = async () => {
     const { data } = await axios.get(`http://localhost:9000/level/${id}`);
@@ -105,8 +108,8 @@ export const Level = () => {
 
     setInstructions(data);
 
-    if (hasLevelGuid(data)) {
-      setIsLevelGuideOpen(true);
+    if (hasGuid(data)) {
+      setIsGuideOpen(true);
     } else {
       showHeroGoals();
     }
@@ -133,7 +136,7 @@ export const Level = () => {
       resetAllData();
       await fetchLevelData();
       await fetchInstructions();
-    })()
+    })();
   }, [id]);
 
   const executeCommand = async (command, i) => {
@@ -353,15 +356,15 @@ export const Level = () => {
     navigate(`/level/${Number(id) + 1}`, { replace: true });
   };
 
-  const openLevelGuide = () => {
-    setIsLevelGuideOpen(true);
+  const openGuide = () => {
+    setIsGuideOpen(true);
     setHeroTexts([]);
   };
 
-  const closeLevelGuide = () => {
-    setIsLevelGuideOpen(false);
+  const closeGuide = () => {
+    setIsGuideOpen(false);
     showHeroGoals();
-  }
+  };
 
   // без данных выводить фон и редактор
   if ((!initialLevelData.current && !levelData.current) || !instructions) {
@@ -487,11 +490,12 @@ export const Level = () => {
         <Controls
           isRunning={isRunning.current}
           isPaused={isPaused.current}
+          hasGuide={hasGuid(instructions)}
           onStart={startGame}
           onPause={pauseGame}
           onContinue={continueGame}
           onStop={stopGame}
-          onLevelGuideOpen={hasLevelGuid(instructions) ? openLevelGuide : undefined}
+          onGuideOpen={openGuide}
         />
       </MainWrapper>
       <CodeEditor
@@ -504,12 +508,8 @@ export const Level = () => {
         onCodeChange={changeCode}
         onErrorsClear={() => setCodeErrors(null)}
       />
-      {isLevelGuideOpen && (
-        <LevelGuide
-          level={id}
-          data={instructions}
-          onClose={closeLevelGuide}
-        />
+      {isGuideOpen && (
+        <LevelGuide level={id} data={instructions} onClose={closeGuide} />
       )}
       {isScoreOpen && <LevelScore onContinue={openNextLevel} />}
     </Wrapper>
