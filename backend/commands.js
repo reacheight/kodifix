@@ -9,7 +9,7 @@ export const shortMovingCommands = movingConstants.map(constants => ({
 export const longMovingCommands = movingConstants.map(constants => ({
     code: `hero.move_${constants[0]}(steps)`,
     description: `перемещает героя на \`steps\` шагов ${constants[1]}`,
-    example: `hero.move_${constants[0]}()`,
+    example: `hero.move_${constants[0]}(3)`,
     autocompleteValue: `hero.move_${constants[0]}(#{1})`,
 }));
 
