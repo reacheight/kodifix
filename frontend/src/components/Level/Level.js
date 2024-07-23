@@ -15,7 +15,6 @@ import {
   Rock,
   Water,
   Gem,
-  Lever,
   MapBottom,
   Finish,
   Bridge,
@@ -31,6 +30,7 @@ import { useRefState } from '../../hooks/useRefState';
 import { Controls } from '../Controls/Controls';
 import { Hero } from '../Hero/Hero';
 import { Enemy } from '../Enemy/Enemy';
+import { Lever } from '../Lever/Lever';
 import { CodeEditor } from '../CodeEditor/CodeEditor';
 import { delay } from '../../utils/delay';
 import { copy } from '../../utils/copy';
@@ -524,6 +524,7 @@ export const Level = () => {
                 key={`${lever.x}${lever.y}`}
                 x={lever.x}
                 y={lever.y}
+                name={lever.name}
                 enabled={lever.enabled}
               />
             ))}

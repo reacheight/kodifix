@@ -9,7 +9,6 @@ import tree from '../../assets/tree.svg';
 import rock from '../../assets/rock.svg';
 import gem from '../../assets/gem.svg';
 import water from '../../assets/water.svg';
-import lever from '../../assets/lever.svg';
 
 const pulsation = keyframes`
   0% {
@@ -245,27 +244,6 @@ export const Finish = styled.div`
   background-position:
     0 0,
     7px 7px;
-
-  ${({ x, y }) => css`
-    grid-row-start: ${x + 1};
-    grid-row-end: ${x + 2};
-    grid-column-start: ${y + 1};
-    grid-column-end: ${y + 2};
-  `}
-`;
-
-export const Lever = styled.div`
-  width: 45px;
-  height: 45px;
-  background: url(${lever}) no-repeat center;
-  position: relative;
-  left: 2px;
-  top: 0;
-  z-index: 2;
-
-  ${({ enabled }) => css`
-    transform: scaleX(${enabled ? -1 : 1});
-  `}
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};

@@ -29,7 +29,7 @@ export const Modal = styled.div`
   font-family: 'Nunito', sans-serif;
   width: 694px;
   padding: 16px;
-  background: #2A2623;
+  background: #2a2623;
   border: 2px #4b4745 solid;
   border-radius: 24px;
   display: flex;
@@ -72,7 +72,9 @@ export const Block = styled.div`
   padding: 20px;
   border-radius: 8px;
   background: #474542;
-  box-shadow: 0px 2px 0px 0px #504d4980, 0px 2px 3px 0px #595959 inset;
+  box-shadow:
+    0px 2px 0px 0px #504d4980,
+    0px 2px 3px 0px #595959 inset;
 
   display: flex;
   flex-direction: column;
@@ -98,7 +100,7 @@ export const ExampleCode = styled.div`
   white-space: break-spaces;
 
   span {
-    color: #6ACAEC
+    color: #6acaec;
   }
 `;
 
@@ -121,7 +123,7 @@ export const Subtitle = styled.div`
   line-height: 22px;
 
   > span {
-    color: #6ACAEC
+    color: #6acaec;
   }
 `;
 
@@ -132,7 +134,7 @@ export const Control = styled.button`
   width: 36px;
   height: 36px;
   border: 2px #727272 solid;
-  background: #3D3632;
+  background: #3d3632;
   border-radius: 100%;
   cursor: pointer;
 
@@ -156,7 +158,6 @@ export const Control = styled.button`
   }}
 `;
 
-
 export const Circle = styled.div`
   width: 12px;
   height: 12px;
@@ -168,7 +169,7 @@ export const Circle = styled.div`
 export const CirclesWrapper = styled.div`
   display: flex;
   gap: 8px;
-`
+`;
 
 export const ButtonsWrapper = styled.div`
   display: flex;
@@ -179,6 +180,7 @@ export const Button = styled.button`
   background: none;
   border: none;
   width: fit-content;
+  cursor: pointer;
 
   &:hover {
     opacity: 0.9;
