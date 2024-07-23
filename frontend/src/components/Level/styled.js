@@ -62,6 +62,8 @@ export const MapWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transition: 50ms linear;
+  transform: scale(${({ scale }) => scale});
 `;
 
 export const MapField = styled.div`
@@ -176,12 +178,12 @@ export const Rock = styled.div`
 `;
 
 export const Water = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 49px;
+  height: 49px;
   background: url(${water}) no-repeat center;
   position: relative;
 
-  z-index: 1;
+  z-index: 0;
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
@@ -259,6 +261,7 @@ export const Lever = styled.div`
   position: relative;
   left: 2px;
   top: 0;
+  z-index: 2;
 
   ${({ enabled }) => css`
     transform: scaleX(${enabled ? -1 : 1});

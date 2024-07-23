@@ -85,6 +85,7 @@ export const Level = () => {
   const [heroTexts, setHeroTexts] = useState([]);
   const [code, setCode] = useState(getInitialCode(id));
   const [codeErrors, setCodeErrors] = useState(null);
+  const [scale, setScale] = useState(1);
 
   const hasGuid = (data) =>
     data.instructions || data.example || data.newCommands?.length;
@@ -388,6 +389,46 @@ export const Level = () => {
     showHeroGoals();
   };
 
+  const SCALE_STEP = 0.1;
+  const MAX_SCALE = 1.5;
+  const MIN_SCALE = 0.8;
+
+  const increaseScale = (coefficient = 1) => {
+    setScale((prevState) => {
+      if (prevState < MAX_SCALE) {
+        return Math.min(
+          Number((prevState + SCALE_STEP * coefficient).toFixed(2)),
+          MAX_SCALE
+        );
+      }
+
+      return prevState;
+    });
+  };
+
+  const decreaseScale = (coefficient = 1) => {
+    setScale((prevState) => {
+      if (prevState > MIN_SCALE) {
+        return Math.max(
+          Number((prevState - SCALE_STEP * coefficient).toFixed(2)),
+          MIN_SCALE
+        );
+      }
+
+      return prevState;
+    });
+  };
+
+  const handleWheel = (e) => {
+    const { deltaY } = e;
+
+    if (deltaY < 0) {
+      increaseScale();
+    } else if (deltaY > 0) {
+      decreaseScale();
+    }
+  };
+
   // без данных выводить фон и редактор
   if ((!initialLevelData.current && !levelData.current) || !instructions) {
     return null;
@@ -413,7 +454,7 @@ export const Level = () => {
   return (
     <Wrapper>
       <MainWrapper>
-        <MapWrapper>
+        <MapWrapper scale={scale} onWheel={handleWheel}>
           <MapField width={width} height={height}>
             {cells.map((cell) => {
               if (cell.type === 'lawn') {
