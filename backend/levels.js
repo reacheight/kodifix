@@ -84,6 +84,7 @@ export const levels = {
       { type: 'gems', name: 'Собрать алмаз', heroText: 'Было бы неплохо собрать алмаз по пути', required: false },
     ],
     levers: [],
+    bridges: [],
   },
 
   [2]: {
@@ -112,6 +113,7 @@ export const levels = {
       { type: 'gems', name: 'Собрать алмазы', heroText: 'Давай соберём все алмазы', required: false },
     ],
     levers: [],
+    bridges: [],
   },
 
   [3]: {
@@ -136,6 +138,7 @@ export const levels = {
       { type: 'gems', name: 'Собрать алмаз', heroText: 'Давай соберём алмаз', required: false },
     ],
     levers: [],
+    bridges: [],
   },
 
   [4]: {
@@ -166,10 +169,11 @@ export const levels = {
       { type: 'gems', name: 'Собрать алмазы', heroText: 'Давай соберём все алмазы', required: false },
     ],
     levers: [],
+    bridges: [],
   },
 
   [5]: {
-    height: 3,
+    height: 4,
     width: 9,
     grid: [
       ["lawn","lawn","lawn","grass","lawn","lawn","lawn","sand","lawn",],
@@ -302,5 +306,6 @@ export const levels = {
       { type: 'gems', name: 'Собрать алмаз', heroText: 'Было бы неплохо собрать алмаз по пути', required: false },
     ],
     levers: [],
+    bridges: [],
   },
 };
