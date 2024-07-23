@@ -97,7 +97,7 @@ export const Level = () => {
   };
 
   const fetchLevelData = async () => {
-    const { data } = await axios.get(`http://localhost:9000/level/${id}`);
+    const { data } = await axios.get(`${process.env.REACT_APP_API_HOST}/level/${id}`);
 
     setInitialLevelData({ ...data });
     setLevelData({ ...data });
@@ -105,7 +105,7 @@ export const Level = () => {
 
   const fetchInstructions = async () => {
     const { data } = await axios.get(
-      `http://localhost:9000/level/${id}/instructions`,
+      `${process.env.REACT_APP_API_HOST}/level/${id}/instructions`,
     );
 
     setInstructions(data);
@@ -324,7 +324,7 @@ export const Level = () => {
 
     try {
       const { data } = await axios.post(
-        `http://localhost:9000/level/${id}/run`,
+        `${process.env.REACT_APP_API_HOST}/level/${id}/run`,
         { code },
       );
 
