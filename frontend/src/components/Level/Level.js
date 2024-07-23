@@ -266,7 +266,7 @@ export const Level = () => {
 
       if (i === commands.length - 1 && hasFinished) {
         setHeroTexts([
-          { value: 'Отлично,\nмы можем идти дальше', delay: 1500 },
+          { value: 'Отлично, мы можем идти дальше', delay: 1500 },
         ]);
         await delay(1500);
         new Audio(victorySound).play();
@@ -282,7 +282,7 @@ export const Level = () => {
 
     if (gameplayError?.type === GameplayErrorTypes.HERO_RAN_IN_ENEMY) {
       setHeroTexts([
-        { value: 'Я не могу туда идти,\nэтот злой рыцарь меня побьёт' },
+        { value: 'Я не могу туда идти,\nэтот злой рыцарь меня побьет' },
       ]);
     }
 
@@ -295,7 +295,7 @@ export const Level = () => {
     if (gameplayError?.type === GameplayErrorTypes.NO_ENEMY_WITH_GIVEN_NAME) {
       setHeroTexts([
         {
-          value: `На этом уровне\nнет врага по имени ${gameplayError.name},\nмне некого атаковать`,
+          value: `На этом уровне\nнет врага по имени «${gameplayError.name}»,\nмне некого атаковать`,
         },
       ]);
     }
@@ -303,7 +303,32 @@ export const Level = () => {
     if (gameplayError?.type === GameplayErrorTypes.ENEMY_TOO_FAR) {
       setHeroTexts([
         {
-          value: `Я не могу атаковать ${gameplayError.name},\nпотому что он слишком далеко`,
+          value: `Я не могу атаковать «${gameplayError.name}»,\nпотому что он слишком далеко`,
+        },
+      ]);
+    }
+
+    if (gameplayError?.type === GameplayErrorTypes.NO_LEVERS) {
+      setHeroTexts([
+        {
+          value: `На этом уровне нет рычагов,\nмне нечего переключать`,
+        },
+      ]);
+    }
+
+    if (gameplayError?.type === GameplayErrorTypes.NO_LEVER_WITH_GIVEN_NAME) {
+      setHeroTexts([
+        {
+          value: `На этом уровне нет рычага с названием «${gameplayError.name}»`,
+        },
+      ]);
+    }
+
+    if (gameplayError?.type === GameplayErrorTypes.LEVER_TOO_FAR) {
+      setHeroTexts([
+        {
+          value: `Рычаг с названием «${gameplayError.name}» слишком далеко,\nя не могу переключить его отсюда`,
+          delay: 3000,
         },
       ]);
     }
