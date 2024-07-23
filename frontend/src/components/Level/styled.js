@@ -41,6 +41,11 @@ const appearance = keyframes`
   }
 `;
 
+export const LoadingBackground = styled.div`
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+`;
+
 export const Wrapper = styled.div`
   height: 100%;
   background-color: #353736;

@@ -18,8 +18,9 @@ import {
   MapBottom,
   Finish,
   Bridge,
+  LoadingBackground,
 } from './styled';
-import axios from 'axios';
+import { axios } from '../../api/axios';
 
 import gemSound from '../../assets/sounds/gem.mp3';
 import walkingSound from '../../assets/sounds/walking.mp3';
@@ -98,16 +99,14 @@ export const Level = () => {
   };
 
   const fetchLevelData = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_HOST}/level/${id}`);
+    const { data } = await axios.get(`/level/${id}`);
 
     setInitialLevelData({ ...data });
     setLevelData({ ...data });
   };
 
   const fetchInstructions = async () => {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_API_HOST}/level/${id}/instructions`,
-    );
+    const { data } = await axios.get(`/level/${id}/instructions`);
 
     setInstructions(data);
 
@@ -265,9 +264,7 @@ export const Level = () => {
       }
 
       if (i === commands.length - 1 && hasFinished) {
-        setHeroTexts([
-          { value: 'Отлично, мы можем идти дальше', delay: 1500 },
-        ]);
+        setHeroTexts([{ value: 'Отлично, мы можем идти дальше', delay: 1500 }]);
         await delay(1500);
         new Audio(victorySound).play();
         setIsScoreOpen(true);
@@ -349,10 +346,7 @@ export const Level = () => {
     setInitialCode(id, code);
 
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_HOST}/level/${id}/run`,
-        { code },
-      );
+      const { data } = await axios.post(`/level/${id}/run`, { code });
 
       setExecutionData(data);
 
@@ -423,7 +417,7 @@ export const Level = () => {
       if (prevState < MAX_SCALE) {
         return Math.min(
           Number((prevState + SCALE_STEP * coefficient).toFixed(2)),
-          MAX_SCALE
+          MAX_SCALE,
         );
       }
 
@@ -436,7 +430,7 @@ export const Level = () => {
       if (prevState > MIN_SCALE) {
         return Math.max(
           Number((prevState - SCALE_STEP * coefficient).toFixed(2)),
-          MIN_SCALE
+          MIN_SCALE,
         );
       }
 
@@ -454,9 +448,8 @@ export const Level = () => {
     }
   };
 
-  // без данных выводить фон и редактор
   if ((!initialLevelData.current && !levelData.current) || !instructions) {
-    return null;
+    return <LoadingBackground />;
   }
 
   const { hero, gems, enemies, levers, bridges } = levelData.current;
