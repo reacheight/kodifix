@@ -26,7 +26,10 @@ export const Name = styled.span`
   text-shadow: 0 0 3px #000;
   user-select: none;
   position: relative;
-  top: -23px;
+  width: fit-content;
+  left: calc(50% + 3px);
+  transform: translateX(-50%);
+  top: -3px;
 `;
 
 export const Image = styled.div`
