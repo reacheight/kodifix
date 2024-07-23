@@ -18,13 +18,15 @@ import {
   Lever,
   MapBottom,
   Finish,
+  Bridge,
 } from './styled';
 import axios from 'axios';
 
 import gemSound from '../../assets/sounds/gem.mp3';
 import walkingSound from '../../assets/sounds/walking.mp3';
 import hitSound from '../../assets/sounds/hit.mp3';
-import victory from '../../assets/sounds/victory.mp3';
+import victorySound from '../../assets/sounds/victory.mp3';
+import leverSound from '../../assets/sounds/lever.mp3';
 import { useRefState } from '../../hooks/useRefState';
 import { Controls } from '../Controls/Controls';
 import { Hero } from '../Hero/Hero';
@@ -204,6 +206,26 @@ export const Level = () => {
       await delay(500);
 
       updatedLevelData.enemies = updatedEnemies;
+    } else if (command.name === 'switch') {
+      await delay(300);
+      const updatedLevers = copy(levelData.current.levers);
+      const updatedBridges = copy(levelData.current.bridges);
+
+      const leverIndex = updatedLevers.findIndex(
+        (lever) => lever.activatesId === command.activatableId,
+      );
+      const bridgeIndex = updatedBridges.findIndex(
+        (bridge) => bridge.id === command.activatableId,
+      );
+
+      updatedLevers[leverIndex].enabled = !updatedLevers[leverIndex].enabled;
+      updatedBridges[bridgeIndex].activated =
+        !updatedBridges[bridgeIndex].activated;
+
+      new Audio(leverSound).play();
+
+      updatedLevelData.levers = updatedLevers;
+      updatedLevelData.bridges = updatedBridges;
     }
 
     // кейс, когда игрок нажал "стоп"
@@ -246,7 +268,7 @@ export const Level = () => {
           { value: 'Отлично,\nмы можем идти дальше', delay: 1500 },
         ]);
         await delay(1500);
-        new Audio(victory).play();
+        new Audio(victorySound).play();
         setIsScoreOpen(true);
       }
     }
@@ -371,19 +393,19 @@ export const Level = () => {
     return null;
   }
 
-  const { hero, gems, enemies } = levelData.current;
+  const { hero, gems, enemies, levers, bridges } = levelData.current;
   const {
     width,
     height,
     hero: initialHero,
     walls,
-    levers,
     grid,
     finish,
   } = initialLevelData.current;
   const trees = walls.filter((wall) => wall.type === 'tree');
   const rocks = walls.filter((wall) => wall.type === 'rock');
   const water = walls.filter((wall) => wall.type === 'water');
+  const activeBridges = bridges?.filter((bridge) => bridge.activated) || [];
   const executingLine =
     executionData.current?.commands[executingCommand.current]?.start.line;
   const { cells, cellsBottom } = prepareCells(grid);
@@ -461,8 +483,17 @@ export const Level = () => {
                 key={`${lever.x}${lever.y}`}
                 x={lever.x}
                 y={lever.y}
-                heroX={hero.x}
-                heroY={hero.y}
+                enabled={lever.enabled}
+              />
+            ))}
+            {activeBridges.map((bridge) => (
+              <Bridge
+                key={`${bridge.id}`}
+                xStart={bridge.start.x}
+                xEnd={bridge.end.x}
+                yStart={bridge.start.y}
+                yEnd={bridge.end.y}
+                vertical={bridge.vertical}
               />
             ))}
             {enemies.map((enemy) => (

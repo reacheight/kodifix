@@ -32,6 +32,16 @@ const gemFade = keyframes`
   }
 `;
 
+const appearance = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
+
 export const Wrapper = styled.div`
   height: 100%;
   background-color: #353736;
@@ -243,17 +253,62 @@ export const Finish = styled.div`
 `;
 
 export const Lever = styled.div`
-  width: 35px;
-  height: 35px;
+  width: 45px;
+  height: 45px;
   background: url(${lever}) no-repeat center;
   position: relative;
-  left: 7px;
-  top: 7px;
+  left: 2px;
+  top: 0;
+
+  ${({ enabled }) => css`
+    transform: scaleX(${enabled ? -1 : 1});
+  `}
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};
     grid-column-end: ${y + 2};
+  `}
+`;
+
+export const Bridge = styled.div`
+  animation: 300ms ${appearance} ease forwards;
+  z-index: 1;
+
+  ${({ vertical }) =>
+    vertical
+      ? css`
+          background: linear-gradient(
+            180deg,
+            #a0522d 25%,
+            rgba(255, 255, 255, 0) 25%,
+            rgba(255, 255, 255, 0) 50%,
+            #a0522d 50%,
+            #a0522d 75%,
+            rgba(255, 255, 255, 0) 75%,
+            rgba(255, 255, 255, 0) 100%
+          );
+        `
+      : css`
+          background: linear-gradient(
+            90deg,
+            #a0522d 25%,
+            rgba(255, 255, 255, 0) 25%,
+            rgba(255, 255, 255, 0) 50%,
+            #a0522d 50%,
+            #a0522d 75%,
+            rgba(255, 255, 255, 0) 75%,
+            rgba(255, 255, 255, 0) 100%
+          );
+        `}
+
+  background-size: 20px 20px; /* Размер полосок */
+
+  ${({ xStart, yStart, xEnd, yEnd }) => css`
+    grid-row-start: ${xStart + 1};
+    grid-row-end: ${xEnd + 2};
+    grid-column-start: ${yStart + 1};
+    grid-column-end: ${yEnd + 2};
   `}
 `;
