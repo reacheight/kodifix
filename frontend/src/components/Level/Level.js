@@ -40,7 +40,7 @@ import { LevelGuide } from '../LevelGuide/LevelGuide';
 
 const getInitialCode = (level) =>
   localStorage.getItem(`code-level-${level}`) ||
-  `# пиши код ниже, что бы управлять своим персонажем\n# нажми запуск, когда закончишь\n\n`;
+  `# пиши код ниже, чтобы управлять персонажем\n# нажми запуск, когда закончишь\n\n`;
 
 const setInitialCode = (level, code) =>
   localStorage.setItem(`code-level-${level}`, code);
