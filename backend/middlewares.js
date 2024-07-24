@@ -1,6 +1,6 @@
 export const cors = (req, res, next) => {
   const allowedOrigins = ['http://localhost:3000', 'https://kodifix.ru', 'https://app.kodifix.ru', 'https://demo.kodifix.ru']
-  const origin = req.header('origin').toLowerCase();
+  const origin = req.header('origin')?.toLowerCase();
   if (allowedOrigins.includes(origin))
     res.setHeader('Access-Control-Allow-Origin', origin);
   
