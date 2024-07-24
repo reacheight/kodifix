@@ -6,6 +6,7 @@ import esper from 'esper.js';
 import express from 'express';
 import { cors } from './middlewares.js';
 import CodeAnalyzer from './CodeAnalyzer.js';
+import { games } from './games.js';
 
 esper.plugin('lang-python');
 
@@ -13,6 +14,11 @@ const port = process.env.KODIFIX_PORT ?? 9000;
 const app = express();
 app.use(express.json());
 app.use(cors);
+
+app.get('/games/:id', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(games[req.params.id]));
+})
 
 app.get('/level/:id', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
