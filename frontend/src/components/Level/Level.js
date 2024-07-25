@@ -489,6 +489,13 @@ export const Level = () => {
     executionData.current?.commands[executingCommand.current]?.start.line;
   const { cells, cellsBottom } = prepareCells(grid);
   const isLastLevel = Number(id) === game.levels;
+  const collectedGemsCount = gems.reduce((acc, gem) => {
+    if (gem.collected) {
+      return acc + 1;
+    }
+
+    return acc;
+  }, 0);
 
   return (
     <Wrapper>
@@ -630,7 +637,7 @@ export const Level = () => {
         <LevelGuide level={id} data={instructions} onClose={closeGuide} />
       )}
       {isScoreOpen && (
-        <LevelScore isLastLevel={isLastLevel} onContinue={openNextLevel} />
+        <LevelScore isLastLevel={isLastLevel} collectedGemsCount={collectedGemsCount} onContinue={openNextLevel} />
       )}
     </Wrapper>
   );

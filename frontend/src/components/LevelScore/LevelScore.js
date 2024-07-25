@@ -19,7 +19,7 @@ import {
   GameOver,
 } from './styled';
 
-export const LevelScore = ({ isLastLevel, onContinue }) => {
+export const LevelScore = ({ isLastLevel, collectedGemsCount, onContinue }) => {
   return createPortal(
     <Wrapper>
       <Modal>
@@ -48,7 +48,7 @@ export const LevelScore = ({ isLastLevel, onContinue }) => {
               </a>
             </GameOver>
           ) : (
-            <Achievement>Собрано алмазов: 1</Achievement>
+            <Achievement>Собрано алмазов: {collectedGemsCount}</Achievement>
           )}
         </Block>
 
