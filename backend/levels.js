@@ -395,8 +395,9 @@ export const levels = {
       { x: 6, y: 0, alive: true, name: "Greg" },
     ],
     goals: [
-      { type: 'finish', name: 'Добраться до финиша', heroText: 'Помоги мне добраться на другой берег', required: true },
-      { type: 'gems', name: 'Подобрать алмаз', heroText: 'Попробуем достать все алмазы?', required: false },
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Мне нужно дойти до финиша', required: true },
+      { type: 'enemies', name: 'Победить всех врагов', heroText: 'И победить всех врагов по пути', required: true },
+      { type: 'gems', name: 'Подобрать алмаз', heroText: 'Как удобно лежат алмазы, давай их соберём', required: false },
     ],  
     levers: [],
     bridges: [],
