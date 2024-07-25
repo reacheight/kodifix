@@ -1,5 +1,5 @@
 export const games = {
     ["wizard-part-1"]: {
-        levels: 8,
+        levels: 9,
     }
 }

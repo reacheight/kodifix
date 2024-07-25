@@ -367,4 +367,38 @@ export const levels = {
       },
     ],
   },
+
+  [9]: {
+    height: 8,
+    width: 3,
+    grid: [
+      ["lawn","sand","grass",],
+      ["lawn","sand","lawn",],
+      ["sand","sand","lawn",],
+      ["lawn","sand","lawn",],
+      ["grass","sand","sand",],
+      ["lawn","sand","lawn",],
+      ["sand","sand","lawn",],
+      ["grass","sand","lawn",],
+    ],
+    hero: { x: 0, y: 1 },
+    finish: { x: 7, y: 1 },
+    gems: [
+      { x: 2, y: 1 }, { x: 4, y: 1 }, { x: 6, y: 1 },
+    ],
+    walls: [
+      { x: 0, y: 0, type: 'rock' },{ x: 0, y: 2, type: 'rock' },
+    ],
+    enemies: [
+      { x: 2, y: 0, alive: true, name: "Brad" },
+      { x: 4, y: 2, alive: true, name: "Bobby" },
+      { x: 6, y: 0, alive: true, name: "Greg" },
+    ],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Помоги мне добраться на другой берег', required: true },
+      { type: 'gems', name: 'Подобрать алмаз', heroText: 'Попробуем достать все алмазы?', required: false },
+    ],  
+    levers: [],
+    bridges: [],
+  },
 };

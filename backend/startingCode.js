@@ -10,5 +10,5 @@ export const startingCode = {
   [6]: defaultStartingComment,
   [7]: `# используй метод attack, чтобы атаковать врага\n\n# дойти до врага John\nhero.move_left(5)\n\n# поменяй параметр метода,\n# чтобы атаковать врага John\nhero.attack("Имя врага")\n\n# продолжи код, чтобы добраться до финиша\n`,
   [8]: `# чтобы пройти этот уровень,\n# тебе надо использовать все методы\n\n`,
-  [9]: "",
+  [9]: `hero.move_down(2)\n\n# это переменная enemy1 со значением "Brad"\nenemy1 = "Brad"\nhero.attack(enemy1)\n\nhero.move_down(2)\n\n# поправь значение переменной на правильное имя\nenemy2 = "Второй враг"\nhero.attack(enemy2)\n\nhero.move_down(2)\n\n# создай переменную с именем третьего врага\n# и передай её в метод attack\n`,
 };
