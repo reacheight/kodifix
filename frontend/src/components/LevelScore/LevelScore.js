@@ -32,7 +32,7 @@ export const LevelScore = ({ isLastLevel, collectedGemsCount, onContinue }) => {
           <Title>Уровень пройден</Title>
           {isLastLevel ? (
             <GameOver>
-              Спасибо за прохождение демоверсии.
+              Спасибо за прохождение демоверсии!
               <br />
               <br />
               Новые уровни находятся в разработке.
