@@ -28,7 +28,7 @@ export const Modal = styled.div`
   font-family: 'Nunito', sans-serif;
   width: 440px;
   height: 408px;
-  padding: 46px 68px;
+  padding: 24px;
   background: #2a2623;
   border-radius: 12px;
   display: flex;
@@ -49,4 +49,13 @@ export const Title = styled.div`
 export const Stars = styled.div`
   display: flex;
   gap: 32px;
+`;
+
+export const GameOver = styled.div`
+  color: #fff;
+
+
+  a {
+    color: #7ac8ea;
+  }
 `;

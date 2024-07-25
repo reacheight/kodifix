@@ -71,6 +71,7 @@ const walkingAudio = new Audio(walkingSound);
 export const Level = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [game, setGame] = useState(null);
   const [initialLevelData, setInitialLevelData] = useRefState(null);
   const [levelData, setLevelData] = useRefState(null);
   const [heroShift, setHeroShift] = useRefState({ right: 0, bottom: 0 });
@@ -98,6 +99,12 @@ export const Level = () => {
     setHeroTexts(goals);
   };
 
+  const fetchGames = async () => {
+    const { data } = await axios.get(`/games/wizard-part-1`);
+
+    setGame(data);
+  };
+
   const fetchLevelData = async () => {
     const { data } = await axios.get(`/level/${id}`);
 
@@ -117,7 +124,7 @@ export const Level = () => {
     }
   };
 
-  const fetchInitialCode = async() => {
+  const fetchInitialCode = async () => {
     const { data } = await axios.get(`/level/${id}/startingCode`);
     if (isNullish(code)) {
       setCode(data);
@@ -143,6 +150,7 @@ export const Level = () => {
   useEffect(() => {
     (async () => {
       resetAllData();
+      await fetchGames();
       await fetchLevelData();
       await fetchInstructions();
       await fetchInitialCode();
@@ -456,7 +464,11 @@ export const Level = () => {
     }
   };
 
-  if ((!initialLevelData.current && !levelData.current) || !instructions || isNullish(code)) {
+  if (
+    (!initialLevelData.current && !levelData.current) ||
+    !instructions ||
+    isNullish(code)
+  ) {
     return <LoadingBackground />;
   }
 
@@ -476,6 +488,7 @@ export const Level = () => {
   const executingLine =
     executionData.current?.commands[executingCommand.current]?.start.line;
   const { cells, cellsBottom } = prepareCells(grid);
+  const isLastLevel = Number(id) === game.levels;
 
   return (
     <Wrapper>
@@ -610,7 +623,9 @@ export const Level = () => {
       {isGuideOpen && (
         <LevelGuide level={id} data={instructions} onClose={closeGuide} />
       )}
-      {isScoreOpen && <LevelScore onContinue={openNextLevel} />}
+      {isScoreOpen && (
+        <LevelScore isLastLevel={isLastLevel} onContinue={openNextLevel} />
+      )}
     </Wrapper>
   );
 };
