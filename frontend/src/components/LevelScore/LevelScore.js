@@ -38,13 +38,13 @@ export const LevelScore = ({ isLastLevel, collectedGemsCount, onContinue }) => {
               Новые уровни находятся в разработке.
               <br />
               <br />
-              За новостями можете следить в{' '}
+              За новостями можете следить в нашем{' '}
               <a
                 href="https://t.me/kodifix_ru"
                 target="_blank"
                 rel="noreferrer"
               >
-                телеграмм канале
+                канале в Telegram
               </a>
             </GameOver>
           ) : (
