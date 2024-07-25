@@ -1,27 +1,42 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import starIcon from '../../assets/star.svg';
+import button1 from '../../assets/button-1.svg';
+import button2 from '../../assets/button-2.svg';
 
-import { Wrapper, Modal, Title, Stars, GameOver } from './styled';
-import { Button } from '../Button/Button';
+import {
+  Wrapper,
+  Modal,
+  Block,
+  Title,
+  Achievement,
+  Stars,
+  Star1,
+  Star2,
+  Star3,
+  Button,
+  ButtonsWrapper,
+  GameOver,
+} from './styled';
 
 export const LevelScore = ({ isLastLevel, onContinue }) => {
   return createPortal(
     <Wrapper>
       <Modal>
-        {isLastLevel ? (
-          <>
-            <Title>Уровень пройден</Title>
-            <Stars>
-              <img src={starIcon} alt="star" />
-              <img src={starIcon} alt="star" />
-              <img src={starIcon} alt="star" />
-            </Stars>
+        <Stars>
+          <Star1 />
+          <Star2 />
+          <Star3 />
+        </Stars>
+        <Block>
+          <Title>Уровень пройден</Title>
+          {isLastLevel ? (
             <GameOver>
               Спасибо за прохождение демоверсии.
               <br />
+              <br />
               Новые уровни находятся в разработке.
+              <br />
               <br />
               За новостями можете следить в{' '}
               <a
@@ -32,25 +47,20 @@ export const LevelScore = ({ isLastLevel, onContinue }) => {
                 телеграмм канале
               </a>
             </GameOver>
-          </>
-        ) : (
-          <>
-            <Title>Уровень пройден</Title>
-            <Stars>
-              <img src={starIcon} alt="star" />
-              <img src={starIcon} alt="star" />
-              <img src={starIcon} alt="star" />
-            </Stars>
-            <Button
-              width={200}
-              height={60}
-              topColor="#1E9029"
-              frontColor="#3CB949"
-              onClick={onContinue}
-            >
-              Далее
+          ) : (
+            <Achievement>Собрано алмазов: 1</Achievement>
+          )}
+        </Block>
+
+        {!isLastLevel && (
+          <ButtonsWrapper>
+            <Button>
+              <img src={button1} alt="меню" />
             </Button>
-          </>
+            <Button onClick={onContinue}>
+              <img src={button2} alt="дальше" />
+            </Button>
+          </ButtonsWrapper>
         )}
       </Modal>
     </Wrapper>,

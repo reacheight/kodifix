@@ -1,5 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 
+import star from '../../assets/star.png';
+
 const appearance = keyframes`
   0% {
     opacity: 0;
@@ -26,34 +28,113 @@ export const Wrapper = styled.div`
 
 export const Modal = styled.div`
   font-family: 'Nunito', sans-serif;
-  width: 440px;
-  height: 408px;
-  padding: 24px;
+  width: 463px;
+  padding: 124px 60px 44px 60px;
   background: #2a2623;
-  border-radius: 12px;
+  border: 2px #4b4745 solid;
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 48px;
+  position: relative;
+`;
+
+export const Block = styled.div`
+  width: 338px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+  padding: 24px 36px 66px 36px;
+  border-radius: 8px;
+  background-color: #474542;
+  box-shadow:
+    0 2px 0 0 #504d4980,
+    0 2px 3px 0 #595959 inset;
 `;
 
 export const Title = styled.div`
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 40px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 42px;
+  line-height: 46px;
   color: #fff;
   text-align: center;
+  text-shadow: 0 7px 0 rgba(0, 0, 0, 0.15);
+`;
+
+export const Achievement = styled.div`
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 27px;
+  line-height: 37px;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+`;
+
+export const Star1 = styled.div`
+  width: 147px;
+  height: 147px;
+  background: url(${star});
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: rotate(51deg);
+  position: relative;
+  bottom: 40px;
+  left: 24px;
+`;
+
+export const Star2 = styled.div`
+  width: 187px;
+  height: 187px;
+  background: url(${star});
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  bottom: 100px;
+`;
+
+export const Star3 = styled.div`
+  width: 147px;
+  height: 147px;
+  background: url(${star});
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: rotate(-51deg);
+  position: relative;
+  bottom: 40px;
+  right: 24px;
 `;
 
 export const Stars = styled.div`
   display: flex;
-  gap: 32px;
+  position: absolute;
+  top: 0;
+`;
+
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  gap: 23px;
+`;
+
+export const Button = styled.button`
+  background: none;
+  border: none;
+  width: fit-content;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    opacity: 0.8;
+  }
 `;
 
 export const GameOver = styled.div`
   color: #fff;
-
 
   a {
     color: #7ac8ea;
