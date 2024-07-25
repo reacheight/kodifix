@@ -521,11 +521,12 @@ export const Level = () => {
                 return <SandBottom key={i} />;
               }
             })}
-            {trees.map((tree) => (
-              <Tree
-                key={`${tree.x}${tree.y}`}
-                x={tree.x}
-                y={tree.y}
+            <Finish x={finish.x} y={finish.y} zIndex={finish.x} />
+            {water.map((water) => (
+              <Water
+                key={`${water.x}${water.y}`}
+                x={water.x}
+                y={water.y}
                 heroX={hero.x}
                 heroY={hero.y}
               />
@@ -537,34 +538,17 @@ export const Level = () => {
                 y={rock.y}
                 heroX={hero.x}
                 heroY={hero.y}
+                zIndex={rock.x}
               />
             ))}
-            {water.map((water) => (
-              <Water
-                key={`${water.x}${water.y}`}
-                x={water.x}
-                y={water.y}
+            {trees.map((tree) => (
+              <Tree
+                key={`${tree.x}${tree.y}`}
+                x={tree.x}
+                y={tree.y}
                 heroX={hero.x}
                 heroY={hero.y}
-              />
-            ))}
-            {gems.map((gem) => (
-              <Gem
-                key={`${gem.x}${gem.y}`}
-                x={gem.x}
-                y={gem.y}
-                heroX={hero.x}
-                heroY={hero.y}
-                collected={gem.collected}
-              />
-            ))}
-            {levers.map((lever) => (
-              <Lever
-                key={`${lever.x}${lever.y}`}
-                x={lever.x}
-                y={lever.y}
-                name={lever.name}
-                enabled={lever.enabled}
+                zIndex={tree.x}
               />
             ))}
             {activeBridges.map((bridge) => (
@@ -584,6 +568,7 @@ export const Level = () => {
                 y={enemy.y}
                 heroX={hero.x}
                 heroY={hero.y}
+                zIndex={enemy.x}
                 name={enemy.name}
                 alive={enemy.alive}
               />
@@ -591,11 +576,32 @@ export const Level = () => {
             <Hero
               x={initialHero.x}
               y={initialHero.y}
+              zIndex={hero.x}
               texts={heroTexts}
               shift={heroShift.current}
               animated={isMoving.current}
             />
-            <Finish x={finish.x} y={finish.y} />
+            {levers.map((lever) => (
+              <Lever
+                key={`${lever.x}${lever.y}`}
+                x={lever.x}
+                y={lever.y}
+                name={lever.name}
+                zIndex={lever.x}
+                enabled={lever.enabled}
+              />
+            ))}
+            {gems.map((gem) => (
+              <Gem
+                key={`${gem.x}${gem.y}`}
+                x={gem.x}
+                y={gem.y}
+                heroX={hero.x}
+                heroY={hero.y}
+                zIndex={gem.x}
+                collected={gem.collected}
+              />
+            ))}
           </MapField>
           <MapBottom width={width} />
         </MapWrapper>

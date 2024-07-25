@@ -97,7 +97,8 @@ export const Lawn = styled.div`
   width: 50px;
   background: url(${lawn}) no-repeat center;
 
-  ${({ x, y }) => css`
+  ${({ x, y, zIndex }) => css`
+    z-index: ${zIndex};
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};
@@ -110,7 +111,8 @@ export const Grass = styled.div`
   width: 50px;
   background: url(${grass}) no-repeat center;
 
-  ${({ x, y }) => css`
+  ${({ x, y, zIndex }) => css`
+    z-index: ${zIndex};
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};
@@ -123,7 +125,8 @@ export const Sand = styled.div`
   width: 50px;
   background: url(${sand}) no-repeat center;
 
-  ${({ x, y }) => css`
+  ${({ x, y, zIndex }) => css`
+    z-index: ${zIndex};
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};
@@ -154,9 +157,8 @@ export const Tree = styled.div`
   opacity: ${({ x, y, heroX, heroY }) =>
     x - heroX === 1 && y === heroY ? 0.5 : 1};
 
-  z-index: ${({ x, heroX }) => (x <= heroX ? 1 : 2)};
-
-  ${({ x, y }) => css`
+  ${({ x, y, zIndex }) => css`
+    z-index: ${zIndex};
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};
@@ -173,7 +175,8 @@ export const Rock = styled.div`
 
   z-index: ${({ x, heroX }) => (x <= heroX ? 1 : 2)};
 
-  ${({ x, y }) => css`
+  ${({ x, y, zIndex }) => css`
+    z-index: ${zIndex};
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};
@@ -186,7 +189,6 @@ export const Water = styled.div`
   height: 49px;
   background: url(${water}) no-repeat center;
   position: relative;
-
   z-index: 0;
 
   ${({ x, y }) => css`
@@ -215,7 +217,8 @@ export const Gem = styled.div`
 
   z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
 
-  ${({ x, y }) => css`
+  ${({ x, y, zIndex }) => css`
+    z-index: ${zIndex};
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};
@@ -250,7 +253,8 @@ export const Finish = styled.div`
     0 0,
     7px 7px;
 
-  ${({ x, y }) => css`
+  ${({ x, y, zIndex }) => css`
+    z-index: ${zIndex};
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};

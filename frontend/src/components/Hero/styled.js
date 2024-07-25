@@ -18,14 +18,14 @@ export const Wrapper = styled.div`
   height: 80px;
   background: url(${wizard}) no-repeat center;
   position: relative;
-  z-index: 1;
 
   ${({ shift }) => css`
     bottom: ${45 + shift.bottom}px;
     right: ${12 + shift.right}px;
   `}
 
-  ${({ x, y }) => css`
+  ${({ x, y, zIndex }) => css`
+    z-index: ${zIndex};
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};

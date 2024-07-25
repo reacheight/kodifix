@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
   z-index: 2;
 
   ${({ x, y }) => css`
+    z-index: ${x};
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};
