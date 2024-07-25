@@ -35,13 +35,13 @@ import { Lever } from '../Lever/Lever';
 import { CodeEditor } from '../CodeEditor/CodeEditor';
 import { delay } from '../../utils/delay';
 import { copy } from '../../utils/copy';
+import { isNullish } from '../../utils/isNullish';
 import { LevelScore } from '../LevelScore/LevelScore';
 import GameplayErrorTypes from '../../utils/GameplayErrorTypes';
 import { LevelGuide } from '../LevelGuide/LevelGuide';
 
-const getInitialCode = (level) =>
-  localStorage.getItem(`code-level-${level}`) ||
-  `# пиши код ниже, чтобы управлять персонажем\n# нажми запуск, когда закончишь\n\n`;
+const getInitialCodeFromStorage = (level) =>
+  localStorage.getItem(`code-level-${level}`);
 
 const setInitialCode = (level, code) =>
   localStorage.setItem(`code-level-${level}`, code);
@@ -84,7 +84,7 @@ export const Level = () => {
   const [pausedCommand, setPausedCommand] = useRefState(null);
   const [instructions, setInstructions] = useState(null);
   const [heroTexts, setHeroTexts] = useState([]);
-  const [code, setCode] = useState(getInitialCode(id));
+  const [code, setCode] = useState(getInitialCodeFromStorage(id));
   const [codeErrors, setCodeErrors] = useState(null);
   const [scale, setScale] = useState(1);
 
@@ -117,6 +117,13 @@ export const Level = () => {
     }
   };
 
+  const fetchInitialCode = async() => {
+    const { data } = await axios.get(`/level/${id}/startingCode`);
+    if (isNullish(code)) {
+      setCode(data);
+    }
+  };
+
   const resetAllData = () => {
     setInitialLevelData(null);
     setLevelData(null);
@@ -130,7 +137,7 @@ export const Level = () => {
     setPausedCommand(null);
     setInstructions(null);
     setHeroTexts([]);
-    setCode(getInitialCode(id));
+    setCode(getInitialCodeFromStorage(id));
   };
 
   useEffect(() => {
@@ -138,6 +145,7 @@ export const Level = () => {
       resetAllData();
       await fetchLevelData();
       await fetchInstructions();
+      await fetchInitialCode();
     })();
   }, [id]);
 
@@ -448,7 +456,7 @@ export const Level = () => {
     }
   };
 
-  if ((!initialLevelData.current && !levelData.current) || !instructions) {
+  if ((!initialLevelData.current && !levelData.current) || !instructions || isNullish(code)) {
     return <LoadingBackground />;
   }
 

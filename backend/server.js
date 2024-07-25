@@ -7,6 +7,7 @@ import express from 'express';
 import { cors } from './middlewares.js';
 import CodeAnalyzer from './CodeAnalyzer.js';
 import { games } from './games.js';
+import { startingCode } from './startingCode.js';
 
 esper.plugin('lang-python');
 
@@ -28,6 +29,11 @@ app.get('/level/:id', (req, res) => {
 app.get('/level/:id/instructions', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(instructions[req.params.id]));
+})
+
+app.get('/level/:id/startingCode', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(startingCode[req.params.id]));
 })
 
 app.post('/level/:id/run', (req, res) => {

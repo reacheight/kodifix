@@ -1,0 +1,1 @@
+export const isNullish = (obj) => obj === null || obj === undefined;
