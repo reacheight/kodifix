@@ -85,7 +85,7 @@ export const Level = () => {
   const [pausedCommand, setPausedCommand] = useRefState(null);
   const [instructions, setInstructions] = useState(null);
   const [heroTexts, setHeroTexts] = useState([]);
-  const [code, setCode] = useState(getInitialCodeFromStorage(id));
+  const [code, setCode] = useRefState(getInitialCodeFromStorage(id));
   const [codeErrors, setCodeErrors] = useState(null);
   const [scale, setScale] = useState(1);
 
@@ -126,7 +126,7 @@ export const Level = () => {
 
   const fetchInitialCode = async () => {
     const { data } = await axios.get(`/level/${id}/startingCode`);
-    if (isNullish(code)) {
+    if (isNullish(code.current)) {
       setCode(data);
     }
   };
@@ -359,10 +359,10 @@ export const Level = () => {
   const startGame = async () => {
     resetData();
     setIsRunning(true);
-    setInitialCode(id, code);
+    setInitialCode(id, code.current);
 
     try {
-      const { data } = await axios.post(`/level/${id}/run`, { code });
+      const { data } = await axios.post(`/level/${id}/run`, { code: code.current });
 
       setExecutionData(data);
 
@@ -467,7 +467,7 @@ export const Level = () => {
   if (
     (!initialLevelData.current && !levelData.current) ||
     !instructions ||
-    isNullish(code)
+    isNullish(code.current)
   ) {
     return <LoadingBackground />;
   }
@@ -611,7 +611,7 @@ export const Level = () => {
         />
       </MainWrapper>
       <CodeEditor
-        code={code}
+        code={code.current}
         codeErrors={codeErrors}
         isRunning={isRunning.current}
         isPaused={isPaused.current}
