@@ -400,5 +400,6 @@ export const levels = {
     ],  
     levers: [],
     bridges: [],
+    onlyVariablesInAttack: true,
   },
 };

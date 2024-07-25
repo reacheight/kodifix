@@ -39,15 +39,16 @@ app.get('/level/:id/startingCode', (req, res) => {
 app.post('/level/:id/run', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
+  const level = levels[req.params.id];
   const analyzer = new CodeAnalyzer();
-  const errors = analyzer.analyze(req.body.code);
+  const errors = analyzer.analyze(req.body.code, level.onlyVariablesInAttack);
   if (errors.length > 0) {
-    res.statusCode = 400; // стоит ли возвращать 400?
+    res.statusCode = 400;
     res.send(JSON.stringify({ errors }));
     return;
   }
 
-  let runner = new LevelRunner(levels[req.params.id]);
+  let runner = new LevelRunner(level);
   let result = runner.run(req.body.code);
 
   if (result.errors) {
