@@ -14,7 +14,7 @@ function splitStringOutsideQuotes(inputString) {
       parts.push(outsideParts[i].trim());
     }
 
-    // Если есть соответствующая подстрока внутри одинарных кавычек, добавляем её тоже в результирующий массив
+    // Если есть соответствующая подстрока внутри одинарных кавычек, добавляем ее тоже в результирующий массив
     if (insideQuotes && insideQuotes[i]) {
       parts.push(insideQuotes[i]);
     }
