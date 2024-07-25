@@ -48,5 +48,10 @@ export const instructions = {
     example: `hero.attack("John")`,
     newCommands: [ attackCommand ],
     prevCommands: longMovingCommands.concat([ switchCommand ]),
+  },
+  [8]: {
+    instructions: 'Используй все выученные методы, чтобы пройти этот уровень.\n\nНе забудь, что ты всегда можешь посмотреть список методов под редактором.',
+    newCommands: [],
+    prevCommands: longMovingCommands.concat([ switchCommand, attackCommand ]),
   }
 }

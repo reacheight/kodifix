@@ -308,4 +308,63 @@ export const levels = {
     levers: [],
     bridges: [],
   },
+
+  [8]: {
+    height: 5,
+    width: 13,
+    grid: [
+      ["lawn","lawn","lawn","lawn","lawn","sand","grass","lawn","lawn","lawn","lawn","lawn","lawn",],
+      ["lawn","sand","grass","lawn","lawn","sand","lawn","grass","lawn","lawn","lawn","grass","lawn",],
+      ["lawn","sand","lawn","lawn","lawn","sand","lawn","lawn","lawn","lawn","grass","lawn","lawn",],
+      ["lawn","sand","sand","lawn","lawn","sand","sand","sand","lawn","lawn","sand","sand","sand",],
+      ["grass","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn","grass",],
+    ],
+    hero: { x: 0, y: 5 },
+    finish: { x: 3, y: 12 },
+    gems: [
+      { x: 1, y: 1 },
+      { x: 3, y: 11 },
+    ],
+    walls: [
+      { x: 0, y: 3, type: 'water' }, { x: 0, y: 4, type: 'water' }, { x: 0, y: 8, type: 'water' }, { x: 0, y: 9, type: 'water' },
+      { x: 1, y: 3, type: 'water' }, { x: 1, y: 4, type: 'water' }, { x: 1, y: 8, type: 'water' }, { x: 1, y: 9, type: 'water' },
+      { x: 2, y: 3, type: 'water' }, { x: 2, y: 4, type: 'water' }, { x: 2, y: 8, type: 'water' }, { x: 2, y: 9, type: 'water' },
+      { x: 3, y: 3, type: 'water' }, { x: 3, y: 4, type: 'water' }, { x: 3, y: 8, type: 'water' }, { x: 3, y: 9, type: 'water' },
+      { x: 4, y: 3, type: 'water' }, { x: 4, y: 4, type: 'water' }, { x: 4, y: 8, type: 'water' }, { x: 4, y: 9, type: 'water' },
+
+      { x: 0, y: 0, type: 'rock' }, { x: 0, y: 1, type: 'rock' }, { x: 0, y: 2, type: 'rock' },
+      { x: 0, y: 10, type: 'rock' }, { x: 0, y: 11, type: 'rock' }, { x: 0, y: 12, type: 'rock' },
+      { x: 2, y: 0, type: 'tree' },
+      { x: 0, y: 7, type: 'tree' },
+      { x: 2, y: 10, type: 'tree' },
+    ],
+    enemies: [
+      { x: 3, y: 2, alive: true, name: "Brad" },
+      { x: 3, y: 10, alive: true, name: "Bobby" },
+    ],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Помоги мне добраться на другой берег', required: true },
+      { type: 'gems', name: 'Подобрать алмаз', heroText: 'Попробуем достать все алмазы?', required: false },
+    ],  
+    levers: [
+      { x: 4, y: 5, activatesId: 'bridge1', name: "Мост1", enabled: false },
+      { x: 2, y: 7, activatesId: 'bridge2', name: "Мост2", enabled: false },
+    ],
+    bridges: [
+      {
+        id: "bridge1",
+        vertical: false,
+        start: { x: 3, y: 3 },
+        end: { x: 3, y: 4 },
+        activated: false,
+      },
+      {
+        id: "bridge2",
+        vertical: false,
+        start: { x: 3, y: 8 },
+        end: { x: 3, y: 9 },
+        activated: false,
+      },
+    ],
+  },
 };
