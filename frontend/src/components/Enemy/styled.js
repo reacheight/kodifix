@@ -36,7 +36,6 @@ export const Wrapper = styled.div`
   width: 57px;
   height: 114px;
   position: relative;
-  bottom: 70px;
   text-align: center;
   z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
 
