@@ -242,6 +242,14 @@ export const Level = () => {
 
       updatedLevelData.levers = updatedLevers;
       updatedLevelData.bridges = updatedBridges;
+    } else if (command.name === 'find_nearest_enemy') {
+      setHeroTexts([]); // почему показывает только первый раз?
+      if (command.hasEnemy) {
+        setHeroTexts([{ value: 'find_nearest_enemy: Я тебя вижу!', delay: 1000 }])
+      } else {
+        setHeroTexts([{ value: 'find_nearest_enemy: На этом уровне нет врагов!', delay: 1000 }])
+      }
+      await delay(500);
     }
 
     // кейс, когда игрок нажал "стоп"

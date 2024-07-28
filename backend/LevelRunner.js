@@ -62,14 +62,21 @@ export default class LevelRunner {
 
     find_nearest_enemy: () => {
       if (!this.level.enemies || this.level.enemies.length === 0)
+      {
+        this.pushNewCommand("find_nearest_enemy", { hasEnemy: false });
         return;
+      }
 
       let sortedAliveEnemies = this.level.enemies
         .filter(e => e.alive)
         .toSorted((a, b) => getDistance(this.level.hero, a) - getDistance(this.level.hero, b));
       
-      if (sortedAliveEnemies.length > 0)
+      if (sortedAliveEnemies.length > 0) {
+        this.pushNewCommand("find_nearest_enemy", { hasEnemy: true });
         return sortedAliveEnemies[0].name;
+      }
+
+      this.pushNewCommand("find_nearest_enemy", { hasEnemy: false });
     },
 
     move: (direction, steps, methodName) => {
