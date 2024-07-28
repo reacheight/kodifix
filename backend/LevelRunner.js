@@ -28,7 +28,7 @@ export default class LevelRunner {
       }
 
       if (Math.abs(target.x - this.level.hero.x) > 1 || Math.abs(target.y - this.level.hero.y) > 1) {
-        this.gameplayError = { type: GameplayErrorTypes.ENEMY_TOO_FAR, name: targetName };
+        this.gameplayError = { type: GameplayErrorTypes.ENEMY_TOO_FAR, name: target.hidden ? "Имя скрыто" : targetName };
         return;
       }
 
