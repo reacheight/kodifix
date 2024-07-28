@@ -30,7 +30,11 @@ export const AvailableCommands = ({ isOpen, commands, onAdd, onToggle }) => {
             onMouseOver={() => setCommand(command)}
             onMouseLeave={() => setCommand(null)}
           >
-            {command.code}
+            <div>
+              hero.
+              <span>{command.code.substring(5, command.code.indexOf('('))}</span>
+              {command.code.substring(command.code.indexOf('('), command.code.length)}
+            </div>
             <img
               src={addIcon}
               alt="add"

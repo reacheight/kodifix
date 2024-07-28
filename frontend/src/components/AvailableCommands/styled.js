@@ -66,6 +66,10 @@ export const Command = styled.span`
   padding: 11px 20px;
   transition: 100ms ease-in-out;
 
+  span {
+    color: #dcdcaa;
+  }
+
   &:hover {
     background: #3d3632;
   }
