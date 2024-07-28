@@ -26,3 +26,9 @@ export const switchCommand = {
     example: 'hero.switch("Мост")',
     autocompleteValue: 'hero.switch(${1})',
 }
+
+export const findNearestEnemy = {
+    code: 'hero.find_nearest_enemy()',
+    description: 'возвращает ближайшего живого врага',
+    example: 'enemy = hero.find_nearest_enemy()\nhero.attack(enemy)',
+}

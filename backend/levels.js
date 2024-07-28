@@ -403,4 +403,47 @@ export const levels = {
     bridges: [],
     onlyVariablesInAttack: true,
   },
+
+  [10]: {
+    height: 8,
+    width: 8,
+    grid: [
+      ["lawn","sand","lawn","lawn","lawn","grass","sand","lawn",],
+      ["lawn","sand","sand","sand","sand","sand","sand","lawn",],
+      ["grass","lawn","lawn","sand","lawn","lawn","sand","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","sand","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","sand","lawn",],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","sand","lawn",],
+      ["lawn","sand","sand","sand","sand","sand","sand","grass",],
+      ["lawn","sand","lawn","grass","lawn","lawn","sand","sand",],
+    ],
+    hero: { x: 1, y: 2 },
+    finish: { x: 7, y: 1 },
+    gems: [
+      { x: 1, y: 6 }, { x: 6, y: 7 },
+    ],
+    walls: [
+      { x: 3, y: 0, type: 'water' }, { x: 3, y: 1, type: 'water' }, { x: 3, y: 2, type: 'water' }, { x: 3, y: 3, type: 'water' }, { x: 3, y: 4, type: 'water' },
+      { x: 4, y: 0, type: 'water' }, { x: 4, y: 1, type: 'water' }, { x: 4, y: 2, type: 'water' }, { x: 4, y: 3, type: 'water' }, { x: 4, y: 4, type: 'water' },
+      { x: 5, y: 0, type: 'water' }, { x: 5, y: 1, type: 'water' }, { x: 5, y: 2, type: 'water' }, { x: 5, y: 3, type: 'water' }, { x: 5, y: 4, type: 'water' },
+
+      { x: 0, y: 0, type: 'tree' }, { x: 0, y: 2, type: 'tree' },
+      { x: 3, y: 5, type: 'rock' }, { x: 3, y: 7, type: 'rock' },
+      { x: 4, y: 7, type: 'rock' },
+      { x: 5, y: 7, type: 'rock' },
+    ],
+    enemies: [
+      { x: 1, y: 7, alive: true, name: "Hidden1", hidden: true },
+      { x: 6, y: 5, alive: true, name: "Hidden2", hidden: true },
+      { x: 6, y: 0, alive: true, name: "Hidden3", hidden: true },
+    ],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Нужно пробраться к финишу через этих безымянных врагов', required: true },
+      { type: 'enemies', name: 'Победить всех врагов', heroText: 'Давай разузнаем их имена и прогоним отсюда', required: true },
+      { type: 'gems', name: 'Собрать все алмазы', heroText: 'Алмазы всегда пригодятся, давай соберём их', required: false },
+    ],  
+    levers: [],
+    bridges: [],
+    onlyVariablesInAttack: true,
+  },
 };

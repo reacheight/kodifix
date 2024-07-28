@@ -11,4 +11,5 @@ export const startingCode = {
   [7]: `# используй метод attack, чтобы атаковать врага\n\n# дойти до врага John\nhero.move_left(5)\n\n# поменяй параметр метода,\n# чтобы атаковать врага John\nhero.attack("Имя врага")\n\n# продолжи код, чтобы добраться до финиша\n`,
   [8]: `# чтобы пройти этот уровень,\n# тебе надо использовать все методы\n\n`,
   [9]: `hero.move_down(2)\n\n# это переменная enemy1 со значением "Brad"\nenemy1 = "Brad"\nhero.attack(enemy1)\n\nhero.move_down(2)\n\n# поправь значение переменной на правильное имя\nenemy2 = "Второй враг"\nhero.attack(enemy2)\n\nhero.move_down(2)\n\n# создай переменную с именем третьего врага\n# и передай ее в метод attack\n`,
+  [10]: `hero.move_right(4)\n\nenemy1 = hero.find_nearest_enemy()\nhero.attack(enemy1)\n\n# дойди до остальных врагов, получи их имена\n# с помощью hero.find_nearest_enemy()\n# и атакуй их\n`
 };

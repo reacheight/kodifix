@@ -1,4 +1,4 @@
-import { shortMovingCommands, longMovingCommands, switchCommand, attackCommand } from "./commands.js"
+import { shortMovingCommands, longMovingCommands, switchCommand, attackCommand, findNearestEnemy } from "./commands.js"
 
 export const instructions = {
   [0]: {
@@ -61,6 +61,13 @@ export const instructions = {
     + 'Чтобы у переменной появилось значение, его нужно присвоить. В Python это делают с помощью знака `=`.',
     example: `# создаем переменную и кладем в нее значение:\n# название = значение\nenemy = "Proggy"\n\n# теперь везде, где мы используем переменную, будет подставляться ее значение:\nhero.attack(enemy) # герой атакует врага с именем Proggy\n\n# обрати внимание, что мы используем переменную без кавычек`,
     newCommands: [],
+    prevCommands: longMovingCommands.concat([ switchCommand, attackCommand ]),
+  },
+  [10]: {
+    instructions: 'Некоторые враги скрывают своё имя. Но ты можешь получить его с помощью метода `hero.find_nearest_enemy()`. Обрати внимание, что метод возвращает имя ближайшего к твоему персонажу врага.\n\n'
+    + 'После того, как ты победишь первого врага, которого вернул этот метод, ты можешь вызвать его повторно, чтобы получить имя следующего врага.',
+    example: `enemy1 = hero.find_nearest_enemy()\nhero.attack(enemy1)\n\nenemy2 = hero.find_nearest_enemy()\nhero.attack(enemy2)`,
+    newCommands: [ findNearestEnemy ],
     prevCommands: longMovingCommands.concat([ switchCommand, attackCommand ]),
   }
 }
