@@ -40,6 +40,10 @@ export const Wrapper = styled.div`
   text-align: center;
   z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
 
+  ${({ nameHidden }) => css`
+    bottom: ${nameHidden ? 45 : 70}px;
+  `};
+
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};

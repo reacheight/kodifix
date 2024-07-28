@@ -4,7 +4,7 @@ import { Wrapper, Name, Image } from './styled';
 
 const computeDirection = ({ y, heroY }) => (y >= heroY ? 'left' : 'right');
 
-export const Enemy = ({ x, y, heroX, heroY, name, alive }) => {
+export const Enemy = ({ x, y, heroX, heroY, name, alive, nameHidden }) => {
   const [deathDirection, setDeathDirection] = useState(null);
 
   useEffect(() => {
@@ -18,8 +18,8 @@ export const Enemy = ({ x, y, heroX, heroY, name, alive }) => {
   const direction = deathDirection || computeDirection({ y, heroY });
 
   return (
-    <Wrapper x={x} y={y} heroX={heroX}>
-      <Name fade={!alive}>{name}</Name>
+    <Wrapper x={x} y={y} heroX={heroX} nameHidden={nameHidden}>
+      {!nameHidden && <Name fade={!alive}>{name}</Name>}
       <Image direction={direction} alive={alive} />
     </Wrapper>
   );

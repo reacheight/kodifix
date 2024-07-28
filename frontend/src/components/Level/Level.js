@@ -586,6 +586,7 @@ export const Level = () => {
                 zIndex={enemy.x}
                 name={enemy.name}
                 alive={enemy.alive}
+                nameHidden={enemy.hidden}
               />
             ))}
             <Hero
