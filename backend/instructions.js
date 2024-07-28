@@ -64,7 +64,7 @@ export const instructions = {
     prevCommands: longMovingCommands.concat([ switchCommand, attackCommand ]),
   },
   [10]: {
-    instructions: 'Некоторые враги скрывают своё имя. Но ты можешь получить его с помощью метода `hero.find_nearest_enemy()`. Обрати внимание, что метод возвращает имя ближайшего к твоему персонажу врага.\n\n'
+    instructions: 'Некоторые враги скрывают свое имя. Но ты можешь получить его с помощью метода `hero.find_nearest_enemy()`. Обрати внимание, что метод возвращает имя ближайшего к твоему персонажу врага.\n\n'
     + 'После того, как ты победишь первого врага, которого вернул этот метод, ты можешь вызвать его повторно, чтобы получить имя следующего врага.',
     example: `enemy1 = hero.find_nearest_enemy()\nhero.attack(enemy1)\n\nenemy2 = hero.find_nearest_enemy()\nhero.attack(enemy2)`,
     newCommands: [ findNearestEnemy ],
