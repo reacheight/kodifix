@@ -18,13 +18,13 @@ export const HeroTooltip = ({ texts }) => {
     if (index < texts.length - 1) {
       showText(index + 1);
     } else {
-      setText(0);
+      setText(null);
     }
   };
 
   useEffect(() => {
     showText(0);
-  }, []);
+  }, [texts]);
 
   if (!text.current) {
     return null;

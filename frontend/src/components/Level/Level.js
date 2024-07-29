@@ -243,11 +243,17 @@ export const Level = () => {
       updatedLevelData.levers = updatedLevers;
       updatedLevelData.bridges = updatedBridges;
     } else if (command.name === 'find_nearest_enemy') {
-      setHeroTexts([]); // почему показывает только первый раз?
       if (command.hasEnemy) {
-        setHeroTexts([{ value: 'find_nearest_enemy: Я тебя вижу!', delay: 1000 }])
+        setHeroTexts([
+          { value: 'find_nearest_enemy: Я тебя вижу!', delay: 1000 },
+        ]);
       } else {
-        setHeroTexts([{ value: 'find_nearest_enemy: На этом уровне нет врагов!', delay: 1000 }])
+        setHeroTexts([
+          {
+            value: 'find_nearest_enemy: На этом уровне нет врагов!',
+            delay: 1000,
+          },
+        ]);
       }
       await delay(500);
     }
@@ -370,7 +376,9 @@ export const Level = () => {
     setInitialCode(id, code.current);
 
     try {
-      const { data } = await axios.post(`/level/${id}/run`, { code: code.current });
+      const { data } = await axios.post(`/level/${id}/run`, {
+        code: code.current,
+      });
 
       setExecutionData(data);
 
@@ -504,6 +512,8 @@ export const Level = () => {
 
     return acc;
   }, 0);
+
+  console.log(heroTexts)
 
   return (
     <Wrapper>
@@ -646,7 +656,11 @@ export const Level = () => {
         <LevelGuide level={id} data={instructions} onClose={closeGuide} />
       )}
       {isScoreOpen && (
-        <LevelScore isLastLevel={isLastLevel} collectedGemsCount={collectedGemsCount} onContinue={openNextLevel} />
+        <LevelScore
+          isLastLevel={isLastLevel}
+          collectedGemsCount={collectedGemsCount}
+          onContinue={openNextLevel}
+        />
       )}
     </Wrapper>
   );
