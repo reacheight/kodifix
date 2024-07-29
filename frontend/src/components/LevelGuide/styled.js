@@ -90,17 +90,39 @@ export const Instructions = styled.div`
   white-space: break-spaces;
 `;
 
-export const ExampleCode = styled.div`
-  background: #3d3732;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-family: 'Monospace', sans-serif;
-  font-size: 14px;
-  line-height: 22px;
-  white-space: break-spaces;
+export const CodeMirrorWrapper = styled.div`
+  .cm-editor {
+    background: rgb(61, 55, 50);
+    border-radius: 4px;
+  }
 
-  span {
-    color: #6acaec;
+  .cm-content {
+    padding: 8px 0;
+  }
+
+  .cm-line {
+    padding: 0 16px;
+  }
+
+  .cm-gutters {
+    display: none;
+  }
+
+  .cm-activeLine {
+    background: none;
+  }
+
+  .cm-scroller {
+    &::-webkit-scrollbar {
+      width: 14px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 20px;
+      border: 4px solid transparent;
+      background-clip: content-box;
+    }
   }
 `;
 

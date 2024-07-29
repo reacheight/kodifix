@@ -12,7 +12,7 @@ import {
   CloseButton,
   Block,
   Instructions,
-  ExampleCode,
+  CodeMirrorWrapper,
   NewCommandsWrapper,
   Subtitle,
   Steps,
@@ -31,13 +31,25 @@ import {
 } from '../CommandDescription/styled';
 import close2Icon from '../../assets/close-2.svg';
 import { extract } from '../../utils/extract';
+import CodeMirror from '@uiw/react-codemirror';
+import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
+import { tags as t } from '@lezer/highlight';
+import { python } from '@codemirror/lang-python';
+
+const basicSetup = {
+  highlightActiveLineGutter: false,
+};
+
+const extensions = [python()];
+
+const theme = vscodeDarkInit({
+  styles: [{ tag: t.comment, color: 'rgba(255, 255, 255, 0.5)' }],
+});
 
 export const LevelGuide = ({ level, data, onClose }) => {
   const { instructions, example, newCommands } = data;
-  const commonExamples = example?.split('\n').map(extract);
   const [commandIndex, setCommandIndex] = useState(0);
   const newCommand = newCommands[commandIndex];
-  const newCommandExample = extract(newCommand?.example);
   const newCommandCode = extract(newCommand?.code);
 
   const hasPrev = commandIndex > 0;
@@ -70,14 +82,15 @@ export const LevelGuide = ({ level, data, onClose }) => {
           <Block>
             {instructions ? <Instructions>{instructions}</Instructions> : null}
             {example ? (
-              <ExampleCode>
-                {commonExamples.map((a) => (
-                  <div key={a.name}>
-                    {a.name}
-                    <span>{a.brackets}</span>
-                  </div>
-                ))}
-              </ExampleCode>
+              <CodeMirrorWrapper>
+                <CodeMirror
+                  extensions={extensions}
+                  basicSetup={basicSetup}
+                  theme={theme}
+                  value={example}
+                  editable={false}
+                />
+              </CodeMirrorWrapper>
             ) : null}
           </Block>
         ) : null}
@@ -97,10 +110,15 @@ export const LevelGuide = ({ level, data, onClose }) => {
               <Description>{newCommand.description}</Description>
               <Example>
                 <ExampleTitle>Пример использования:</ExampleTitle>
-                <ExampleCode>
-                  {newCommandExample.name}
-                  <span>{newCommandExample.brackets}</span>
-                </ExampleCode>
+                <CodeMirrorWrapper>
+                  <CodeMirror
+                    extensions={extensions}
+                    basicSetup={basicSetup}
+                    theme={theme}
+                    value={newCommand?.example}
+                    editable={false}
+                  />
+                </CodeMirrorWrapper>
               </Example>
 
               {newCommands.length > 1 ? (
@@ -123,7 +141,7 @@ export const LevelGuide = ({ level, data, onClose }) => {
                     <img src={arrow2Icon} alt="следующий" />
                   </Control>
                 </Steps>
-              ): null}
+              ) : null}
             </Block>
           </NewCommandsWrapper>
         ) : null}
