@@ -59,8 +59,8 @@ export const Name = styled.span`
   font-weight: bold;
   font-size: 20px;
   font-family: 'Inter', sans-serif;
-  color: #ff0000;
-  text-shadow: 0 0 3px black;
+  color: #fff;
+  text-shadow: 0 0 3px #000;
   user-select: none;
   ${({ fade }) =>
     fade &&

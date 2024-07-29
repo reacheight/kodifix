@@ -245,7 +245,10 @@ export const Level = () => {
     } else if (command.name === 'find_nearest_enemy') {
       if (command.hasEnemy) {
         setHeroTexts([
-          { value: 'find_nearest_enemy: Я тебя вижу!', delay: 1000 },
+          {
+            value: 'find_nearest_enemy: Я тебя вижу!',
+            delay: 1000,
+          },
         ]);
       } else {
         setHeroTexts([
@@ -512,8 +515,6 @@ export const Level = () => {
 
     return acc;
   }, 0);
-
-  console.log(heroTexts)
 
   return (
     <Wrapper>
