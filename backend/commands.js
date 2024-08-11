@@ -32,3 +32,9 @@ export const findNearestEnemy = {
     description: 'возвращает ближайшего живого врага',
     example: 'enemy = hero.find_nearest_enemy()\nhero.attack(enemy)',
 }
+
+export const hasEnemyAround = {
+    code: 'hero.has_enemy_around()',
+    description: 'сообщает, есть ли живой враг на соседних с твоим персонажем клетках',
+    example: 'if hero.has_enemy_around():\n    enemy = hero.find_nearest_enemy()\n    hero.attack(enemy)',
+}

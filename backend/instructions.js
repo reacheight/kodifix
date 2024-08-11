@@ -1,4 +1,4 @@
-import { shortMovingCommands, longMovingCommands, switchCommand, attackCommand, findNearestEnemy } from "./commands.js"
+import { shortMovingCommands, longMovingCommands, switchCommand, attackCommand, findNearestEnemy, hasEnemyAround } from "./commands.js"
 
 export const instructions = {
   [0]: {
@@ -66,9 +66,17 @@ export const instructions = {
   [10]: {
     instructions: 'Некоторые враги скрывают свое имя. Но ты можешь получить его с помощью метода `hero.find_nearest_enemy()`. Обрати внимание, что метод возвращает имя ближайшего к твоему персонажу врага.\n\n'
     + 'После того, как ты победишь первого врага, которого вернул этот метод, ты можешь вызвать его повторно, чтобы получить имя следующего врага.\n\n'
-    + 'В переменные можно складывать не только готовые значения, но и результат выполнения методов. Попробуй присвоить переменной результат `find_nearest_enemy`, чтобы затем использовать её в `attack`.',
+    + 'В переменные можно складывать не только готовые значения, но и результат выполнения методов. Попробуй присвоить переменной результат `find_nearest_enemy`, чтобы затем использовать ее в `attack`.',
     example: `enemy1 = hero.find_nearest_enemy()\nhero.attack(enemy1)\n\nenemy2 = hero.find_nearest_enemy()\nhero.attack(enemy2)`,
     newCommands: [ findNearestEnemy ],
     prevCommands: longMovingCommands.concat([ switchCommand, attackCommand ]),
+  },
+  [11]: {
+    instructions: 'На этом уровне на каждом островке тебя может поджидать враг, но ты никогда не можешь быть уверенным, есть он там, или же путь свободен — твой код будет проверятся несколько раз на разных случаях. Тебе надо аккуратно дойти до финиша, проверяя каждый островок.\n\n'
+    + 'В этом тебе помогут новый метод `has_enemy_around`, который скажет, есть ли на соседних с твоим героем клетках враг, и конструкция if («если»), с помощью которой можно писать код так, чтобы в разных случаях он работал по-разному.\n\n'
+    + 'Посмотри, как это выглядит, и обрати внимание, что строчки кода, которые должны выполняться при условии if, должны быть сдвинуты вправо на 4 пробела:',
+    example: `hero.move_right(3)              # всегда пройди вправо\nif hero.has_enemy_around():     # если рядом есть враг, то\n    enemy = hero.find_nearest_enemy() # найди врага\n    hero.attack(enemy)                # и атакуй его\nhero.move_down(2)               # всегда пройди вниз`,
+    newCommands: [ hasEnemyAround ],
+    prevCommands: longMovingCommands.concat([ findNearestEnemy, switchCommand, attackCommand ]),
   }
 }

@@ -79,6 +79,32 @@ export default class LevelRunner {
       this.pushNewCommand("find_nearest_enemy", { hasEnemy: false });
     },
 
+    has_enemy_around: () => {
+      if (!this.level.enemies || this.level.enemies.length === 0)
+        return false;
+
+      const aroundPoints =[
+        { x: this.level.hero.x + 1, y: this.level.hero.y },
+        { x: this.level.hero.x - 1, y: this.level.hero.y },
+        { x: this.level.hero.x, y: this.level.hero.y + 1 },
+        { x: this.level.hero.x, y: this.level.hero.y - 1 },
+        { x: this.level.hero.x + 1, y: this.level.hero.y + 1 },
+        { x: this.level.hero.x + 1, y: this.level.hero.y - 1 },
+        { x: this.level.hero.x - 1, y: this.level.hero.y + 1 },
+        { x: this.level.hero.x - 1, y: this.level.hero.y - 1 },
+      ];
+
+      for (const point of aroundPoints) {
+        if (this.getAliveEnemyAtPoint(point)) {
+          this.pushNewCommand("has_enemy_around", { hasEnemy: true });
+          return true;
+        }
+      }
+
+      this.pushNewCommand("has_enemy_around", { hasEnemy: false });
+      return false;
+    },
+
     move: (direction, steps, methodName) => {
       let newHeroPos = structuredClone(this.level.hero);
       newHeroPos.x += direction.x * steps;

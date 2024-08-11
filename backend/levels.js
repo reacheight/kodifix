@@ -446,4 +446,75 @@ export const levels = {
     bridges: [],
     onlyVariablesInAttack: true,
   },
+
+  [11]: {
+    height: 9,
+    width: 15,
+    grid: [
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn", "lawn","lawn","lawn","lawn","lawn","lawn", "lawn"],
+      ["lawn","sand","sand","lawn","lawn","lawn","sand","sand", "lawn","lawn","lawn","lawn","lawn","lawn", "lawn"],
+      ["grass","lawn","lawn","lawn","lawn","lawn","lawn","sand", "lawn","lawn","lawn","lawn","lawn","lawn", "lawn"],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn", "lawn","lawn","lawn","lawn","lawn","lawn", "lawn"],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn", "lawn","lawn","lawn","lawn","lawn","lawn", "lawn"],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","lawn", "lawn","lawn","lawn","lawn","lawn","lawn", "lawn"],
+      ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","sand", "lawn","lawn","lawn","lawn","lawn","lawn", "lawn"],
+      ["sand","sand","sand","lawn","lawn","lawn","sand","sand", "grass","lawn","lawn","lawn","lawn","lawn", "lawn"],
+      ["lawn","lawn","grass","lawn","lawn","lawn","lawn","lawn", "lawn","lawn","lawn","lawn","lawn","lawn", "lawn"],
+    ],
+    hero: { x: 1, y: 7 },
+    finish: { x: 7, y: 14 },
+    gems: [
+      { x: 1, y: 1 }, { x: 7, y: 13 }
+    ],
+    walls: [
+      { x: 0, y: 3, type: 'water' }, { x: 0, y: 4, type: 'water' }, { x: 0, y: 5, type: 'water' }, { x: 0, y: 9, type: 'water' }, { x: 0, y: 10, type: 'water' }, { x: 0, y: 11, type: 'water' }, { x: 0, y: 12, type: 'water' }, { x: 0, y: 13, type: 'water' }, { x: 0, y: 14, type: 'water' },
+      { x: 1, y: 3, type: 'water' }, { x: 1, y: 4, type: 'water' }, { x: 1, y: 5, type: 'water' }, { x: 1, y: 9, type: 'water' }, { x: 1, y: 10, type: 'water' }, { x: 1, y: 11, type: 'water' }, { x: 1, y: 12, type: 'water' }, { x: 1, y: 13, type: 'water' }, { x: 1, y: 14, type: 'water' },
+      { x: 2, y: 3, type: 'water' }, { x: 2, y: 4, type: 'water' }, { x: 2, y: 5, type: 'water' }, { x: 2, y: 9, type: 'water' }, { x: 2, y: 10, type: 'water' }, { x: 2, y: 11, type: 'water' }, { x: 2, y: 12, type: 'water' }, { x: 2, y: 13, type: 'water' }, { x: 2, y: 14, type: 'water' },
+      { x: 3, y: 0, type: 'water' }, { x: 3, y: 1, type: 'water' }, { x: 3, y: 2, type: 'water' }, { x: 3, y: 3, type: 'water' }, { x: 3, y: 4, type: 'water' }, { x: 3, y: 5, type: 'water' }, { x: 3, y: 6, type: 'water' }, { x: 3, y: 7, type: 'water' }, { x: 3, y: 8, type: 'water' }, { x: 3, y: 9, type: 'water' }, { x: 3, y: 10, type: 'water' }, { x: 3, y: 11, type: 'water' }, { x: 3, y: 12, type: 'water' }, { x: 3, y: 13, type: 'water' }, { x: 3, y: 14, type: 'water' },
+      { x: 4, y: 0, type: 'water' }, { x: 4, y: 1, type: 'water' }, { x: 4, y: 2, type: 'water' }, { x: 4, y: 3, type: 'water' }, { x: 4, y: 4, type: 'water' }, { x: 4, y: 5, type: 'water' }, { x: 4, y: 6, type: 'water' }, { x: 4, y: 7, type: 'water' }, { x: 4, y: 8, type: 'water' }, { x: 4, y: 9, type: 'water' }, { x: 4, y: 10, type: 'water' }, { x: 4, y: 11, type: 'water' }, { x: 4, y: 12, type: 'water' }, { x: 4, y: 13, type: 'water' }, { x: 4, y: 14, type: 'water' },
+      { x: 5, y: 0, type: 'water' }, { x: 5, y: 1, type: 'water' }, { x: 5, y: 2, type: 'water' }, { x: 5, y: 3, type: 'water' }, { x: 5, y: 4, type: 'water' }, { x: 5, y: 5, type: 'water' }, { x: 5, y: 6, type: 'water' }, { x: 5, y: 7, type: 'water' }, { x: 5, y: 8, type: 'water' }, { x: 5, y: 9, type: 'water' }, { x: 5, y: 10, type: 'water' }, { x: 5, y: 11, type: 'water' }, { x: 5, y: 12, type: 'water' }, { x: 5, y: 13, type: 'water' }, { x: 5, y: 14, type: 'water' },
+      { x: 6, y: 0, type: 'water' }, { x: 6, y: 1, type: 'water' }, { x: 6, y: 2, type: 'water' }, { x: 6, y: 3, type: 'water' }, { x: 6, y: 4, type: 'water' }, { x: 6, y: 5, type: 'water' }, { x: 6, y: 9, type: 'water' }, { x: 6, y: 10, type: 'water' }, { x: 6, y: 11, type: 'water' },
+      { x: 7, y: 0, type: 'water' }, { x: 7, y: 1, type: 'water' }, { x: 7, y: 2, type: 'water' }, { x: 7, y: 3, type: 'water' }, { x: 7, y: 4, type: 'water' }, { x: 7, y: 5, type: 'water' }, { x: 7, y: 9, type: 'water' }, { x: 7, y: 10, type: 'water' }, { x: 7, y: 11, type: 'water' },
+      { x: 8, y: 0, type: 'water' }, { x: 8, y: 1, type: 'water' }, { x: 8, y: 2, type: 'water' }, { x: 8, y: 3, type: 'water' }, { x: 8, y: 4, type: 'water' }, { x: 8, y: 5, type: 'water' }, { x: 8, y: 9, type: 'water' }, { x: 8, y: 10, type: 'water' }, { x: 8, y: 11, type: 'water' },
+
+      { x: 0, y: 6, type: 'tree' }, { x: 0, y: 8, type: 'tree' },
+      { x: 1, y: 0, type: 'tree' },
+      { x: 6, y: 13, type: 'tree' },
+    ],
+    enemies: [
+      { x: 1, y: 2, alive: true, name: "Hidden1", hidden: true },
+      { x: 6, y: 7, alive: true, name: "Hidden2", hidden: true },
+      { x: 7, y: 12, alive: true, name: "Hidden3", hidden: true },
+    ],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Нужно пробраться к финишу через этих безымянных врагов', required: true },
+      { type: 'enemies', name: 'Победить всех врагов', heroText: 'Давай разузнаем их имена и прогоним отсюда', required: true },
+      { type: 'gems', name: 'Собрать все алмазы', heroText: 'Алмазы всегда пригодятся, давай соберем их', required: false },
+    ],  
+    levers: [],
+    bridges: [
+      {
+        id: "bridge1",
+        vertical: false,
+        start: { x: 1, y: 3 },
+        end: { x: 1, y: 5 },
+        activated: true,
+      },
+      {
+        id: "bridge2",
+        vertical: true,
+        start: { x: 3, y: 7 },
+        end: { x: 5, y:7 },
+        activated: true,
+      },
+      {
+        id: "bridge3",
+        vertical: false,
+        start: { x: 7, y: 9 },
+        end: { x: 7, y: 11 },
+        activated: true,
+      },
+    ],
+    onlyVariablesInAttack: true,
+  },
 };
