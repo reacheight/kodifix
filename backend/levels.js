@@ -487,9 +487,9 @@ export const levels = {
       { x: 7, y: 12, alive: true, name: "Hidden3", hidden: true },
     ],
     goals: [
-      { type: 'finish', name: 'Добраться до финиша', heroText: 'Нужно пробраться к финишу через этих безымянных врагов', required: true },
-      { type: 'enemies', name: 'Победить всех врагов', heroText: 'Давай разузнаем их имена и прогоним отсюда', required: true },
-      { type: 'gems', name: 'Собрать все алмазы', heroText: 'Алмазы всегда пригодятся, давай соберем их', required: false },
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Опасность поджидает на каждому шагу,\nпомоги мне добраться до финиша', required: true },
+      { type: 'enemies', name: 'Победить всех врагов', heroText: 'На островках могут скрываться враги, надо их победить', required: true },
+      { type: 'gems', name: 'Собрать все алмазы', heroText: 'Не забудь про алмазы', required: false },
     ],  
     levers: [],
     bridges: [
