@@ -202,6 +202,7 @@ export default class LevelRunner {
       };
 
       results.push({ enemiesVariant, variantResult });
+      this.commands = [];
     }
 
     return results;
