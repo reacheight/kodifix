@@ -482,9 +482,9 @@ export const levels = {
       { x: 6, y: 13, type: 'tree' },
     ],
     enemies: [
-      { x: 1, y: 2, alive: true, name: "Hidden1", hidden: true },
-      { x: 6, y: 7, alive: true, name: "Hidden2", hidden: true },
-      { x: 7, y: 12, alive: true, name: "Hidden3", hidden: true },
+      { x: 1, y: 2, alive: true, name: "Hidden1", hidden: true, random: true },
+      { x: 6, y: 7, alive: true, name: "Hidden2", hidden: true, random: true },
+      { x: 7, y: 12, alive: true, name: "Hidden3", hidden: true, random: true },
     ],
     goals: [
       { type: 'finish', name: 'Добраться до финиша', heroText: 'Опасность поджидает на каждому шагу,\nпомоги мне добраться до финиша', required: true },
@@ -516,5 +516,6 @@ export const levels = {
       },
     ],
     onlyVariablesInAttack: true,
+    checksCount: 5,
   },
 };
