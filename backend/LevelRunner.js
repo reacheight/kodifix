@@ -139,46 +139,72 @@ export default class LevelRunner {
   commands = [];
   
   constructor(level) {
+    this.initialLevel = structuredClone(level);
     this.level = structuredClone(level);
     this.engine = esper({
       language: 'python'
     });
 
+    this.enemiesVariants = [this.initialLevel.enemies];
+
+    if (this.initialLevel.checksCount) {
+      this.enemiesVariants = [];
+      for (let i = 0; i < this.initialLevel.checksCount; i++) {
+        const newEnemies = [...this.initialLevel.enemies].map(e => {
+          const clone = structuredClone(e);
+          if (!clone.random)
+            return clone;
+          clone.alive = Math.random() < 0.5;
+          return clone;
+        });
+        this.enemiesVariants.push(newEnemies);
+      }
+    }
+
     this.engine.addGlobal('hero', this.hero);
   }
 
   run(code) {
-    try {
-      this.engine.load(code);
-      let steps = 0;
-      let value = this.engine.evloop.next();
-      while (!value.done && !this.gameplayError) {
-        value = this.engine.evloop.next();
-        if ( value.value && value.value.then ) throw new Error('Can\'t deal with futures when running in sync mode');
-        if ( ++steps > this.engine.options.executionLimit ) throw new Error('Execution Limit Reached');
+    const results = []
+    for (const enemiesVariant of this.enemiesVariants) {
+      this.level = structuredClone(this.initialLevel);
+      this.level.enemies = enemiesVariant;
+      try {
+        this.engine.load(code);
+        let steps = 0;
+        let value = this.engine.evloop.next();
+        while (!value.done && !this.gameplayError) {
+          value = this.engine.evloop.next();
+          if ( value.value && value.value.then ) throw new Error('Can\'t deal with futures when running in sync mode');
+          if ( ++steps > this.engine.options.executionLimit ) throw new Error('Execution Limit Reached');
+        }
+      } catch (e) {
+  
+        let message = ErrorMessageMapper.map(e.message);
+        let line = e.loc.line ?? e.loc.start.line;
+        return {
+          errors: [
+            {
+              message,
+              line,
+            }
+          ]
+        }
       }
-    } catch (e) {
+  
+      const variantResult = {
+        hasFinished: arePointsEqual(this.level.finish, this.level.hero),
+        allGemsCollected: !this.level.gems || this.gemsCollected === this.level.gems.length,
+        numberOfLinesSatisfy: !this.level.linesGoal || calculateCodeLines(code) <= this.level.linesGoal,
+        goals: this.level.goals.map(goal => { return { type: goal.type, completed: this.isGoalCompleted(goal, code) } }),
+        commands: this.commands,
+        gameplayError: this.gameplayError,
+      };
 
-      let message = ErrorMessageMapper.map(e.message);
-      let line = e.loc.line ?? e.loc.start.line;
-      return {
-        errors: [
-          {
-            message,
-            line,
-          }
-        ]
-      }
+      results.push({ enemiesVariant, variantResult });
     }
 
-    return {
-      hasFinished: arePointsEqual(this.level.finish, this.level.hero),
-      allGemsCollected: !this.level.gems || this.gemsCollected === this.level.gems.length,
-      numberOfLinesSatisfy: !this.level.linesGoal || calculateCodeLines(code) <= this.level.linesGoal,
-      goals: this.level.goals.map(goal => { return { type: goal.type, completed: this.isGoalCompleted(goal, code) } }),
-      commands: this.commands,
-      gameplayError: this.gameplayError,
-    };
+    return results;
   }
 
   isGoalCompleted(goal, code) {
