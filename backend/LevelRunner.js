@@ -168,7 +168,7 @@ export default class LevelRunner {
     const results = []
     for (const enemiesVariant of this.enemiesVariants) {
       this.level = structuredClone(this.initialLevel);
-      this.level.enemies = enemiesVariant;
+      this.level.enemies = structuredClone(enemiesVariant);
       try {
         this.engine.load(code);
         let steps = 0;
