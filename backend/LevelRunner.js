@@ -148,7 +148,6 @@ export default class LevelRunner {
     this.enemiesVariants = [this.initialLevel.enemies];
 
     if (this.initialLevel.checksCount) {
-      this.enemiesVariants = [];
       for (let i = 0; i < this.initialLevel.checksCount; i++) {
         const newEnemies = [...this.initialLevel.enemies].map(e => {
           const clone = structuredClone(e);
