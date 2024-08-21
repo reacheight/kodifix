@@ -80,9 +80,11 @@ export const Level = () => {
   const [isMoving, setIsMoving] = useRefState(false);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isScoreOpen, setIsScoreOpen] = useState(false);
-  const [executionData, setExecutionData] = useRefState(null);
+  const [levelVariants, setLevelVariants] = useRefState(null);
+  const [currentVariant, setCurrentVariant] = useRefState(null);
   const [executingCommand, setExecutingCommand] = useRefState(null);
   const [pausedCommand, setPausedCommand] = useRefState(null);
+  const [pausedEnemiesVariant, setPausedEnemiesVariant] = useRefState(null);
   const [instructions, setInstructions] = useState(null);
   const [heroTexts, setHeroTexts] = useState([]);
   const [code, setCode] = useRefState(getInitialCodeFromStorage(id));
@@ -139,9 +141,11 @@ export const Level = () => {
     setIsPaused(false);
     setIsMoving(false);
     setIsScoreOpen(false);
-    setExecutionData(null);
+    setLevelVariants(null);
+    setCurrentVariant(null);
     setExecutingCommand(null);
     setPausedCommand(null);
+    setPausedEnemiesVariant(null);
     setInstructions(null);
     setHeroTexts([]);
     setCode(getInitialCodeFromStorage(id));
@@ -270,15 +274,17 @@ export const Level = () => {
   };
 
   const execCommands = async () => {
-    const { commands, gameplayError, hasFinished } = executionData.current;
+    const { commands, gameplayError, hasFinished } = levelVariants.current[currentVariant.current].variantResult;
 
     if (commands.length === 0) {
       setHeroTextsForGameplayError(gameplayError);
+      stopGameWithoutResetting();
     }
 
     for (let i = pausedCommand.current || 0; i < commands.length; i++) {
       if (isPaused.current) {
         setPausedCommand(i);
+        setPausedEnemiesVariant(levelData.current.enemies); // запоминаю убитых врагов, чтобы они не воскресли после продолжения после паузы
         break;
       }
 
@@ -290,20 +296,40 @@ export const Level = () => {
       await executeCommand(commands[i], i);
 
       if (i === commands.length - 1) {
-        setExecutingCommand(null);
-        walkingAudio.currentTime = 0;
-
-        setHeroTextsForGameplayError(gameplayError);
-      }
-
-      if (i === commands.length - 1 && hasFinished) {
-        setHeroTexts([{ value: 'Отлично, мы можем идти дальше', delay: 1500 }]);
-        await delay(1500);
-        new Audio(victorySound).play();
-        setIsScoreOpen(true);
+        if (!hasFinished) { // если текущий вариант не пройден, остальные не смотрим
+          setHeroTextsForGameplayError(gameplayError);
+          stopGameWithoutResetting();
+        } else if (currentVariant.current === levelVariants.current.length - 1) { // уровень завершается, только если все варианты прошли
+          setHeroTexts([{ value: 'Отлично, мы можем идти дальше', delay: 1500 }]);
+          await delay(1500);
+          new Audio(victorySound).play();
+          setIsScoreOpen(true);
+        } else { // если это не последний вариант, то при корректном прохождении варианта просто прогоняем следующий вариант
+          resetData();
+        }
       }
     }
   };
+
+  const execVariants = async () => {
+    if (!levelVariants.current || levelVariants.current.length === 0)
+      return;
+
+    for (let i = currentVariant.current || 0; i < levelVariants.current.length; i++) {
+      if (isPaused.current || !isRunning.current) {
+        break;
+      }
+
+      const variant = levelVariants.current[i];
+      setCurrentVariant(i);
+
+      const newLevelData = copy(levelData.current);
+      newLevelData.enemies = pausedEnemiesVariant.current || variant.enemiesVariant; // если после паузы, то сеттим запомнивших врагов; если нет, то просто врагов из текущего варианта
+      setLevelData(newLevelData);
+
+      await execCommands();
+    }
+  }
 
   const setHeroTextsForGameplayError = (gameplayError) => {
     if (gameplayError?.type === GameplayErrorTypes.HERO_RAN_IN_WALL) {
@@ -368,8 +394,9 @@ export const Level = () => {
     setHeroTexts([]);
     setHeroShift({ right: 0, bottom: 0 });
     setLevelData({ ...initialLevelData.current });
-    setExecutionData(null);
+    setCurrentVariant(null);
     setPausedCommand(null);
+    setPausedEnemiesVariant(null);
     setCodeErrors(null);
   };
 
@@ -383,9 +410,8 @@ export const Level = () => {
         code: code.current,
       });
 
-      setExecutionData(data);
-
-      await execCommands();
+      setLevelVariants(data);
+      await execVariants();
     } catch (error) {
       setCodeErrors(error.response.data.errors);
     } finally {
@@ -397,14 +423,15 @@ export const Level = () => {
     setIsPaused(false);
     setIsRunning(true);
 
-    await execCommands();
+    await execVariants();
 
     setIsRunning(false);
   };
 
   const pauseGame = () => {
+    // последняя команда последнего варианта
     const isLastCommandExecuting =
-      executingCommand.current === executionData.current.commands.length - 1;
+      currentVariant.current && executingCommand.current === levelVariants.current[currentVariant.current].variantResult.commands.length - 1;
 
     if (!isLastCommandExecuting) {
       setIsRunning(false);
@@ -412,7 +439,7 @@ export const Level = () => {
     }
   };
 
-  const stopGame = async () => {
+  const stopGameWithoutResetting = () => {
     if (isRunning.current) {
       setIsRunning(false);
     }
@@ -420,7 +447,10 @@ export const Level = () => {
     if (isPaused.current) {
       setIsPaused(false);
     }
+  }
 
+  const stopGame = () => {
+    stopGameWithoutResetting();
     resetData();
   };
 
@@ -505,7 +535,7 @@ export const Level = () => {
   const water = walls.filter((wall) => wall.type === 'water');
   const activeBridges = bridges?.filter((bridge) => bridge.activated) || [];
   const executingLine =
-    executionData.current?.commands[executingCommand.current]?.start.line;
+    levelVariants.current?.[currentVariant.current]?.variantResult.commands[executingCommand.current]?.start.line;
   const { cells, cellsBottom } = prepareCells(grid);
   const isLastLevel = Number(id) === game.levels;
   const collectedGemsCount = gems.reduce((acc, gem) => {
