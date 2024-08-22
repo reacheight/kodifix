@@ -314,7 +314,7 @@ export const Level = () => {
 
       // когда успешно прошли первый уровень, говорим, что теперь проверим на других вариантах
       if (i === commands.length - 1 && currentVariant.current === 0 && hasFinished && levelVariants.current.length > 1) {
-        setHeroTexts([{ value: 'Отлично, теперь проверим твой код на других вариантах уровня!', delay: 1500 }]);
+        setHeroTexts([{ value: 'Отлично, теперь проверим твой код\nна других вариантах уровня!', delay: 1500 }]);
         await delay(1500);
       }
 
