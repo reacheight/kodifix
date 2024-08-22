@@ -312,6 +312,12 @@ export const Level = () => {
 
       await executeCommand(commands[i], i);
 
+      // когда успешно прошли первый уровень, говорим, что теперь проверим на других вариантах
+      if (i === commands.length - 1 && currentVariant.current === 0 && hasFinished && levelVariants.current.length > 1) {
+        setHeroTexts([{ value: 'Отлично, теперь проверим твой код на других вариантах уровня!', delay: 1500 }]);
+        await delay(1500);
+      }
+
       if (i === commands.length - 1) {
         if (!hasFinished) { // если текущий вариант не пройден, остальные не смотрим
           setHeroTextsForGameplayError(gameplayError);
@@ -336,6 +342,7 @@ export const Level = () => {
       if (isPaused.current || !isRunning.current) {
         break;
       }
+
 
       const variant = levelVariants.current[i];
       setCurrentVariant(i);
