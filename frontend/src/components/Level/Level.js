@@ -66,6 +66,20 @@ const prepareCells = (grid) => {
   };
 };
 
+const normalSpeedDelays = {
+  walking: 300,
+  attacking: 500,
+  switching: 300,
+  findingEnemy: 500,
+}
+
+const fastSpeedDelays = {
+  walking: 150,
+  attacking: 250,
+  switching: 150,
+  findingEnemy: 250,
+}
+
 const walkingAudio = new Audio(walkingSound);
 
 export const Level = () => {
@@ -90,6 +104,9 @@ export const Level = () => {
   const [code, setCode] = useRefState(getInitialCodeFromStorage(id));
   const [codeErrors, setCodeErrors] = useState(null);
   const [scale, setScale] = useState(1);
+
+  const isSpedUp = () => currentVariant.current && currentVariant.current > 0;
+  const getDelays = () => isSpedUp() ? fastSpeedDelays : normalSpeedDelays;
 
   const hasGuid = (data) =>
     data.instructions || data.example || data.newCommands?.length;
@@ -198,7 +215,7 @@ export const Level = () => {
       setHeroShift(updatedHeroShift);
       walkingAudio.play();
 
-      await delay(300);
+      await delay(getDelays().walking);
 
       setIsMoving(false);
       walkingAudio.pause();
@@ -223,11 +240,11 @@ export const Level = () => {
 
       updatedEnemies[targetIndex].alive = false;
       new Audio(hitSound).play();
-      await delay(500);
+      await delay(getDelays().attacking);
 
       updatedLevelData.enemies = updatedEnemies;
     } else if (command.name === 'switch') {
-      await delay(300);
+      await delay(getDelays().switching);
       const updatedLevers = copy(levelData.current.levers);
       const updatedBridges = copy(levelData.current.bridges);
 
@@ -262,7 +279,7 @@ export const Level = () => {
           },
         ]);
       }
-      await delay(500);
+      await delay(getDelays().findingEnemy);
     }
 
     // кейс, когда игрок нажал "стоп"
@@ -628,6 +645,7 @@ export const Level = () => {
                 name={enemy.name}
                 alive={enemy.alive}
                 nameHidden={enemy.hidden}
+                spedUp={isSpedUp()}
               />
             ))}
             <Hero
@@ -637,6 +655,7 @@ export const Level = () => {
               texts={heroTexts}
               shift={heroShift.current}
               animated={isMoving.current}
+              spedUp={isSpedUp()}
             />
             {levers.map((lever) => (
               <Lever

@@ -76,11 +76,11 @@ export const Image = styled.div`
   right: ${({ direction }) => (direction === 'right' ? 7 : -2)}px;
   transform: scaleX(${({ direction }) => (direction === 'right' ? 1 : -1)});
 
-  ${({ alive, direction }) =>
+  ${({ alive, direction, spedUp }) =>
     !alive &&
     css`
       animation:
-        ${direction === 'right' ? leftFallAnimation : rightFallAnimation} 1s ease-out
+        ${direction === 'right' ? leftFallAnimation : rightFallAnimation} ${spedUp ? 500 : 1000}ms ease-out
           forwards,
         ${fadeAnimation} 2s ease-out forwards;
     `}
