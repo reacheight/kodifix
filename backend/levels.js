@@ -516,6 +516,6 @@ export const levels = {
       },
     ],
     onlyVariablesInAttack: true,
-    checksCount: 5,
+    checksCount: 4,
   },
 };
