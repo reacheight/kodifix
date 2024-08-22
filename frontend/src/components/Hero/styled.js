@@ -38,12 +38,12 @@ export const Wrapper = styled.div`
       transform: scaleX(${shift.direction === 'left' ? -1 : 1});
     `}
 
-  ${({ animated }) =>
+  ${({ animated, spedUp }) =>
     animated &&
     css`
       transition:
-        bottom linear 300ms,
-        right linear 300ms;
-      animation: 300ms ${shaking} infinite alternate;
+        bottom linear ${spedUp ? 150 : 300}ms,
+        right linear ${spedUp ? 150 : 300}ms;
+      animation: ${spedUp ? 150 : 300}ms ${shaking} infinite alternate;
     `}
 `;
