@@ -59,6 +59,7 @@ export const MainWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+  z-index: 100;
 `;
 
 export const MapWrapper = styled.div`
