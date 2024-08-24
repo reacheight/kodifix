@@ -518,4 +518,49 @@ export const levels = {
     onlyVariablesInAttack: true,
     checksCount: 4,
   },
+
+  [12]: {
+    height: 7,
+    width: 8,
+    grid: [
+      ["lawn","sand","sand","lawn","lawn","sand","lawn","grass"],
+      ["grass","lawn","sand","lawn","lawn","sand","lawn","lawn"],
+      ["lawn","lawn","sand","lawn","lawn","sand","lawn","lawn"],
+      ["sand","sand","sand","sand","sand","sand","grass","lawn"],
+      ["lawn","grass","sand","lawn","lawn","sand","sand","sand"],
+      ["lawn","sand","lawn","lawn","sand","sand","lawn","lawn"],
+      ["sand","sand","sand","sand","grass","lawn","sand","sand"],
+    ],
+    hero: { x: 3, y: 0 },
+    finish: { x: 6, y: 5 },
+    gems: [
+      { x: 0, y: 6 },
+    ],
+    walls: [
+      { x: 0, y: 3, type: 'water' }, { x: 0, y: 4, type: 'water' },
+      { x: 1, y: 3, type: 'water' }, { x: 1, y: 4, type: 'water' },
+      { x: 2, y: 3, type: 'water' }, { x: 2, y: 4, type: 'water' },
+      { x: 2, y: 6, type: 'rock' }, { x: 2, y: 7, type: 'rock' },
+
+      { x: 5, y: 6, type: 'water' }, { x: 5, y: 7, type: 'water' }, { x: 6, y: 6, type: 'water' },
+      { x: 4, y: 3, type: 'water' }, { x: 4, y: 4, type: 'water' },
+      { x: 5, y: 2, type: 'water' }, { x: 5, y: 3, type: 'water' },
+      { x: 6, y: 1, type: 'water' }, { x: 6, y: 2, type: 'water' },
+
+      { x: 0, y: 0, type: 'tree' }, { x: 1, y: 1, type: 'tree' },
+    ],
+    enemies: [
+      { x: 2, y: 5, alive: true, name: "Hidden1", hidden: true, random: true },
+      { x: 4, y: 5, alive: true, name: "Hidden2", hidden: true, random: true },
+    ],
+    goals: [
+      { type: 'finish', name: 'Добраться до финиша', heroText: 'Проведи меня до финиша', required: true },
+      { type: 'enemies', name: 'Победить всех врагов', heroText: 'Давай победим всех встретившихся врагов', required: true },
+      { type: 'gems', name: 'Собрать все алмазы', heroText: 'И захватим этот алмаз', required: false },
+    ],  
+    levers: [],
+    bridges: [],
+    onlyVariablesInAttack: true,
+    checksCount: 4,
+  },
 };

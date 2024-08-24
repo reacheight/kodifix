@@ -78,5 +78,11 @@ export const instructions = {
     example: `hero.move_right(3)              # всегда пройди вправо\nif hero.has_enemy_around():     # если рядом есть враг, то\n    enemy = hero.find_nearest_enemy() # найди врага\n    hero.attack(enemy)                # и атакуй его\nhero.move_down(2)               # всегда пройди вниз`,
     newCommands: [ hasEnemyAround ],
     prevCommands: longMovingCommands.concat([ findNearestEnemy, switchCommand, attackCommand ]),
+  },
+  [12]: {
+    instructions: 'Отлично, давай закрепим знания. Помни, что враги на этом уровне непостоянны — могут исчезать и появляться. Проверяй, есть ли враг, с помощью конструкции if.',
+    example: `hero.move_right(3)              # всегда пройди вправо\nif hero.has_enemy_around():     # если рядом есть враг, то\n    enemy = hero.find_nearest_enemy() # найди врага\n    hero.attack(enemy)                # и атакуй его\nhero.move_down(2)               # всегда пройди вниз`,
+    newCommands: [],
+    prevCommands: [ hasEnemyAround ].concat(longMovingCommands.concat([ findNearestEnemy, switchCommand, attackCommand ])),
   }
 }
