@@ -103,7 +103,7 @@ export const Level = () => {
   const [heroTexts, setHeroTexts] = useState([]);
   const [code, setCode] = useRefState(getInitialCodeFromStorage(id));
   const [codeErrors, setCodeErrors] = useState(null);
-  const [scale, setScale] = useState(1);
+  const [scale, setScale] = useState(1.5);
 
   const isSpedUp = () => currentVariant.current && currentVariant.current > 0;
   const getDelays = () => isSpedUp() ? fastSpeedDelays : normalSpeedDelays;
@@ -498,7 +498,7 @@ export const Level = () => {
   };
 
   const SCALE_STEP = 0.1;
-  const MAX_SCALE = 1.5;
+  const MAX_SCALE = 3.0;
   const MIN_SCALE = 0.8;
 
   const increaseScale = (coefficient = 1) => {
