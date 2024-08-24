@@ -7,14 +7,27 @@ import {
   Description,
   Example,
   ExampleTitle,
-  ExampleCode,
+  CodeMirrorWrapper,
 } from './styled';
 
 import { extract } from '../../utils/extract'
+import CodeMirror from '@uiw/react-codemirror';
+import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
+import { tags as t } from '@lezer/highlight';
+import { python } from '@codemirror/lang-python';
+
+const basicSetup = {
+  highlightActiveLineGutter: false,
+};
+
+const extensions = [python()];
+
+const theme = vscodeDarkInit({
+  styles: [{ tag: t.comment, color: 'rgba(255, 255, 255, 0.5)' }],
+});
 
 export const CommandDescription = ({ command }) => {
   const title = command.code ? extract(command.code) : null;
-  const example = command.example ? extract(command.example) : null;
 
   return (
     <Wrapper>
@@ -29,13 +42,18 @@ export const CommandDescription = ({ command }) => {
         </Top>
       )}
       {command?.description && <Description>{command.description}</Description>}
-      {example && (
+      {command?.example && (
         <Example>
           <ExampleTitle>Пример использования:</ExampleTitle>
-          <ExampleCode>
-            {example.name}
-            <span>{example.brackets}</span>
-          </ExampleCode>
+          <CodeMirrorWrapper>
+            <CodeMirror
+              extensions={extensions}
+              basicSetup={basicSetup}
+              theme={theme}
+              value={command.example}
+              editable={false}
+            />
+          </CodeMirrorWrapper>
         </Example>
       )}
     </Wrapper>

@@ -75,16 +75,39 @@ export const ExampleTitle = styled.div`
   line-height: 20px;
 `;
 
-export const ExampleCode = styled.div`
-  background-color: #3d3732;
-  border-radius: 4px;
-  font-family: 'monospace', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  padding: 8px 16px;
+export const CodeMirrorWrapper = styled.div`
+  .cm-editor {
+    background: rgb(61, 55, 50);
+    border-radius: 4px;
+    padding-bottom: 0;
+  }
 
-  span {
-    color: #7ac8ea;
+  .cm-content {
+    padding: 8px 0;
+  }
+
+  .cm-line {
+    padding: 0 16px;
+  }
+
+  .cm-gutters {
+    display: none;
+  }
+
+  .cm-activeLine {
+    background: none;
+  }
+
+  .cm-scroller {
+    &::-webkit-scrollbar {
+      width: 14px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 20px;
+      border: 4px solid transparent;
+      background-clip: content-box;
+    }
   }
 `;
