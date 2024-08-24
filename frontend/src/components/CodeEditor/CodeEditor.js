@@ -3,6 +3,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { autocompletion, snippetCompletion } from '@codemirror/autocomplete';
 import { tags as t } from '@lezer/highlight';
 import { python } from '@codemirror/lang-python';
+import { indentUnit } from '@codemirror/language';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { AvailableCommands } from '../AvailableCommands/AvailableCommands';
 import React, { useState } from 'react';
@@ -57,6 +58,7 @@ export const CodeEditor = ({
     autocompletion({
       override: [getCompletions(options)],
     }),
+    indentUnit.of("    "),
   ];
   const width = '529px';
   const height = `${innerHeight - (isCommandsOpen ? 268 : 65)}px`;
