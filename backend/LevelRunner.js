@@ -16,12 +16,12 @@ export default class LevelRunner {
     shoot_left: () => this.hero.shoot(Direction.LEFT, 'shoot_left'),
 
     attack: (targetName) => {
-      if (!this.level.enemies || this.level.enemies.length === 0) {
+      if (!this.level.enemies || this.level.enemies.filter(e => e.alive).length === 0) {
         this.gameplayError = { type: GameplayErrorTypes.NO_ENEMIES_TO_ATTACK };
         return;
       }
       
-      let target = this.level.enemies.find(e => e.name === targetName);
+      let target = this.level.enemies.filter(e => e.alive).find(e => e.name === targetName);
       if (!target) {
         this.gameplayError = { type: GameplayErrorTypes.NO_ENEMY_WITH_GIVEN_NAME, name: targetName };
         return;
