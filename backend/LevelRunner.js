@@ -133,7 +133,6 @@ export default class LevelRunner {
     }
   };
 
-  gemsCollected = 0;
   gameplayError = null;
 
   commands = [];
@@ -166,6 +165,7 @@ export default class LevelRunner {
   run(code) {
     const results = []
     for (const enemiesVariant of this.enemiesVariants) {
+      this.gemsCollected = 0;
       this.level = structuredClone(this.initialLevel);
       this.level.enemies = structuredClone(enemiesVariant);
       try {
