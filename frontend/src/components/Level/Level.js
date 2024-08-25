@@ -294,7 +294,8 @@ export const Level = () => {
   };
 
   const execCommands = async () => {
-    const { commands, gameplayError, hasFinished } = levelVariants.current[currentVariant.current].variantResult;
+    const { commands, gameplayError, goals } = levelVariants.current[currentVariant.current].variantResult;
+    const allRequiredGoalsCompleted = goals.filter(g => g.required).every(g => g.completed);
 
     if (commands.length === 0) {
       setHeroTextsForGameplayError(gameplayError);
@@ -316,13 +317,13 @@ export const Level = () => {
       await executeCommand(commands[i], i);
 
       // когда успешно прошли первый уровень, говорим, что теперь проверим на других вариантах
-      if (i === commands.length - 1 && currentVariant.current === 0 && hasFinished && levelVariants.current.length > 1) {
+      if (i === commands.length - 1 && currentVariant.current === 0 && allRequiredGoalsCompleted && levelVariants.current.length > 1) {
         setHeroTexts([{ value: 'Отлично, теперь проверим твой код\nна других вариантах уровня!', delay: 3000 }]);
         await delay(3000);
       }
 
       if (i === commands.length - 1) {
-        if (!hasFinished) { // если текущий вариант не пройден, остальные не смотрим
+        if (!allRequiredGoalsCompleted) { // если текущий вариант не пройден, остальные не смотрим
           setForceShowGoals(true);
           setHeroTextsForGameplayError(gameplayError);
           stopGameWithoutResetting();
