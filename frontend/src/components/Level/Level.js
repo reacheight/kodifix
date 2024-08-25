@@ -39,6 +39,7 @@ import { isNullish } from '../../utils/isNullish';
 import { LevelScore } from '../LevelScore/LevelScore';
 import GameplayErrorTypes from '../../utils/GameplayErrorTypes';
 import { LevelGuide } from '../LevelGuide/LevelGuide';
+import { Goals } from '../Goals/Goals';
 
 const getInitialCodeFromStorage = (level) =>
   localStorage.getItem(`code-level-${level}`);
@@ -572,6 +573,7 @@ export const Level = () => {
 
   return (
     <Wrapper>
+      <Goals goals={initialLevelData.current.goals} />
       <MainWrapper>
         <MapWrapper scale={scale} onWheel={handleWheel}>
           <MapField width={width} height={height}>
