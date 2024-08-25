@@ -105,6 +105,7 @@ export const Level = () => {
   const [code, setCode] = useRefState(getInitialCodeFromStorage(id));
   const [codeErrors, setCodeErrors] = useState(null);
   const [scale, setScale] = useState(1.5);
+  const [forceShowGoals, setForceShowGoals] = useState(false);
 
   const isSpedUp = () => currentVariant.current && currentVariant.current > 0;
   const getDelays = () => isSpedUp() ? fastSpeedDelays : normalSpeedDelays;
@@ -167,6 +168,7 @@ export const Level = () => {
     setInstructions(null);
     setHeroTexts([]);
     setCode(getInitialCodeFromStorage(id));
+    setForceShowGoals(false);
   };
 
   useEffect(() => {
@@ -321,9 +323,11 @@ export const Level = () => {
 
       if (i === commands.length - 1) {
         if (!hasFinished) { // если текущий вариант не пройден, остальные не смотрим
+          setForceShowGoals(true);
           setHeroTextsForGameplayError(gameplayError);
           stopGameWithoutResetting();
         } else if (currentVariant.current === levelVariants.current.length - 1) { // уровень завершается, только если все варианты прошли
+          setForceShowGoals(true);
           setHeroTexts([{ value: 'Отлично, мы можем идти дальше', delay: 1500 }]);
           await delay(1500);
           new Audio(victorySound).play();
@@ -423,6 +427,7 @@ export const Level = () => {
     setPausedCommand(null);
     setPausedEnemiesVariant(null);
     setCodeErrors(null);
+    setForceShowGoals(false);
   };
 
   const startGame = async () => {
@@ -447,6 +452,7 @@ export const Level = () => {
   const continueGame = async () => {
     setIsPaused(false);
     setIsRunning(true);
+    setForceShowGoals(false);
 
     await execVariants();
 
@@ -573,7 +579,11 @@ export const Level = () => {
 
   return (
     <Wrapper>
-      <Goals goals={initialLevelData.current.goals} />
+      <Goals
+        forceOpen={forceShowGoals}
+        goals={initialLevelData.current.goals}
+        goalsResult={isNullish(currentVariant.current) ? [] : levelVariants.current[currentVariant.current].variantResult.goals}
+      />
       <MainWrapper>
         <MapWrapper scale={scale} onWheel={handleWheel}>
           <MapField width={width} height={height}>

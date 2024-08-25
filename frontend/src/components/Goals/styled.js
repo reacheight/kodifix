@@ -94,4 +94,18 @@ export const GoalsList = styled.div`
 `
 
 export const Goal = styled.div`
+  display: flex;
+  align-items: center;
+
+  ${({ notCompleted }) =>
+    notCompleted &&
+    css`
+      color: red;
+      font-weight: 800;
+    `}
+
+  img {
+    width: 20px;
+    margin-left: 5px;
+  }
 `
