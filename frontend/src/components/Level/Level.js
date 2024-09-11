@@ -680,7 +680,8 @@ export const Level = () => {
             ))}
           </MapField>
         </MapWrapper>
-        <Controls
+      </MainWrapper>
+      <Controls
           isRunning={isRunning.current}
           isPaused={isPaused.current}
           hasGuide={hasGuid(instructions)}
@@ -690,7 +691,6 @@ export const Level = () => {
           onStop={stopGame}
           onGuideOpen={openGuide}
         />
-      </MainWrapper>
       <CodeEditor
         code={code.current}
         codeErrors={codeErrors}

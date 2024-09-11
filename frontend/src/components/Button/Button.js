@@ -1,8 +1,8 @@
 import React from 'react';
-import { Wrapper, ButtonFront, ButtonTop } from './styled';
+import { Wrapper, ButtonFront } from './styled';
 
 export const Button = ({
-  topColor,
+  shadowColor,
   frontColor,
   icon,
   alt,
@@ -13,11 +13,12 @@ export const Button = ({
   height,
 }) => (
   <Wrapper disabled={disabled} onClick={onClick}>
-    <ButtonTop width={width} color={disabled ? '#626763' : topColor} />
     <ButtonFront
       width={width}
       height={height}
       color={disabled ? '#858A86' : frontColor}
+      shadowColor={disabled ? '#626763' : shadowColor}
+      disabled={disabled}
     >
       <img alt={alt} src={icon} />
       {children}

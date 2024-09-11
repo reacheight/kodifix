@@ -20,8 +20,8 @@ export const Controls = ({
     <Wrapper>
       {!isRunning && !isPaused && (
         <Button
-          topColor="#1E9029"
-          frontColor="#3CB949"
+          shadowColor="#1E9029"
+          frontColor="#40BF4C"
           icon={playIcon}
           alt="play"
           onClick={onStart}
@@ -30,7 +30,7 @@ export const Controls = ({
 
       {isRunning && (
         <Button
-          topColor="#B47C11"
+          shadowColor="#B47C11"
           frontColor="#D79D2C"
           icon={pauseIcon}
           alt="pause"
@@ -40,7 +40,7 @@ export const Controls = ({
 
       {isPaused && (
         <Button
-          topColor="#1E9029"
+          shadowColor="#1E9029"
           frontColor="#3CB949"
           icon={playIcon}
           alt="play"
@@ -50,7 +50,7 @@ export const Controls = ({
 
       <Button
         disabled={!isRunning && !isPaused}
-        topColor="#7C2828"
+        shadowColor="#7C2828"
         frontColor="#B93C3C"
         icon={stopIcon}
         alt="stop"
@@ -59,7 +59,7 @@ export const Controls = ({
 
       <Button
         disabled={!hasGuide}
-        topColor="#06719F"
+        shadowColor="#06719F"
         frontColor="#0AA1E2"
         icon={questionsIcon}
         alt="questions"

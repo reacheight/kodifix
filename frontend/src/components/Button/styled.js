@@ -5,25 +5,31 @@ export const Wrapper = styled.button`
   border: none;
   padding: 0;
 
+  position: relative;
+  bottom: 40px;
+`;
+
+export const ButtonFront = styled.div`
+  width: ${({ width = 89 }) => width}px;
+  height: ${({ height = 73 }) => height}px;
+  border-radius: 15px;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+  background: ${({ color }) => color};
+
+  box-shadow: 0 15px ${({ shadowColor }) => shadowColor};
+
   ${({ disabled }) =>
     !disabled &&
     css`
       cursor: pointer;
       &:hover {
-        opacity: 0.9;
+       filter: brightness(.9);
       }
       &:active {
-        opacity: 0.8;
+        opacity: brightness(.8);
       }
     `}
-`;
 
-export const ButtonFront = styled.div`
-  width: ${({ width = 94 }) => width}px;
-  height: ${({ height = 94 }) => height}px;
-  border-radius: 5px;
-  background: ${({ color }) => color};
-  position: relative;
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -33,14 +39,4 @@ export const ButtonFront = styled.div`
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
-`;
-
-export const ButtonTop = styled.div`
-  width: ${({ width = 94 }) => width}px;
-  height: 14px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  background: ${({ color }) => color};
-  position: relative;
-  top: 4px;
 `;
