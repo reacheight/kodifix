@@ -18,9 +18,9 @@ export const Enemy = ({ x, y, heroX, heroY, name, alive, nameHidden, spedUp }) =
   const direction = deathDirection || computeDirection({ y, heroY });
 
   return (
-    <Wrapper x={x} y={y} heroX={heroX} nameHidden={nameHidden}>
+    <Wrapper x={x} y={y} heroX={heroX} heroY={heroY} nameHidden={nameHidden}>
       {!nameHidden && <Name fade={!alive}>{name}</Name>}
-      <Image direction={direction} alive={alive} spedUp={spedUp} />
+      <Image x={x} y={y} heroX={heroX} heroY={heroY} direction={direction} alive={alive} spedUp={spedUp} />
     </Wrapper>
   );
 };

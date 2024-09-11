@@ -7,18 +7,15 @@ import {
   MapWrapper,
   MapField,
   Lawn,
-  Grass,
   Sand,
-  LawnBottom,
-  SandBottom,
   Tree,
   Rock,
   Water,
   Gem,
-  MapBottom,
   Finish,
   Bridge,
   LoadingBackground,
+  CellFilter,
 } from './styled';
 import { axios } from '../../api/axios';
 
@@ -49,22 +46,14 @@ const setInitialCode = (level, code) =>
 
 const prepareCells = (grid) => {
   const cells = [];
-  const cellsBottom = [];
 
   for (let x = 0; x < grid.length; x++) {
     for (let y = 0; y < grid[x].length; y++) {
       cells.push({ x, y, type: grid[x][y] });
-
-      if (x === grid.length - 1) {
-        cellsBottom.push(grid[x][y]);
-      }
     }
   }
 
-  return {
-    cells,
-    cellsBottom,
-  };
+  return cells;
 };
 
 const normalSpeedDelays = {
@@ -566,11 +555,11 @@ export const Level = () => {
     grid,
     finish,
   } = initialLevelData.current;
-  const { cells, cellsBottom } = prepareCells(grid);
-  const walls = cells.filter(cell => ['tree', 'rock', 'water'].includes(cell.type));
+  const cells = prepareCells(grid);
+  const walls = cells.filter(cell => ['tree', 'rock', 'water', 'watert'].includes(cell.type));
   const trees = walls.filter((wall) => wall.type === 'tree');
   const rocks = walls.filter((wall) => wall.type === 'rock');
-  const water = walls.filter((wall) => wall.type === 'water');
+  const water = walls.filter((wall) => wall.type === 'water' || wall.type === 'watert');
   const activeBridges = bridges?.filter((bridge) => bridge.activated) || [];
   const executingLine =
     levelVariants.current?.[currentVariant.current]?.variantResult.commands[executingCommand.current]?.start.line;
@@ -587,40 +576,33 @@ export const Level = () => {
         <MapWrapper scale={scale} onWheel={handleWheel}>
           <MapField width={width} height={height}>
             {cells.map((cell) => {
-              if (cell.type === 'lawn' || cell.type === 'tree' || cell.type === 'rock') {
-                return (
-                  <Lawn key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y} />
-                );
-              }
-              if (cell.type === 'grass') {
-                return (
-                  <Grass key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y} />
-                );
-              }
               if (cell.type === 'sand') {
                 return (
-                  <Sand key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y} />
+                  <Sand key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y}>
+                    <CellFilter x={cell.x} y={cell.y} />
+                  </Sand>
                 );
               }
-            })}
-            {cellsBottom.map((cellBottom, i) => {
-              if (cellBottom === 'lawn' || cellBottom === 'grass' || cellBottom === 'tree' || cellBottom === 'rock') {
-                return <LawnBottom key={i} />;
-              }
-
-              if (cellBottom === 'sand' || cellBottom === 'water') {
-                return <SandBottom key={i} />;
+              else {
+                return (
+                  <Lawn key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y}>
+                    <CellFilter x={cell.x} y={cell.y} />
+                  </Lawn>
+                )
               }
             })}
             <Finish x={finish.x} y={finish.y} zIndex={finish.x} />
             {water.map((water) => (
               <Water
+                isTop={water.type === 'watert'}
                 key={`${water.x}${water.y}`}
                 x={water.x}
                 y={water.y}
                 heroX={hero.x}
                 heroY={hero.y}
-              />
+              >
+                <CellFilter x={water.x} y={water.y} />
+              </Water>
             ))}
             {rocks.map((rock) => (
               <Rock
@@ -697,7 +679,6 @@ export const Level = () => {
               />
             ))}
           </MapField>
-          <MapBottom width={width} />
         </MapWrapper>
         <Controls
           isRunning={isRunning.current}
