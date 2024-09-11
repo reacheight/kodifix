@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 
 import button1 from '../../assets/button-1.svg';
 import button2 from '../../assets/button-2.svg';
+import button3 from '../../assets/button-3.svg';
 
 import {
   Wrapper,
@@ -19,7 +20,7 @@ import {
   GameOver,
 } from './styled';
 
-export const LevelScore = ({ isLastLevel, goals, onContinue }) => {
+export const LevelScore = ({ isLastLevel, goals, onContinue, onClose }) => {
   const someRequiredGoalNotCompleted = goals.filter(g => g.required).some(g => !g.completed);
   const everyOptionalGoalNotCompleted = goals.filter(g => !g.required).every(g => !g.completed);
   const someOptionalGoalNotCompleted = everyOptionalGoalNotCompleted || goals.filter(g => !g.required).some(g => !g.completed);
@@ -63,6 +64,9 @@ export const LevelScore = ({ isLastLevel, goals, onContinue }) => {
             </Button>
             <Button onClick={onContinue}>
               <img src={button2} alt="дальше" />
+            </Button>
+            <Button onClick={onClose}>
+              <img src={button3} alt="снова" />
             </Button>
           </ButtonsWrapper>
         )}

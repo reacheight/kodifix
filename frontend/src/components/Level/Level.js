@@ -505,6 +505,11 @@ export const Level = () => {
     showHeroGoals();
   };
 
+  const closeScore = () => {
+    setIsScoreOpen(false);
+    resetData();
+  }
+
   const SCALE_STEP = 0.1;
   const MAX_SCALE = 3.0;
   const MIN_SCALE = 0.8;
@@ -723,6 +728,7 @@ export const Level = () => {
           isLastLevel={isLastLevel}
           goals={levelVariants.current[currentVariant.current].variantResult.goals}
           onContinue={openNextLevel}
+          onClose={closeScore}
         />
       )}
     </Wrapper>
