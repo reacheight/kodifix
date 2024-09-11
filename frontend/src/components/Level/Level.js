@@ -558,17 +558,17 @@ export const Level = () => {
     width,
     height,
     hero: initialHero,
-    walls,
     grid,
     finish,
   } = initialLevelData.current;
+  const { cells, cellsBottom } = prepareCells(grid);
+  const walls = cells.filter(cell => ['tree', 'rock', 'water'].includes(cell.type));
   const trees = walls.filter((wall) => wall.type === 'tree');
   const rocks = walls.filter((wall) => wall.type === 'rock');
   const water = walls.filter((wall) => wall.type === 'water');
   const activeBridges = bridges?.filter((bridge) => bridge.activated) || [];
   const executingLine =
     levelVariants.current?.[currentVariant.current]?.variantResult.commands[executingCommand.current]?.start.line;
-  const { cells, cellsBottom } = prepareCells(grid);
   const isLastLevel = Number(id) === game.levels;
   const collectedGemsCount = gems.reduce((acc, gem) => {
     if (gem.collected) {
@@ -589,7 +589,7 @@ export const Level = () => {
         <MapWrapper scale={scale} onWheel={handleWheel}>
           <MapField width={width} height={height}>
             {cells.map((cell) => {
-              if (cell.type === 'lawn') {
+              if (cell.type === 'lawn' || cell.type === 'tree' || cell.type === 'rock') {
                 return (
                   <Lawn key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y} />
                 );
@@ -606,11 +606,11 @@ export const Level = () => {
               }
             })}
             {cellsBottom.map((cellBottom, i) => {
-              if (cellBottom === 'lawn' || cellBottom === 'grass') {
+              if (cellBottom === 'lawn' || cellBottom === 'grass' || cellBottom === 'tree' || cellBottom === 'rock') {
                 return <LawnBottom key={i} />;
               }
 
-              if (cellBottom === 'sand') {
+              if (cellBottom === 'sand' || cellBottom === 'water') {
                 return <SandBottom key={i} />;
               }
             })}
