@@ -34,7 +34,7 @@ export const Name = styled.span`
 `;
 
 export const Image = styled.div`
-  height: 50px;
+  height: 44px;
   width: 50px;
   background: url(${lever}) no-repeat center;
 
