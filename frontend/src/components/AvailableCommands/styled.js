@@ -8,7 +8,6 @@ export const Collapse = styled.div`
   color: #fff;
   position: relative;
   z-index: 100;
-  transform: translateY(-20px);
 `;
 
 export const CollapseTitle = styled.div`

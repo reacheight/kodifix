@@ -1,14 +1,11 @@
 import styled, { css } from 'styled-components';
 
 export const CodeMirrorWrapper = styled.div`
-  margin: 20px 20px 0 0;
   font-size: 18px;
+  background: #2a2623;
 
   .cm-editor {
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
     background: #2a2623;
-    padding-bottom: 20px;
     transition: 0.5s ease-in-out;
   }
 
@@ -17,7 +14,6 @@ export const CodeMirrorWrapper = styled.div`
   }
 
   .cm-gutters {
-    border-top-left-radius: 16px;
     background: #2f2b29;
     overflow: hidden;
   }
