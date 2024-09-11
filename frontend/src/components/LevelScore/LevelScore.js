@@ -52,7 +52,7 @@ export const LevelScore = ({ isLastLevel, goals, onContinue, onClose }) => {
               </a>
             </GameOver>
           ) : (<>
-            {someOptionalGoalNotCompleted && <Achievement>Но чтобы заработать все звезды, нужно выполнить все задания</Achievement>}
+            {someOptionalGoalNotCompleted && <Achievement>Но чтобы заработать больше звезд, нужно выполнить все задания</Achievement>}
           </>
           )}
         </Block>
