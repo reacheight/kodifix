@@ -71,8 +71,6 @@ export const MapWrapper = styled.div`
 
 export const MapField = styled.div`
   display: grid;
-  border: dashed 1px rgba(0, 0, 0, 0.7);
-  border-radius: 5px;
 
   ${({ width, height }) => css`
     width: ${width * 50}px;
@@ -85,8 +83,6 @@ export const MapField = styled.div`
 export const Lawn = styled.div`
   height: 50px;
   width: 50px;
-  border-radius: 5px;
-  background-repeat: no-repeat; 
 
   ${({ x, y, zIndex }) => css`
     z-index: ${zIndex};
@@ -116,7 +112,7 @@ export const CellFilter = styled.div`
   width: 50px;
 
   ${({ x, y }) => css`
-      background-color: ${((x + y) % 2 == 0) ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0)"};
+      background-color: ${((x + y) % 2 == 0) ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.05)"};
       border-radius: ${((x + y) % 2 == 0) ? "5px" : "0px"};
     `}
 `
