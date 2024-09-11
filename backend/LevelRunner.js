@@ -192,9 +192,6 @@ export default class LevelRunner {
       }
   
       const variantResult = {
-        hasFinished: arePointsEqual(this.level.finish, this.level.hero),
-        allGemsCollected: !this.level.gems || this.gemsCollected === this.level.gems.length,
-        numberOfLinesSatisfy: !this.level.linesGoal || calculateCodeLines(code) <= this.level.linesGoal,
         goals: this.level.goals.map(goal => { return { type: goal.type, required: goal.required, completed: this.isGoalCompleted(goal, code) } }),
         commands: this.commands,
         gameplayError: this.gameplayError,
