@@ -77,7 +77,7 @@ export const Image = styled.div`
   transform: scaleX(${({ direction }) => (direction === 'right' ? 1 : -1)});
 
   opacity: ${({ x, y, heroX, heroY }) =>
-    x - heroX === 1 && y === heroY ? 0.5 : 1};
+    x - heroX === 1 && y === heroY ? 0.7 : 1};
 
   ${({ alive, direction, spedUp }) =>
     !alive &&
