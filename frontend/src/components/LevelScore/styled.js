@@ -1,6 +1,7 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import star from '../../assets/star.png';
+import emptyStar from '../../assets/star-empty.png';
 
 const appearance = keyframes`
   0% {
@@ -67,7 +68,7 @@ export const Title = styled.div`
 export const Achievement = styled.div`
   font-family: 'Nunito', sans-serif;
   font-weight: 800;
-  font-size: 27px;
+  font-size: 22px;
   line-height: 37px;
   color: #fff;
   text-align: center;
@@ -77,35 +78,44 @@ export const Achievement = styled.div`
 export const Star1 = styled.div`
   width: 147px;
   height: 147px;
-  background: url(${star});
-  background-size: contain;
-  background-repeat: no-repeat;
   transform: rotate(51deg);
   position: relative;
   bottom: 40px;
   left: 24px;
+
+  ${({ isEmpty }) => css`
+    background: url(${isEmpty ? emptyStar : star});
+    background-size: contain;
+    background-repeat: no-repeat;
+  `}
 `;
 
 export const Star2 = styled.div`
   width: 187px;
   height: 187px;
-  background: url(${star});
-  background-size: contain;
-  background-repeat: no-repeat;
   position: relative;
   bottom: 100px;
+
+  ${({ isEmpty }) => css`
+    background: url(${isEmpty ? emptyStar : star});
+    background-size: contain;
+    background-repeat: no-repeat;
+  `}
 `;
 
 export const Star3 = styled.div`
   width: 147px;
   height: 147px;
-  background: url(${star});
-  background-size: contain;
-  background-repeat: no-repeat;
   transform: rotate(-51deg);
   position: relative;
   bottom: 40px;
   right: 24px;
+
+  ${({ isEmpty }) => css`
+    background: url(${isEmpty ? emptyStar : star});
+    background-size: contain;
+    background-repeat: no-repeat;
+  `}
 `;
 
 export const Stars = styled.div`

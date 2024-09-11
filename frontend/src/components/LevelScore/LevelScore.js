@@ -19,17 +19,20 @@ import {
   GameOver,
 } from './styled';
 
-export const LevelScore = ({ isLastLevel, collectedGemsCount, onContinue }) => {
+export const LevelScore = ({ isLastLevel, goals, onContinue }) => {
+  const someRequiredGoalNotCompleted = goals.filter(g => g.required).some(g => !g.completed);
+  const everyOptionalGoalNotCompleted = goals.filter(g => !g.required).every(g => !g.completed);
+  const someOptionalGoalNotCompleted = everyOptionalGoalNotCompleted || goals.filter(g => !g.required).some(g => !g.completed);
   return createPortal(
     <Wrapper>
       <Modal>
         <Stars>
-          <Star1 />
-          <Star2 />
-          <Star3 />
+          <Star1 isEmpty={someRequiredGoalNotCompleted} />
+          <Star2 isEmpty={everyOptionalGoalNotCompleted} />
+          <Star3 isEmpty={someOptionalGoalNotCompleted} />
         </Stars>
         <Block>
-          <Title>Уровень пройден</Title>
+          <Title>Уровень пройден!</Title>
           {isLastLevel ? (
             <GameOver>
               Спасибо за прохождение демоверсии!
@@ -47,8 +50,9 @@ export const LevelScore = ({ isLastLevel, collectedGemsCount, onContinue }) => {
                 канале в Telegram
               </a>
             </GameOver>
-          ) : (
-            <Achievement>Собрано алмазов: {collectedGemsCount}</Achievement>
+          ) : (<>
+            {someOptionalGoalNotCompleted && <Achievement>Но чтобы заработать все звезды, нужно выполнить все задания</Achievement>}
+          </>
           )}
         </Block>
 

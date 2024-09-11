@@ -570,13 +570,6 @@ export const Level = () => {
   const executingLine =
     levelVariants.current?.[currentVariant.current]?.variantResult.commands[executingCommand.current]?.start.line;
   const isLastLevel = Number(id) === game.levels;
-  const collectedGemsCount = gems.reduce((acc, gem) => {
-    if (gem.collected) {
-      return acc + 1;
-    }
-
-    return acc;
-  }, 0);
 
   return (
     <Wrapper>
@@ -728,7 +721,7 @@ export const Level = () => {
       {isScoreOpen && (
         <LevelScore
           isLastLevel={isLastLevel}
-          collectedGemsCount={collectedGemsCount}
+          goals={levelVariants.current[currentVariant.current].variantResult.goals}
           onContinue={openNextLevel}
         />
       )}
