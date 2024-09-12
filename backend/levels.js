@@ -317,7 +317,7 @@ export const levels = {
     ],
     goals: [
       { type: 'finish', name: 'Добраться до финиша', heroText: 'Мне нужно дойти до финиша', required: true },
-      { type: 'enemies', name: 'Победить всех врагов', heroText: 'И победить всех врагов по пути', required: true },
+      { type: 'enemies', name: 'Победить всех врагов, используя переменные', heroText: 'И победить всех врагов по пути, используя переменные', required: true },
       { type: 'gems', name: 'Подобрать алмаз', heroText: 'Как удобно лежат алмазы, давай их соберем', required: false },
     ],  
     levers: [],
