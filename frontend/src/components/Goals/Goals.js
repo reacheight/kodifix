@@ -40,7 +40,7 @@ export const Goals = ({ forceOpen, goals, goalsResult }) => {
           )}
           {optionalGoals.length > 0 && (
             <GoalsBlock>
-              <GoalsBlockTitle>Опциональные</GoalsBlockTitle>
+              <GoalsBlockTitle>Дополнительные</GoalsBlockTitle>
               <GoalsList>
                 {optionalGoals.map(goal => {
                   const goalCompleted = goalsResult?.find(r => r.type === goal.type)?.completed;
