@@ -4,9 +4,6 @@ export const Wrapper = styled.button`
   background: none;
   border: none;
   padding: 0;
-
-  position: relative;
-  bottom: 40px;
 `;
 
 export const ButtonFront = styled.div`
@@ -37,6 +34,7 @@ export const ButtonFront = styled.div`
   color: #fff;
   font-family: 'Nunito', sans-serif;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 20px;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
 `;

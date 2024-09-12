@@ -1,9 +1,7 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import button1 from '../../assets/button-1.svg';
-import button2 from '../../assets/button-2.svg';
-import button3 from '../../assets/button-3.svg';
+import { Button } from '../Button/Button';
 
 import {
   Wrapper,
@@ -15,7 +13,6 @@ import {
   Star1,
   Star2,
   Star3,
-  Button,
   ButtonsWrapper,
   GameOver,
 } from './styled';
@@ -59,14 +56,14 @@ export const LevelScore = ({ isLastLevel, goals, onContinue, onClose }) => {
 
         {!isLastLevel && (
           <ButtonsWrapper>
-            <Button>
-              <img src={button1} alt="меню" />
+            <Button frontColor="#BD3A0F" shadowColor="#8C2B0B" height="50" width="100">
+              <span>Меню</span>
+            </Button> 
+            <Button frontColor="#40BF4C" shadowColor="#1E9029" onClick={onContinue} height="50" width="100">
+              <span>Дальше</span>
             </Button>
-            <Button onClick={onContinue}>
-              <img src={button2} alt="дальше" />
-            </Button>
-            <Button onClick={onClose}>
-              <img src={button3} alt="снова" />
+            <Button frontColor="#D79D2C" shadowColor="#B47C11" onClick={onClose} height="50" width="100">
+              <span>Заново</span>
             </Button>
           </ButtonsWrapper>
         )}

@@ -30,7 +30,7 @@ export const Wrapper = styled.div`
 export const Modal = styled.div`
   font-family: 'Nunito', sans-serif;
   width: 463px;
-  padding: 124px 60px 44px 60px;
+  padding: 124px 60px 40px 60px;
   background: #2a2623;
   border: 2px #4b4745 solid;
   border-radius: 24px;
@@ -38,7 +38,7 @@ export const Modal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 48px;
+  gap: 25px;
   position: relative;
 `;
 
@@ -47,7 +47,7 @@ export const Block = styled.div`
   display: flex;
   flex-direction: column;
   gap: 72px;
-  padding: 24px 36px 66px 36px;
+  padding: 24px 36px 24px 36px;
   border-radius: 8px;
   background-color: #474542;
   box-shadow:
@@ -127,20 +127,6 @@ export const Stars = styled.div`
 export const ButtonsWrapper = styled.div`
   display: flex;
   gap: 23px;
-`;
-
-export const Button = styled.button`
-  background: none;
-  border: none;
-  width: fit-content;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.9;
-  }
-  &:active {
-    opacity: 0.8;
-  }
 `;
 
 export const GameOver = styled.div`

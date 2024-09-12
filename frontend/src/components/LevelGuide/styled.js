@@ -36,7 +36,7 @@ export const Modal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 32px;
+  gap: 26px;
 `;
 
 export const Top = styled.div`
@@ -196,18 +196,5 @@ export const CirclesWrapper = styled.div`
 export const ButtonsWrapper = styled.div`
   display: flex;
   gap: 32px;
-`;
-
-export const Button = styled.button`
-  background: none;
-  border: none;
-  width: fit-content;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.9;
-  }
-  &:active {
-    opacity: 0.8;
-  }
+  padding-bottom: 20px;
 `;

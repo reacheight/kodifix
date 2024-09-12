@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import arrow2Icon from '../../assets/arrow-2.svg';
-import button1Icon from '../../assets/button-1.svg';
-import button2Icon from '../../assets/button-2.svg';
+
+import { Button } from '../Button/Button';
 
 import {
   Wrapper,
@@ -19,7 +19,6 @@ import {
   Control,
   CirclesWrapper,
   Circle,
-  Button,
   ButtonsWrapper,
 } from './styled';
 import {
@@ -147,11 +146,11 @@ export const LevelGuide = ({ level, data, onClose }) => {
         ) : null}
 
         <ButtonsWrapper>
-          <Button>
-            <img src={button1Icon} alt="меню" />
-          </Button>
-          <Button onClick={onClose}>
-            <img src={button2Icon} alt="продолжить" />
+          <Button frontColor="#BD3A0F" shadowColor="#8C2B0B" height="50" width="100">
+            <span>Меню</span>
+          </Button> 
+          <Button frontColor="#40BF4C" shadowColor="#1E9029" onClick={onClose} height="50" width="100">
+            <span>Дальше</span>
           </Button>
         </ButtonsWrapper>
       </Modal>
