@@ -32,6 +32,16 @@ const fadeAnimation = keyframes`
   }
 `;
 
+const randomEnemyAnimation = keyframes`
+  0% {
+    opacity:  1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+`
+
 export const Wrapper = styled.div`
   width: 57px;
   height: 114px;
@@ -87,4 +97,8 @@ export const Image = styled.div`
           forwards,
         ${fadeAnimation} 2s ease-out forwards;
     `}
+  
+  ${({ isRandom }) => isRandom && css`
+    animation: ${randomEnemyAnimation} 1s infinite alternate;
+  `}
 `;

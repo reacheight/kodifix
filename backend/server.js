@@ -21,25 +21,25 @@ app.get('/games/:id', (req, res) => {
   res.send(JSON.stringify(games[req.params.id]));
 })
 
-app.get('/level/:id', (req, res) => {
+app.get('/:game/level/:id', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(levels[req.params.id]));
+  res.send(JSON.stringify(levels[req.params.game][req.params.id]));
 })
 
-app.get('/level/:id/instructions', (req, res) => {
+app.get('/:game/level/:id/instructions', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(instructions[req.params.id]));
+  res.send(JSON.stringify(instructions[req.params.game][req.params.id]));
 })
 
-app.get('/level/:id/startingCode', (req, res) => {
+app.get('/:game/level/:id/startingCode', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(startingCode[req.params.id]));
+  res.send(JSON.stringify(startingCode[req.params.game][req.params.id]));
 })
 
-app.post('/level/:id/run', (req, res) => {
+app.post('/:game/level/:id/run', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
-  const level = levels[req.params.id];
+  const level = levels[req.params.game][req.params.id];
   const analyzer = new CodeAnalyzer();
   const errors = analyzer.analyze(req.body.code, level.onlyVariablesInAttack);
   if (errors.length > 0) {

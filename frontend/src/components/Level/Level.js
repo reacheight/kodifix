@@ -38,11 +38,11 @@ import GameplayErrorTypes from '../../utils/GameplayErrorTypes';
 import { LevelGuide } from '../LevelGuide/LevelGuide';
 import { Goals } from '../Goals/Goals';
 
-const getInitialCodeFromStorage = (level) =>
-  localStorage.getItem(`code-level-${level}`);
+const getInitialCodeFromStorage = (game, level) =>
+  localStorage.getItem(`code-${game}-${level}`);
 
-const setInitialCode = (level, code) =>
-  localStorage.setItem(`code-level-${level}`, code);
+const setInitialCode = (game, level, code) =>
+  localStorage.setItem(`code-${game}-${level}`, code);
 
 const prepareCells = (grid) => {
   const cells = [];
@@ -73,7 +73,7 @@ const fastSpeedDelays = {
 const walkingAudio = new Audio(walkingSound);
 
 export const Level = () => {
-  const { id } = useParams();
+  const { gameId, id } = useParams();
   const navigate = useNavigate();
   const [game, setGame] = useState(null);
   const [initialLevelData, setInitialLevelData] = useRefState(null);
@@ -110,20 +110,20 @@ export const Level = () => {
   };
 
   const fetchGames = async () => {
-    const { data } = await axios.get(`/games/wizard-part-1`);
+    const { data } = await axios.get(`/games/${gameId}`);
 
     setGame(data);
   };
 
   const fetchLevelData = async () => {
-    const { data } = await axios.get(`/level/${id}`);
+    const { data } = await axios.get(`/${gameId}/level/${id}`);
 
     setInitialLevelData({ ...data });
     setLevelData({ ...data });
   };
 
   const fetchInstructions = async () => {
-    const { data } = await axios.get(`/level/${id}/instructions`);
+    const { data } = await axios.get(`/${gameId}/level/${id}/instructions`);
 
     setInstructions(data);
 
@@ -135,7 +135,7 @@ export const Level = () => {
   };
 
   const fetchInitialCode = async () => {
-    const { data } = await axios.get(`/level/${id}/startingCode`);
+    const { data } = await axios.get(`/${gameId}/level/${id}/startingCode`);
     if (isNullish(code.current)) {
       setCode(data);
     }
@@ -426,7 +426,7 @@ export const Level = () => {
     setInitialCode(id, code.current);
 
     try {
-      const { data } = await axios.post(`/level/${id}/run`, {
+      const { data } = await axios.post(`/${gameId}/level/${id}/run`, {
         code: code.current,
       });
 
@@ -481,7 +481,7 @@ export const Level = () => {
   };
 
   const openNextLevel = () => {
-    navigate(`/level/${Number(id) + 1}`, { replace: true });
+    navigate(`/${gameId}/level/${Number(id) + 1}`, { replace: true });
   };
 
   const openGuide = () => {
@@ -646,6 +646,7 @@ export const Level = () => {
                 alive={enemy.alive}
                 nameHidden={enemy.hidden}
                 spedUp={isSpedUp()}
+                isRandom={enemy.random}
               />
             ))}
             <Hero

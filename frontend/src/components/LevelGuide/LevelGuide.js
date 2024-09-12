@@ -4,6 +4,8 @@ import arrow2Icon from '../../assets/arrow-2.svg';
 
 import { Button } from '../Button/Button';
 
+import { useNavigate } from 'react-router-dom';
+
 import {
   Wrapper,
   Modal,
@@ -50,6 +52,7 @@ export const LevelGuide = ({ level, data, onClose }) => {
   const [commandIndex, setCommandIndex] = useState(0);
   const newCommand = newCommands[commandIndex];
   const newCommandCode = extract(newCommand?.code);
+  const navigate = useNavigate();
 
   const hasPrev = commandIndex > 0;
 
@@ -65,6 +68,10 @@ export const LevelGuide = ({ level, data, onClose }) => {
     if (hasPrev) {
       setCommandIndex(commandIndex - 1);
     }
+  };
+
+  const openMenu = () => {
+    navigate('/', { replace: true });
   };
 
   return (
@@ -146,7 +153,7 @@ export const LevelGuide = ({ level, data, onClose }) => {
         ) : null}
 
         <ButtonsWrapper>
-          <Button frontColor="#BD3A0F" shadowColor="#8C2B0B" height="50" width="100">
+          <Button frontColor="#BD3A0F" shadowColor="#8C2B0B" onClick={openMenu} height="50" width="100">
             <span>Меню</span>
           </Button> 
           <Button frontColor="#40BF4C" shadowColor="#1E9029" onClick={onClose} height="50" width="100">

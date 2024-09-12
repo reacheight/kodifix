@@ -128,11 +128,3 @@ export const ButtonsWrapper = styled.div`
   display: flex;
   gap: 23px;
 `;
-
-export const GameOver = styled.div`
-  color: #fff;
-
-  a {
-    color: #7ac8ea;
-  }
-`;
