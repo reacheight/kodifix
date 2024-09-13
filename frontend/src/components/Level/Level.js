@@ -156,7 +156,7 @@ export const Level = () => {
     setPausedEnemiesVariant(null);
     setInstructions(null);
     setHeroTexts([]);
-    setCode(getInitialCodeFromStorage(id));
+    setCode(getInitialCodeFromStorage(gameId, id));
     setForceShowGoals(false);
   };
 
@@ -423,7 +423,7 @@ export const Level = () => {
   const startGame = async () => {
     resetData();
     setIsRunning(true);
-    setInitialCode(id, code.current);
+    setInitialCode(gameId, id, code.current);
 
     try {
       const { data } = await axios.post(`/${gameId}/level/${id}/run`, {
