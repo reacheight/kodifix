@@ -1,6 +1,6 @@
 export const games = {
     ["first-steps"]: {
-        levels: 4,
+        levels: 5,
     },
     ["fights-on-bridges"]: {
         levels: 4,

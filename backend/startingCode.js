@@ -6,6 +6,7 @@ export const startingCode = {
     [2]: defaultStartingComment + "# напиши код, чтобы добраться до финиша\n# постарайся собрать все алмазы\n",
     [3]: "# используй метод с параметром,\n# чтобы пройти уровень одной строчкой\n",
     [4]: defaultStartingComment,
+    [5]: defaultStartingComment,
   },
   ["fights-on-bridges"]: {
     [1]: `# используй метод switch, чтобы переключить мост\n\nhero.move_right(2)\nhero.switch("Напиши название рычага")\n\n# продолжи код, чтобы  добраться до финиша\n`,

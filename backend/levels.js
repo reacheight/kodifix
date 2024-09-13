@@ -92,6 +92,36 @@ export const levels = {
       levers: [],
       bridges: [],
     },
+
+    [5]: {
+      height: 7,
+      width: 8,
+      grid: [
+        ["sand","sand","tree","lawn","watert","watert","tree","tree"],
+        ["lawn","sand","sand","lawn","water","water","lawn","lawn"],
+        ["lawn","lawn","sand","lawn","water","water","lawn","lawn"],
+        ["lawn","lawn","sand","lawn","sand","sand","sand","lawn"],
+        ["rock","rock","sand","rock","lawn","lawn","sand","sand"],
+        ["lawn","sand","sand","lawn","tree","lawn","sand","rock"],
+        ["lawn","sand","lawn","lawn","lawn","tree","sand","lawn"],
+      ],
+      hero: { x: 0, y: 0 },
+      finish: { x: 6, y: 1 },
+      gems: [
+        { x: 1, y: 7 },
+        { x: 6, y: 6 },
+        { x: 3, y: 0 },
+        { x: 6, y: 4 },
+      ],
+      enemies: [],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша', heroText: 'Помоги мне добраться до финиша', required: true },
+        { type: 'lines', name: 'Использовать не более 10 строк', heroText: 'Ты должен использовать максимум 10 строчек кода', linesCount: 10, required: true },
+        { type: 'gems', name: 'Собрать алмазы', heroText: 'Давай соберем все алмазы', required: false },
+      ],
+      levers: [],
+      bridges: [],
+    },
   },
   ["fights-on-bridges"]: {
     [1]: {

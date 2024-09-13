@@ -26,6 +26,10 @@ export const instructions = {
       newCommands: [],
       prevCommands: longMovingCommands,
     },
+    [5]: {
+      newCommands: [],
+      prevCommands: longMovingCommands,
+    },
   },
   ["fights-on-bridges"]: {
     [1]: {
