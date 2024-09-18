@@ -436,5 +436,55 @@ export const levels = {
       onlyVariablesInAttack: true,
       checksCount: 4,
     },
+
+    [3]: {
+      id: 'if-guarded-gems',
+      height: 7,
+      width: 9,
+      grid: [
+        ["tree","sand","tree","lawn","watert","watert","lawn","lawn","rock"],
+        ["lawn","sand","sand","sand","water","water","sand","sand","lawn"],
+        ["tree","lawn","lawn","sand","water","water","lawn","lawn","lawn"],
+        ["rock","lawn","lawn","sand","water","water","watert","watert","watert"],
+        ["lawn","lawn","lawn","sand","water","water","tree","lawn","lawn"],
+        ["tree","sand","sand","sand","water","water","sand","sand","rock"],
+        ["lawn","sand","rock","lawn","water","water","lawn","lawn","lawn"],
+      ],
+      hero: { x: 0, y: 1 },
+      finish: { x: 6, y: 1 },
+      gems: [
+        { x: 1, y: 7, guardedBy: "Hidden1" },
+        { x: 5, y: 7, guardedBy: "Hidden2" },
+      ],
+      enemies: [
+        { x: 1, y: 4, alive: true, name: "Hidden1", hidden: true, random: true },
+        { x: 5, y: 4, alive: true, name: "Hidden2", hidden: true, random: true },
+      ],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша', required: true },
+        { type: 'enemies', name: 'Победить всех врагов', required: true },
+        { type: 'gems', name: 'Собрать все доступные алмазы', heroText: 'Если остров охраняют, значит на нем есть алмаз — давай заберем их', required: true },
+        { type: 'no-unnecessary-islands', name: 'Не заходить на остров без алмаза', heroText: 'Но я не хочу заходить на остров, если на нем нет алмаза', required: true },
+      ],  
+      levers: [],
+      bridges: [
+        {
+          id: "bridge1",
+          vertical: false,
+          start: { x: 1, y: 4 },
+          end: { x: 1, y: 5 },
+          activated: true,
+        },
+        {
+          id: "bridge2",
+          vertical: false,
+          start: { x: 5, y: 4 },
+          end: { x: 5, y: 5 },
+          activated: true,
+        }
+      ],
+      onlyVariablesInAttack: true,
+      checksCount: 4,
+    },
   }
 }

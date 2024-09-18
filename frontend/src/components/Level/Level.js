@@ -103,7 +103,7 @@ export const Level = () => {
     data.instructions || data.example || data.newCommands?.length;
 
   const showHeroGoals = () => {
-    const goals = initialLevelData.current.goals.map((goal) => ({
+    const goals = initialLevelData.current.goals.filter((goal) => !!goal.heroText).map((goal) => ({
       value: goal.heroText,
     }));
     setHeroTexts(goals);
@@ -344,6 +344,7 @@ export const Level = () => {
 
       const newLevelData = copy(levelData.current);
       newLevelData.enemies = pausedEnemiesVariant.current || variant.enemiesVariant; // если после паузы, то сеттим запомнивших врагов; если нет, то просто врагов из текущего варианта
+      newLevelData.gems = newLevelData.gems.filter(gem => !gem.guardedBy || variant.enemiesVariant.find(e => e.name === gem.guardedBy).alive);
       setLevelData(newLevelData);
 
       await execCommands();
@@ -405,6 +406,15 @@ export const Level = () => {
           value: `Рычаг с названием «${gameplayError.name}» слишком далеко,\nя не могу переключить его отсюда`,
           delay: 3000,
         },
+      ]);
+    }
+
+    if (gameplayError?.type === GameplayErrorTypes.CANT_BE_HERE) {
+      setHeroTexts([
+        {
+          value: 'Зачем мне сюда? Здесь нет алмаза',
+          delay: 3000,
+        }
       ]);
     }
   };

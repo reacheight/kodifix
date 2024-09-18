@@ -88,6 +88,12 @@ export const instructions = {
       example: `hero.move_right(3)              # всегда пройди вправо\nif hero.has_enemy_around():     # если рядом есть враг, то\n    enemy = hero.find_nearest_enemy() # найди врага\n    hero.attack(enemy)                # и атакуй его\nhero.move_down(2)               # всегда пройди вниз`,
       newCommands: [],
       prevCommands: [ hasEnemyAround ].concat(longMovingCommands.concat([ findNearestEnemy, switchCommand, attackCommand ])),
+    },
+    [3]: {
+      instructions: 'Рыцари прячут алмазы на островах, давай заберем их. Но имей в виду: на острове есть алмаз, только если его охраняют! Если дорога открыта — на острове нечего искать.\n\n'
+      + 'Тебе надо собрать все доступные алмазы, но при этом ты не должен заходить на остров, если там пусто.',
+      newCommands: [],
+      prevCommands: [ hasEnemyAround ].concat(longMovingCommands.concat([ findNearestEnemy, switchCommand, attackCommand ])),
     }
   }
 }

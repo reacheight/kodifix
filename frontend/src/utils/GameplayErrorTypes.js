@@ -7,4 +7,5 @@ export default class GameplayErrorTypes {
   static NO_LEVERS = 'no_levers';
   static NO_LEVER_WITH_GIVEN_NAME = 'no_lever_with_given_name';
   static LEVER_TOO_FAR = 'lever_too_far';
+  static CANT_BE_HERE = 'cant_be_here';
 }

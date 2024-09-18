@@ -168,6 +168,18 @@ export default class LevelRunner {
       this.gemsCollected = 0;
       this.level = structuredClone(this.initialLevel);
       this.level.enemies = structuredClone(enemiesVariant);
+      this.level.gems = this.level.gems.filter(gem => !gem.guardedBy || this.level.enemies.find(e => e.name === gem.guardedBy).alive);
+
+      // только для уровня с охраняемыми гемами
+      if (this.level.id === 'if-guarded-gems') {
+        this.ifGuardedGemsInfo = {
+          canBeOnTopIsland: this.level.enemies.find(e => e.name === 'Hidden1').alive,
+          canBeOnBottomIsland: this.level.enemies.find(e => e.name === 'Hidden2').alive,
+          topIslandEnter: { x: 1, y: 6 },
+          bottomIslandEnter: { x: 5, y: 6 },
+        };
+      }
+
       try {
         this.engine.load(code);
         let steps = 0;
@@ -206,6 +218,7 @@ export default class LevelRunner {
 
   isGoalCompleted(goal, code) {
     switch (goal.type) {
+      case 'no-unnecessary-islands': // так можно, потому что выкидываем ошибку, когда зашли на лишний остров
       case 'finish':
         return arePointsEqual(this.level.finish, this.level.hero);
       case 'lines':
@@ -235,6 +248,19 @@ export default class LevelRunner {
       }
 
       this.pushNewCommand(moveCommandName);
+
+      // только для уровня с охраняемыми гемами
+      if (this.ifGuardedGemsInfo) {
+        if (arePointsEqual(this.ifGuardedGemsInfo.topIslandEnter, this.level.hero) && !this.ifGuardedGemsInfo.canBeOnTopIsland) {
+          this.gameplayError = { type: GameplayErrorTypes.CANT_BE_HERE };
+          return;
+        }
+
+        if (arePointsEqual(this.ifGuardedGemsInfo.bottomIslandEnter, this.level.hero) && !this.ifGuardedGemsInfo.canBeOnBottomIsland) {
+          this.gameplayError = { type: GameplayErrorTypes.CANT_BE_HERE };
+          return;
+        }
+      }
 
       if (this.level.gems) {
         let takenGem = this.level.gems.find(g => arePointsEqual(g, this.level.hero) && !g.taken)

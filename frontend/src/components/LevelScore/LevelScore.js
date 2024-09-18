@@ -24,9 +24,11 @@ export const LevelScore = ({ isLastLevel, goals, onContinue, onClose }) => {
     navigate('/', { replace: true });
   };
 
+  const hasOptionalGoals = goals.filter(g => !g.required).length !== 0;
+
   const someRequiredGoalNotCompleted = goals.filter(g => g.required).some(g => !g.completed);
-  const everyOptionalGoalNotCompleted = goals.filter(g => !g.required).every(g => !g.completed);
-  const someOptionalGoalNotCompleted = everyOptionalGoalNotCompleted || goals.filter(g => !g.required).some(g => !g.completed);
+  const everyOptionalGoalNotCompleted = hasOptionalGoals && goals.filter(g => !g.required).every(g => !g.completed);
+  const someOptionalGoalNotCompleted = hasOptionalGoals && (everyOptionalGoalNotCompleted || goals.filter(g => !g.required).some(g => !g.completed));
   return createPortal(
     <Wrapper>
       <Modal>
