@@ -89,16 +89,17 @@ export const Image = styled.div`
   opacity: ${({ x, y, heroX, heroY }) =>
     x - heroX === 1 && y === heroY ? 0.7 : 1};
 
-  ${({ alive, direction, spedUp }) =>
-    !alive &&
-    css`
-      animation:
-        ${direction === 'right' ? leftFallAnimation : rightFallAnimation} ${spedUp ? 500 : 1000}ms ease-out
-          forwards,
-        ${fadeAnimation} 2s ease-out forwards;
-    `}
-  
-  ${({ isRandom }) => isRandom && css`
-    animation: ${randomEnemyAnimation} 1s infinite alternate;
-  `}
+   ${({ alive, direction, spedUp, isRandom }) => {
+    if (!alive)
+      return css`
+        animation:
+          ${direction === 'right' ? leftFallAnimation : rightFallAnimation} ${spedUp ? 500 : 1000}ms ease-out
+            forwards,
+          ${fadeAnimation} 2s ease-out forwards;
+      `;
+    else if (isRandom)
+      return css`
+        animation: ${randomEnemyAnimation} 1s infinite alternate;
+      `;
+   }}
 `;
