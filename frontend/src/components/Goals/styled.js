@@ -7,7 +7,11 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 10px 10px;
-  opacity: 0.9;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
 export const Collapse = styled.div`
