@@ -372,6 +372,26 @@ export const levels = {
         { x: 6, y: 7, alive: true, name: "Hidden2", hidden: true, random: true },
         { x: 7, y: 12, alive: true, name: "Hidden3", hidden: true, random: true },
       ],
+      additionalVariants: {
+        enemies: [
+          [
+            { x: 1, y: 2, alive: false, name: "Hidden1", hidden: true, random: true },
+            { x: 6, y: 7, alive: true, name: "Hidden2", hidden: true, random: true },
+            { x: 7, y: 12, alive: true, name: "Hidden3", hidden: true, random: true },
+          ],
+          [
+            { x: 1, y: 2, alive: true, name: "Hidden1", hidden: true, random: true },
+            { x: 6, y: 7, alive: true, name: "Hidden2", hidden: true, random: true },
+            { x: 7, y: 12, alive: false, name: "Hidden3", hidden: true, random: true },
+          ],
+          [
+            { x: 1, y: 2, alive: true, name: "Hidden1", hidden: true, random: true },
+            { x: 6, y: 7, alive: false, name: "Hidden2", hidden: true, random: true },
+            { x: 7, y: 12, alive: true, name: "Hidden3", hidden: true, random: true },
+          ],
+        ],
+        randomVariantsCount: 2,
+      },
       goals: [
         { type: 'finish', name: 'Добраться до финиша', heroText: 'Опасность поджидает на каждому шагу,\nпомоги мне добраться до финиша', required: true },
         { type: 'enemies', name: 'Победить всех врагов', heroText: 'На островках могут скрываться враги, надо их победить', required: true },
@@ -426,6 +446,23 @@ export const levels = {
         { x: 2, y: 5, alive: true, name: "Hidden1", hidden: true, random: true },
         { x: 4, y: 5, alive: true, name: "Hidden2", hidden: true, random: true },
       ],
+      additionalVariants: {
+        enemies: [
+          [
+            { x: 2, y: 5, alive: false, name: "Hidden1", hidden: true, random: true },
+            { x: 4, y: 5, alive: true, name: "Hidden2", hidden: true, random: true },
+          ],
+          [
+            { x: 2, y: 5, alive: true, name: "Hidden1", hidden: true, random: true },
+            { x: 4, y: 5, alive: false, name: "Hidden2", hidden: true, random: true },
+          ],
+          [
+            { x: 2, y: 5, alive: false, name: "Hidden1", hidden: true, random: true },
+            { x: 4, y: 5, alive: false, name: "Hidden2", hidden: true, random: true },
+          ],
+        ],
+        randomVariantsCount: 0,
+      },
       goals: [
         { type: 'finish', name: 'Добраться до финиша', heroText: 'Проведи меня до финиша', required: true },
         { type: 'enemies', name: 'Победить всех врагов', heroText: 'Давай победим всех встретившихся врагов', required: true },
@@ -460,6 +497,23 @@ export const levels = {
         { x: 1, y: 4, alive: true, name: "Hidden1", hidden: true, random: true },
         { x: 5, y: 4, alive: true, name: "Hidden2", hidden: true, random: true },
       ],
+      additionalVariants: {
+        enemies: [
+          [
+            { x: 1, y: 4, alive: false, name: "Hidden1", hidden: true, random: true },
+            { x: 5, y: 4, alive: true, name: "Hidden2", hidden: true, random: true },
+          ],
+          [
+            { x: 1, y: 4, alive: true, name: "Hidden1", hidden: true, random: true },
+            { x: 5, y: 4, alive: false, name: "Hidden2", hidden: true, random: true },
+          ],
+          [
+            { x: 1, y: 4, alive: false, name: "Hidden1", hidden: true, random: true },
+            { x: 5, y: 4, alive: false, name: "Hidden2", hidden: true, random: true },
+          ],
+        ],
+        randomVariantsCount: 0,
+      },
       goals: [
         { type: 'finish', name: 'Добраться до финиша', required: true },
         { type: 'enemies', name: 'Победить всех врагов', required: true },
