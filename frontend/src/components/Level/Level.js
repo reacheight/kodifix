@@ -231,12 +231,10 @@ export const Level = () => {
       );
 
       updatedEnemies[targetIndex].alive = false;
-      new Audio(hitSound).play();
       await delay(getDelays().attacking);
 
       updatedLevelData.enemies = updatedEnemies;
     } else if (command.name === 'switch') {
-      await delay(getDelays().switching);
       const updatedLevers = copy(levelData.current.levers);
       const updatedBridges = copy(levelData.current.bridges);
 
@@ -280,6 +278,13 @@ export const Level = () => {
     }
 
     setLevelData(updatedLevelData);
+
+    if (command.name === 'switch')
+      await delay(getDelays().switching);
+    else if (command.name === 'attack') {
+      new Audio(hitSound).play();
+      await delay(getDelays().attacking);
+    }
   };
 
   const execCommands = async () => {
