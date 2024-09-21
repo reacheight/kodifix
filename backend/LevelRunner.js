@@ -229,6 +229,8 @@ export default class LevelRunner {
         return this.gemsCollected === this.level.gems.length;
       case 'enemies':
         return this.level.enemies.every(enemy => !enemy.alive)
+      case 'lever':
+        return this.level.levers.find(l => l.name === goal.leverName).enabled;
       default:
         return false;
     }

@@ -207,8 +207,48 @@ export const levels = {
         },
       ],
     },
-  
+
     [3]: {
+      height: 9,
+      width: 5,
+      grid: [
+        ["rock","tree","sand","tree","rock"],
+        ["lawn","lawn","sand","sand","lawn"],
+        ["watert","watert","watert","watert","watert"],
+        ["water","water","water","water","water"],
+        ["water","water","water","water","water"],
+        ["water","water","water","water","water"],
+        ["rock","sand","sand","lawn","lawn"],
+        ["sand","sand","lawn","lawn","lawn"],
+        ["lawn","lawn","lawn","lawn","tree"],
+      ],
+      hero: { x: 0, y: 2 },
+      finish: { x: 8, y: 2 },
+      gems: [
+        { x: 6, y: 2 },
+        { x: 7, y: 2 },
+      ],
+      enemies: [],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша на другом берегу', heroText: 'На том берегу много алмазов, давай перейдём на него', required: true },
+        { type: 'lever', leverName: "Секретный", name: 'Найти название рычага и переключить его', heroText: 'Для этого надо выяснить название рычага,\nкоторый откроет мне мост', required: true },
+        { type: 'gems', name: 'Подобрать все алмазы', required: true },
+      ],
+      levers: [
+        { x: 1, y: 1, name: "Секретный", activatesId: "bridge1", enabled: false, hidden: true },
+      ],
+      bridges: [
+        {
+          id: "bridge1",
+          vertical: true,
+          start: { x: 2, y: 2 },
+          end: { x: 5, y: 2 },
+          activated: false,
+        },
+      ],
+    },
+  
+    [4]: {
       height: 3,
       width: 8,
       grid: [
@@ -234,7 +274,7 @@ export const levels = {
       bridges: [],
     },
   
-    [4]: {
+    [5]: {
       height: 5,
       width: 13,
       grid: [

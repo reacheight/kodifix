@@ -3,7 +3,7 @@ export const games = {
         levels: 5,
     },
     ["fights-on-bridges"]: {
-        levels: 4,
+        levels: 5,
     },
     ["variables"]: {
         levels: 2,

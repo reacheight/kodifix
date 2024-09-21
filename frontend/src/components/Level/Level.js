@@ -676,6 +676,7 @@ export const Level = () => {
                 name={lever.name}
                 zIndex={lever.x}
                 enabled={lever.enabled}
+                hidden={lever.hidden}
               />
             ))}
             {gems.map((gem) => (

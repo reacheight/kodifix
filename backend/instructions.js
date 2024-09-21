@@ -44,12 +44,18 @@ export const instructions = {
       prevCommands: longMovingCommands.concat([ switchCommand ]),
     },
     [3]: {
+      instructions: 'Программисты могут оставлять комментарии в своём коде, чтобы сделать его понятнее для других программистов.\nТы уже видел их в редакторе справа — это текст, идущий после знака #.\n\nЧтобы пройти этот уровень тебе надо прочитать комментарии к коду.',
+      example: `# в питоне комментарии начинаются с #, они содержат пояснения и подсказки\n\nhero.move_right() # комментарии могут быть на одной строчке с кодом\n\n# а это комментарий\n# сразу на двух строчках подряд`,
+      newCommands: [],
+      prevCommands: longMovingCommands.concat([ switchCommand ]),
+    },
+    [4]: {
       instructions: 'Нам преградили дорогу злые рыцари! Придется их проучить.\n\nПередай в метод `attack` строку с именем врага, чтобы его ударить. Как и с рычагом, твой герой должен находиться рядом с врагом, которого ты хочешь атаковать.',
       example: `hero.attack("John")`,
       newCommands: [ attackCommand ],
       prevCommands: longMovingCommands.concat([ switchCommand ]),
     },
-    [4]: {
+    [5]: {
       instructions: 'Используй все выученные методы, чтобы пройти этот уровень.\n\nНе забудь, что ты всегда можешь посмотреть список методов под редактором.',
       newCommands: [],
       prevCommands: longMovingCommands.concat([ switchCommand, attackCommand ]),
