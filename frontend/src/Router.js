@@ -6,6 +6,7 @@ import {
 import { Level } from './components/Level/Level';
 import React from 'react';
 import { MainMenu } from './components/MainMenu/MainMenu';
+import { YandexCallback } from './components/YandexCallback/YandexCallback';
 
 export const browserRouter = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ export const browserRouter = createBrowserRouter([
   {
     path: '/:gameId/level/:id',
     element: <Level />,
+  },
+  {
+    path: '/ya_callback',
+    element: <YandexCallback />
   },
   {
     path: '*',

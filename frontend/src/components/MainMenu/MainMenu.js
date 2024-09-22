@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GamePreview, Section, SectionTitle, SectionGames, Wrapper, PreviewImage, PreviewTitle, PreviewTags, ComingSoonTitle } from './styled';
 import firstStepsPreviewImage from '../../assets/first-steps-preview.png';
 import bridgesPreviewImage from '../../assets/bridges-preview.png';
@@ -8,6 +8,24 @@ import elseImagePreview from '../../assets/else-preview.png';
 import whileImagePreview from '../../assets/while-preview.png';
 
 export const MainMenu = () => {
+  useEffect(() => {
+    if (window.YaAuthSuggest) {
+      console.log("yes init login");
+      window.YaAuthSuggest.init(
+        {
+          client_id: '064dd0d0ea2d41bd8867928cd9704763',
+          response_type: 'token',
+          redirect_uri: 'https://kodifix.ru/ya_callback'
+        },
+        'https://kodifix.ru',
+        { view: "default" }
+      )
+      .then(({handler}) => handler())
+      .then(data => console.log('Сообщение с токеном', data))
+      .catch(error => console.log('Обработка ошибки', error));
+    }
+  }, []);
+  
   return (
     <Wrapper>
       <Section>
