@@ -14,12 +14,12 @@ export const browserRouter = createBrowserRouter([
     element: <MainMenu />,
   },
   {
-    path: '/:gameId/level/:id',
-    element: <Level />,
-  },
-  {
     path: '/ya_callback',
     element: <YandexCallback />
+  },
+  {
+    path: '/:gameId/level/:id',
+    element: <Level />,
   },
   {
     path: '*',
