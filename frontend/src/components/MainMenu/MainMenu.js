@@ -9,7 +9,7 @@ import whileImagePreview from '../../assets/while-preview.png';
 
 export const MainMenu = () => {
   useEffect(() => {
-    if (window.YaAuthSuggest) {
+    if (!document.cookie.includes(yaToken) && window.YaAuthSuggest) {
       window.YaAuthSuggest.init(
         {
           client_id: '064dd0d0ea2d41bd8867928cd9704763',
