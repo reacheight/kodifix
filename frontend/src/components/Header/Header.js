@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { axios } from '../../api/axios';
 import { HeaderWrapper } from './styled';
 import { MiniProfile } from '../MiniProfile/MiniProfile';
-import Cookies from 'js-cookie';
 
-export const Header = () => {
+export const Header = (authToken) => {
   const [user, setUser] = useState(null);
-  const [authToken, setAuthToken] = useState(Cookies.get('yaToken'));
 
   useEffect(() => {
     (async () => {
@@ -17,11 +15,6 @@ export const Header = () => {
       }
     })();
   }, [authToken]);
-
-  const newTokenCookie = Cookies.get('yaToken');
-  if (authToken !== newTokenCookie ) {
-    setAuthToken(newTokenCookie);
-  }
   
   return (
     <HeaderWrapper>

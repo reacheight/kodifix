@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { GamePreview, Section, SectionTitle, SectionGames, Wrapper, PreviewImage, PreviewTitle, PreviewTags, ComingSoonTitle } from './styled';
 import firstStepsPreviewImage from '../../assets/first-steps-preview.png';
 import bridgesPreviewImage from '../../assets/bridges-preview.png';
@@ -6,29 +6,9 @@ import variablesPreviewImage from '../../assets/variables-preview.png';
 import whatIfPreviewImage from '../../assets/what-if-preview.png';
 import elseImagePreview from '../../assets/else-preview.png';
 import whileImagePreview from '../../assets/while-preview.png';
-import { Header } from '../Header/Header';
 import { Layout } from '../Layout/Layout';
 
 export const MainMenu = () => {
-  useEffect(() => {
-    if (!document.cookie.includes('yaToken') && window.YaAuthSuggest) {
-      window.YaAuthSuggest.init(
-        {
-          client_id: '064dd0d0ea2d41bd8867928cd9704763',
-          response_type: 'token',
-          redirect_uri: 'https://demo.kodifix.ru/ya_callback'
-        },
-        'https://demo.kodifix.ru',
-        { view: "default" }
-      )
-      .then(({handler}) => handler())
-      .then(data => {
-        document.cookie = `yaToken=${data.access_token}; path=/; max-age=${data.expires_in}; secure; domain=kodifix.ru; samesite=lax`
-      })
-      .catch(error => console.log('Обработка ошибки', error));
-    }
-  }, []);
-  
   return (
     <Layout>
       <Wrapper>
