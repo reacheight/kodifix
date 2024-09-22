@@ -5,7 +5,7 @@ export const YandexCallback = () => {
     if (window.YaSendSuggestToken) {
       console.log("yes send token");
       window.YaSendSuggestToken(
-        'https://kodifix.ru', 
+        'https://demo.kodifix.ru', 
         {
           flag: true
         }

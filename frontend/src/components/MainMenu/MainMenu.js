@@ -17,7 +17,7 @@ export const MainMenu = () => {
           response_type: 'token',
           redirect_uri: 'https://demo.kodifix.ru/ya_callback'
         },
-        'https://kodifix.ru',
+        'https://demo.kodifix.ru',
         { view: "default" }
       )
       .then(({handler}) => handler())
