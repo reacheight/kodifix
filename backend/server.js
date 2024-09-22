@@ -66,7 +66,7 @@ app.post('/:game/level/:id/run', (req, res) => {
 
 app.get('/user', async (req, res) => {
   if (!req.cookies.yaToken) {
-    res.send(401);
+    res.sendStatus(401);
     return
   }
 
@@ -78,7 +78,7 @@ app.get('/user', async (req, res) => {
     return;
   }
 
-  res.send(401);
+  res.sendStatus(401);
 })
 
 const server = createServer(app);
