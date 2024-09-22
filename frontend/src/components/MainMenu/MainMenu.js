@@ -10,7 +10,6 @@ import whileImagePreview from '../../assets/while-preview.png';
 export const MainMenu = () => {
   useEffect(() => {
     if (window.YaAuthSuggest) {
-      console.log("yes init login");
       window.YaAuthSuggest.init(
         {
           client_id: '064dd0d0ea2d41bd8867928cd9704763',
@@ -21,7 +20,9 @@ export const MainMenu = () => {
         { view: "default" }
       )
       .then(({handler}) => handler())
-      .then(data => console.log('Сообщение с токеном', data))
+      .then(data => {
+        document.cookie = `yaToken=${data.access_token}; path=/; max-age=${data.expiresIn}; secure; domain=kodifix.ru; samesite=lax`
+      })
       .catch(error => console.log('Обработка ошибки', error));
     }
   }, []);
