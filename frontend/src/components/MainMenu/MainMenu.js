@@ -15,7 +15,7 @@ export const MainMenu = () => {
         {
           client_id: '064dd0d0ea2d41bd8867928cd9704763',
           response_type: 'token',
-          redirect_uri: 'https://kodifix.ru/ya_callback'
+          redirect_uri: 'https://demo.kodifix.ru/ya_callback'
         },
         'https://kodifix.ru',
         { view: "default" }
