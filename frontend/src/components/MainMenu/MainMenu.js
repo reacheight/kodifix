@@ -9,7 +9,7 @@ import whileImagePreview from '../../assets/while-preview.png';
 
 export const MainMenu = () => {
   useEffect(() => {
-    if (!document.cookie.includes(yaToken) && window.YaAuthSuggest) {
+    if (!document.cookie.includes('yaToken') && window.YaAuthSuggest) {
       window.YaAuthSuggest.init(
         {
           client_id: '064dd0d0ea2d41bd8867928cd9704763',
@@ -21,7 +21,7 @@ export const MainMenu = () => {
       )
       .then(({handler}) => handler())
       .then(data => {
-        document.cookie = `yaToken=${data.access_token}; path=/; max-age=${data.expiresIn}; secure; domain=kodifix.ru; samesite=lax`
+        document.cookie = `yaToken=${data.access_token}; path=/; max-age=${data.expires_in}; secure; domain=kodifix.ru; samesite=lax`
       })
       .catch(error => console.log('Обработка ошибки', error));
     }
