@@ -25,7 +25,7 @@ export const Layout = ({ children }) => {
       )
       .then(({handler}) => handler())
       .then(data => {
-        document.cookie = `yaToken=${data.access_token}; path=/; max-age=${data.expires_in}; secure; domain=kodifix.ru; samesite=lax`;
+        document.cookie = `yaToken=${data.access_token}; path=/; max-age=${data.expires_in}; secure; domain=demo.kodifix.ru; samesite=lax`;
         setAuthToken(data.access_token);
       })
       .catch(error => console.log('Обработка ошибки', error));
