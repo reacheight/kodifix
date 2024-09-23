@@ -25,7 +25,7 @@ export const Layout = ({ children }) => {
       )
       .then(({handler}) => handler())
       .then(data => {
-        document.cookie = `yaToken=${data.access_token}; path=/; max-age=${data.expires_in}; secure; domain=.kodifix.ru; samesite=lax`;
+        Cookies.set('yaToken', data.access_token, { path: '/', domain: '.kodifix.ru', secure: true, sameSite: 'Lax', expires_in: data.expires_in })
         setAuthToken(data.access_token);
       })
       .catch(error => console.log('Обработка ошибки', error));
@@ -33,7 +33,7 @@ export const Layout = ({ children }) => {
   }, []);
 
   const logout = () => {
-    Cookies.remove('yaToken');
+    Cookies.remove('yaToken', { path: '/', domain: '.kodifix.ru', secure: true, sameSite: 'Lax' });
     setAuthToken(null);
   };
 
