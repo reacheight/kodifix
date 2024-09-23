@@ -1,11 +1,15 @@
 import React from 'react';
-import { AvatarPlaceHolder, MiniProfileWrapper, Name } from './styled';
+import { AvatarPlaceHolder, Logout, MiniProfileWrapper, Name, NameAndTitle, Title } from './styled';
 
-export const MiniProfile = ({ user }) => {
+export const MiniProfile = ({ user, onLogout }) => {
   return (
     <MiniProfileWrapper>
       <AvatarPlaceHolder />
-      <Name>{user.name}</Name>
+      <NameAndTitle>
+        <Name>{user.name}</Name>
+        <Title>Новичок</Title>
+      </NameAndTitle>
+      <Logout onClick={onLogout} />
     </MiniProfileWrapper>
   );
 }

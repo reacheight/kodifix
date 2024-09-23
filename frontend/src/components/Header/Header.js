@@ -3,7 +3,7 @@ import { axios } from '../../api/axios';
 import { HeaderWrapper } from './styled';
 import { MiniProfile } from '../MiniProfile/MiniProfile';
 
-export const Header = (authToken) => {
+export const Header = ({ authToken, onLogout }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -12,6 +12,8 @@ export const Header = (authToken) => {
       if (isAuthorized) {
         const response = await axios.get('/user', { withCredentials: true });
         setUser(response.data);
+      } else {
+        setUser(null);
       }
     })();
   }, [authToken]);
@@ -19,7 +21,7 @@ export const Header = (authToken) => {
   return (
     <HeaderWrapper>
       {!!user && (
-        <MiniProfile user={user} />
+        <MiniProfile user={user} onLogout={onLogout} />
       )}
     </HeaderWrapper>
   );

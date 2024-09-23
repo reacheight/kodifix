@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-inline: 20%;
 `
 
 export const Layout = ({ children }) => {
@@ -31,9 +32,14 @@ export const Layout = ({ children }) => {
     }
   }, []);
 
+  const logout = () => {
+    Cookies.remove('yaToken');
+    setAuthToken(null);
+  };
+
   return (
     <LayoutWrapper>
-      <Header authToken={authToken} />
+      <Header authToken={authToken} onLogout={logout} />
       {children}
     </LayoutWrapper>
   )
