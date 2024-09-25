@@ -10,5 +10,8 @@ export const games = {
     },
     ["what-if"]: {
         levels: 3,
+    },
+    ["forest"]: {
+        levels: 15,
     }
 }

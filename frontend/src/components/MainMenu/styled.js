@@ -1,89 +1,152 @@
 import styled, { css, keyframes } from 'styled-components';
+import wizardImage from '../../assets/wizard.svg';
+import gemImage from '../../assets/gem.svg';
+import mapImage from '../../assets/map.jpg';
+import levelIcon from '../../assets/finish-no-shadow.svg';
 
-export const Wrapper = styled.div`
+export const Game = styled.div`
+  display: flex;
+  gap: 100px;
+`
+
+export const GameDescription = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  padding-inline: 40px;
-`;
+  margin-bottom: auto;
 
-export const Section = styled.div`
+  width: 400px;
+  background: rgba(61, 200, 209, 0.2);
+  border-radius: 10px;
 `
 
-export const SectionTitle = styled.div`
-  font-family: 'Nunito', sans-serif;
-  font-size: 24px;
-  margin-bottom: 10px;
+export const DescriptionHeader = styled.div`
+  width: 400px;
+  height: 180px;
+  background: linear-gradient(#3DC8D1, #8BC7F9);
+  border-radius: 10px;
+  padding: 20px;
 `
 
-export const SectionGames = styled.div`
-  display: flex;
-  gap: 20px;
-`
-
-export const PreviewImage = styled.div`
-  height: 300px;
-  width: 225px;
-  background: url(${({ source }) => source }) no-repeat;
-  border-radius: 8px;
-  transition: 100ms ease-in-out;
-`
-
-export const PreviewTitle = styled.div`
-  font-family: 'Nunito', sans-serif;
-  font-size: 20px;
+export const Title = styled.div`
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
   font-weight: 600;
-  text-shadow: 1px 0 rgba(255, 255, 255, 0.5), -1px 0 rgba(255, 255, 255, 0.5), 0 1px rgba(255, 255, 255, 0.5), 0 -1px rgba(255, 255, 255, 0.5),
-             1px 1px rgba(255, 255, 255, 0.5), -1px -1px rgba(255, 255, 255, 0.5), 1px -1px rgba(255, 255, 255, 0.5), -1px 1px rgba(255, 255, 255, 0.5);
-
-  text-align: center;
-  user-select: none;
-`
-
-export const PreviewTags = styled.div`
-  font-family: 'Nunito', sans-serif;
-  text-align: center;
-  user-select: none;
-  width: 225px;
-`
-
-export const ComingSoonTitle = styled.div`
-  font-family: 'Nunito', sans-serif;
-  font-size: 24px;
-  text-align: center;
-  user-select: none;
-  width: 225px;
-
-  text-shadow: 1px 0 rgba(255, 255, 255, 0.1), -1px 0 rgba(255, 255, 255, 0.1), 0 1px rgba(255, 255, 255, 0.1), 0 -1px rgba(255, 255, 255, 0.1),
-             1px 1px rgba(255, 255, 255, 0.1), -1px -1px rgba(255, 255, 255, 0.1), 1px -1px rgba(255, 255, 255, 0.1), -1px 1px rgba(255, 255, 255, 0.1);
+  color: white;
 
   position: relative;
-  bottom: 200px;
+
+  z-index: 1;
 `
 
-export const GamePreview = styled.a`
+export const LevelCount = styled.div`
+  font-family: 'Inter', sans-serif;
+  color: white;
+  margin-top: 8px;
+  margin-left: 10px;
+`
+
+export const Wizard = styled.div`
+  width: 74px;
+  height: 80px;
+  transform: scale(2) scaleX(-1);
+  background: url(${wizardImage}) no-repeat center;
+
+  position: relative;
+  left: 250px;
+  top: 0px;
+
+  z-index: 1;
+`
+
+export const Gem1 = styled.div`
+  width: 40px;
+  height: 84px;
+  transform: scale(2) rotate(30deg);
+  background: url(${gemImage}) no-repeat center;
+
+  position: relative;
+  left: 230px;
+  bottom: 170px;
+
+  z-index: 0;
+`
+
+export const Gem2 = styled.div`
+  width: 40px;
+  height: 84px;
+  transform: scale(1.5) rotate(-15deg);
+  background: url(${gemImage}) no-repeat center;
+
+  position: relative;
+  left: 160px;
+  bottom: 130px;
+
+  z-index: 0;
+`
+
+export const Gem3 = styled.div`
+  width: 40px;
+  height: 84px;
+  transform: scale(1.5) rotate(10deg);
+  background: url(${gemImage}) no-repeat center;
+
+  position: relative;
+  left: 340px;
+  bottom: 280px;
+
+  z-index: 0;
+`
+
+export const Description = styled.div`
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #393939;
+
+  padding: 20px;
+  margin-top: 20px;
+`
+
+export const Tags = styled.div`
   display: flex;
-  flex-direction: column;
-  text-decoration: none;
+  flex-wrap: wrap;
+  gap: 8px;
 
-  &:visited {
-    color: black;
+  padding: 20px;
+`
+
+export const Tag = styled.div`
+  font-family: 'Consolas', sans-serif;
+  color: #3C80E7;
+  text-align: center;
+  align-items: center;
+
+  background: #F4F4F4;
+  border-radius: 3px;
+  padding: 2px 4px;
+`
+
+export const Map = styled.div`
+  width: 800px;
+  height: 800px;
+  background: url(${mapImage}) no-repeat;
+  background-size: 100%;
+  border-radius: 10px;
+`
+
+export const Level = styled.a`
+  display: block;
+  width: 64px;
+  height: 80px;
+  background: url(${levelIcon}) no-repeat center;
+  transform: scale(0.7);
+
+  &:hover {
+    filter: brightness(0.8);
   }
 
-  &:link {
-    color: black;
-  }
-
-  ${({ isUnavailable }) => isUnavailable
-  ? css`
-    cursor: default;
-    ${PreviewImage} {
-      filter: blur(8px);
-    }
-  `
-  : css`
-    &:hover ${PreviewImage} {
-      filter: brightness(1.1);
-    }
+  position: relative;
+  ${({ top, left }) => css`
+    top: ${top}px;
+    left: ${left}px;
   `}
 `

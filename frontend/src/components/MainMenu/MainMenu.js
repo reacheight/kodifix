@@ -1,60 +1,47 @@
 import React from 'react';
-import { GamePreview, Section, SectionTitle, SectionGames, Wrapper, PreviewImage, PreviewTitle, PreviewTags, ComingSoonTitle } from './styled';
-import firstStepsPreviewImage from '../../assets/first-steps-preview.png';
-import bridgesPreviewImage from '../../assets/bridges-preview.png';
-import variablesPreviewImage from '../../assets/variables-preview.png';
-import whatIfPreviewImage from '../../assets/what-if-preview.png';
-import elseImagePreview from '../../assets/else-preview.png';
-import whileImagePreview from '../../assets/while-preview.png';
+import { Game, GameDescription, DescriptionHeader, Title, Wizard, Gem1, Gem2, Gem3, LevelCount, Description, Tag, Tags, Map, Level } from './styled';
 import { Layout } from '../Layout/Layout';
 
 export const MainMenu = () => {
   return (
     <Layout>
-      <Wrapper>
-        <Section>
-          <SectionTitle>Начало</SectionTitle>
-          <SectionGames>
-            <GamePreview href={'/first-steps/level/1'}>
-              <PreviewImage source={firstStepsPreviewImage} />
-              <PreviewTitle>Первые шаги</PreviewTitle>
-              <PreviewTags>методы, параметры</PreviewTags>
-            </GamePreview>
-            <GamePreview href={'/fights-on-bridges/level/1'}>
-              <PreviewImage source={bridgesPreviewImage} />
-              <PreviewTitle>Драки на мостах</PreviewTitle>
-              <PreviewTags>параметры, строки</PreviewTags>
-            </GamePreview>
-            <GamePreview href={'/variables/level/1'}>
-              <PreviewImage source={variablesPreviewImage} />
-              <PreviewTitle>Перемена?</PreviewTitle>
-              <PreviewTags>параметры, переменные</PreviewTags>
-            </GamePreview>
-          </SectionGames>
-        </Section>
-        <Section>
-          <SectionTitle>Основы</SectionTitle>
-          <SectionGames>
-            <GamePreview href={'/what-if/level/1'}>
-              <PreviewImage source={whatIfPreviewImage} />
-              <PreviewTitle>А что, если...</PreviewTitle>
-              <PreviewTags>if-выражения</PreviewTags>
-            </GamePreview>
-            <GamePreview isUnavailable={true}>
-              <PreviewImage source={elseImagePreview} />
-              <PreviewTitle>План Б</PreviewTitle>
-              <PreviewTags>if-else-выражения</PreviewTags>
-              <ComingSoonTitle>Скоро появится</ComingSoonTitle>
-            </GamePreview>
-            <GamePreview isUnavailable={true}>
-              <PreviewImage source={whileImagePreview} />
-              <PreviewTitle>До последнего врага</PreviewTitle>
-              <PreviewTags>циклы while</PreviewTags>
-              <ComingSoonTitle>Скоро появится</ComingSoonTitle>
-            </GamePreview>
-          </SectionGames>
-        </Section>
-      </Wrapper>
+      <Game>
+        <GameDescription>
+          <DescriptionHeader>
+            <Title>Шервудский лес</Title>
+            <LevelCount>0 / 15</LevelCount>
+            <Wizard />
+            <Gem1 />
+            <Gem2 />
+            <Gem3 />
+          </DescriptionHeader>
+          <Description>
+            Исследуйте древние руины и запретные библиотеки, обучаясь искусству программирования, чтобы создавать мощные заклинания и решать головоломки.
+          </Description>
+          <Tags>
+            <Tag>основы синтаксиса</Tag>
+            <Tag>методы</Tag>
+            <Tag>параметры</Tag>
+            <Tag>строки</Tag>
+            <Tag>переменные</Tag>
+            <Tag>if-else-выражения</Tag>
+          </Tags>
+        </GameDescription>
+        <Map>
+          <Level top={700} left={140} href={'/forest/level/1'} />
+          <Level top={545} left={145} href={'/forest/level/2'} />
+          <Level top={380} left={280} href={'/forest/level/3'} />
+          <Level top={260} left={200} href={'/forest/level/4'} />
+          <Level top={140} left={130} href={'/forest/level/5'} />
+          <Level top={-10} left={220} href={'/forest/level/6'} />
+          <Level top={-135} left={290} href={'/forest/level/7'} />
+          <Level top={-260} left={360} href={'/forest/level/8'} />
+          <Level top={-370} left={420} href={'/forest/level/9'} />
+          <Level top={-420} left={480} href={'/forest/level/9'} />
+          <Level top={-450} left={590} href={'/forest/level/10'} />
+          <Level top={-500} left={650} href={'/forest/level/11'} />
+        </Map>
+      </Game>
     </Layout>
   )
 }

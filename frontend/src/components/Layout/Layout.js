@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-inline: 20%;
+  margin-inline: 3%;
 `
 
 export const Layout = ({ children }) => {

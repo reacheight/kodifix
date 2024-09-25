@@ -8,6 +8,11 @@
   src: local('Nunito'), url(assets/fonts/Nunito.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: 'Raleway';
+  src: local('Raleway'), url(assets/fonts/Raleway.ttf) format('truetype');
+}
+
 * {
     box-sizing:border-box;
     margin: 0;

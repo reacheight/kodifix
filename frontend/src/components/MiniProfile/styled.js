@@ -11,7 +11,7 @@ export const MiniProfileWrapper = styled.div`
 export const AvatarPlaceHolder = styled.div`
   height: 48px;
   width: 48px;
-  background: url(${avatarPlaceholder}) no-repeat center, rgba(0, 0, 0, 0.15);
+  background: url(${avatarPlaceholder}) no-repeat center, rgba(61, 200, 209, 0.2);;
   border-radius: 10px;
 `
 
