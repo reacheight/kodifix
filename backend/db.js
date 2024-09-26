@@ -4,6 +4,16 @@ import { open } from 'sqlite';
 const dbFilename = process.env.KODIFIX_DB_FILE ?? String.raw`C:\sqlite\kodifix.db`;
 
 export default class Database {
+  async getAllUserLevels(userId) {
+    this.db = await open({ filename: dbFilename, driver: sqlite3.Database });
+
+    const result = await this.db.all("SELECT * FROM user_level where userId = $userId", {
+      $userId: userId,
+    });
+
+    this.db.close();
+    return result;
+  }
 
   async getUserLevel(userId, levelId) {
     this.db = await open({ filename: dbFilename, driver: sqlite3.Database });

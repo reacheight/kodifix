@@ -2,7 +2,18 @@ import styled, { css, keyframes } from 'styled-components';
 import wizardImage from '../../assets/wizard.svg';
 import gemImage from '../../assets/gem.svg';
 import mapImage from '../../assets/map.jpg';
-import levelIcon from '../../assets/finish-no-shadow.svg';
+import currentLevel from '../../assets/current-level.svg';
+import unavailableLevelIcon from '../../assets/unavailable-level.svg';
+import completedLEvelIcon from '../../assets/completed-level.svg';
+
+const currentLevelAnimation = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.5);
+  }
+`
 
 export const Game = styled.div`
   display: flex;
@@ -137,16 +148,26 @@ export const Level = styled.a`
   display: block;
   width: 64px;
   height: 80px;
-  background: url(${levelIcon}) no-repeat center;
-  transform: scale(0.7);
+
+  background: url(${({ current, completed }) => current ? currentLevel : completed ? completedLEvelIcon : unavailableLevelIcon}) no-repeat center;
+
+  ${({ current }) => current && css`
+    animation: 1s ${currentLevelAnimation} linear infinite alternate;
+    z-index: 1;
+  `};
+
+  ${({ available }) => !available && css`
+    pointer-events: none;
+    cursor: default;
+  `};
 
   &:hover {
     filter: brightness(0.8);
   }
 
   position: relative;
-  ${({ top, left }) => css`
-    top: ${top}px;
-    left: ${left}px;
-  `}
+  ${({ top, left, current }) => css`
+    top: ${top + (current ? -10 : 25)}px;
+    left: ${left + (current ? 20 : -10)}px;
+  `};
 `

@@ -111,5 +111,25 @@ app.post('/:game/level/:levelId/complete', async (req, res) => {
   await db.addUserLevel(user.id, levelId, levelScore);
 })
 
+app.get('/user/:game/levels', async (req, res) => {
+  if (!req.cookies.yaToken) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const userManager = new UserManager();
+  const user = await userManager.getUser(req.cookies.yaToken);
+  if (!user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const db = new Database();
+  const allUserLevels = await db.getAllUserLevels(user.id);
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(allUserLevels));
+})
+
 const server = createServer(app);
 server.listen(port, () => console.log(`Server started on ${port}`));
