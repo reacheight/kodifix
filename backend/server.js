@@ -9,8 +9,8 @@ import CodeAnalyzer from './CodeAnalyzer.js';
 import { games } from './games.js';
 import { startingCode } from './startingCode.js';
 import cookieParser from 'cookie-parser';
-import axios from 'axios';
 import UserManager from './UserManager.js';
+import Database from './db.js';
 
 esper.plugin('lang-python');
 
@@ -67,7 +67,7 @@ app.post('/:game/level/:id/run', (req, res) => {
 app.get('/user', async (req, res) => {
   if (!req.cookies.yaToken) {
     res.sendStatus(401);
-    return
+    return;
   }
 
   const userManager = new UserManager();
@@ -79,6 +79,36 @@ app.get('/user', async (req, res) => {
   }
 
   res.sendStatus(401);
+})
+
+app.post('/:game/level/:levelId/complete', async (req, res) => {
+  if (!req.cookies.yaToken) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const userManager = new UserManager();
+  const user = await userManager.getUser(req.cookies.yaToken);
+  if (!user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const levelId = req.params.levelId;
+  const levelScore = req.body.score;
+
+  const db = new Database();
+
+  const existingUserLevel = await db.getUserLevel(user.id, levelId);
+  if (existingUserLevel) {
+    if (levelScore > existingUserLevel.stars)
+      await db.updateUserLevel(user.id, levelId, levelScore);
+
+    res.sendStatus(200);
+    return;
+  }
+  
+  await db.addUserLevel(user.id, levelId, levelScore);
 })
 
 const server = createServer(app);

@@ -327,6 +327,7 @@ export const Level = () => {
           await delay(1500);
           new Audio(victorySound).play();
           setIsScoreOpen(true);
+          axios.post(`/${gameId}/level/${id}/complete`, { score: levelVariants.current[currentVariant.current].score }, { withCredentials: true });
         } else { // если это не последний вариант, то при корректном прохождении варианта просто прогоняем следующий вариант
           resetData();
         }
@@ -724,7 +725,7 @@ export const Level = () => {
       {isScoreOpen && (
         <LevelScore
           isLastLevel={isLastLevel}
-          goals={levelVariants.current[currentVariant.current].variantResult.goals}
+          score={levelVariants.current[currentVariant.current].score}
           onContinue={openNextLevel}
           onClose={closeScore}
         />

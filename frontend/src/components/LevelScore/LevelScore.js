@@ -17,29 +17,24 @@ import {
   ButtonsWrapper,
 } from './styled';
 
-export const LevelScore = ({ isLastLevel, goals, onContinue, onClose }) => {
+export const LevelScore = ({ isLastLevel, score, onContinue, onClose }) => {
   const navigate = useNavigate();
 
   const openMenu = () => {
     navigate('/', { replace: true });
   };
 
-  const hasOptionalGoals = goals.filter(g => !g.required).length !== 0;
-
-  const someRequiredGoalNotCompleted = goals.filter(g => g.required).some(g => !g.completed);
-  const everyOptionalGoalNotCompleted = hasOptionalGoals && goals.filter(g => !g.required).every(g => !g.completed);
-  const someOptionalGoalNotCompleted = hasOptionalGoals && (everyOptionalGoalNotCompleted || goals.filter(g => !g.required).some(g => !g.completed));
   return createPortal(
     <Wrapper>
       <Modal>
         <Stars>
-          <Star1 isEmpty={someRequiredGoalNotCompleted} />
-          <Star2 isEmpty={everyOptionalGoalNotCompleted} />
-          <Star3 isEmpty={someOptionalGoalNotCompleted} />
+          <Star1 isEmpty={score < 1} />
+          <Star2 isEmpty={score < 2} />
+          <Star3 isEmpty={score < 3} />
         </Stars>
         <Block>
           <Title>Уровень пройден!</Title>
-          {someOptionalGoalNotCompleted && <Achievement>Но чтобы заработать больше звезд, нужно выполнить все задания</Achievement>}
+          {score < 3 && <Achievement>Но чтобы заработать больше звезд, нужно выполнить все задания</Achievement>}
         </Block>
 
         <ButtonsWrapper>

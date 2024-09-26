@@ -211,11 +211,30 @@ export default class LevelRunner {
         gameplayError: this.gameplayError,
       };
 
-      results.push({ enemiesVariant, variantResult });
+      results.push({ enemiesVariant, variantResult, score: this.calculateScore(variantResult.goals) });
       this.commands = [];
     }
 
     return results;
+  }
+
+  calculateScore(goals) {
+    const optionalGoals = goals.filter(g => !g.required);
+    const hasOptionalGoals = optionalGoals.length != 0;
+
+    const allRequiredGoalsCompleted = goals.filter(g => g.required).every(g => g.completed);
+    const anyOptionalGoalCompleted = !hasOptionalGoals || goals.filter(g => !g.required).some(g => g.completed);
+    const allOptionalGoalsCompleted = !hasOptionalGoals || goals.filter(g => !g.required).every(g => g.completed);
+
+    const variantScore = allRequiredGoalsCompleted
+      ? allOptionalGoalsCompleted
+        ? 3
+        : anyOptionalGoalCompleted
+          ? 2
+          : 1
+      : 0;
+
+    return variantScore;
   }
 
   isGoalCompleted(goal, code) {
