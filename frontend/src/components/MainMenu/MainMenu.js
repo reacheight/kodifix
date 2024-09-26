@@ -13,10 +13,10 @@ export const MainMenu = () => {
         const levels = await axios.get('/user/forest/levels', { withCredentials: true });
         if (levels.data)
           setUserLevels(levels.data);
-      } finally {}
-
-      const game = await axios.get('/games/forest', { withCredentials: true });
-      setGame(game.data);
+      } finally {
+        const game = await axios.get('/games/forest', { withCredentials: true });
+        setGame(game.data);
+      }
     })();
   }, [])
 
