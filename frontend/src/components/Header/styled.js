@@ -6,4 +6,6 @@ export const HeaderWrapper = styled.div`
   
   padding-top: 20px;
   padding-inline: 20px;
+
+  z-index: 1;
 `

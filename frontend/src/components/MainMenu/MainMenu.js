@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Game, GameDescription, DescriptionHeader, Title, Wizard, Gem1, Gem2, Gem3, LevelCount, Description, Tag, Tags, Map, Level } from './styled';
 import { Layout } from '../Layout/Layout';
 import { axios } from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 export const MainMenu = () => {
+  const navigate = useNavigate();
+  
   const [userLevels, setUserLevels] = useState([]);
   const [game, setGame] = useState(null);
 
@@ -26,12 +29,20 @@ export const MainMenu = () => {
   const completedLevelsCount = userLevels?.length ?? 0;
   const currentLevel = completedLevelsCount + 1;
 
+  const openLevel = (level) => {
+    navigate(`/forest/level/${level}`, { replace: true });
+  }
+
+  const isCompleted = (level) => userLevels.some(l => l.levelId === level);
+
+  const getLevelElement = (level, bottom, left) => <Level bottomPercent={bottom} leftPercent={left} onClick={() => openLevel(level)} completed={isCompleted(level)} current={currentLevel === level} available={currentLevel >= level} />
+
   return (
     <Layout>
       <Game>
         <GameDescription>
           <DescriptionHeader>
-            <Title>Шервудский лес</Title>
+            <Title>Алмазный лес</Title>
             <LevelCount>{completedLevelsCount} / 15</LevelCount>
             <Wizard />
             <Gem1 />
@@ -51,18 +62,21 @@ export const MainMenu = () => {
           </Tags>
         </GameDescription>
         <Map>
-          <Level top={700} left={140} href={'/forest/level/1'} completed={userLevels.some(l => l.levelId === 1)} current={currentLevel === 1} available={currentLevel >= 1} />
-          <Level top={545} left={145} href={'/forest/level/2'} completed={userLevels.some(l => l.levelId === 2)} current={currentLevel === 2} available={currentLevel >= 2} />
-          <Level top={380} left={280} href={'/forest/level/3'} completed={userLevels.some(l => l.levelId === 3)} current={currentLevel === 3} available={currentLevel >= 3} />
-          <Level top={260} left={200} href={'/forest/level/4'} completed={userLevels.some(l => l.levelId === 4)} current={currentLevel === 4} available={currentLevel >= 4} />
-          <Level top={140} left={130} href={'/forest/level/5'} completed={userLevels.some(l => l.levelId === 5)} current={currentLevel === 5} available={currentLevel >= 5} />
-          <Level top={-10} left={220} href={'/forest/level/6'} completed={userLevels.some(l => l.levelId === 6)} current={currentLevel === 6} available={currentLevel >= 6} />
-          <Level top={-135} left={290} href={'/forest/level/7'} completed={userLevels.some(l => l.levelId === 7)} current={currentLevel === 7} available={currentLevel >= 7} />
-          <Level top={-260} left={360} href={'/forest/level/8'} completed={userLevels.some(l => l.levelId === 8)} current={currentLevel === 8} available={currentLevel >= 8} />
-          <Level top={-370} left={420} href={'/forest/level/9'} completed={userLevels.some(l => l.levelId === 9)} current={currentLevel === 9} available={currentLevel >= 9} />
-          <Level top={-420} left={480} href={'/forest/level/9'} completed={userLevels.some(l => l.levelId === 10)} current={currentLevel === 10} available={currentLevel >= 10} />
-          <Level top={-450} left={590} href={'/forest/level/10'} completed={userLevels.some(l => l.levelId === 11)} current={currentLevel === 11} available={currentLevel >= 11} />
-          <Level top={-500} left={650} href={'/forest/level/11'} completed={userLevels.some(l => l.levelId === 12)} current={currentLevel === 12} available={currentLevel >= 12} />
+          {getLevelElement(1, 68, 25)}
+          {getLevelElement(2, 61, 24)}
+          {getLevelElement(3, 55, 28)}
+          {getLevelElement(4, 41, 26)}
+          {getLevelElement(5, 38, 30)}
+          {getLevelElement(6, 34, 33)}
+          {getLevelElement(7, 37, 38)}
+          {getLevelElement(8, 38, 43)}
+          {getLevelElement(9, 30, 46)}
+          {getLevelElement(10, 23, 51)}
+          {getLevelElement(11, 17, 57)}
+          {getLevelElement(12, 11, 62)}
+          {getLevelElement(13, 3, 61.5)}
+          {getLevelElement(14, 0, 69)}
+          {getLevelElement(15, 0, 77)}
         </Map>
       </Game>
     </Layout>

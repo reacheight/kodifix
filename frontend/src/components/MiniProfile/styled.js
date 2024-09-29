@@ -6,12 +6,16 @@ export const MiniProfileWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
 `
 
 export const AvatarPlaceHolder = styled.div`
   height: 48px;
   width: 48px;
-  background: url(${avatarPlaceholder}) no-repeat center, rgba(61, 200, 209, 0.2);;
+  background: url(${avatarPlaceholder}) no-repeat center, rgba(61, 200, 209, 0.4);;
   border-radius: 10px;
 `
 
