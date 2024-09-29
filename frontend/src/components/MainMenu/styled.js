@@ -27,7 +27,7 @@ export const Game = styled.div`
 export const GameDescription = styled.div`
   position: absolute;
 
-  width: 400px;
+  width: 21vw;
   height: calc(100vh - 40px);
   margin: 20px;
   background: white;
@@ -68,7 +68,7 @@ export const Wizard = styled.div`
   background: url(${wizardImage}) no-repeat center;
 
   position: relative;
-  left: 250px;
+  left: 13vw;
   top: 0px;
   z-index: 1;
 `
@@ -80,7 +80,7 @@ export const Gem1 = styled.div`
   background: url(${gemImage}) no-repeat center;
 
   position: relative;
-  left: 230px;
+  left: 12vw;
   bottom: 170px;
   z-index: 0;
 `
@@ -92,7 +92,7 @@ export const Gem2 = styled.div`
   background: url(${gemImage}) no-repeat center;
 
   position: relative;
-  left: 160px;
+  left: 9vw;
   bottom: 130px;
   z-index: 0;
 `
@@ -104,7 +104,7 @@ export const Gem3 = styled.div`
   background: url(${gemImage}) no-repeat center;
 
   position: relative;
-  left: 340px;
+  left: 18vw;
   bottom: 280px;
   z-index: 0;
 `
