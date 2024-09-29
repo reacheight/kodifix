@@ -26,6 +26,7 @@ export const Layout = ({ children }) => {
       .then(data => {
         Cookies.set('yaToken', data.access_token, { path: '/', domain: '.kodifix.ru', secure: true, sameSite: 'Lax', expires: Math.floor(Number(data.expires_in) / 86400) })
         setAuthToken(data.access_token);
+        location.reload();
       })
       .catch(error => console.log('Обработка ошибки', error));
     }
