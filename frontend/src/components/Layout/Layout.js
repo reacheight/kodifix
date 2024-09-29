@@ -24,7 +24,7 @@ export const Layout = ({ children }) => {
       )
       .then(({handler}) => handler())
       .then(data => {
-        Cookies.set('yaToken', data.access_token, { path: '/', domain: '.kodifix.ru', secure: true, sameSite: 'Lax', expires: data.expires_in })
+        Cookies.set('yaToken', data.access_token, { path: '/', domain: '.kodifix.ru', secure: true, sameSite: 'Lax' })
         console.log(data.expires_in);
         setAuthToken(data.access_token);
       })
