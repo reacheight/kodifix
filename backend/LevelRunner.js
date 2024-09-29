@@ -313,7 +313,7 @@ export default class LevelRunner {
   }
 
   isPointHitWall(point) {
-    return ['tree', 'rock', 'watert'].includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
+    return ['tree', 'rock', 'watert', 'water'].includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
   }
 
   isActiveBridgePoint(point) {
