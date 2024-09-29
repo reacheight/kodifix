@@ -35,6 +35,7 @@ export const Layout = ({ children }) => {
   const logout = () => {
     Cookies.remove('yaToken', { path: '/', domain: '.kodifix.ru', secure: true, sameSite: 'Lax' });
     setAuthToken(null);
+    location.reload();
   };
 
   return (
