@@ -3,7 +3,7 @@ import { axios } from '../../api/axios';
 import { HeaderWrapper } from './styled';
 import { MiniProfile } from '../MiniProfile/MiniProfile';
 
-export const Header = ({ authToken, onLogout }) => {
+export const Header = ({ onLogout }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export const Header = ({ authToken, onLogout }) => {
         setUser(null);
       }
     })();
-  }, [authToken]);
+  }, []);
   
   return (
     <HeaderWrapper>
