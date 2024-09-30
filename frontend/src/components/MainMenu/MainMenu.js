@@ -32,10 +32,14 @@ export const MainMenu = () => {
         if (levels.data)
           setUserLevels(levels.data);
       } catch (e) {
-        if (e.response?.status !== 401)
+        if (e.response?.status === 401) {
+          const currentAnonymousUserLevel = localStorage.getItem('current-level') ?? 0;
+          setUserLevels(Array.from({ length: currentAnonymousUserLevel }, (_, i) => ({ levelId: i + 1 })));
+        } else {
           throw e;
+        }
       }
-      
+
       const game = await axios.get('/games/forest', {
         withCredentials: true,
       });

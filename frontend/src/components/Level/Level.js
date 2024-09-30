@@ -327,7 +327,9 @@ export const Level = () => {
           await delay(1500);
           new Audio(victorySound).play();
           setIsScoreOpen(true);
-          axios.post(`/${gameId}/level/${id}/complete`, { score: levelVariants.current[currentVariant.current].score }, { withCredentials: true });
+          
+          axios.post(`/${gameId}/level/${id}/complete`, { score: levelVariants.current[currentVariant.current].score }, { withCredentials: true })
+            .catch(_ => localStorage.setItem('current-level', id));
         } else { // если это не последний вариант, то при корректном прохождении варианта просто прогоняем следующий вариант
           resetData();
         }
