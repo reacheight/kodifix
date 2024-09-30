@@ -25,25 +25,31 @@ export const MainMenu = () => {
   const [userLevels, setUserLevels] = useState([]);
   const [game, setGame] = useState(null);
 
+  const fetchLevels = async () => {
+    try {
+      const levels = await axios.get('/user/forest/levels', { withCredentials: true });
+      if (levels.data)
+        setUserLevels(levels.data);
+    } catch (e) {
+      if (e.response?.status === 401) {
+        const currentAnonymousUserLevel = localStorage.getItem('current-level') ?? 0;
+        setUserLevels(Array.from({ length: currentAnonymousUserLevel }, (_, i) => ({ levelId: i + 1 })));
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  const fetchGame = async () => {
+    const game = await axios.get('/games/forest', {
+      withCredentials: true,
+    });
+    setGame(game.data);
+  }
+
   useEffect(() => {
     (async () => {
-      try {
-        const levels = await axios.get('/user/forest/levels', { withCredentials: true });
-        if (levels.data)
-          setUserLevels(levels.data);
-      } catch (e) {
-        if (e.response?.status === 401) {
-          const currentAnonymousUserLevel = localStorage.getItem('current-level') ?? 0;
-          setUserLevels(Array.from({ length: currentAnonymousUserLevel }, (_, i) => ({ levelId: i + 1 })));
-        } else {
-          throw e;
-        }
-      }
-
-      const game = await axios.get('/games/forest', {
-        withCredentials: true,
-      });
-      setGame(game.data);
+      await Promise.all([fetchLevels(), fetchGame()]);
     })();
   }, []);
 
