@@ -1,41 +1,67 @@
 import React, { useEffect, useState } from 'react';
-import { Game, GameDescription, DescriptionHeader, Title, Wizard, Gem1, Gem2, Gem3, LevelCount, Description, Tag, Tags, Map, Level } from './styled';
+import {
+  Game,
+  GameDescription,
+  DescriptionHeader,
+  Title,
+  Wizard,
+  Gem1,
+  Gem2,
+  Gem3,
+  LevelCount,
+  Description,
+  Tag,
+  Tags,
+  Map,
+  Level,
+} from './styled';
 import { Layout } from '../Layout/Layout';
 import { axios } from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 
 export const MainMenu = () => {
   const navigate = useNavigate();
-  
+
   const [userLevels, setUserLevels] = useState([]);
   const [game, setGame] = useState(null);
 
   useEffect(() => {
     (async () => {
       try {
-        const levels = await axios.get('/user/forest/levels', { withCredentials: true });
-        if (levels.data)
-          setUserLevels(levels.data);
+        const levels = await axios.get('/user/forest/levels', {
+          withCredentials: true,
+        });
+        if (levels.data) setUserLevels(levels.data);
       } finally {
-        const game = await axios.get('/games/forest', { withCredentials: true });
+        const game = await axios.get('/games/forest', {
+          withCredentials: true,
+        });
         setGame(game.data);
       }
     })();
-  }, [])
+  }, []);
 
-  if (!game)
-    return null;
+  if (!game) return null;
 
   const completedLevelsCount = userLevels?.length ?? 0;
   const currentLevel = completedLevelsCount + 1;
 
   const openLevel = (level) => {
     navigate(`/forest/level/${level}`, { replace: true });
-  }
+  };
 
-  const isCompleted = (level) => userLevels.some(l => l.levelId === level);
+  const isCompleted = (level) => userLevels.some((l) => l.levelId === level);
 
-  const getLevelElement = (level, bottom, left) => <Level bottomPercent={bottom} leftPercent={left} onClick={() => openLevel(level)} completed={isCompleted(level)} current={currentLevel === level} available={currentLevel >= level} />
+  const getLevelElement = (level, bottom, left) => (
+    <Level
+      bottomPercent={bottom}
+      leftPercent={left}
+      onClick={() => openLevel(level)}
+      completed={isCompleted(level)}
+      current={currentLevel === level}
+      available={currentLevel >= level}
+    />
+  );
 
   return (
     <Layout>
@@ -50,7 +76,9 @@ export const MainMenu = () => {
             <Gem3 />
           </DescriptionHeader>
           <Description>
-            Исследуйте древние руины и запретные библиотеки, обучаясь искусству программирования, чтобы создавать мощные заклинания и решать головоломки.
+            Исследуйте древние руины и запретные библиотеки, обучаясь искусству
+            программирования, чтобы создавать мощные заклинания и решать
+            головоломки.
           </Description>
           <Tags>
             <Tag>основы синтаксиса</Tag>
@@ -80,5 +108,5 @@ export const MainMenu = () => {
         </Map>
       </Game>
     </Layout>
-  )
-}
+  );
+};

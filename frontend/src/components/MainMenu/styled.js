@@ -13,35 +13,37 @@ const currentLevelAnimation = keyframes`
   100% {
     transform: scale(1.3);
   }
-`
+`;
 
 export const Game = styled.div`
   display: flex;
   gap: 100px;
+  overflow: auto;
 
   position: absolute;
   width: 100%;
   height: 100%;
-`
+`;
 
 export const GameDescription = styled.div`
   position: absolute;
 
-  width: 21vw;
+  flex-shrink: 0;
+  width: 400px;
   height: calc(100vh - 40px);
   margin: 20px;
   background: white;
   border-radius: 10px;
 
   z-index: 1;
-`
+`;
 
 export const DescriptionHeader = styled.div`
   height: 180px;
-  background: linear-gradient(#3DC8D1, #8BC7F9);
+  background: linear-gradient(#3dc8d1, #8bc7f9);
   border-radius: 10px;
   padding: 20px;
-`
+`;
 
 export const Title = styled.div`
   font-family: 'Inter', sans-serif;
@@ -51,7 +53,7 @@ export const Title = styled.div`
 
   position: relative;
   z-index: 1;
-`
+`;
 
 export const LevelCount = styled.div`
   font-family: 'Inter', sans-serif;
@@ -59,7 +61,7 @@ export const LevelCount = styled.div`
 
   margin-top: 8px;
   margin-left: 10px;
-`
+`;
 
 export const Wizard = styled.div`
   width: 74px;
@@ -68,10 +70,10 @@ export const Wizard = styled.div`
   background: url(${wizardImage}) no-repeat center;
 
   position: relative;
-  left: 13vw;
-  top: 0px;
+  left: 250px;
+  top: 0;
   z-index: 1;
-`
+`;
 
 export const Gem1 = styled.div`
   width: 40px;
@@ -80,10 +82,10 @@ export const Gem1 = styled.div`
   background: url(${gemImage}) no-repeat center;
 
   position: relative;
-  left: 12vw;
+  left: 230px;
   bottom: 170px;
   z-index: 0;
-`
+`;
 
 export const Gem2 = styled.div`
   width: 40px;
@@ -92,10 +94,10 @@ export const Gem2 = styled.div`
   background: url(${gemImage}) no-repeat center;
 
   position: relative;
-  left: 9vw;
+  left: 173px;
   bottom: 130px;
   z-index: 0;
-`
+`;
 
 export const Gem3 = styled.div`
   width: 40px;
@@ -104,10 +106,10 @@ export const Gem3 = styled.div`
   background: url(${gemImage}) no-repeat center;
 
   position: relative;
-  left: 18vw;
+  left: 346px;
   bottom: 280px;
   z-index: 0;
-`
+`;
 
 export const Description = styled.div`
   font-family: 'Inter', sans-serif;
@@ -116,7 +118,7 @@ export const Description = styled.div`
 
   padding: 20px;
   margin-top: 20px;
-`
+`;
 
 export const Tags = styled.div`
   display: flex;
@@ -124,30 +126,31 @@ export const Tags = styled.div`
   gap: 8px;
 
   padding: 20px;
-`
+`;
 
 export const Tag = styled.div`
   font-family: 'Consolas', sans-serif;
-  color: #3C80E7;
-  
+  color: #3c80e7;
+
   text-align: center;
   align-items: center;
 
-  background: #CDEDF2;
+  background: #cdedf2;
   border-radius: 3px;
   padding: 2px 4px;
-`
+`;
 
 export const Map = styled.div`
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 1920px;
+  height: 1080px;
+  flex-shrink: 0;
 
   z-index: 0;
 
   background: url(${gameMap}) no-repeat bottom;
-  background-size: 100%;
-`
+  background-size: cover;
+`;
 
 export const Level = styled.button`
   border: none;
@@ -158,17 +161,27 @@ export const Level = styled.button`
   width: 64px;
   height: 80px;
 
-  background: url(${({ current, completed }) => current ? currentLevel : completed ? completedLEvelIcon : unavailableLevelIcon}) no-repeat center;
+  background: url(${({ current, completed }) =>
+      current
+        ? currentLevel
+        : completed
+          ? completedLEvelIcon
+          : unavailableLevelIcon})
+    no-repeat center;
 
-  ${({ current }) => current && css`
-    animation: 1s ${currentLevelAnimation} linear infinite alternate;
-    z-index: 1;
-  `};
+  ${({ current }) =>
+    current &&
+    css`
+      animation: 1s ${currentLevelAnimation} linear infinite alternate;
+      z-index: 1;
+    `};
 
-  ${({ available }) => !available && css`
-    pointer-events: none;
-    cursor: default;
-  `};
+  ${({ available }) =>
+    !available &&
+    css`
+      pointer-events: none;
+      cursor: default;
+    `};
 
   &:hover {
     filter: brightness(0.8);
@@ -178,4 +191,4 @@ export const Level = styled.button`
     bottom: ${bottomPercent + (current ? 4 : 0)}%;
     left: ${leftPercent + (current ? 1 : 0)}%;
   `};
-`
+`;
