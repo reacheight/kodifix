@@ -16,6 +16,7 @@ import {
   Bridge,
   LoadingBackground,
   CellFilter,
+  MenuButton,
 } from './styled';
 import { axios } from '../../api/axios';
 
@@ -37,6 +38,7 @@ import { LevelScore } from '../LevelScore/LevelScore';
 import GameplayErrorTypes from '../../utils/GameplayErrorTypes';
 import { LevelGuide } from '../LevelGuide/LevelGuide';
 import { Goals } from '../Goals/Goals';
+import { Button } from '../Button/Button';
 
 const getInitialCodeFromStorage = (game, level) =>
   localStorage.getItem(`code-${game}-${level}`);
@@ -327,7 +329,7 @@ export const Level = () => {
           await delay(1500);
           new Audio(victorySound).play();
           setIsScoreOpen(true);
-          
+
           axios.post(`/${gameId}/level/${id}/complete`, { score: levelVariants.current[currentVariant.current].score }, { withCredentials: true })
             .catch(_ => localStorage.setItem('current-level', id));
         } else { // если это не последний вариант, то при корректном прохождении варианта просто прогоняем следующий вариант
@@ -502,6 +504,10 @@ export const Level = () => {
     navigate(`/${gameId}/level/${Number(id) + 1}`, { replace: true });
   };
 
+  const openMenu = () => {
+    navigate('/', { replace: true });
+  };
+
   const openGuide = () => {
     setIsGuideOpen(true);
     setHeroTexts([]);
@@ -585,6 +591,11 @@ export const Level = () => {
 
   return (
     <Wrapper>
+      <MenuButton>
+        <Button frontColor="#BD3A0F" shadowColor="#8C2B0B" onClick={openMenu} height="50" width="100">
+          <span>Меню</span>
+        </Button> 
+      </MenuButton>
       <Goals
         forceOpen={forceShowGoals}
         goals={initialLevelData.current.goals}

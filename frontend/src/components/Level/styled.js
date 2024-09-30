@@ -256,3 +256,11 @@ export const Bridge = styled.div`
     grid-column-end: ${yEnd + 2};
   `}
 `;
+
+export const MenuButton = styled.div`
+  position: fixed;
+  z-index: 101;
+
+  top: 10px;
+  right: 540px;
+`
