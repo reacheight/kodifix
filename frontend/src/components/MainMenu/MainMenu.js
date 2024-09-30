@@ -28,16 +28,18 @@ export const MainMenu = () => {
   useEffect(() => {
     (async () => {
       try {
-        const levels = await axios.get('/user/forest/levels', {
-          withCredentials: true,
-        });
-        if (levels.data) setUserLevels(levels.data);
-      } finally {
-        const game = await axios.get('/games/forest', {
-          withCredentials: true,
-        });
-        setGame(game.data);
+        const levels = await axios.get('/user/forest/levels', { withCredentials: true });
+        if (levels.data)
+          setUserLevels(levels.data);
+      } catch (e) {
+        if (e.response?.status !== 401)
+          throw e;
       }
+      
+      const game = await axios.get('/games/forest', {
+        withCredentials: true,
+      });
+      setGame(game.data);
     })();
   }, []);
 

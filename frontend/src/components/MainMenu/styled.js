@@ -18,7 +18,6 @@ const currentLevelAnimation = keyframes`
 export const Game = styled.div`
   display: flex;
   gap: 100px;
-  overflow: auto;
 
   position: absolute;
   width: 100%;
@@ -29,7 +28,7 @@ export const GameDescription = styled.div`
   position: absolute;
 
   flex-shrink: 0;
-  width: 400px;
+  width: 21vw;
   height: calc(100vh - 40px);
   margin: 20px;
   background: white;
@@ -70,7 +69,7 @@ export const Wizard = styled.div`
   background: url(${wizardImage}) no-repeat center;
 
   position: relative;
-  left: 250px;
+  left: 13vw;
   top: 0;
   z-index: 1;
 `;
@@ -82,7 +81,7 @@ export const Gem1 = styled.div`
   background: url(${gemImage}) no-repeat center;
 
   position: relative;
-  left: 230px;
+  left: 12vw;
   bottom: 170px;
   z-index: 0;
 `;
@@ -94,7 +93,7 @@ export const Gem2 = styled.div`
   background: url(${gemImage}) no-repeat center;
 
   position: relative;
-  left: 173px;
+  left: 9vw;
   bottom: 130px;
   z-index: 0;
 `;
@@ -106,7 +105,7 @@ export const Gem3 = styled.div`
   background: url(${gemImage}) no-repeat center;
 
   position: relative;
-  left: 346px;
+  left: 18vw;
   bottom: 280px;
   z-index: 0;
 `;
@@ -142,14 +141,14 @@ export const Tag = styled.div`
 
 export const Map = styled.div`
   position: relative;
-  width: 1920px;
-  height: 1080px;
+  width: 100%;
+  height: 100%;
   flex-shrink: 0;
 
   z-index: 0;
 
-  background: url(${gameMap}) no-repeat bottom;
-  background-size: cover;
+  background: url(${gameMap}) no-repeat center;
+  background-size: contain;
 `;
 
 export const Level = styled.button`
