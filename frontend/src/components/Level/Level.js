@@ -331,7 +331,7 @@ export const Level = () => {
           setIsScoreOpen(true);
 
           axios.post(`/${gameId}/level/${id}/complete`, { score: levelVariants.current[currentVariant.current].score }, { withCredentials: true })
-            .catch(_ => localStorage.setItem('current-level', id));
+            .catch(_ => localStorage.setItem('current-level', Math.max(localStorage.getItem('current-level'), id)));
         } else { // если это не последний вариант, то при корректном прохождении варианта просто прогоняем следующий вариант
           resetData();
         }
