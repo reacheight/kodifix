@@ -563,7 +563,8 @@ export const Level = () => {
   if (
     (!initialLevelData.current && !levelData.current) ||
     !instructions ||
-    isNullish(code.current)
+    isNullish(code.current) ||
+    !game
   ) {
     return <LoadingBackground />;
   }
