@@ -36,7 +36,7 @@ export const Layout = ({ children }) => {
           view: 'button',
           parentId: "yaButtonContainerId",
           buttonSize: 'm',
-          buttonView: 'main',
+          buttonView: 'additional',
           buttonTheme: 'light',
           buttonBorderRadius: '10',
           buttonIcon: 'ya',
