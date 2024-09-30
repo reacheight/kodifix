@@ -33,12 +33,12 @@ export const Layout = ({ children }) => {
         params,
         'https://demo.kodifix.ru',
         {
-          view: "button",
-          parentId: "buttonContainerId",
+          view: 'button',
+          parentId: "yaButtonContainerId",
           buttonSize: 'm',
           buttonView: 'main',
           buttonTheme: 'light',
-          buttonBorderRadius: "10",
+          buttonBorderRadius: '10',
           buttonIcon: 'ya',
         }
       )

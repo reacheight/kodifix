@@ -9,3 +9,7 @@ export const HeaderWrapper = styled.div`
 
   z-index: 1;
 `
+
+export const YaButtonWrapper = styled.div`
+  width: 200px;
+`

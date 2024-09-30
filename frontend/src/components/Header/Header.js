@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { axios } from '../../api/axios';
-import { HeaderWrapper } from './styled';
+import { HeaderWrapper, YaButtonWrapper } from './styled';
 import { MiniProfile } from '../MiniProfile/MiniProfile';
 
 export const Header = ({ onLogout }) => {
@@ -22,6 +22,9 @@ export const Header = ({ onLogout }) => {
     <HeaderWrapper>
       {!!user && (
         <MiniProfile user={user} onLogout={onLogout} />
+      )}
+      {!user && (
+        <YaButtonWrapper id='yaButtonContainerId'></YaButtonWrapper>
       )}
     </HeaderWrapper>
   );
