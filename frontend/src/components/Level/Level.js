@@ -165,10 +165,7 @@ export const Level = () => {
   useEffect(() => {
     (async () => {
       resetAllData();
-      await fetchGames();
-      await fetchLevelData();
-      await fetchInstructions();
-      await fetchInitialCode();
+      await Promise.all([fetchGames(), fetchLevelData(), fetchInstructions(), fetchInitialCode()]);
     })();
   }, [id]);
 
