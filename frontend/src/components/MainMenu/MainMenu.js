@@ -25,6 +25,23 @@ export const MainMenu = () => {
   const [userLevels, setUserLevels] = useState([]);
   const [game, setGame] = useState(null);
 
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const updateWindowDimensions = () => {
+      const newHeight = window.innerHeight;
+      setWindowHeight(newHeight);
+
+      const newWidth = window.innerWidth;
+      setWindowWidth(newWidth);
+    };
+
+    window.addEventListener("resize", updateWindowDimensions);
+
+    return () => window.removeEventListener("resize", updateWindowDimensions) 
+  }, []);
+
   const fetchLevels = async () => {
     try {
       const levels = await axios.get('/user/forest/levels', { withCredentials: true });
@@ -75,6 +92,17 @@ export const MainMenu = () => {
     />
   );
 
+  const mapRatio = 898 / 1863;
+  const calculateMapWidthAndHeight = () => {
+    if (windowHeight / windowWidth > mapRatio) {
+      return { width: `${windowWidth}px`, height: `${windowWidth * mapRatio}px` };
+    } else {
+      return { width: `${windowHeight / mapRatio}px`, height: `${windowHeight}px` };
+    }
+  }
+
+  const { width, height } = calculateMapWidthAndHeight();
+
   return (
     <Layout>
       <Game>
@@ -101,7 +129,7 @@ export const MainMenu = () => {
             <Tag>if-else-выражения</Tag>
           </Tags>
         </GameDescription>
-        <Map>
+        <Map width={width} height={height}>
           {getLevelElement(1, 68, 25)}
           {getLevelElement(2, 61, 24)}
           {getLevelElement(3, 55, 28)}

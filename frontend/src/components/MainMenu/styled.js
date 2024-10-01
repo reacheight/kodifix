@@ -141,14 +141,19 @@ export const Tag = styled.div`
 
 export const Map = styled.div`
   position: relative;
-  width: 100%;
-  height: 100%;
-  flex-shrink: 0;
-
   z-index: 0;
 
   background: url(${gameMap}) no-repeat center;
   background-size: contain;
+
+  ${({ width, height }) => css`
+    width: ${width};
+    height: ${height};
+  `}
+
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
 `;
 
 export const Level = styled.button`
