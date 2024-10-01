@@ -46,7 +46,7 @@ export const DescriptionHeader = styled.div`
 
 export const Title = styled.div`
   font-family: 'Inter', sans-serif;
-  font-size: 26px;
+  font-size: 1.4vw;
   font-weight: 600;
   color: white;
 
@@ -57,56 +57,61 @@ export const Title = styled.div`
 export const LevelCount = styled.div`
   font-family: 'Inter', sans-serif;
   color: white;
+  font-size: 1vw;
 
   margin-top: 8px;
   margin-left: 10px;
 `;
 
 export const Wizard = styled.div`
-  width: 74px;
-  height: 80px;
+  width: 4.625vw;
+  height: 9vh;
   transform: scale(2) scaleX(-1);
   background: url(${wizardImage}) no-repeat center;
-
+  background-size: 10vh;
   position: relative;
-  left: 13vw;
-  top: 0;
+  left: 12.6vw;
+  top: -0.9vh;
   z-index: 1;
 `;
 
 export const Gem1 = styled.div`
-  width: 40px;
-  height: 84px;
+  width: 2vw;
+  height: 4.5vh;
   transform: scale(2) rotate(30deg);
   background: url(${gemImage}) no-repeat center;
+  background-size: 4.5vh;
 
   position: relative;
   left: 12vw;
-  bottom: 170px;
+  bottom: 17vh;
   z-index: 0;
 `;
 
 export const Gem2 = styled.div`
-  width: 40px;
-  height: 84px;
+  width: 2vw;
+  height: 4.5vh;
   transform: scale(1.5) rotate(-15deg);
   background: url(${gemImage}) no-repeat center;
+  background-size: 4.5vh;
 
   position: relative;
   left: 9vw;
-  bottom: 130px;
+  bottom: 8vh;
   z-index: 0;
 `;
 
 export const Gem3 = styled.div`
-  width: 40px;
-  height: 84px;
+  width: 2vw;
+  width: 2vw;
+  height: 4.5vh;
   transform: scale(1.5) rotate(10deg);
   background: url(${gemImage}) no-repeat center;
+  background-size: 4.5vh;
 
   position: relative;
   left: 18vw;
-  bottom: 280px;
+  bottom: 19vh;
   z-index: 0;
 `;
 
