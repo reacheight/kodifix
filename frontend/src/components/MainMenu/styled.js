@@ -68,7 +68,7 @@ export const Wizard = styled.div`
   height: 9vh;
   transform: scale(2) scaleX(-1);
   background: url(${wizardImage}) no-repeat center;
-  background-size: 10vh;
+  background-size: 10.5vh;
   position: relative;
   left: 12.6vw;
   top: -0.9vh;
