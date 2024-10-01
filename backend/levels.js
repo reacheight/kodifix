@@ -878,7 +878,7 @@ export const levels = {
       ],
       goals: [
         { type: 'finish', name: 'Добраться до финиша', heroText: 'Помоги мне добраться на другой берег', required: true },
-        { type: 'gems', name: 'Подобрать алмаз', heroText: 'Попробуем достать все алмазы?', required: false },
+        { type: 'gems', name: 'Подобрать все алмазы', heroText: 'Попробуем достать все алмазы?', required: false },
       ],  
       levers: [
         { x: 4, y: 5, activatesId: 'bridge1', name: "Мост1", enabled: false },
