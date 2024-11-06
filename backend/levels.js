@@ -155,8 +155,60 @@ export const levels = {
         },
       ],
     },
-  
+
     [7]: {
+      height: 6,
+      width: 9,
+      grid: [
+        ["tree","tree","lawn","watert","watert","watert","lawn","lawn","rock",],
+        ["lawn","sand","sand","water","water","water","sand","sand","sand",],
+        ["watert","watert","watert","water","water","water","watert","watert","watert",],
+        ["water","water","water","water","water","water","water","water","water",],
+        ["lawn","sand","sand","water","water","water","sand","sand","sand",],
+        ["lawn","rock","lawn","water","water","water","lawn","rock","lawn",],
+      ],
+      hero: { x: 4, y: 8 },
+      finish: { x: 1, y: 8 },
+      gems: [
+        { x: 1, y: 7 }, { x: 1, y: 0 }
+      ],
+      enemies: [],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша', heroText: 'Проведи меня по мостам', required: true },
+        { type: 'lines', name: 'Использовать не более 8 строчек кода', heroText: 'Тебе надо уложиться в 8 строчек кода', linesCount: 8, required: true },
+        { type: 'gems', name: 'Подобрать алмаз', heroText: 'Сможем собрать все алмазы?', required: false },
+      ],
+      levers: [
+        { x: 5, y: 6, name: "Мост1", activatesId: "bridge1", enabled: false },
+        { x: 4, y: 0, name: "Мост2", activatesId: "bridge2", enabled: true },
+        { x: 0, y: 2, name: "Мост3", activatesId: "bridge3", enabled: false },
+      ],
+      bridges: [
+        {
+          id: "bridge1",
+          vertical: false,
+          start: { x: 4, y: 3 },
+          end: { x: 4, y: 5 },
+          activated: false,
+        },
+        {
+          id: "bridge2",
+          vertical: true,
+          start: { x: 2, y: 1 },
+          end: { x: 3, y: 1 },
+          activated: true,
+        },
+        {
+          id: "bridge3",
+          vertical: false,
+          start: { x: 1, y: 3 },
+          end: { x: 1, y: 5 },
+          activated: false,
+        },
+      ],
+    },
+  
+    [8]: {
       height: 7,
       width: 9,
       grid: [
@@ -207,7 +259,7 @@ export const levels = {
       ],
     },
 
-    [8]: {
+    [9]: {
       height: 9,
       width: 5,
       grid: [
@@ -247,7 +299,7 @@ export const levels = {
       ],
     },
   
-    [9]: {
+    [10]: {
       height: 3,
       width: 8,
       grid: [
@@ -273,7 +325,7 @@ export const levels = {
       bridges: [],
     },
   
-    [10]: {
+    [11]: {
       height: 5,
       width: 13,
       grid: [
@@ -319,7 +371,7 @@ export const levels = {
       ],
     },
 
-    [11]: {
+    [12]: {
       height: 8,
       width: 3,
       grid: [
@@ -352,7 +404,7 @@ export const levels = {
       onlyVariablesInAttack: true,
     },
   
-    [12]: {
+    [13]: {
       height: 8,
       width: 8,
       grid: [
@@ -385,7 +437,7 @@ export const levels = {
       onlyVariablesInAttack: true,
     },
 
-    [13]: {
+    [14]: {
       height: 9,
       width: 13,
       grid: [
@@ -478,7 +530,7 @@ export const levels = {
       ],
     },
 
-    [14]: {
+    [15]: {
       height: 8,
       width: 8,
       grid: [
@@ -549,7 +601,7 @@ export const levels = {
       checksCount: 4,
     },
   
-    [15]: {
+    [16]: {
       height: 7,
       width: 8,
       grid: [
@@ -598,7 +650,7 @@ export const levels = {
       checksCount: 4,
     },
 
-    [16]: {
+    [17]: {
       id: 'if-guarded-gems',
       height: 7,
       width: 9,
