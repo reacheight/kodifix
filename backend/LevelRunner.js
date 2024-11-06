@@ -60,6 +60,21 @@ export default class LevelRunner {
       this.pushNewCommand("switch", { activatableId: lever.activatesId });
     },
 
+    is_disabled: (leverName) => {
+      if (!this.level.levers || this.level.levers.length === 0) {
+        this.gameplayError = { type: GameplayErrorTypes.NO_LEVERS };
+        return;
+      }
+
+      const lever = this.level.levers.find(l => l.name === leverName);
+      if (!lever) {
+        this.gameplayError = { type: GameplayErrorTypes.NO_LEVER_WITH_GIVEN_NAME, name: leverName };
+        return;
+      }
+
+      return !lever.enabled;
+    },
+
     find_nearest_enemy: () => {
       if (!this.level.enemies || this.level.enemies.length === 0)
       {
@@ -130,7 +145,7 @@ export default class LevelRunner {
           break;
         }
       }
-    }
+    },
   };
 
   gameplayError = null;
@@ -144,32 +159,42 @@ export default class LevelRunner {
       language: 'python'
     });
 
-    this.enemiesVariants = [this.initialLevel.enemies];
+    this.variants = [{
+      enemies: this.initialLevel.enemies,
+      levers: this.initialLevel.levers,
+    }]
 
     if (this.initialLevel.additionalVariants) {
-      this.enemiesVariants = this.enemiesVariants.concat(this.initialLevel.additionalVariants.enemies);
-
-      for (let i = 0; i < this.initialLevel.additionalVariants.randomVariantsCount; i++) {
-        const newEnemies = [...this.initialLevel.enemies].map(e => {
-          const clone = structuredClone(e);
-          if (!clone.random)
-            return clone;
-          clone.alive = Math.random() < 0.5;
-          return clone;
-        });
-        this.enemiesVariants.push(newEnemies);
-      }
+      this.variants = this.variants.concat(this.initialLevel.additionalVariants);
     }
 
     this.engine.addGlobal('hero', this.hero);
   }
 
+  normalizeVariant(variant) {
+    return {
+      enemies: variant.enemies ?? [],
+      levers: variant.levers ?? [],
+    }
+  }
+
   run(code) {
     const results = []
-    for (const enemiesVariant of this.enemiesVariants) {
+    for (const variant of this.variants) {
       this.gemsCollected = 0;
       this.level = structuredClone(this.initialLevel);
-      this.level.enemies = structuredClone(enemiesVariant);
+      if (variant.enemies)
+        this.level.enemies = structuredClone(variant.enemies);
+
+      if (variant.levers) {
+        this.level.levers = structuredClone(variant.levers);
+        this.level.bridges = this.level.bridges.map(bridge => {
+          const lever = this.level.levers.find(l => l.activatesId === bridge.id);
+          bridge.activated = lever.enabled;
+          return bridge;
+        })
+      }
+
       this.level.gems = this.level.gems.filter(gem => !gem.guardedBy || this.level.enemies.find(e => e.name === gem.guardedBy).alive);
 
       // только для уровня с охраняемыми гемами
@@ -211,7 +236,7 @@ export default class LevelRunner {
         gameplayError: this.gameplayError,
       };
 
-      results.push({ enemiesVariant, variantResult, score: this.calculateScore(variantResult.goals) });
+      results.push({ variant: variant, variantResult, score: this.calculateScore(variantResult.goals) });
       this.commands = [];
     }
 

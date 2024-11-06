@@ -90,7 +90,7 @@ export const Level = () => {
   const [currentVariant, setCurrentVariant] = useRefState(null);
   const [executingCommand, setExecutingCommand] = useRefState(null);
   const [pausedCommand, setPausedCommand] = useRefState(null);
-  const [pausedEnemiesVariant, setPausedEnemiesVariant] = useRefState(null);
+  const [pausedVariant, setPausedVariant] = useRefState(null);
   const [instructions, setInstructions] = useState(null);
   const [heroTexts, setHeroTexts] = useState([]);
   const [code, setCode] = useRefState(getInitialCodeFromStorage(id));
@@ -155,7 +155,7 @@ export const Level = () => {
     setCurrentVariant(null);
     setExecutingCommand(null);
     setPausedCommand(null);
-    setPausedEnemiesVariant(null);
+    setPausedVariant(null);
     setInstructions(null);
     setHeroTexts([]);
     setCode(getInitialCodeFromStorage(gameId, id));
@@ -298,7 +298,7 @@ export const Level = () => {
     for (let i = pausedCommand.current || 0; i < commands.length; i++) {
       if (isPaused.current) {
         setPausedCommand(i);
-        setPausedEnemiesVariant(levelData.current.enemies); // запоминаю убитых врагов, чтобы они не воскресли после продолжения после паузы
+        setPausedVariant({ enemies: levelData.current.enemies, levers: levelData.current.levers });
         break;
       }
 
@@ -345,14 +345,25 @@ export const Level = () => {
         break;
       }
 
-
       const variant = levelVariants.current[i];
       setCurrentVariant(i);
+      variant.variant.enemies = variant.variant.enemies ?? initialLevelData.current.enemies;
+      variant.variant.levers = variant.variant.levers ?? initialLevelData.current.levers;
 
       const newLevelData = copy(levelData.current);
-      newLevelData.enemies = pausedEnemiesVariant.current || variant.enemiesVariant; // если после паузы, то сеттим запомнивших врагов; если нет, то просто врагов из текущего варианта
-      newLevelData.gems = newLevelData.gems.filter(gem => !gem.guardedBy || variant.enemiesVariant.find(e => e.name === gem.guardedBy).alive);
+      newLevelData.enemies = pausedVariant.current?.enemies || variant.variant.enemies; // если после паузы, то сеттим запомнивших врагов; если нет, то просто врагов из текущего варианта
+      newLevelData.levers = pausedVariant.current?.levers || variant.variant.levers;
+      newLevelData.bridges = newLevelData.bridges.map(bridge => {
+        const lever = newLevelData.levers.find(l => l.activatesId === bridge.id);
+        bridge.activated = lever.enabled;
+        return bridge;
+      });
+
+      newLevelData.gems = newLevelData.gems.filter(gem => !gem.guardedBy || variant.variant.enemies.find(e => e.name === gem.guardedBy).alive);
       setLevelData(newLevelData);
+
+      if (i > 0)
+        await delay(500);
 
       await execCommands();
     }
@@ -432,7 +443,7 @@ export const Level = () => {
     setLevelData({ ...initialLevelData.current });
     setCurrentVariant(null);
     setPausedCommand(null);
-    setPausedEnemiesVariant(null);
+    setPausedVariant(null);
     setCodeErrors(null);
     setForceShowGoals(false);
   };

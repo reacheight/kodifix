@@ -38,3 +38,10 @@ export const hasEnemyAround = {
     description: 'сообщает, есть ли живой враг на соседних с твоим персонажем клетках',
     example: 'if hero.has_enemy_around():\n    enemy = hero.find_nearest_enemy()\n    hero.attack(enemy)',
 }
+
+export const isDisabled = {
+    code: 'hero.is_disabled(lever)',
+    description: 'проверяет, выключен ли рычаг `lever`',
+    example: 'if hero.is_disabled("Мост"):\n    hero.switch("Мост")',
+    autocompleteValue: 'hero.is_disabled(${1})',
+}
