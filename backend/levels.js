@@ -224,6 +224,7 @@ export const levels = {
       finish: { x: 6, y: 8 },
       gems: [
         { x: 1, y: 7 },
+        { x: 5, y: 4 },
       ],
       enemies: [],
       goals: [
@@ -372,6 +373,45 @@ export const levels = {
     },
 
     [12]: {
+      height: 7,
+      width: 9,
+      grid: [
+        ["tree","tree","tree","lawn","rock","sand","lawn","watert","tree",],
+        ["rock","lawn","sand","sand","sand","sand","lawn","water","watert",],
+        ["watert","watert","watert","watert","watert","watert","watert","water","water",],
+        ["water","water","water","water","water","water","water","water","water",],
+        ["rock","lawn","sand","lawn","lawn","lawn","lawn","sand","water",],
+        ["lawn","lawn","sand","lawn","lawn","rock","lawn","sand","lawn",],
+        ["sand","sand","sand","sand","sand","sand","sand","sand","tree",],
+      ],
+      hero: { x: 4, y: 7 },
+      finish: { x: 6, y: 0 },
+      gems: [
+        { x: 6, y: 7 },
+      ],
+      enemies: [
+        { x: 1, y: 5, alive: true, name: "BigBoy", big: true, moveFinish: { x: 4, y: 2 } },
+      ],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша', heroText: null, required: true },
+        { type: 'big_enemy_bridge', bridgeName: "bridge1", enemyName: "BigBoy", name: 'Не дать огромному рыцарю перейти мост', heroText: 'Нам не справиться с этим огромным рыцарем,\nнельзя пропустить его на наш берег!', required: true },
+        { type: 'gems', name: 'Подобрать алмаз', heroText: null, required: false },
+      ],
+      levers: [
+        { x: 4, y: 1, name: "Мост1", activatesId: "bridge1", enabled: true },
+      ],
+      bridges: [
+        {
+          id: "bridge1",
+          vertical: true,
+          start: { x: 2, y: 2 },
+          end: { x: 3, y: 2 },
+          activated: true,
+        },
+      ],
+    },
+
+    [13]: {
       height: 8,
       width: 3,
       grid: [
@@ -404,7 +444,7 @@ export const levels = {
       onlyVariablesInAttack: true,
     },
   
-    [13]: {
+    [14]: {
       height: 8,
       width: 8,
       grid: [
@@ -437,7 +477,7 @@ export const levels = {
       onlyVariablesInAttack: true,
     },
 
-    [14]: {
+    [15]: {
       height: 9,
       width: 13,
       grid: [
@@ -530,7 +570,7 @@ export const levels = {
       ],
     },
 
-    [15]: {
+    [16]: {
       height: 8,
       width: 8,
       grid: [
@@ -601,7 +641,7 @@ export const levels = {
       checksCount: 4,
     },
   
-    [16]: {
+    [17]: {
       height: 7,
       width: 8,
       grid: [
@@ -650,7 +690,7 @@ export const levels = {
       checksCount: 4,
     },
 
-    [17]: {
+    [18]: {
       id: 'if-guarded-gems',
       height: 7,
       width: 9,

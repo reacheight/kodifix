@@ -236,6 +236,7 @@ export const Level = () => {
     } else if (command.name === 'switch') {
       const updatedLevers = copy(levelData.current.levers);
       const updatedBridges = copy(levelData.current.bridges);
+      const updatedEnemies = copy(levelData.current.enemies);
 
       const leverIndex = updatedLevers.findIndex(
         (lever) => lever.activatesId === command.activatableId,
@@ -248,10 +249,21 @@ export const Level = () => {
       updatedBridges[bridgeIndex].activated =
         !updatedBridges[bridgeIndex].activated;
 
+      const enemiesIndexes = command.enemiesOnBridge.map(enemyName => updatedEnemies.findIndex(e => e.name === enemyName));
+      if (!updatedBridges[bridgeIndex].activated) {
+        enemiesIndexes.forEach(index => {
+          updatedEnemies[index].alive = false;
+        })
+      }
+
+      if (enemiesIndexes.length !== 0)
+        await delay(getDelays().switching);
+
       new Audio(leverSound).play();
 
       updatedLevelData.levers = updatedLevers;
       updatedLevelData.bridges = updatedBridges;
+      updatedLevelData.enemies = updatedEnemies;
     } else if (command.name === 'find_nearest_enemy') {
       if (command.hasEnemy) {
         setHeroTexts([
@@ -269,6 +281,26 @@ export const Level = () => {
         ]);
       }
       await delay(getDelays().findingEnemy);
+    } else if (command.name === 'enemy_move') {
+      const updatedEnemies = copy(updatedLevelData.enemies);
+
+      const targetIndex = updatedEnemies.findIndex(
+        (enemy) => enemy.name === command.enemy,
+      );
+
+      switch (command.direction) {
+        case 'down':
+          // updatedHeroShift.bottom -= 49;
+          updatedEnemies[targetIndex].x += 1;
+          break;
+        case 'left':
+          // updatedHeroShift.right -= 49;
+          // updatedHeroShift.direction = 'right';
+          updatedEnemies[targetIndex].y -= 1;
+          break;
+      }
+
+      updatedLevelData.enemies = updatedEnemies;
     }
 
     // кейс, когда игрок нажал "стоп"
@@ -431,6 +463,15 @@ export const Level = () => {
       setHeroTexts([
         {
           value: 'Зачем мне сюда? Здесь нет алмаза',
+          delay: 3000,
+        }
+      ]);
+    }
+
+    if (gameplayError?.type === GameplayErrorTypes.ENEMY_SHOULD_NOT_BE_HERE) {
+      setHeroTexts([
+        {
+          value: 'Огромный рыцарь перешёл на наш берег, нам конец!',
           delay: 3000,
         }
       ]);
@@ -685,6 +726,7 @@ export const Level = () => {
                 nameHidden={enemy.hidden}
                 spedUp={isSpedUp()}
                 isRandom={enemy.random}
+                isBig={enemy.big}
               />
             ))}
             <Hero

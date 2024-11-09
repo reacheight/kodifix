@@ -48,9 +48,10 @@ export const Wrapper = styled.div`
   position: relative;
   text-align: center;
   z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
+  transform: scale(${({ isBig }) => (isBig ? 2 : 1)});
 
-  ${({ nameHidden }) => css`
-    bottom: ${nameHidden ? 45 : 70}px;
+  ${({ isBig, nameHidden }) => css`
+    bottom: ${nameHidden ? 45 : (isBig ? 115 : 70)}px;
   `};
 
   ${({ x, y }) => css`

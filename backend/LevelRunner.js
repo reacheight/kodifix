@@ -57,7 +57,22 @@ export default class LevelRunner {
       const bridge = this.level.bridges.find(bridge => bridge.id === lever.activatesId);
       bridge.activated = lever.enabled;
 
-      this.pushNewCommand("switch", { activatableId: lever.activatesId });
+      const enemiesOnBridge = this.level.enemies.filter(enemy => {
+        if (!enemy.alive)
+          return false;
+
+        if (bridge.vertical) {
+          return bridge.start.y === enemy.y && bridge.start.x <= enemy.x && enemy.x <= bridge.end.x;
+        } else {
+          return bridge.start.x === enemy.x && bridge.start.y <= enemy.y && enemy.y <= bridge.end.y;
+        }
+      });
+      
+      enemiesOnBridge.forEach(enemy => {
+        enemy.alive = bridge.activated;
+      });
+
+      this.pushNewCommand("switch", { activatableId: lever.activatesId, enemiesOnBridge: enemiesOnBridge.map(e => e.name) });
     },
 
     is_disabled: (leverName) => {
@@ -275,6 +290,13 @@ export default class LevelRunner {
         return this.level.enemies.every(enemy => !enemy.alive)
       case 'lever':
         return this.level.levers.find(l => l.name === goal.leverName).enabled;
+      case 'big_enemy_bridge':
+        const bigEnemy = this.level.enemies.find(e => e.name === goal.enemyName);
+        if (!bigEnemy.alive)
+          return true;
+
+        const bridge = this.level.bridges.find(b => b.id === goal.bridgeName);
+        return !bridge.activated;
       default:
         return false;
     }
@@ -296,6 +318,10 @@ export default class LevelRunner {
       }
 
       this.pushNewCommand(moveCommandName);
+      this.incrementAction();
+
+      if (this.gameplayError)
+        return;
 
       // только для уровня с охраняемыми гемами
       if (this.ifGuardedGemsInfo) {
@@ -331,6 +357,38 @@ export default class LevelRunner {
       ...additionalInfo
     };
     this.commands.push(command);
+  }
+
+  incrementAction() {
+    this.level.enemies = this.level.enemies.map(enemy => {
+      if (!enemy.moveFinish)
+        return enemy;
+
+      if (!enemy.alive)
+        return enemy;
+
+      if (enemy.y > enemy.moveFinish.y) {
+        enemy.y -= 1;
+        this.pushNewCommand("enemy_move", { enemy: enemy.name, direction: 'left' });
+        if (arePointsEqual(enemy, enemy.moveFinish)) {
+          this.gameplayError = { type: GameplayErrorTypes.ENEMY_SHOULD_NOT_BE_HERE };
+        }
+
+        return enemy;
+      }
+
+      if (enemy.x < enemy.moveFinish.x) {
+        enemy.x += 1;
+        this.pushNewCommand("enemy_move", { enemy: enemy.name, direction: 'down' });
+        if (arePointsEqual(enemy, enemy.moveFinish)) {
+          this.gameplayError = { type: GameplayErrorTypes.ENEMY_SHOULD_NOT_BE_HERE };
+        }
+
+        return enemy;
+      }
+
+      return enemy;
+    });
   }
 
   isPointOutOfMap(point) {
