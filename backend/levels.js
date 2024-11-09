@@ -461,7 +461,7 @@ export const levels = {
       enemies: [
       ],
       goals: [
-        { type: 'finish', name: 'Добраться до финиша', heroText: 'Опасность поджидает на каждому шагу,\nпомоги мне добраться до финиша', required: true },
+        { type: 'finish', name: 'Добраться до финиша', heroText: 'Давай аккуратно пройдём по этим островкам', required: true },
         { type: 'gems', name: 'Собрать все алмазы', heroText: 'Не забудь про алмазы', required: false },
       ],  
       levers: [
