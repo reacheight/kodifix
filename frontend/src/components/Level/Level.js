@@ -61,14 +61,14 @@ const prepareCells = (grid) => {
 const normalSpeedDelays = {
   walking: 300,
   attacking: 500,
-  switching: 300,
+  switching: 500,
   findingEnemy: 500,
 }
 
 const fastSpeedDelays = {
   walking: 150,
   attacking: 250,
-  switching: 150,
+  switching: 250,
   findingEnemy: 250,
 }
 
