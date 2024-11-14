@@ -250,13 +250,6 @@ export const levels = {
           end: { x: 4, y: 1 },
           activated: false,
         },
-        {
-          id: "fakeBridge",
-          vertical: true,
-          start: { x: 3, y: 7 },
-          end: { x: 4, y: 7 },
-          activated: false,
-        },
       ],
     },
 
