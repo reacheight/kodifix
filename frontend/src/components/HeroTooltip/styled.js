@@ -13,7 +13,7 @@ export const StyledTooltip = styled(Tooltip)`
     border-radius: 8px;
     white-space: break-spaces;
     transform: translateX(14px);
-    z-index: 1000;
+    z-index: 101;
   }
 
   &.react-tooltip__show {

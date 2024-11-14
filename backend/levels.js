@@ -318,8 +318,51 @@ export const levels = {
       levers: [],
       bridges: [],
     },
-  
+
     [11]: {
+      height: 6,
+      width: 13,
+      grid: [
+        ["tree","tree","tree","watert","watert","watert","watert","watert","watert","watert","tree","tree","tree",],
+        ["lawn","sand","sand","water","water","water","water","water","water","water","sand","sand","lawn",],
+        ["lawn","sand","lawn","water","water","water","sand","water","water","water","lawn","sand","lawn",],
+        ["lawn","sand","lawn","water","water","rock","sand","rock","water","water","lawn","sand","lawn",],
+        ["grass","sand","lawn","water","water","lawn","sand","lawn","water","water","lawn","sand","lawn",],
+        ["rock","sand","rock","water","water","tree","sand","lawn","water","water","rock","sand","rock",],
+      ],
+      hero: { x: 1, y: 11 },
+      finish: { x: 5, y: 1 },
+      gems: [
+        { x: 1, y: 1 },
+        { x: 5, y: 6 },
+      ],
+      enemies: [
+        { x: 1, y: 3, alive: true, name: "Alog" },
+        { x: 1, y: 5, alive: true, name: "Bran" },
+        { x: 1, y: 7, alive: true, name: "Cerk" },
+        { x: 1, y: 9, alive: true, name: "Dunrum" },
+      ],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша', heroText: null, required: true },
+        { type: 'enemies', name: 'Победить всех врагов', heroText: 'Надо уничтожить всех врагов.\nМы можем сделать это как-то быстрее?', required: true },
+        { type: 'lines', linesCount: 9, name: 'Использовать не больше 9 строк', heroText: null, required: true },
+        { type: 'gems', name: 'Подобрать все алмазы', heroText: 'Попробуем достать все алмазы?', required: false },
+      ],  
+      levers: [
+        { x: 5, y: 11, activatesId: 'bridge1', name: "Мост1", enabled: true },
+      ],
+      bridges: [
+        {
+          id: "bridge1",
+          vertical: false,
+          start: { x: 1, y: 3 },
+          end: { x: 1, y: 9 },
+          activated: true,
+        },
+      ],
+    },
+  
+    [12]: {
       height: 5,
       width: 13,
       grid: [
@@ -365,7 +408,7 @@ export const levels = {
       ],
     },
 
-    [12]: {
+    [13]: {
       height: 7,
       width: 9,
       grid: [
@@ -404,7 +447,7 @@ export const levels = {
       ],
     },
 
-    [13]: {
+    [14]: {
       height: 8,
       width: 3,
       grid: [
@@ -437,7 +480,7 @@ export const levels = {
       onlyVariablesInAttack: true,
     },
   
-    [14]: {
+    [15]: {
       height: 8,
       width: 8,
       grid: [
@@ -470,7 +513,7 @@ export const levels = {
       onlyVariablesInAttack: true,
     },
 
-    [15]: {
+    [16]: {
       height: 9,
       width: 13,
       grid: [
@@ -563,7 +606,7 @@ export const levels = {
       ],
     },
 
-    [16]: {
+    [17]: {
       height: 8,
       width: 8,
       grid: [
@@ -634,7 +677,7 @@ export const levels = {
       checksCount: 4,
     },
   
-    [17]: {
+    [18]: {
       height: 7,
       width: 8,
       grid: [
@@ -683,7 +726,7 @@ export const levels = {
       checksCount: 4,
     },
 
-    [18]: {
+    [19]: {
       id: 'if-guarded-gems',
       height: 7,
       width: 9,

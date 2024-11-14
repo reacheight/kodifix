@@ -47,7 +47,7 @@ export const Wrapper = styled.div`
   height: 114px;
   position: relative;
   text-align: center;
-  z-index: ${({ x, heroX }) => (x < heroX ? 1 : 2)};
+  z-index: ${({ x }) => (x)};
   transform: scale(${({ isBig }) => (isBig ? 2 : 1)});
 
   ${({ isBig, nameHidden }) => css`

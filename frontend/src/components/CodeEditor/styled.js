@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 export const CodeMirrorWrapper = styled.div`
   font-size: 18px;
   background: #2a2623;
-  z-index: 101;
 
   .cm-editor {
     background: #2a2623;
@@ -17,6 +16,10 @@ export const CodeMirrorWrapper = styled.div`
   .cm-gutters {
     background: #2f2b29;
     overflow: hidden;
+  }
+  
+  .cm-tooltip {
+    z-index: 102;
   }
 
   .cm-scroller {
