@@ -91,7 +91,9 @@ app.post('/user', async (req, res) => {
   const user = await userManager.getUser(req.cookies.yaToken);
   if (user) {
     const db = new Database();
-    db.createUserIfNotExists(user);
+    await db.createUserIfNotExists(user);
+    res.sendStatus(200);
+    return;
   }
 
   res.sendStatus(401);
