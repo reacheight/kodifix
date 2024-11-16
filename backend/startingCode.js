@@ -31,7 +31,8 @@ hero.move_up(3)
 `,
     [14]: `hero.move_down(2)\n\n# это переменная enemy1 со значением "Brad"\nenemy1 = "Brad"\nhero.attack(enemy1)\n\nhero.move_down(2)\n\n# поправь значение переменной на правильное имя\nenemy2 = "Второй враг"\nhero.attack(enemy2)\n\nhero.move_down(2)\n\n# создай переменную с именем третьего врага\n# и передай ее в метод attack\n`,
     [15]: `hero.move_right(4)\n\nenemy1 = hero.find_nearest_enemy()\nhero.attack(enemy1)\n\n# дойди до остальных врагов, получи их имена\n# с помощью hero.find_nearest_enemy()\n# и атакуй их\n`,
-    [16]: `# дойди до берега
+    [16]: ``,
+    [17]: `# дойди до берега
 hero.move_right()
 
 # если мост закрыт
@@ -59,9 +60,9 @@ if hero.is_disabled("Мост2"):
 
 # дойди до финиша
 `,
-    [17]: `# напиши весь кода сам!`,
+    [18]: `# напиши весь кода сам!`,
 
-    [18]: `# дойди до верхнего моста
+    [19]: `# дойди до верхнего моста
 hero.move_down()
 hero.move_right(2)
 
@@ -78,7 +79,7 @@ if hero.has_enemy_around():
 
 # дойди до финиша
 `,
-    [19]: `# дойди до конца левого моста
+    [20]: `# дойди до конца левого моста
 hero.move_left(4)
 # если рядом есть враг, то
 
