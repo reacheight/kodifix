@@ -147,6 +147,7 @@ export const MainMenu = () => {
           {getLevelElement(15, 0, 77)}
           {getLevelElement(16, 0, 82)}
           {getLevelElement(17, 10, 81)}
+          {getLevelElement(18, 20, 79)}
         </Map>
       </Game>
     </Layout>
