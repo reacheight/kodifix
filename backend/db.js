@@ -4,6 +4,23 @@ import { open } from 'sqlite';
 const dbFilename = process.env.KODIFIX_DB_FILE ?? String.raw`C:\sqlite\kodifix.db`;
 
 export default class Database {
+  async createUserIfNotExists(user) {
+    this.db = await open({ filename: dbFilename, driver: sqlite3.Database });
+
+    const existingUser = await this.db.get("SELECT * FROM users where id = $id", {
+      $id: user.id,
+    });
+
+    if (!existingUser)
+      await this.db.run("INSERT INTO users(id, email, name) VALUES($id, $email, $name)", {
+        $id: user.id,
+        $email: user.email,
+        $name: user.name,
+      });
+
+    this.db.close();
+  }
+
   async getAllUserLevels(userId) {
     this.db = await open({ filename: dbFilename, driver: sqlite3.Database });
 

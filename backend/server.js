@@ -81,6 +81,22 @@ app.get('/user', async (req, res) => {
   res.sendStatus(401);
 })
 
+app.post('/user', async (req, res) => {
+  if (!req.cookies.yaToken) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const userManager = new UserManager();
+  const user = await userManager.getUser(req.cookies.yaToken);
+  if (user) {
+    const db = new Database();
+    db.createUserIfNotExists(user);
+  }
+
+  res.sendStatus(401);
+})
+
 app.post('/:game/level/:levelId/complete', async (req, res) => {
   if (!req.cookies.yaToken) {
     res.sendStatus(401);
