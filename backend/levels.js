@@ -663,7 +663,7 @@ export const levels = {
         ["tree","lawn","tree","lawn","lawn","watert","watert","rock"],
         ["lawn","lawn","lawn","rock","watert","water","rock","lawn"],
         ["lawn","lawn","lawn","watert","water","lawn","lawn","lawn"],
-        ["watert","watert","watert","watert","watert","watert","watert","watert"],
+        ["watert","watert","watert","water","water","watert","watert","watert"],
         ["water","water","water","water","water","water","water","water"],
         ["lawn","lawn","lawn","lawn","lawn","lawn","lawn","water"],
         ["lawn","lawn","lawn","lawn","rock","lawn","lawn","lawn"],
