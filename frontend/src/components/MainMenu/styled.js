@@ -22,6 +22,8 @@ export const Game = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+
+  background-image: linear-gradient(rgba(131, 201, 213) 0%, rgba(144, 180, 73) 100%);
 `;
 
 export const GameDescription = styled.div`
@@ -29,7 +31,6 @@ export const GameDescription = styled.div`
 
   flex-shrink: 0;
   width: 21vw;
-  height: calc(100vh - 40px);
   margin: 20px;
   background: white;
   border-radius: 10px;
@@ -160,6 +161,26 @@ export const Map = styled.div`
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
 `;
+
+export const TopGradient = styled.div`
+  position: absolute;
+  z-index: 0;
+  background-image: linear-gradient(to top, rgba(131, 201, 213, 0) 0%, rgba(131, 201, 213) 100%);
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 3%;
+`
+
+export const BotGradient = styled.div`
+  position: absolute;
+  z-index: 0;
+  background-image: linear-gradient(rgba(144, 180, 73, 0) 0%, rgba(144, 180, 73) 100%);
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3%;
+`
 
 export const Level = styled.button`
   border: none;

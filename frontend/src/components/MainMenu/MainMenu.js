@@ -14,6 +14,8 @@ import {
   Tags,
   Map,
   Level,
+  TopGradient,
+  BotGradient,
 } from './styled';
 import { Layout } from '../Layout/Layout';
 import { axios } from '../../api/axios';
@@ -126,10 +128,12 @@ export const MainMenu = () => {
             <Tag>параметры</Tag>
             <Tag>строки</Tag>
             <Tag>переменные</Tag>
-            <Tag>if-else-выражения</Tag>
+            <Tag>if-выражения</Tag>
           </Tags>
         </GameDescription>
         <Map width={width} height={height}>
+          <TopGradient />
+          <BotGradient />
           {getLevelElement(1, 68, 25)}
           {getLevelElement(2, 61, 24)}
           {getLevelElement(3, 55, 28)}
