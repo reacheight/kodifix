@@ -4,10 +4,7 @@ import {
   GameDescription,
   DescriptionHeader,
   Title,
-  Wizard,
   Gem1,
-  Gem2,
-  Gem3,
   LevelCount,
   Description,
   Tag,
@@ -20,6 +17,7 @@ import {
 import { Layout } from '../Layout/Layout';
 import { axios } from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../Button/Button';
 
 export const MainMenu = () => {
   const navigate = useNavigate();
@@ -112,10 +110,17 @@ export const MainMenu = () => {
           <DescriptionHeader>
             <Title>Алмазный лес</Title>
             <LevelCount>{completedLevelsCount} / 15</LevelCount>
-            <Wizard />
+            <Button
+              height='45'
+              width='150'
+              shadowHeight='10'
+              shadowColor="#06719F"
+              frontColor="#0AA1E2"
+              onClick={() => openLevel(currentLevel)}
+            >
+              {completedLevelsCount === 0 ? 'Начать' : 'Продолжить'}
+            </Button>
             <Gem1 />
-            <Gem2 />
-            <Gem3 />
           </DescriptionHeader>
           <Description>
             Помогите волшебнику добраться до замка, чтобы вернуть украденную
