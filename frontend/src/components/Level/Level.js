@@ -13,7 +13,6 @@ import {
   Water,
   Gem,
   Finish,
-  Bridge,
   LoadingBackground,
   CellFilter,
   MenuButton,
@@ -39,6 +38,7 @@ import GameplayErrorTypes from '../../utils/GameplayErrorTypes';
 import { LevelGuide } from '../LevelGuide/LevelGuide';
 import { Goals } from '../Goals/Goals';
 import { Button } from '../Button/Button';
+import { Bridge } from '../Bridge/Bridge';
 
 const getInitialCodeFromStorage = (game, level) =>
   localStorage.getItem(`code-${game}-${level}`);
@@ -634,7 +634,6 @@ export const Level = () => {
   const trees = walls.filter((wall) => wall.type === 'tree');
   const rocks = walls.filter((wall) => wall.type === 'rock');
   const water = walls.filter((wall) => wall.type === 'water' || wall.type === 'watert');
-  const activeBridges = bridges?.filter((bridge) => bridge.activated) || [];
   const executingLine =
     levelVariants.current?.[currentVariant.current]?.variantResult.commands[executingCommand.current]?.start.line;
   const isLastLevel = Number(id) === game.levels;
@@ -703,7 +702,7 @@ export const Level = () => {
                 zIndex={tree.x}
               />
             ))}
-            {activeBridges.map((bridge) => (
+            {bridges.map((bridge) => (
               <Bridge
                 key={`${bridge.id}`}
                 xStart={bridge.start.x}
@@ -711,6 +710,7 @@ export const Level = () => {
                 yStart={bridge.start.y}
                 yEnd={bridge.end.y}
                 vertical={bridge.vertical}
+                activated={bridge.activated}
               />
             ))}
             {enemies.map((enemy) => (

@@ -28,16 +28,6 @@ const gemFade = keyframes`
   }
 `;
 
-const appearance = keyframes`
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-`;
-
 export const LoadingBackground = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.95);
@@ -213,47 +203,6 @@ export const Finish = styled.div`
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};
     grid-column-end: ${y + 2};
-  `}
-`;
-
-export const Bridge = styled.div`
-  animation: 300ms ${appearance} ease forwards;
-  z-index: 1;
-
-  ${({ vertical }) =>
-    vertical
-      ? css`
-          background: linear-gradient(
-            180deg,
-            #a0522d 25%,
-            rgba(255, 255, 255, 0) 25%,
-            rgba(255, 255, 255, 0) 50%,
-            #a0522d 50%,
-            #a0522d 75%,
-            rgba(255, 255, 255, 0) 75%,
-            rgba(255, 255, 255, 0) 100%
-          );
-        `
-      : css`
-          background: linear-gradient(
-            90deg,
-            #a0522d 25%,
-            rgba(255, 255, 255, 0) 25%,
-            rgba(255, 255, 255, 0) 50%,
-            #a0522d 50%,
-            #a0522d 75%,
-            rgba(255, 255, 255, 0) 75%,
-            rgba(255, 255, 255, 0) 100%
-          );
-        `}
-
-  background-size: 20px 20px; /* Размер полосок */
-
-  ${({ xStart, yStart, xEnd, yEnd }) => css`
-    grid-row-start: ${xStart + 1};
-    grid-row-end: ${xEnd + 2};
-    grid-column-start: ${yStart + 1};
-    grid-column-end: ${yEnd + 2};
   `}
 `;
 
