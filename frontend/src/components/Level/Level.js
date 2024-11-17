@@ -170,7 +170,7 @@ export const Level = () => {
       resetAllData();
       await Promise.all([fetchGames(), fetchLevelData(), fetchInstructions(), fetchInitialCode()]);
       
-      if (innerHeight <= 570) {
+      if (innerHeight <= 720) {
         const { width, height } = initialLevelData.current;
         if (width * height >= 90)
           setScale(0.7)
