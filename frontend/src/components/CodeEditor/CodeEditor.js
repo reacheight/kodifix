@@ -44,7 +44,7 @@ export const CodeEditor = ({
   onErrorsClear,
 }) => {
   const [isCommandsOpen, setIsCommandsOpen] = useState(false);
-  const { height: innerHeight } = useWindowSize();
+  const { height: innerHeight, width: windowWidth } = useWindowSize();
 
   const commands = [...instructions.newCommands, ...instructions.prevCommands];
   const options = commands.map((command) =>
@@ -60,7 +60,7 @@ export const CodeEditor = ({
     }),
     indentUnit.of("    "),
   ];
-  const width = '529px';
+  const width = windowWidth <= 1300 ? 480 : 529;
   const height = `${innerHeight - (isCommandsOpen ? 268 : 65)}px`;
 
   const addCommand = (command) => onCodeChange(code + '\n' + command);
@@ -70,6 +70,7 @@ export const CodeEditor = ({
   return (
     <>
       <CodeMirrorWrapper
+        width={width}
         errorLine={codeErrors?.[0].line}
         highlightFocusedLine={!isRunning && !isPaused}
         executingLine={executingLine}
@@ -77,7 +78,7 @@ export const CodeEditor = ({
         <CodeMirror
           autoFocus
           value={code}
-          width={width}
+          width={`${width}px`}
           height={height}
           theme={theme}
           readOnly={isRunning}

@@ -212,4 +212,9 @@ export const MenuButton = styled.div`
 
   top: 10px;
   right: 540px;
+
+  @media only screen and (max-width: 1300px) {
+    right: 489px;
+  }
+}
 `
