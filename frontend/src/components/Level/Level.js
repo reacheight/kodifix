@@ -39,6 +39,7 @@ import { LevelGuide } from '../LevelGuide/LevelGuide';
 import { Goals } from '../Goals/Goals';
 import { Button } from '../Button/Button';
 import { Bridge } from '../Bridge/Bridge';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 const getInitialCodeFromStorage = (game, level) =>
   localStorage.getItem(`code-${game}-${level}`);
@@ -77,6 +78,8 @@ const walkingAudio = new Audio(walkingSound);
 export const Level = () => {
   const { gameId, id } = useParams();
   const navigate = useNavigate();
+  const { height: innerHeight } = useWindowSize();
+
   const [game, setGame] = useState(null);
   const [initialLevelData, setInitialLevelData] = useRefState(null);
   const [levelData, setLevelData] = useRefState(null);
@@ -166,6 +169,17 @@ export const Level = () => {
     (async () => {
       resetAllData();
       await Promise.all([fetchGames(), fetchLevelData(), fetchInstructions(), fetchInitialCode()]);
+      
+      if (innerHeight <= 570) {
+        const { width, height } = initialLevelData.current;
+        if (width * height >= 90)
+          setScale(0.7)
+        else if (width * height >= 54)
+          setScale(0.9);
+        else if (width * height >= 45 || height >= 8) {
+          setScale(1);
+        }
+      }
     })();
   }, [id]);
 
