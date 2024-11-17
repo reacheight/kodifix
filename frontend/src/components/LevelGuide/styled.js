@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 101;
+  z-index: 102;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,9 +25,11 @@ export const Wrapper = styled.div`
 `;
 
 export const Modal = styled.div`
+  position: fixed;
   color: #fff;
   font-family: 'Nunito', sans-serif;
   width: 694px;
+  max-height: calc(100vh - 60px);
   padding: 16px;
   background: #2a2623;
   border: 2px #4b4745 solid;
@@ -36,7 +38,9 @@ export const Modal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 26px;
+  gap: 1vw;
+
+  overflow: auto;
 `;
 
 export const Top = styled.div`
@@ -69,7 +73,7 @@ export const Title = styled.div`
 
 export const Block = styled.div`
   width: 100%;
-  padding: 20px;
+  padding: 1vw;
   border-radius: 8px;
   background: #474542;
   box-shadow:
@@ -78,7 +82,21 @@ export const Block = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0.8vw;
+
+  max-height: 600px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    border: 4px solid transparent;
+    background-clip: content-box;
+  }
 `;
 
 export const Instructions = styled.div`
