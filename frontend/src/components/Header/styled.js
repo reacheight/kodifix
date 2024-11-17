@@ -7,9 +7,12 @@ export const HeaderWrapper = styled.div`
   padding-top: 20px;
   padding-inline: 20px;
 
-  z-index: 1;
+  z-index: 1000;
 `
 
-export const YaButtonWrapper = styled.div`
-  width: 200px;
+export const LoginButton = styled.div`
+  font-family: 'Inter', sans-serif;
+  background-color: white;
+  padding: 8px;
+  border-radius: 6px;
 `

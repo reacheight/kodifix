@@ -13,7 +13,7 @@ export const ButtonFront = styled.div`
   border-bottom: 3px solid rgba(255, 255, 255, 0.3);
   background: ${({ color }) => color};
 
-  box-shadow: 0 15px ${({ shadowColor }) => shadowColor};
+  box-shadow: 0 ${({ shadowHeight }) => shadowHeight}px ${({ shadowColor }) => shadowColor};
 
   ${({ disabled }) =>
     !disabled &&

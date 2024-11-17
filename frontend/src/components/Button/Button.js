@@ -11,11 +11,13 @@ export const Button = ({
   children,
   width,
   height,
+  shadowHeight,
 }) => (
   <Wrapper disabled={disabled} onClick={onClick}>
     <ButtonFront
       width={width}
       height={height}
+      shadowHeight={shadowHeight ?? 15}
       color={disabled ? '#858A86' : frontColor}
       shadowColor={disabled ? '#626763' : shadowColor}
       disabled={disabled}

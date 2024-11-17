@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { axios } from '../../api/axios';
-import { HeaderWrapper, YaButtonWrapper } from './styled';
+import { HeaderWrapper, LoginButton } from './styled';
 import { MiniProfile } from '../MiniProfile/MiniProfile';
+import { Button } from '../Button/Button';
+import { LoginModal } from '../LoginModal/LoginModal';
 
 export const Header = ({ onLogout }) => {
   const [user, setUser] = useState(null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -24,8 +27,18 @@ export const Header = ({ onLogout }) => {
         <MiniProfile user={user} onLogout={onLogout} />
       )}
       {!user && (
-        <YaButtonWrapper id='yaButtonContainerId'></YaButtonWrapper>
+        <Button
+          height='45'
+          width='90'
+          shadowHeight='10'
+          shadowColor="#06719F"
+          frontColor="#0AA1E2"
+          onClick={() => setShowLoginModal(true)}
+        >
+          Войти
+        </Button>
       )}
+      {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)}/>}
     </HeaderWrapper>
   );
 }
