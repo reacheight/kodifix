@@ -423,7 +423,7 @@ export const levels = {
       hero: { x: 4, y: 7 },
       finish: { x: 6, y: 0 },
       gems: [
-        { x: 6, y: 7 },
+        { x: 6, y: 7 }, { x: 0, y: 3 },
       ],
       enemies: [
         { x: 1, y: 5, alive: true, name: "BigBoy", big: true, moveFinish: { x: 4, y: 2 } },
@@ -431,7 +431,7 @@ export const levels = {
       goals: [
         { type: 'finish', name: 'Добраться до финиша', heroText: null, required: true },
         { type: 'big_enemy_bridge', bridgeName: "bridge1", enemyName: "BigBoy", name: 'Не дать огромному рыцарю перейти мост', heroText: 'Нам не справиться с этим огромным рыцарем,\nнельзя пропустить его на наш берег!', required: true },
-        { type: 'gems', name: 'Подобрать алмаз', heroText: null, required: false },
+        { type: 'gems', name: 'Подобрать алмазы', heroText: null, required: false },
       ],
       levers: [
         { x: 4, y: 1, name: "Мост1", activatesId: "bridge1", enabled: true },
