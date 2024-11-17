@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Collapse, Wrapper, Title, CollapseIcon, CollapsTitle, CollapseContent, GoalsBlock, GoalsBlockTitle, GoalsList, Goal } from './styled';
 import arrow1Icon from '../../assets/arrow-1.svg';
 import checkmark from '../../assets/checkmark.svg';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 export const Goals = ({ forceOpen, goals, goalsResult }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const { height: windowHeight } = useWindowSize();
+  const [isOpen, setIsOpen] = useState(windowHeight > 950);
 
   if (!goals || goals.length === 0)
     return;
