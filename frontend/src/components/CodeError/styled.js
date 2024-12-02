@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
   top: 0;
   right: 0;
   gap: 12px;
-  transform: translate(-564px, ${({ offset }) => 24 + offset}px);
+  transform: translate(-540px, ${({ offset }) => 24 + offset}px);
   z-index: 100;
   background-color: #2a2623;
   animation: 300ms ${appearance} ease-in-out forwards;

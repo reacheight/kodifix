@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
   opacity: 0;
   position: absolute;
   left: -485px;
-  bottom: 130px;
+  bottom: 160px;
   display: flex;
   flex-direction: column;
   gap: 24px;
