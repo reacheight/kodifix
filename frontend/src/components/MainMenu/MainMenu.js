@@ -109,7 +109,7 @@ export const MainMenu = () => {
         <GameDescription>
           <DescriptionHeader>
             <Title>Алмазный лес</Title>
-            <LevelCount>{completedLevelsCount} / 15</LevelCount>
+            <LevelCount>{completedLevelsCount} / 18</LevelCount>
             <Button
               height='45'
               width='150'
