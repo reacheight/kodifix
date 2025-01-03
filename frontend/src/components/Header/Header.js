@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { axios } from '../../api/axios';
-import { HeaderWrapper, LoginButton } from './styled';
+import logo from '../../assets/logo.svg';
+import { HeaderWrapper, HeaderContent, LoginButton } from './styled';
 import { MiniProfile } from '../MiniProfile/MiniProfile';
 import { Button } from '../Button/Button';
 import { LoginModal } from '../LoginModal/LoginModal';
@@ -23,22 +24,34 @@ export const Header = ({ onLogout }) => {
   
   return (
     <HeaderWrapper>
-      {!!user && (
-        <MiniProfile user={user} onLogout={onLogout} />
-      )}
-      {!user && (
-        <Button
-          height='45'
-          width='90'
-          shadowHeight='10'
-          shadowColor="#06719F"
-          frontColor="#0AA1E2"
-          onClick={() => setShowLoginModal(true)}
-        >
-          Войти
-        </Button>
-      )}
-      {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)}/>}
+      <HeaderContent>
+        <img 
+          src={logo} 
+          alt="App Logo" 
+          style={{ 
+            height: '45px', 
+            filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.2))',
+            position: 'relative',
+            zIndex: 2
+          }} 
+        />
+        {!!user && (
+          <MiniProfile user={user} onLogout={onLogout} />
+        )}
+        {!user && (
+          <Button
+            height='45'
+            width='90'
+            shadowHeight='10'
+            shadowColor="#06719F"
+            frontColor="#0AA1E2"
+            onClick={() => setShowLoginModal(true)}
+          >
+            Войти
+          </Button>
+        )}
+        {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)}/>}
+      </HeaderContent>
     </HeaderWrapper>
   );
 }

@@ -1,13 +1,41 @@
 import styled, { css } from 'styled-components';
 
 export const HeaderWrapper = styled.div`
-  margin-left: auto;
-  margin-right: 0;
-  
-  padding-top: 20px;
-  padding-inline: 20px;
-
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 15px;
+  background: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1000;
+`
+
+export const HeaderContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  padding: 12px 25px;
+  background: linear-gradient(to right, #1976D2, #2196F3);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  position: relative;
+  z-index: 1;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: inherit;
+    z-index: -1;
+  }
 `
 
 export const LoginButton = styled.div`

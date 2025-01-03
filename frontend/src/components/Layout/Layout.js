@@ -7,6 +7,7 @@ import { axios } from '../../api/axios';
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding-top: 100px;
 `
 
 export const Layout = ({ children }) => {

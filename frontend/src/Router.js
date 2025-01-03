@@ -5,13 +5,13 @@ import {
 } from 'react-router-dom';
 import { Level } from './components/Level/Level';
 import React from 'react';
-import { MainMenu } from './components/MainMenu/MainMenu';
 import { YandexCallback } from './components/YandexCallback/YandexCallback';
+import { MainPage } from './components/MainPage/MainPage';
 
 export const browserRouter = createBrowserRouter([
   {
     path: '/',
-    element: <MainMenu />,
+    element: <MainPage />,
   },
   {
     path: '/ya_callback',
