@@ -85,7 +85,7 @@ export const CloseButton = styled.button`
 export const Title = styled.div`
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 32px;
+  font-size: 24px;
   line-height: 35px;
 `;
 

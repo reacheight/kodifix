@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   Game,
-  GameDescription,
-  DescriptionHeader,
-  Title,
-  Gem1,
-  LevelCount,
-  Description,
-  Tag,
-  Tags,
   Map,
   Level,
   TopGradient,
@@ -17,9 +9,8 @@ import {
 import { Layout } from '../Layout/Layout';
 import { axios } from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../Button/Button';
 
-export const MainMenu = () => {
+export const Module1 = () => {
   const navigate = useNavigate();
 
   const [userLevels, setUserLevels] = useState([]);
@@ -76,7 +67,7 @@ export const MainMenu = () => {
   const currentLevel = completedLevelsCount + 1;
 
   const openLevel = (level) => {
-    navigate(`/forest/level/${level}`, { replace: true });
+    navigate(`/forest/level/${level}`);
   };
 
   const isCompleted = (level) => userLevels.some((l) => l.levelId === level);
@@ -106,36 +97,6 @@ export const MainMenu = () => {
   return (
     <Layout>
       <Game>
-        <GameDescription>
-          <DescriptionHeader>
-            <Title>Алмазный лес</Title>
-            <LevelCount>{completedLevelsCount} / 18</LevelCount>
-            <Button
-              height='45'
-              width='150'
-              shadowHeight='10'
-              shadowColor="#06719F"
-              frontColor="#0AA1E2"
-              onClick={() => openLevel(currentLevel)}
-            >
-              {completedLevelsCount === 0 ? 'Начать' : 'Продолжить'}
-            </Button>
-            <Gem1 />
-          </DescriptionHeader>
-          <Description>
-            Помогите волшебнику добраться до замка, чтобы вернуть украденную
-            книгу заклинаний. Управляйте персонажем с помощью кода,
-            побеждайте врагов, проходите опасные преграды и собирайте алмазы.
-          </Description>
-          <Tags>
-            <Tag>основы синтаксиса</Tag>
-            <Tag>методы</Tag>
-            <Tag>параметры</Tag>
-            <Tag>строки</Tag>
-            <Tag>переменные</Tag>
-            <Tag>if-выражения</Tag>
-          </Tags>
-        </GameDescription>
         <Map width={width} height={height}>
           <TopGradient />
           <BotGradient />

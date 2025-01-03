@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../Button/Button';
 
@@ -19,9 +19,10 @@ import {
 
 export const LevelScore = ({ isLastLevel, score, onContinue, onClose }) => {
   const navigate = useNavigate();
+  const { gameId } = useParams();
 
   const openMenu = () => {
-    navigate('/', { replace: true });
+    navigate(`/${gameId}`);
   };
 
   return createPortal(

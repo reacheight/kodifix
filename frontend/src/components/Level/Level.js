@@ -564,11 +564,11 @@ export const Level = () => {
   };
 
   const openNextLevel = () => {
-    navigate(`/${gameId}/level/${Number(id) + 1}`, { replace: true });
+    navigate(`/${gameId}/level/${Number(id) + 1}`);
   };
 
   const openMenu = () => {
-    navigate('/', { replace: true });
+    navigate(`/${gameId}`);
   };
 
   const openGuide = () => {

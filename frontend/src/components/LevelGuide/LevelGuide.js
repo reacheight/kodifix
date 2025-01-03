@@ -4,7 +4,7 @@ import arrow2Icon from '../../assets/arrow-2.svg';
 
 import { Button } from '../Button/Button';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   Wrapper,
@@ -53,6 +53,7 @@ export const LevelGuide = ({ level, data, onClose }) => {
   const newCommand = newCommands[commandIndex];
   const newCommandCode = extract(newCommand?.code);
   const navigate = useNavigate();
+  const { gameId } = useParams();
 
   const hasPrev = commandIndex > 0;
 
@@ -71,7 +72,7 @@ export const LevelGuide = ({ level, data, onClose }) => {
   };
 
   const openMenu = () => {
-    navigate('/', { replace: true });
+    navigate(`/${gameId}`);
   };
 
   return (
