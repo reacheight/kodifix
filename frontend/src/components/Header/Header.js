@@ -4,6 +4,7 @@ import logo from '../../assets/logo.svg';
 import { HeaderWrapper, HeaderContent, LoginLink } from './styled';
 import { MiniProfile } from '../MiniProfile/MiniProfile';
 import { LoginModal } from '../LoginModal/LoginModal';
+import { Link } from 'react-router-dom';
 
 export const Header = ({ onLogout }) => {
   const [user, setUser] = useState(null);
@@ -24,16 +25,18 @@ export const Header = ({ onLogout }) => {
   return (
     <HeaderWrapper>
       <HeaderContent>
-        <img 
-          src={logo} 
-          alt="App Logo" 
-          style={{ 
-            height: '45px', 
-            filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.2))',
-            position: 'relative',
-            zIndex: 2
-          }} 
-        />
+        <Link to='/'>
+          <img 
+            src={logo} 
+            alt="App Logo" 
+            style={{ 
+              height: '45px', 
+              filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.2))',
+              position: 'relative',
+              zIndex: 2
+            }} 
+          />
+        </Link>
         {!!user && (
           <MiniProfile user={user} onLogout={onLogout} />
         )}
