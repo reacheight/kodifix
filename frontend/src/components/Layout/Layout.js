@@ -35,14 +35,9 @@ export const Layout = ({ children }) => {
     }
   }, []);
 
-  const logout = () => {
-    Cookies.remove('yaToken', { path: '/', domain: '.kodifix.ru', secure: true, sameSite: 'Lax' });
-    location.reload();
-  };
-
   return (
     <LayoutWrapper>
-      <Header onLogout={logout} />
+      <Header />
       {children}
     </LayoutWrapper>
   )
