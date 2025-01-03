@@ -84,11 +84,13 @@ export const Level = () => {
   const [initialLevelData, setInitialLevelData] = useRefState(null);
   const [levelData, setLevelData] = useRefState(null);
   const [heroShift, setHeroShift] = useRefState({ right: 0, bottom: 0 });
-  const [isRunning, setIsRunning] = useRefState(false);
+  const [isActuallyRunning, setIsActuallyRunning] = useRefState(false);
   const [isPaused, setIsPaused] = useRefState(false);
+  const [isStopped, setIsStopped] = useRefState(false);
   const [isMoving, setIsMoving] = useRefState(false);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isScoreOpen, setIsScoreOpen] = useState(false);
+  const [isLevelFinished, setIsLevelFinished] = useState(false);
   const [levelVariants, setLevelVariants] = useRefState(null);
   const [currentVariant, setCurrentVariant] = useRefState(null);
   const [executingCommand, setExecutingCommand] = useRefState(null);
@@ -150,7 +152,8 @@ export const Level = () => {
     setInitialLevelData(null);
     setLevelData(null);
     setHeroShift({ right: 0, bottom: 0 });
-    setIsRunning(false);
+    setIsActuallyRunning(false);
+    setIsStopped(false);
     setIsPaused(false);
     setIsMoving(false);
     setIsScoreOpen(false);
@@ -317,8 +320,7 @@ export const Level = () => {
       updatedLevelData.enemies = updatedEnemies;
     }
 
-    // кейс, когда игрок нажал "стоп"
-    if (!isRunning.current && !isPaused.current) {
+    if (!isActuallyRunning.current) {
       return;
     }
 
@@ -345,11 +347,12 @@ export const Level = () => {
       if (isPaused.current) {
         setPausedCommand(i);
         setPausedVariant({ enemies: levelData.current.enemies, levers: levelData.current.levers });
+        setIsActuallyRunning(false);
         break;
       }
 
-      // кейс, когда игрок нажал "стоп"
-      if (!isRunning.current) {
+      if (isStopped.current) {
+        setIsActuallyRunning(false);
         break;
       }
 
@@ -365,12 +368,23 @@ export const Level = () => {
         if (!allRequiredGoalsCompleted) { // если текущий вариант не пройден, остальные не смотрим
           setForceShowGoals(true);
           setHeroTextsForGameplayError(gameplayError);
+
+          setIsActuallyRunning(false);
+          setIsStopped(false);
+          setIsPaused(false);
+
           stopGameWithoutResetting();
         } else if (currentVariant.current === levelVariants.current.length - 1) { // уровень завершается, только если все варианты прошли
+          setIsActuallyRunning(false);
+          setIsStopped(false);
+          setIsPaused(false);
+          setIsLevelFinished(true);
+          
           setForceShowGoals(true);
           setHeroTexts([{ value: 'Отлично, мы можем идти дальше', delay: 1500 }]);
           await delay(1500);
           new Audio(victorySound).play();
+          setIsGuideOpen(false);
           setIsScoreOpen(true);
 
           axios.post(`/${gameId}/level/${id}/complete`, { score: levelVariants.current[currentVariant.current].score }, { withCredentials: true })
@@ -386,8 +400,11 @@ export const Level = () => {
     if (!levelVariants.current || levelVariants.current.length === 0)
       return;
 
+    setIsActuallyRunning(true);
+
     for (let i = currentVariant.current || 0; i < levelVariants.current.length; i++) {
-      if (isPaused.current || !isRunning.current) {
+      if (isPaused.current || isStopped.current) {
+        setIsActuallyRunning(false);
         break;
       }
 
@@ -413,6 +430,8 @@ export const Level = () => {
 
       await execCommands();
     }
+
+    setIsActuallyRunning(false);
   }
 
   const setHeroTextsForGameplayError = (gameplayError) => {
@@ -505,7 +524,7 @@ export const Level = () => {
 
   const startGame = async () => {
     resetData();
-    setIsRunning(true);
+    setIsStopped(false);
     setInitialCode(gameId, id, code.current);
 
     try {
@@ -518,35 +537,42 @@ export const Level = () => {
     } catch (error) {
       setCodeErrors(error.response.data.errors);
     } finally {
-      setIsRunning(false);
+      setIsActuallyRunning(false);
     }
   };
 
   const continueGame = async () => {
+    if (isActuallyRunning.current) {
+      return;
+    }
+
     setIsPaused(false);
-    setIsRunning(true);
+    setIsStopped(false);
     setForceShowGoals(false);
 
     await execVariants();
-
-    setIsRunning(false);
   };
 
   const pauseGame = () => {
+    if (!isActuallyRunning.current) {
+      return;
+    }
+
     // последняя команда последнего варианта
     const isLastCommandExecuting =
       currentVariant.current && executingCommand.current === levelVariants.current[currentVariant.current].variantResult.commands.length - 1;
 
     if (!isLastCommandExecuting) {
-      setIsRunning(false);
       setIsPaused(true);
     }
   };
 
   const stopGameWithoutResetting = () => {
-    if (isRunning.current) {
-      setIsRunning(false);
+    if (!isActuallyRunning.current) {
+      return;
     }
+
+    setIsStopped(true);
 
     if (isPaused.current) {
       setIsPaused(false);
@@ -582,6 +608,7 @@ export const Level = () => {
   };
 
   const closeScore = () => {
+    setIsLevelFinished(false);
     setIsScoreOpen(false);
     resetData();
   }
@@ -778,8 +805,9 @@ export const Level = () => {
         </MapWrapper>
       </MainWrapper>
       <Controls
-          isRunning={isRunning.current}
+          isRunning={isActuallyRunning.current}
           isPaused={isPaused.current}
+          isLevelFinished={isLevelFinished}
           hasGuide={hasGuid(instructions)}
           onStart={startGame}
           onPause={pauseGame}
@@ -790,7 +818,7 @@ export const Level = () => {
       <CodeEditor
         code={code.current}
         codeErrors={codeErrors}
-        isRunning={isRunning.current}
+        isRunning={isActuallyRunning.current}
         isPaused={isPaused.current}
         executingLine={executingLine}
         instructions={instructions}

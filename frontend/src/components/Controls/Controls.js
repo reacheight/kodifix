@@ -9,6 +9,7 @@ import { Button } from '../Button/Button';
 export const Controls = ({
   isRunning,
   isPaused,
+  isLevelFinished,
   hasGuide,
   onStart,
   onContinue,
@@ -21,6 +22,7 @@ export const Controls = ({
       <Buttons>
         {!isRunning && !isPaused && (
           <Button
+            disabled={isLevelFinished}
             shadowColor="#1E9029"
             frontColor="#40BF4C"
             icon={playIcon}
@@ -29,7 +31,7 @@ export const Controls = ({
           />
         )}
 
-        {isRunning && (
+        {isRunning && !isPaused && (
           <Button
             shadowColor="#B47C11"
             frontColor="#D79D2C"

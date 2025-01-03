@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 102;
+  z-index: 101;
   display: flex;
   justify-content: center;
   align-items: center;
