@@ -8,6 +8,7 @@ const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 100px;
+  background: #F5F7FA;
 `
 
 export const Layout = ({ children }) => {

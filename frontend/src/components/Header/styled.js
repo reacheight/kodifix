@@ -32,7 +32,7 @@ export const HeaderContent = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     border-radius: inherit;
     z-index: -1;
   }

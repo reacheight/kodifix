@@ -3,43 +3,56 @@ import styled from 'styled-components';
 export const Container = styled.div`
   padding: 32px;
   min-height: 100vh;
-  background-color: #F5F5F5;
+  background-color: #F5F7FA;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 64px;
+  padding-top: 120px;
 `;
 
 export const ModuleCard = styled.div`
   background: white;
-  border-radius: 24px;
-  padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(25, 118, 210, 0.08);
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.3s ease;
+  max-width: 600px;
   width: 100%;
-  max-width: 700px;
+  font-family: 'Inter', sans-serif;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(25, 118, 210, 0.12);
+  }
+
+  img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+  }
 `;
 
 export const ModuleInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  padding: 24px 32px;
+  background: white;
 `;
 
 export const ModuleTitle = styled.h2`
   font-family: 'Inter', sans-serif;
-  font-size: 28px;
-  font-weight: 500;
-  color: #000;
-  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #1A1A1A;
 `;
 
-export const LevelCount = styled.span`
+export const LevelCount = styled.div`
   font-family: 'Inter', sans-serif;
-  color: #666;
+  color: #5C7185;
   font-size: 14px;
-  margin-top: 4px;
+  font-weight: 500;
+  margin-bottom: 20px;
 `;
 
 export const Description = styled.p`
@@ -58,9 +71,11 @@ export const Tags = styled.div`
 
 export const Tag = styled.span`
   font-family: 'Inter', sans-serif;
-  background: #F5F5F5;
-  color: #666;
-  padding: 8px 16px;
-  border-radius: 100px;
-  font-size: 14px;
+  background: rgba(25, 118, 210, 0.08);
+  color: #1976D2;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  user-select: none;
 `; 
