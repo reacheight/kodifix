@@ -25,7 +25,7 @@ export const NameAndTitle = styled.div`
 `
 
 export const Name = styled.div`
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
   font-weight: 600;
   text-align: left;
@@ -33,8 +33,8 @@ export const Name = styled.div`
 `
 
 export const Title = styled.div`
-  font-family: 'Nunito', sans-serif;
-  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
   color: #718096;
 `
 
