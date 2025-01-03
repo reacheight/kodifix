@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { axios } from '../../api/axios';
 import logo from '../../assets/logo.svg';
-import { HeaderWrapper, HeaderContent, LoginButton } from './styled';
+import { HeaderWrapper, HeaderContent, LoginLink } from './styled';
 import { MiniProfile } from '../MiniProfile/MiniProfile';
-import { Button } from '../Button/Button';
 import { LoginModal } from '../LoginModal/LoginModal';
 
 export const Header = ({ onLogout }) => {
@@ -39,16 +38,9 @@ export const Header = ({ onLogout }) => {
           <MiniProfile user={user} onLogout={onLogout} />
         )}
         {!user && (
-          <Button
-            height='45'
-            width='90'
-            shadowHeight='10'
-            shadowColor="#06719F"
-            frontColor="#0AA1E2"
-            onClick={() => setShowLoginModal(true)}
-          >
+          <LoginLink onClick={() => setShowLoginModal(true)}>
             Войти
-          </Button>
+          </LoginLink>
         )}
         {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)}/>}
       </HeaderContent>

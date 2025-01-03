@@ -38,9 +38,18 @@ export const HeaderContent = styled.div`
   }
 `
 
-export const LoginButton = styled.div`
+export const LoginLink = styled.button`
+  background: none;
+  border: none;
+  color: white;
   font-family: 'Inter', sans-serif;
-  background-color: white;
-  padding: 8px;
-  border-radius: 6px;
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `

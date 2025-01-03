@@ -1,10 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { axios } from '../../api/axios';
 import { Modal, Wrapper, Top, CloseButton, Title, YaLoginButton } from './styled';
 import close2Icon from '../../assets/close-2.svg';
 
 export const LoginModal = ({ onClose }) => {
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(onClose, 200); // Match animation duration
+  };
+
   useEffect(() => {
     const params = {
       client_id: '064dd0d0ea2d41bd8867928cd9704763',
@@ -19,10 +26,10 @@ export const LoginModal = ({ onClose }) => {
         {
           view: 'button',
           parentId: "yaButtonContainerId",
-          buttonSize: 's',
+          buttonSize: 'l',
           buttonView: 'main',
           buttonTheme: 'light',
-          buttonBorderRadius: '10',
+          buttonBorderRadius: '24',
           buttonIcon: 'ya',
         }
       )
@@ -37,12 +44,12 @@ export const LoginModal = ({ onClose }) => {
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper isClosing={isClosing}>
       <Modal>
         <Top>
           <Title>Вход</Title>
-          <CloseButton onClick={onClose}>
-            <img src={close2Icon} alt="close" />
+          <CloseButton onClick={handleClose}>
+            ×
           </CloseButton>
         </Top>
         <YaLoginButton id="yaButtonContainerId" />
