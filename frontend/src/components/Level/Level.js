@@ -320,7 +320,7 @@ export const Level = () => {
       updatedLevelData.enemies = updatedEnemies;
     }
 
-    if (!isActuallyRunning.current) {
+    if (isStopped.current) {
       return;
     }
 
@@ -370,7 +370,7 @@ export const Level = () => {
           setHeroTextsForGameplayError(gameplayError);
 
           setIsActuallyRunning(false);
-          setIsStopped(false);
+          setIsStopped(true);
           setIsPaused(false);
 
           stopGameWithoutResetting();
