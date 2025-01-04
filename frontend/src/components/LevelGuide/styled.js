@@ -216,3 +216,11 @@ export const ButtonsWrapper = styled.div`
   gap: 32px;
   padding-bottom: 20px;
 `;
+
+export const CodeTag = styled.span`
+  color: #bd0f0f;
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-inline: 4px;
+`;

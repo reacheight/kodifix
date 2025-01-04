@@ -22,6 +22,7 @@ import {
   CirclesWrapper,
   Circle,
   ButtonsWrapper,
+  CodeTag,
 } from './styled';
 import {
   Top as NewCommandTop,
@@ -46,6 +47,26 @@ const extensions = [python()];
 const theme = vscodeDarkInit({
   styles: [{ tag: t.comment, color: 'rgba(255, 255, 255, 0.5)' }],
 });
+
+function splitStringOutsideQuotes(inputString) {
+  const parts = [];
+  const insideQuotes = inputString.match(/`([^`]*)`/g); // Находим все подстроки внутри одинарных кавычек
+  const outsideParts = inputString.split(/`[^`]+`/); // Разбиваем строку на части вне одинарных кавычек
+
+  // Добавляем части вне одинарных кавычек в результирующий массив
+  for (let i = 0; i < outsideParts.length; i++) {
+    if (outsideParts[i].trim() !== '') {
+      parts.push(outsideParts[i].trim());
+    }
+
+    // Если есть соответствующая подстрока внутри одинарных кавычек, добавляем ее тоже в результирующий массив
+    if (insideQuotes && insideQuotes[i]) {
+      parts.push(insideQuotes[i]);
+    }
+  }
+
+  return parts;
+}
 
 export const LevelGuide = ({ level, data, onClose }) => {
   const { instructions, example, newCommands } = data;
@@ -87,7 +108,18 @@ export const LevelGuide = ({ level, data, onClose }) => {
 
         {instructions || example ? (
           <Block>
-            {instructions ? <Instructions>{instructions}</Instructions> : null}
+            {instructions
+              ? <Instructions>
+                {splitStringOutsideQuotes(instructions).map((text, i) => {
+                  if (text.includes("`")) {
+                    return <CodeTag key={i}>{text.replace(/`/g, '')}</CodeTag>;
+                  } else {
+                    return <span key={i}>{text}</span>
+                  }
+                })}
+              </Instructions>
+              : null
+            }
             {example ? (
               <CodeMirrorWrapper>
                 <CodeMirror
