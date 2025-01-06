@@ -45,7 +45,7 @@ app.post('/:game/level/:id/run', (req, res) => {
 
   const level = levels[req.params.game][req.params.id];
   const analyzer = new CodeAnalyzer();
-  const errors = analyzer.analyze(req.body.code, level.onlyVariablesInAttack);
+  const errors = analyzer.analyze(req.body.code, level.onlyVariablesInAttack, level.onlyVariablesInSwitch);
   if (errors.length > 0) {
     res.statusCode = 400;
     res.send(JSON.stringify({ errors }));

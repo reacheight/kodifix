@@ -1,5 +1,5 @@
 export default class CodeAnalyzer {
-  analyze(rawCode, onlyVariablesInAttack) {
+  analyze(rawCode, onlyVariablesInAttack, onlyVariablesInSwitch) {
     const lines = rawCode.split(/\r\n|\r|\n/);
     for (let i = 0; i < lines.length; i++) {
       const lineCode = lines[i];
@@ -30,6 +30,18 @@ export default class CodeAnalyzer {
           return [
             {
               message: `Используй имя переменной, например \`enemy1\`, вместо строки \`${notVariableInAttackMatch[1]}\`.`,
+              line: i + 1,
+            }
+          ];
+        }
+      }
+
+      if (onlyVariablesInSwitch) {
+        const notVariableInSwitchMatch = lineCode.match(/hero.switch\((".*")\)/);
+        if (notVariableInSwitchMatch) {
+          return [
+            {
+              message: `Используй имя переменной, например \`Мост1\`, вместо строки \`${notVariableInSwitchMatch[1]}\`.`,
               line: i + 1,
             }
           ];
