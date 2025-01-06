@@ -46,7 +46,7 @@ hero.attack(enemy1)
 # используй переменные, созданные выше
 `,
     [16]: `hero.move_right(4)\n\nenemy1 = hero.find_nearest_enemy()\nhero.attack(enemy1)\n\n# дойди до остальных врагов, получи их имена\n# с помощью hero.find_nearest_enemy()\n# и атакуй их\n`,
-    [17]: ``,
+    [17]: `# кто-то оставил эту переменную тут\n# интересно, для чего она?\nsecret = "ИспользуйМеняСУмом"\n\n`,
     [18]: `# дойди до берега
 hero.move_right()
 

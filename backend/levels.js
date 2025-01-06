@@ -594,7 +594,7 @@ export const levels = {
       ],  
       levers: [
         { x: 4, y: 8, name: "Мост1", activatesId: "bridge1", enabled: false },
-        { x: 0, y: 6, name: "Мост2", activatesId: "bridge2", enabled: false },
+        { x: 0, y: 6, name: "ИспользуйМеняСУмом", activatesId: "bridge2", enabled: false, hidden: true },
       ],
       bridges: [
         {

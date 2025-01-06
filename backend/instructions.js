@@ -115,10 +115,9 @@ hero.switch("Мост") # снова открыть мост
       prevCommands: longMovingCommands.concat([ switchCommand, attackCommand ]),
     },
     [17]: {
-      instructions: 'Отлично! Давай применим все изученные методы для прохождения этого уровня.\n\n'
-      + 'Помни, что `find_nearest_enemy()` возвращает самого близкого к тебе врага.',
-      newCommands: [ findNearestEnemy ],
-      prevCommands: longMovingCommands.concat([ switchCommand, attackCommand ]),
+      instructions: 'Ты уже многое умеешь! Используй все свои знания, чтобы пройти этот уровень.',
+      newCommands: [],
+      prevCommands: longMovingCommands.concat([ switchCommand, attackCommand, findNearestEnemy ]),
     },
     [18]: {
       instructions: 'На этом уровне мосты между островками случайные. Это значит, что каждый мост может быть открыт или закрыт, и ты не знаешь заранее, в каком они положении — твой код будет проверяться сразу на нескольких случаях.\n\n'
