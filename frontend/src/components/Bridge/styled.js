@@ -8,11 +8,11 @@ export const OpenBridge = styled.div`
       ? css`
           background: linear-gradient(
             180deg,
-            #a0522d 25%,
+            #8b4513 25%,
             rgba(255, 255, 255, 0) 25%,
             rgba(255, 255, 255, 0) 50%,
-            #a0522d 50%,
-            #a0522d 75%,
+            #8b4513 50%,
+            #8b4513 75%,
             rgba(255, 255, 255, 0) 75%,
             rgba(255, 255, 255, 0) 100%
           );
@@ -20,11 +20,11 @@ export const OpenBridge = styled.div`
       : css`
           background: linear-gradient(
             90deg,
-            #a0522d 25%,
+            #8b4513 25%,
             rgba(255, 255, 255, 0) 25%,
             rgba(255, 255, 255, 0) 50%,
-            #a0522d 50%,
-            #a0522d 75%,
+            #8b4513 50%,
+            #8b4513 75%,
             rgba(255, 255, 255, 0) 75%,
             rgba(255, 255, 255, 0) 100%
           );
@@ -50,20 +50,20 @@ export const ClosedBridge = styled.div`
           background: linear-gradient(
             180deg,
             rgba(255, 255, 255, 0) 25%,
-            #a0522d 25%,
-            #a0522d 50%,
+            #8b4513 25%,
+            #8b4513 50%,
             rgba(255, 255, 255, 0) 50%,
             rgba(255, 255, 255, 0) 75%,
-            #a0522d 75%,
-            #a0522d 100%
+            #8b4513 75%,
+            #8b4513 100%
           ) top center repeat-x,
            linear-gradient(
             180deg,
-            #a0522d 25%,
+            #8b4513 25%,
             rgba(255, 255, 255, 0) 25%,
             rgba(255, 255, 255, 0) 50%,
-            #a0522d 50%,
-            #a0522d 75%,
+            #8b4513 50%,
+            #8b4513 75%,
             rgba(255, 255, 255, 0) 75%,
             rgba(255, 255, 255, 0) 100%
           ) bottom center repeat-x;
@@ -71,23 +71,23 @@ export const ClosedBridge = styled.div`
       : css`
           background: linear-gradient(
             90deg,
-            #a0522d 25%,
+            #8b4513 25%,
             rgba(255, 255, 255, 0) 25%,
             rgba(255, 255, 255, 0) 50%,
-            #a0522d 50%,
-            #a0522d 75%,
+            #8b4513 50%,
+            #8b4513 75%,
             rgba(255, 255, 255, 0) 75%,
             rgba(255, 255, 255, 0) 100%
           ) left center repeat-y,
            linear-gradient(
             90deg,
             rgba(255, 255, 255, 0) 25%,
-            #a0522d 25%,
-            #a0522d 50%,
+            #8b4513 25%,
+            #8b4513 50%,
             rgba(255, 255, 255, 0) 50%,
             rgba(255, 255, 255, 0) 75%,
-            #a0522d 75%,
-            #a0522d 100%
+            #8b4513 75%,
+            #8b4513 100%
           ) right center repeat-y;
 
           margin-left: 1px;
