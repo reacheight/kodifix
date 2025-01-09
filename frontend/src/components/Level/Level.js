@@ -754,6 +754,7 @@ export const Level = () => {
                 yEnd={bridge.end.y}
                 vertical={bridge.vertical}
                 activated={bridge.activated}
+                random={bridge.random}
               />
             ))}
             {enemies.map((enemy) => (
