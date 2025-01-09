@@ -119,6 +119,7 @@ export const Module1 = () => {
           {getLevelElement(17, 10, 81)}
           {getLevelElement(18, 20, 79)}
           {getLevelElement(19, 30, 77)}
+          {getLevelElement(20, 40, 73)}
         </Map>
       </Game>
     </Layout>
