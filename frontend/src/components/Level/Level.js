@@ -166,6 +166,7 @@ export const Level = () => {
     setHeroTexts([]);
     setCode(getInitialCodeFromStorage(gameId, id));
     setForceShowGoals(false);
+    setIsLevelFinished(false);
   };
 
   useEffect(() => {
@@ -520,6 +521,7 @@ export const Level = () => {
     setPausedVariant(null);
     setCodeErrors(null);
     setForceShowGoals(false);
+    setIsLevelFinished(false);
   };
 
   const startGame = async () => {
