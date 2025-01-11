@@ -38,7 +38,7 @@ export const MainPage = () => {
           <img src={module1Preview} alt="Module 1 Preview" />
           <ModuleInfo>
             <ModuleTitle>Модуль 1</ModuleTitle>
-            <LevelCount>20 уровней</LevelCount>
+            <LevelCount>21 уровней</LevelCount>
             <Tags>
               <Tag>знакомство с платформой</Tag>
               <Tag>основы синтаксиса</Tag>

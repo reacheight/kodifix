@@ -1,5 +1,5 @@
 export const games = {
     ["forest"]: {
-        levels: 20,
+        levels: 21,
     }
 }
