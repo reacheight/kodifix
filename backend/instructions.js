@@ -153,17 +153,19 @@ if hero.has_enemy_around():     # если рядом есть враг, то
     hero.attack(enemy)                # и атакуй его
 hero.move_down(2)               # всегда пройди вниз`,
       newCommands: [ hasEnemyAround ],
-      prevCommands: longMovingCommands.concat([ findNearestEnemy, switchCommand, attackCommand ]),
+      prevCommands: longMovingCommands.concat([ findNearestEnemy, attackCommand, isDisabled, switchCommand ]),
     },
     [21]: {
-      instructions: 'На этом уровне на каждом островке тебя может поджидать враг, но ты никогда не знаешь точно, есть ли он там — твой код будет проверятся несколько раз на разных случаях. Такие «непостоянные» враги переливаются. Тебе надо дойти до финиша, проверяя каждый островок.\n\nВ этом тебе помогут новый метод `has_enemy_around`, который скажет, есть ли на соседних с твоим героем клетках враг, и конструкция if («если»), с помощью которой можно писать код так, чтобы в разных случаях он работал по-разному.',
-      example: `hero.move_right(3)              # всегда пройди вправо
-if hero.has_enemy_around():     # если рядом есть враг, то
-    enemy = hero.find_nearest_enemy() # найди врага
-    hero.attack(enemy)                # и атакуй его
-hero.move_down(2)               # всегда пройди вниз`,
-      newCommands: [ hasEnemyAround ],
-      prevCommands: longMovingCommands.concat([ findNearestEnemy, switchCommand, attackCommand ]),
+      instructions: 'Этот уровень полон сюрпризов — здесь есть и случайные мосты, и случайные враги!\n\n' +
+      'Используй всё, чему ты научился.',
+      example: `if hero.is_disabled("Мост1"):    # если мост закрыт
+    hero.switch("Мост1")             # открой его
+
+if hero.has_enemy_around():      # если рядом враг
+    enemy = hero.find_nearest_enemy() # найди его
+    hero.attack(enemy)                # и атакуй`,
+      newCommands: [],
+      prevCommands: [ hasEnemyAround, isDisabled ].concat(longMovingCommands.concat([ findNearestEnemy, attackCommand, switchCommand ])),
     },
     [22]: {
       instructions: 'На этом уровне на каждом островке тебя может поджидать враг, но ты никогда не знаешь точно, есть ли он там — твой код будет проверятся несколько раз на разных случаях. Такие «непостоянные» враги переливаются. Тебе надо дойти до финиша, проверяя каждый островок.\n\nВ этом тебе помогут новый метод `has_enemy_around`, который скажет, есть ли на соседних с твоим героем клетках враг, и конструкция if («если»), с помощью которой можно писать код так, чтобы в разных случаях он работал по-разному.',

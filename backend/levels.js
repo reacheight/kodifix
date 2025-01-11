@@ -792,11 +792,11 @@ export const levels = {
       grid: [
         ["lawn","sand","tree","rock","watert","watert","watert","watert","lawn"],
         ["sand","sand","sand","sand","tree","water","water","lawn","lawn"],
-        ["tree","sand","lawn","sand","sand","lawn","tree","lawn","lawn"],
+        ["tree","sand","lawn","sand","sand","water","tree","lawn","lawn"],
         ["sand","sand","lawn","lawn","sand","lawn","rock","tree","lawn"],
         ["lawn","tree","lawn","lawn","sand","lawn","lawn","lawn","lawn"],
         ["lawn","lawn","tree","lawn","watert","tree","lawn","lawn","watert"],
-        ["tree","lawn","watert","watert","water","lawn","lawn","watert","water"],
+        ["tree","lawn","watert","watert","water","watert","lawn","watert","water"],
       ],
       hero: { x: 0, y: 1 },
       finish: { x: 0, y: 8 },
@@ -845,49 +845,85 @@ export const levels = {
 
     [21]: {
       height: 7,
-      width: 8,
+      width: 9,
       grid: [
-        ["tree","sand","sand","watert","watert","sand","lawn","grass"],
-        ["grass","tree","sand","water","water","sand","lawn","lawn"],
-        ["lawn","lawn","sand","water","water","sand","rock","rock"],
-        ["sand","sand","sand","sand","sand","sand","grass","lawn"],
-        ["lawn","grass","sand","watert","watert","sand","sand","sand"],
-        ["lawn","sand","watert","water","sand","sand","watert","watert"],
-        ["sand","watert","water","sand","grass","lawn","water","sand"],
+        ["tree","sand","tree","lawn","watert","watert","watert","tree","lawn"],
+        ["lawn","sand","sand","sand","water","water","sand","sand","tree"],
+        ["tree","watert","watert","watert","water","water","watert","lawn","rock"],
+        ["watert","water","water","water","water","water","water","lawn","watert"],
+        ["water","water","lawn","tree","water","water","tree","lawn","tree"],
+        ["tree","sand","sand","sand","water","water","sand","sand","lawn"],
+        ["lawn","sand","rock","watert","water","water","watert","watert","watert"],
       ],
-      hero: { x: 3, y: 0 },
-      finish: { x: 6, y: 5 },
+      hero: { x: 0, y: 1 },
+      finish: { x: 5, y: 1 },
       gems: [
-        { x: 0, y: 6 },
+        { x: 1, y: 7 },
+        { x: 5, y: 7 },
       ],
       enemies: [
-        { x: 2, y: 5, alive: true, name: "Hidden1", hidden: true, random: true },
-        { x: 4, y: 5, alive: true, name: "Hidden2", hidden: true, random: true },
+        { x: 1, y: 6, alive: true, name: "Hidden1", hidden: true, random: true },
+        { x: 5, y: 6, alive: true, name: "Hidden2", hidden: true, random: true },
       ],
-      additionalVariants: {
-        enemies: [
-          [
-            { x: 2, y: 5, alive: false, name: "Hidden1", hidden: true, random: true },
-            { x: 4, y: 5, alive: true, name: "Hidden2", hidden: true, random: true },
+      additionalVariants: [
+        {
+          enemies: [
+            { x: 1, y: 6, alive: false, name: "Hidden1", hidden: true, random: true },
+            { x: 5, y: 6, alive: true, name: "Hidden2", hidden: true, random: true },
           ],
-          [
-            { x: 2, y: 5, alive: true, name: "Hidden1", hidden: true, random: true },
-            { x: 4, y: 5, alive: false, name: "Hidden2", hidden: true, random: true },
+          levers: [
+            { x: 0, y: 3, activatesId: 'bridge1', name: "Мост1", enabled: true },
+            { x: 5, y: 8, activatesId: 'bridge2', name: "Мост2", enabled: false },
           ],
-          [
-            { x: 2, y: 5, alive: false, name: "Hidden1", hidden: true, random: true },
-            { x: 4, y: 5, alive: false, name: "Hidden2", hidden: true, random: true },
+        },
+        {
+          enemies: [
+            { x: 1, y: 6, alive: true, name: "Hidden1", hidden: true, random: true },
+            { x: 5, y: 6, alive: false, name: "Hidden2", hidden: true, random: true },
           ],
-        ],
-        randomVariantsCount: 0,
-      },
+          levers: [
+            { x: 0, y: 3, activatesId: 'bridge1', name: "Мост1", enabled: false },
+            { x: 5, y: 8, activatesId: 'bridge2', name: "Мост2", enabled: false },
+          ],
+        },
+        {
+          enemies: [
+            { x: 1, y: 6, alive: false, name: "Hidden1", hidden: true, random: true },
+            { x: 5, y: 6, alive: false, name: "Hidden2", hidden: true, random: true },
+          ],
+          levers: [
+            { x: 0, y: 3, activatesId: 'bridge1', name: "Мост1", enabled: true },
+            { x: 5, y: 8, activatesId: 'bridge2', name: "Мост2", enabled: true },
+          ],
+        },
+      ],
       goals: [
-        { type: 'finish', name: 'Добраться до финиша', heroText: 'Проведи меня до финиша', required: true },
-        { type: 'enemies', name: 'Победить всех врагов', heroText: 'Давай победим всех встретившихся врагов', required: true },
-        { type: 'gems', name: 'Собрать все алмазы', heroText: 'И захватим этот алмаз', required: false },
+        { type: 'finish', name: 'Добраться до финиша', required: true },
+        { type: 'enemies', name: 'Победить всех врагов', required: true },
+        { type: 'gems', name: 'Собрать все алмазы', required: false },
       ],  
-      levers: [],
-      bridges: [],
+      levers: [
+        { x: 0, y: 3, activatesId: 'bridge1', name: "Мост1", enabled: false },
+        { x: 5, y: 8, activatesId: 'bridge2', name: "Мост2", enabled: true },
+      ],
+      bridges: [
+        {
+          id: "bridge1",
+          vertical: false,
+          start: { x: 1, y: 4 },
+          end: { x: 1, y: 5 },
+          activated: false,
+          random: true,
+        },
+        {
+          id: "bridge2",
+          vertical: false,
+          start: { x: 5, y: 4 },
+          end: { x: 5, y: 5 },
+          activated: true,
+          random: true,
+        }
+      ],
       onlyVariablesInAttack: true,
       checksCount: 4,
     },
