@@ -2,7 +2,7 @@ import React from 'react';
 import { HeroTooltip } from '../HeroTooltip/HeroTooltip';
 import { Wrapper } from './styled';
 
-export const Hero = ({ x, y, zIndex, shift, animated, texts, spedUp }) => (
+export const Hero = ({ x, y, alive, zIndex, shift, animated, texts, spedUp }) => (
   <>
     <HeroTooltip texts={texts} />
     <Wrapper
@@ -12,6 +12,7 @@ export const Hero = ({ x, y, zIndex, shift, animated, texts, spedUp }) => (
       shift={shift}
       animated={animated}
       spedUp={spedUp}
+      isDead={!alive}
       data-tooltip-id="wizard-tooltip"
     />
   </>

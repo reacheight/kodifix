@@ -192,7 +192,13 @@ export const Level = () => {
 
     setExecutingCommand(i);
 
-    if (
+    if (command.name === 'enemy_attack') {
+      const updatedHeroShift = copy(heroShift.current);
+      updatedHeroShift.direction = command.isEnemyToTheLeft ? 'left' : 'right';
+      setHeroShift(updatedHeroShift);
+      new Audio(hitSound).play();
+      updatedLevelData.hero.alive = false;
+    } else if (
       ['move_up', 'move_down', 'move_right', 'move_left'].includes(command.name)
     ) {
       const updatedHeroShift = copy(heroShift.current);
@@ -438,6 +444,12 @@ export const Level = () => {
   const setHeroTextsForGameplayError = (gameplayError) => {
     if (gameplayError?.type === GameplayErrorTypes.HERO_RAN_IN_WALL) {
       setHeroTexts([{ value: 'Ой, здесь я не могу пройти' }]);
+    }
+
+    if (gameplayError?.type === GameplayErrorTypes.HERO_KILLED_BY_ENEMY) {
+      setHeroTexts([
+        { value: 'С этим рыцарем надо быть аккуратнее..' },
+      ]);
     }
 
     if (gameplayError?.type === GameplayErrorTypes.HERO_RAN_IN_ENEMY) {
@@ -776,6 +788,7 @@ export const Level = () => {
             <Hero
               x={initialHero.x}
               y={initialHero.y}
+              alive={hero.alive === false ? false : true}
               zIndex={hero.x}
               texts={heroTexts}
               shift={heroShift.current}

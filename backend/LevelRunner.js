@@ -304,6 +304,18 @@ export default class LevelRunner {
 
   updateHeroPos(newHeroPosition, moveCommandName) {
     while (!arePointsEqual(newHeroPosition, this.level.hero)) {
+      const adjustedEnemy = this.level.enemies.find(e => 
+        e.alive && 
+        ((Math.abs(e.x - this.level.hero.x) <= 1 && e.y - this.level.hero.y === 0) || (Math.abs(e.y - this.level.hero.y) <= 1 && e.x - this.level.hero.x === 0)) // толко по прямым линиям
+      );
+
+      if (adjustedEnemy) {
+        this.pushNewCommand("enemy_attack", { isEnemyToTheLeft: adjustedEnemy.y < this.level.hero.y });
+        this.gameplayError = { type: GameplayErrorTypes.HERO_KILLED_BY_ENEMY };
+        return;
+      }
+
+
       this.level.hero.x += Math.sign(newHeroPosition.x - this.level.hero.x);
       this.level.hero.y += Math.sign(newHeroPosition.y - this.level.hero.y);
 
@@ -312,37 +324,8 @@ export default class LevelRunner {
         return;
       }
 
-      if (this.getAliveEnemyAtPoint(this.level.hero)) {
-        this.gameplayError = { type: GameplayErrorTypes.HERO_RAN_IN_ENEMY, enemyPosition: this.level.hero };
-        return;
-      }
-
       this.pushNewCommand(moveCommandName);
       this.incrementAction();
-
-      if (this.gameplayError)
-        return;
-
-      // только для уровня с охраняемыми гемами
-      if (this.ifGuardedGemsInfo) {
-        if (arePointsEqual(this.ifGuardedGemsInfo.topIslandEnter, this.level.hero) && !this.ifGuardedGemsInfo.canBeOnTopIsland) {
-          this.gameplayError = { type: GameplayErrorTypes.CANT_BE_HERE };
-          return;
-        }
-
-        if (arePointsEqual(this.ifGuardedGemsInfo.bottomIslandEnter, this.level.hero) && !this.ifGuardedGemsInfo.canBeOnBottomIsland) {
-          this.gameplayError = { type: GameplayErrorTypes.CANT_BE_HERE };
-          return;
-        }
-      }
-
-      if (this.level.gems) {
-        let takenGem = this.level.gems.find(g => arePointsEqual(g, this.level.hero) && !g.taken)
-        if (takenGem) {
-          takenGem.taken = true;
-          this.gemsCollected += 1;
-        }
-      }
     }
   }
 
