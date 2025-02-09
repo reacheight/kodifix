@@ -326,6 +326,17 @@ export default class LevelRunner {
 
       this.pushNewCommand(moveCommandName);
       this.incrementAction();
+
+      if (this.gameplayError)
+        return;
+
+      if (this.level.gems) {
+        let takenGem = this.level.gems.find(g => arePointsEqual(g, this.level.hero) && !g.taken)
+        if (takenGem) {
+          takenGem.taken = true;
+          this.gemsCollected += 1;
+        }
+      }
     }
   }
 
