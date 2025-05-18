@@ -994,5 +994,144 @@ export const levels = {
       onlyVariablesInAttack: true,
       checksCount: 4,
     },
+
+    [23]: {
+      height: 5,
+      width: 9,
+      grid: [
+        ["lawn","watert","watert","watert","watert","watert","watert","watert","watert"],
+        ["sand","sand","sand","water","water","rock","lawn","tree","lawn"],
+        ["lawn","lawn","sand","sand","sand","lawn","lawn","lawn","tree"],
+        ["tree","lawn","lawn","lawn","sand","sand","sand","lawn","lawn"],
+        ["rock","lawn","rock","lawn","lawn","lawn","sand","sand","sand"],
+      ],
+      hero: { x: 0, y: 0 },
+      finish: { x: 4, y: 8 },
+      gems: [
+        { x: 3, y: 5 },
+        { x: 1, y: 2 },
+      ],
+      enemies: [],
+      levers: [],
+      bridges: [],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша', heroText: 'Проведи меня до финиша, используя цикл', required: true },
+        { type: 'gems', name: 'Собрать все алмазы', required: true },
+        { type: 'lines', name: 'Использовать не более 3 строк кода', heroText: 'Уложись в 3 строчки кода!', linesCount: 3, required: true },
+      ],
+      isWhileTrue: true,
+    },
+    [24]: {
+      height: 9,
+      width: 5,
+      grid: [
+        ["sand","sand","sand","sand","sand"],
+        ["sand","watert","watert","watert","watert"],
+        ["sand","lawn","lawn","lawn","lawn"],
+        ["sand","rock","watert","watert","lawn"],
+        ["sand","lawn","lawn","lawn","lawn"],
+        ["sand","lawn","tree","lawn","lawn"],
+        ["sand","lawn","lawn","lawn","lawn"],
+        ["sand","lawn","lawn","watert","watert"],
+        ["sand","sand","sand","sand","lawn"],
+      ],
+      hero: { x: 8, y: 4 },
+      finish: { x: 0, y: 4 },
+      gems: [
+        { x: 6, y: 4 },
+        { x: 2, y: 4 },
+        { x: 4, y: 4 },
+      ],
+      enemies: [],
+      levers: [],
+      bridges: [],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша', required: true },
+        { type: 'gems', name: 'Собрать все алмазы', heroText: 'Алмазы всегда пригодятся, давай соберем их', required: true },
+        { type: 'lines', name: 'Использовать не более 4 строк кода', heroText: 'Снова используй цикл и уложись в 4 строчки кода', linesCount: 4, required: true },
+      ],
+      isWhileTrue: true,
+    },
+    [25]: {
+      height: 9,
+      width: 9,
+      grid: [
+        ["lawn","lawn","lawn","lawn","rock","watert","watert","watert","watert"],
+        ["lawn","lawn","lawn","lawn","lawn","water","water","water","water"],
+        ["watert","watert","watert","lawn","lawn","water","water","water","water"],
+        ["water","water","tree","lawn","lawn","water","water","water","water"],
+        ["water","lawn","lawn","lawn","lawn","water","water","sand","lawn"],
+        ["water","watert","watert","watert","watert","water","water","sand","lawn"],
+        ["tree","lawn","lawn","water","water","water","lawn","sand","lawn"],
+        ["lawn","sand","sand","water","water","water","sand","sand","lawn"],
+        ["lawn","lawn","lawn","water","water","water","lawn","lawn","tree"],
+      ],
+      hero: { x: 7, y: 7 },
+      finish: { x: 1, y: 1 },
+      gems: [
+        { x: 7, y: 1 },
+      ],
+      enemies: [
+        { x: 4, y: 6, alive: true, name: "Hidden1", hidden: true },
+        { x: 1, y: 3, alive: true, name: "Hidden2", hidden: true },
+      ],
+      levers: [
+        { x: 8, y: 7, activatesId: 'bridge1', name: "Мост1", enabled: false },
+      ],
+      bridges: [
+        {
+          id: "bridge1",
+          vertical: false,
+          start: { x: 7, y: 3 },
+          end: { x: 7, y: 5 },
+          activated: false,
+        },
+        {
+          id: "bridge2",
+          vertical: false,
+          start: { x: 4, y: 5 },
+          end: { x: 4, y: 6 },
+          activated: true,
+        }
+      ],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша', required: true },
+        { type: 'gems', name: 'Подобрать алмаз', heroText: 'Давай сначала заберём этот алмаз', required: true },
+        { type: 'lines', name: 'Использовать не более 8 строк кода', heroText: 'А потом дойдём до финиша, используя цикл', linesCount: 8, required: true },
+      ],
+      isWhileTrue: true,
+    },
+    [26]: {
+      height: 9,
+      width: 9,
+      grid: [
+        ["lawn","lawn","tree","lawn","watert","watert","watert","watert","watert"],
+        ["sand","lawn","lawn","lawn","lawn","water","water","water","water"],
+        ["sand","sand","sand","lawn","lawn","rock","water","water","water"],
+        ["watert","lawn","sand","tree","lawn","lawn","lawn","water","water"],
+        ["water","watert","sand","sand","sand","lawn","lawn","tree","water"],
+        ["water","water","watert","lawn","sand","lawn","lawn","lawn","rock"],
+        ["water","water","water","lawn","sand","sand","sand","lawn","lawn"],
+        ["water","water","lawn","lawn","lawn","lawn","sand","lawn","lawn"],
+        ["water","lawn","lawn","tree","lawn","lawn","sand","sand","sand"],
+      ],
+      hero: { x: 0, y: 0 },
+      finish: { x: 8, y: 8 },
+      gems: [
+      ],
+      enemies: [
+        { x: 2, y: 1, alive: true, name: "Hidden1", hidden: true },
+        { x: 6, y: 5, alive: true, name: "Hidden2", hidden: true },
+      ],
+      levers: [
+      ],
+      bridges: [
+      ],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша', required: true },
+        { type: 'lines', name: 'Использовать не более 7 строк кода', linesCount: 7, required: true },
+      ],
+      isWhileTrue: true,
+    },
   }
 }

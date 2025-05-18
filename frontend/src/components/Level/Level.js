@@ -64,6 +64,7 @@ const normalSpeedDelays = {
   attacking: 500,
   switching: 500,
   findingEnemy: 500,
+  hasEnemyAround: 1000,
 }
 
 const fastSpeedDelays = {
@@ -71,6 +72,7 @@ const fastSpeedDelays = {
   attacking: 250,
   switching: 250,
   findingEnemy: 250,
+  hasEnemyAround: 500,
 }
 
 const walkingAudio = new Audio(walkingSound);
@@ -305,6 +307,23 @@ export const Level = () => {
         ]);
       }
       await delay(getDelays().findingEnemy);
+    } else if (command.name === 'has_enemy_around') {
+      if (command.hasEnemy) {
+        setHeroTexts([
+          {
+            value: 'has_enemy_around: Рядом враг!',
+            delay: 1000,
+          },
+        ]);
+      } else {
+        setHeroTexts([
+          {
+            value: 'has_enemy_around: Рядом нет врагов!',
+            delay: 1000,
+          },
+        ]);
+      }
+      await delay(getDelays().hasEnemyAround);
     } else if (command.name === 'enemy_move') {
       const updatedEnemies = copy(updatedLevelData.enemies);
 
@@ -425,7 +444,8 @@ export const Level = () => {
       newLevelData.levers = pausedVariant.current?.levers || variant.variant.levers;
       newLevelData.bridges = newLevelData.bridges.map(bridge => {
         const lever = newLevelData.levers.find(l => l.activatesId === bridge.id);
-        bridge.activated = lever.enabled;
+        if (lever)
+          bridge.activated = lever.enabled;
         return bridge;
       });
 
@@ -522,6 +542,15 @@ export const Level = () => {
         }
       ]);
     }
+
+    if (gameplayError?.type === GameplayErrorTypes.INFINITE_LOOP) {
+      setHeroTexts([
+        {
+          value: 'Ой, кажется, я застрял в бесконечном цикле!',
+          delay: 3000,
+        }
+      ]);
+    }
   };
 
   const resetData = () => {
@@ -549,6 +578,7 @@ export const Level = () => {
       setLevelVariants(data);
       await execVariants();
     } catch (error) {
+      console.log(error);
       setCodeErrors(error.response.data.errors);
     } finally {
       setIsActuallyRunning(false);

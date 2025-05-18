@@ -9,5 +9,6 @@ export default class GameplayErrorTypes {
     static LEVER_TOO_FAR = 'lever_too_far';
     static CANT_BE_HERE = 'cant_be_here';
     static ENEMY_SHOULD_NOT_BE_HERE = 'enemy_should_not_be_here';
-    static HERO_KILLED_BY_ENEMY = 'HERO_KILLED_BY_ENEMY';
+    static HERO_KILLED_BY_ENEMY = 'hero_killed_by_enemy';
+    static INFINITE_LOOP = 'infinite_loop';
 }

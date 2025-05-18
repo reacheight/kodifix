@@ -1,6 +1,6 @@
 export const calculateCodeLines = (userCode) => userCode
   .split(/\r\n|\r|\n/)
-  .filter(s => !s.startsWith('#'))
+  .filter(s => !s.trim().startsWith('#'))
   .filter(s => /\S/.test(s))
   .length;
 

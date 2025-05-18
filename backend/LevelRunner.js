@@ -205,7 +205,8 @@ export default class LevelRunner {
         this.level.levers = structuredClone(variant.levers);
         this.level.bridges = this.level.bridges.map(bridge => {
           const lever = this.level.levers.find(l => l.activatesId === bridge.id);
-          bridge.activated = lever.enabled;
+          if (lever)
+            bridge.activated = lever.enabled;
           return bridge;
         })
       }
@@ -230,6 +231,14 @@ export default class LevelRunner {
           value = this.engine.evloop.next();
           if ( value.value && value.value.then ) throw new Error('Can\'t deal with futures when running in sync mode');
           if ( ++steps > this.engine.options.executionLimit ) throw new Error('Execution Limit Reached');
+
+          if (this.level.isWhileTrue && arePointsEqual(this.level.hero, this.level.finish))
+            break;
+
+          if (steps > 300) {
+            this.gameplayError = { type: GameplayErrorTypes.INFINITE_LOOP };
+            break;
+          }
         }
       } catch (e) {
   
@@ -283,6 +292,7 @@ export default class LevelRunner {
       case 'finish':
         return arePointsEqual(this.level.finish, this.level.hero);
       case 'lines':
+        console.log(calculateCodeLines(code));
         return calculateCodeLines(code) <= goal.linesCount;
       case 'gems':
         return this.gemsCollected === this.level.gems.length;
@@ -309,18 +319,17 @@ export default class LevelRunner {
         ((Math.abs(e.x - this.level.hero.x) <= 1 && e.y - this.level.hero.y === 0) || (Math.abs(e.y - this.level.hero.y) <= 1 && e.x - this.level.hero.x === 0)) // толко по прямым линиям
       );
 
-      if (adjustedEnemy) {
-        this.pushNewCommand("enemy_attack", { isEnemyToTheLeft: adjustedEnemy.y < this.level.hero.y });
-        this.gameplayError = { type: GameplayErrorTypes.HERO_KILLED_BY_ENEMY };
-        return;
-      }
-
-
       this.level.hero.x += Math.sign(newHeroPosition.x - this.level.hero.x);
       this.level.hero.y += Math.sign(newHeroPosition.y - this.level.hero.y);
 
       if (this.isPointOutOfMap(this.level.hero) || this.isPointHitWall(this.level.hero)) {
         this.gameplayError = { type: GameplayErrorTypes.HERO_RAN_IN_WALL, wallPosition: this.level.hero };
+        return;
+      }
+
+      if (adjustedEnemy) {
+        this.pushNewCommand("enemy_attack", { isEnemyToTheLeft: adjustedEnemy.y < this.level.hero.y });
+        this.gameplayError = { type: GameplayErrorTypes.HERO_KILLED_BY_ENEMY };
         return;
       }
 
@@ -337,6 +346,9 @@ export default class LevelRunner {
           this.gemsCollected += 1;
         }
       }
+
+      if (this.level.isWhileTrue && arePointsEqual(this.level.hero, this.level.finish))
+        return;
     }
   }
 
