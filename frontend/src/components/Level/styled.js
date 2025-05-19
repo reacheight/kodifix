@@ -109,12 +109,12 @@ export const CellFilter = styled.div`
 `
 
 export const Tree = styled.div`
-  width: 75px;
+  width: 100px;
   height: 100px;
   background: url(${tree}) no-repeat center;
   position: relative;
-  bottom: 60px;
-  right: 12px;
+  bottom: 50px;
+  right: 25px;
 
   opacity: ${({ x, y, heroX, heroY }) =>
     x - heroX === 1 && y === heroY ? 0.5 : 1};
@@ -130,10 +130,11 @@ export const Tree = styled.div`
 
 export const Rock = styled.div`
   width: 100px;
-  height: 85px;
+  height: 100px;
+  transform: scale(0.6);
   background: url(${rock}) no-repeat center;
   position: relative;
-  bottom: 20px;
+  bottom: 25px;
   right: 25px;
 
   z-index: ${({ x, heroX }) => (x <= heroX ? 1 : 2)};

@@ -1096,7 +1096,7 @@ export const levels = {
       ],
       goals: [
         { type: 'finish', name: 'Добраться до финиша', required: true },
-        { type: 'gems', name: 'Подобрать алмаз', heroText: 'Давай сначала заберём этот алмаз', required: true },
+        { type: 'gems', name: 'Подобрать алмаз', heroText: 'Давай сначала заберём этот алмаз', required: false },
         { type: 'lines', name: 'Использовать не более 8 строк кода', heroText: 'А потом дойдём до финиша, используя цикл', linesCount: 8, required: true },
       ],
       isWhileTrue: true,
