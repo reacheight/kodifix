@@ -419,13 +419,13 @@ export const levels = {
         ["watert","watert","watert","watert","watert","watert","watert","water","water",],
         ["water","water","water","water","water","water","water","water","water",],
         ["rock","lawn","sand","lawn","lawn","lawn","lawn","sand","water",],
-        ["lawn","lawn","sand","lawn","lawn","rock","lawn","sand","lawn",],
-        ["sand","sand","sand","sand","sand","sand","sand","sand","tree",],
+        ["watert","lawn","sand","lawn","lawn","rock","lawn","sand","lawn",],
+        ["water","watert","sand","sand","sand","sand","sand","sand","tree",],
       ],
       hero: { x: 4, y: 7 },
-      finish: { x: 6, y: 0 },
+      finish: { x: 1, y: 6 },
       gems: [
-        { x: 6, y: 7 }, { x: 0, y: 3 },
+        { x: 6, y: 7 }, { x: 1, y: 1 },
       ],
       enemies: [
         { x: 1, y: 5, alive: true, name: "BigBoy", big: true, moveFinish: { x: 4, y: 2 } },
