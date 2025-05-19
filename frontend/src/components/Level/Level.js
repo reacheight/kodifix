@@ -65,6 +65,7 @@ const normalSpeedDelays = {
   switching: 500,
   findingEnemy: 500,
   hasEnemyAround: 1000,
+  enemyWalk: 150,
 }
 
 const fastSpeedDelays = {
@@ -73,6 +74,7 @@ const fastSpeedDelays = {
   switching: 250,
   findingEnemy: 250,
   hasEnemyAround: 500,
+  enemyWalk: 100,
 }
 
 const walkingAudio = new Audio(walkingSound);
@@ -86,6 +88,7 @@ export const Level = () => {
   const [initialLevelData, setInitialLevelData] = useRefState(null);
   const [levelData, setLevelData] = useRefState(null);
   const [heroShift, setHeroShift] = useRefState({ right: 0, bottom: 0 });
+  const [enemyShifts, setEnemyShifts] = useRefState({});
   const [isActuallyRunning, setIsActuallyRunning] = useRefState(false);
   const [isPaused, setIsPaused] = useRefState(false);
   const [isStopped, setIsStopped] = useRefState(false);
@@ -154,6 +157,7 @@ export const Level = () => {
     setInitialLevelData(null);
     setLevelData(null);
     setHeroShift({ right: 0, bottom: 0 });
+    setEnemyShifts({});
     setIsActuallyRunning(false);
     setIsStopped(false);
     setIsPaused(false);
@@ -326,22 +330,45 @@ export const Level = () => {
       await delay(getDelays().hasEnemyAround);
     } else if (command.name === 'enemy_move') {
       const updatedEnemies = copy(updatedLevelData.enemies);
+      const updatedEnemyShifts = { ...enemyShifts.current };
 
       const targetIndex = updatedEnemies.findIndex(
         (enemy) => enemy.name === command.enemy,
       );
 
+      const targetEnemy = updatedEnemies[targetIndex];
+      
+      if (!updatedEnemyShifts[targetEnemy.name]) {
+        updatedEnemyShifts[targetEnemy.name] = { bottom: 0, right: 0 };
+      }
+      
+      const currentShift = updatedEnemyShifts[targetEnemy.name];
+
       switch (command.direction) {
+        case 'up':
+          currentShift.bottom += 49;
+          updatedEnemies[targetIndex].x -= 1;
+          break;
         case 'down':
-          // updatedHeroShift.bottom -= 49;
+          currentShift.bottom -= 49;
           updatedEnemies[targetIndex].x += 1;
           break;
+        case 'right':
+          currentShift.right -= 49;
+          updatedEnemies[targetIndex].y += 1;
+          break;
         case 'left':
-          // updatedHeroShift.right -= 49;
-          // updatedHeroShift.direction = 'right';
+          currentShift.right += 49;
           updatedEnemies[targetIndex].y -= 1;
           break;
       }
+
+      setEnemyShifts(updatedEnemyShifts);
+      
+      await delay(getDelays().enemyWalk);
+
+      updatedEnemyShifts[targetEnemy.name] = { bottom: 0, right: 0 };
+      setEnemyShifts(updatedEnemyShifts);
 
       updatedLevelData.enemies = updatedEnemies;
     }
@@ -556,6 +583,7 @@ export const Level = () => {
   const resetData = () => {
     setHeroTexts([]);
     setHeroShift({ right: 0, bottom: 0 });
+    setEnemyShifts({});
     setLevelData({ ...initialLevelData.current });
     setCurrentVariant(null);
     setPausedCommand(null);
@@ -813,6 +841,7 @@ export const Level = () => {
                 spedUp={isSpedUp()}
                 isRandom={enemy.random}
                 isBig={enemy.big}
+                shift={enemyShifts.current[enemy.name] ?? { bottom: 0, right: 0 }}
               />
             ))}
             <Hero

@@ -49,10 +49,15 @@ export const Wrapper = styled.div`
   text-align: center;
   z-index: ${({ x }) => (x)};
   transform: scale(${({ isBig }) => (isBig ? 2 : 1)});
+  transition: ${({ spedUp }) => css`
+    right ${spedUp ? 100 : 150}ms linear, 
+    bottom ${spedUp ? 100 : 150}ms linear;
+  `}
 
-  ${({ isBig, nameHidden }) => css`
-    bottom: ${nameHidden ? 45 : (isBig ? 115 : 70)}px;
-  `};
+  ${({ shift, isBig, nameHidden }) => shift && css`
+    bottom: ${(nameHidden ? 45 : (isBig ? 115 : 70)) + shift.bottom}px;
+    right: ${shift.right}px;
+  `}
 
   ${({ x, y }) => css`
     grid-row-start: ${x + 1};
