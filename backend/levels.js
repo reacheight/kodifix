@@ -47,15 +47,18 @@ export const levels = {
     },
   
     [3]: {
-      height: 2,
+      height: 5,
       width: 7,
       grid: [
-        ["tree","lawn","sand","lawn","rock","lawn","rock",],
-        ["grass","lawn","sand","sand","sand","sand","sand",],
+        ["tree","lawn","sand","lawn","rock","tree","rock",],
+        ["lawn","lawn","sand","lawn","lawn","lawn","lawn",],
+        ["lawn","lawn","sand","sand","sand","sand","sand",],
+        ["watert","lawn","rock","watert","watert","lawn","lawn",],
+        ["water","watert","watert","water","water","watert","tree",],
       ],
-      hero: { x: 1, y: 0 },
-      finish: { x: 1, y: 6 },
-      gems: [ { x: 1, y: 3 }],
+      hero: { x: 2, y: 0 },
+      finish: { x: 2, y: 6 },
+      gems: [ { x: 2, y: 3 }],
       enemies: [],
   
       goals: [
@@ -296,21 +299,23 @@ export const levels = {
     },
   
     [10]: {
-      height: 3,
+      height: 5,
       width: 8,
       grid: [
-        ["lawn","lawn","lawn","grass","lawn","lawn","lawn","lawn",],
-        ["sand","sand","rock","rock","rock","rock","rock","rock",],
-        ["grass","sand","sand","sand","lawn","lawn","grass","lawn",],
+        ["tree","lawn","lawn","lawn","lawn","lawn","lawn","lawn",],
+        ["sand","sand","rock","lawn","lawn","lawn","watert","watert",],
+        ["lawn","sand","lawn","tree","watert","watert","water","water",],
+        ["tree","sand","sand","lawn","rock","water","water","lawn",],
+        ["lawn","lawn","sand","sand","sand","sand","sand","sand",],
       ],
       hero: { x: 0, y: 7 },
-      finish: { x: 2, y: 7 },
+      finish: { x: 4, y: 7 },
       gems: [
-        { x: 0, y: 0 },
+        { x: 4, y: 0 },
       ],
       enemies: [
         { x: 0, y: 1, alive: true, name: "John" },
-        { x: 2, y: 5, alive: true, name: "Greg" },
+        { x: 4, y: 5, alive: true, name: "Greg" },
       ],
       goals: [
         { type: 'finish', name: 'Добраться до финиша', heroText: 'Проведи меня до финиша', required: true },
@@ -535,27 +540,26 @@ export const levels = {
     },
   
     [16]: {
-      height: 8,
+      height: 7,
       width: 8,
       grid: [
         ["tree","sand","tree","lawn","lawn","grass","sand","lawn",],
-        ["lawn","sand","sand","sand","sand","sand","sand","lawn",],
-        ["grass","lawn","lawn","sand","lawn","lawn","sand","lawn",],
-        ["watert","watert","watert","watert","watert","rock","sand","rock",],
+        ["watert","sand","sand","sand","sand","sand","sand","lawn",],
+        ["water","watert","lawn","sand","lawn","lawn","sand","lawn",],
+        ["water","water","watert","watert","watert","rock","sand","lawn",],
         ["water","water","water","water","water","lawn","sand","rock",],
-        ["water","water","water","water","water","lawn","sand","rock",],
-        ["lawn","sand","sand","sand","sand","sand","sand","grass",],
-        ["lawn","sand","lawn","grass","lawn","lawn","sand","sand",],
+        ["water","water","water","water","water","tree","sand","lawn",],
+        ["water","lawn","lawn","lawn","lawn","lawn","sand","sand",],
       ],
       hero: { x: 1, y: 2 },
-      finish: { x: 7, y: 1 },
+      finish: { x: 6, y: 1 },
       gems: [
         { x: 1, y: 6 }, { x: 6, y: 7 },
       ],
       enemies: [
         { x: 1, y: 7, alive: true, name: "Hidden1", hidden: true },
         { x: 6, y: 5, alive: true, name: "Hidden2", hidden: true },
-        { x: 6, y: 0, alive: true, name: "Hidden3", hidden: true },
+        { x: 6, y: 2, alive: true, name: "Hidden3", hidden: true },
       ],
       goals: [
         { type: 'finish', name: 'Добраться до финиша', heroText: 'Нужно пробраться к финишу через этих безымянных врагов', required: true },
