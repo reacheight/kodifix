@@ -11,4 +11,5 @@ export default class GameplayErrorTypes {
   static ENEMY_SHOULD_NOT_BE_HERE = 'enemy_should_not_be_here';
   static HERO_KILLED_BY_ENEMY = 'hero_killed_by_enemy';
   static INFINITE_LOOP = 'infinite_loop';
+  static ENEMY_IS_BIG = 'enemy_is_big';
 }

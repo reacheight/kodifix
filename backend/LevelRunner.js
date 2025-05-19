@@ -32,8 +32,13 @@ export default class LevelRunner {
         return;
       }
 
+      if (target.big) {
+        this.gameplayError = { type: GameplayErrorTypes.ENEMY_IS_BIG, name: targetName };
+        return;
+      }
+
       target.alive = false;
-      this.pushNewCommand(`attack`, { target: targetName });
+      this.pushNewCommand(`attack`, { target: targetName, isDead: !target.alive });
     },
 
     switch: (leverName) => {

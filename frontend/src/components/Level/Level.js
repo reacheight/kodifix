@@ -527,6 +527,14 @@ export const Level = () => {
       ]);
     }
 
+    if (gameplayError?.type === GameplayErrorTypes.ENEMY_IS_BIG) {
+      setHeroTexts([
+        {
+          value: `Я не могу атаковать «${gameplayError.name}» — он слишком сильный`,
+        },
+      ]);
+    }
+
     if (gameplayError?.type === GameplayErrorTypes.NO_LEVERS) {
       setHeroTexts([
         {
