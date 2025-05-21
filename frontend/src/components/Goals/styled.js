@@ -110,8 +110,8 @@ export const Goal = styled.div`
   ${({ notCompleted }) =>
     notCompleted &&
     css`
-      color: red;
-      font-weight: 800;
+      color:rgb(255, 100, 100);
+      font-weight: 400;
     `}
 
   img {
