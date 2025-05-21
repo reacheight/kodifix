@@ -189,12 +189,13 @@ export const Gem = styled.div`
 `;
 
 export const Finish = styled.div`
-  width: 64px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
+  transform: scale(0.6);
   background: url(${finish}) no-repeat center;
   position: relative;
   bottom: 45px;
-  left: 15px;
+  right: 14px;
 
   ${({ x, y, zIndex }) => css`
     z-index: ${zIndex};
