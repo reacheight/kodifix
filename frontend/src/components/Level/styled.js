@@ -59,7 +59,7 @@ export const MapWrapper = styled.div`
   transform: scale(${({ scale }) => scale});
   margin-right: 100px;
 
-  @media only screen and (max-width: 1024px) {
+  @media only screen and (max-width: 1300px) {
     margin-right: 0px;
   }
 `;

@@ -29,10 +29,6 @@ export const Wrapper = styled.div`
   padding-right: 540px;
 
   @media only screen and (max-width: 1300px) {
-    padding-right: 489px;
-  }
-
-  @media only screen and (max-width: 1024px) {
     padding-right: 0px;
   }
 `;
