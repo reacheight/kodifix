@@ -764,6 +764,42 @@ export const levels = {
     },
 
     [22]: {
+      height: 6,
+      width: 13,
+      grid: [
+        ["lawn","watert","tree","watert","watert","lawn","rock","sand","tree","sand","watert","watert","watert"],
+        ["sand","water","sand","sand","lawn","lawn","lawn","sand","lawn","sand","sand","sand","sand"],
+        ["sand","water","sand","lawn","lawn","lawn","lawn","sand","lawn","lawn","lawn","lawn","lawn"],
+        ["sand","sand","sand","lawn","lawn","lawn","lawn","sand","sand","sand","lawn","lawn","lawn"],
+        ["sand","watert","rock","lawn","tree","watert","lawn","lawn","lawn","sand","lawn","rock","lawn"],
+        ["sand","water","watert","lawn","watert","water","lawn","rock","tree","sand","watert","watert","lawn"]
+      ],
+      hero: { x: 1, y: 0 },
+      finish: { x: 1, y: 12 },
+      gems: [
+        { x: 5, y: 0 },
+        { x: 5, y: 3 },
+        { x: 5, y: 6 },
+        { x: 5, y: 9 },
+      ],
+      enemies: [
+        { x: 2, y: 2, alive: true, name: "Hidden1", hidden: true },
+        { x: 2, y: 5, alive: true, name: "Hidden2", hidden: true },
+        { x: 2, y: 11, alive: true, name: "Hidden3", hidden: true },
+      ],
+      levers: [
+      ],
+      bridges: [
+      ],
+      goals: [
+        { type: 'finish', name: 'Добраться до финиша', required: true },
+        { type: 'lines', name: 'Использовать не более 9 строк кода', linesCount: 9, required: true },
+        { type: 'gems', name: 'Собрать все алмазы', heroText: 'Сможем захватит с собой все алмазы?', required: false },
+      ],
+      isWhileTrue: true,
+    },
+
+    [23]: {
       height: 9,
       width: 13,
       grid: [
@@ -859,7 +895,7 @@ export const levels = {
       ],
     },
 
-    [23]: {
+    [24]: {
       height: 8,
       width: 8,
       grid: [
@@ -932,7 +968,7 @@ export const levels = {
       checksCount: 4,
     },
   
-    [24]: {
+    [25]: {
       height: 7,
       width: 9,
       grid: [
@@ -989,7 +1025,7 @@ export const levels = {
       checksCount: 4,
     },
 
-    [25]: {
+    [26]: {
       height: 7,
       width: 9,
       grid: [
@@ -1074,7 +1110,7 @@ export const levels = {
       checksCount: 4,
     },
 
-    [26]: {
+    [27]: {
       id: 'if-guarded-gems',
       height: 7,
       width: 9,
