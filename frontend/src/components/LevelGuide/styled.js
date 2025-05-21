@@ -17,11 +17,20 @@ export const Wrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 101;
+  z-index: 102;
   display: flex;
   justify-content: center;
   align-items: center;
   animation: 0ms ${appearance} linear forwards;
+  padding-right: 540px;
+
+  @media only screen and (max-width: 1300px) {
+    padding-right: 489px;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    padding-right: 0px;
+  }
 `;
 
 export const Modal = styled.div`

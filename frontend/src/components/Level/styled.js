@@ -57,6 +57,11 @@ export const MapWrapper = styled.div`
   justify-content: center;
   transition: 50ms linear;
   transform: scale(${({ scale }) => scale});
+  margin-right: 100px;
+
+  @media only screen and (max-width: 1024px) {
+    margin-right: 0px;
+  }
 `;
 
 export const MapField = styled.div`
@@ -209,12 +214,6 @@ export const Finish = styled.div`
 export const MenuButton = styled.div`
   position: fixed;
   z-index: 101;
-
-  top: 10px;
-  right: 540px;
-
-  @media only screen and (max-width: 1300px) {
-    right: 489px;
-  }
-}
-`
+  top: 15px;
+  left: 15px;
+`;

@@ -8,6 +8,12 @@ export const Wrapper = styled.div`
   align-items: center;
   padding: 10px 10px;
   opacity: 0.7;
+  top: 10px;
+  right: 540px;
+
+  @media only screen and (max-width: 1300px) {
+    right: 489px;
+  }
 
   &:hover {
     opacity: 0.9;
@@ -62,7 +68,7 @@ export const CollapseContent = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  overflow: hidden;
+  overflow-y: auto;
   transition: 0.3s ease-in-out;
 
   ${({ isOpen }) =>
