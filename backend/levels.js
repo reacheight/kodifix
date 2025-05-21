@@ -659,7 +659,7 @@ export const levels = {
         ["sand","lawn","lawn","lawn","lawn"],
         ["sand","lawn","tree","lawn","lawn"],
         ["sand","lawn","lawn","lawn","lawn"],
-        ["sand","lawn","lawn","watert","watert"],
+        ["sand","tree","lawn","watert","watert"],
         ["sand","sand","sand","sand","lawn"],
       ],
       hero: { x: 8, y: 4 },
