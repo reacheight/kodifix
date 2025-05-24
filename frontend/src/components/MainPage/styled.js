@@ -15,11 +15,12 @@ const currentLevelAnimation = keyframes`
 
 export const Container = styled.div`
   padding: 20px;
+  padding-top: 200px;
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 40px;
 
   @media (max-width: 1200px) {
@@ -27,10 +28,12 @@ export const Container = styled.div`
     align-items: center;
     gap: 30px;
     padding: 20px;
+    padding-top: 120px;
   }
 
   @media (max-width: 768px) {
     padding: 15px;
+    padding-top: 100px;
     gap: 20px;
   }
 `;
@@ -71,6 +74,10 @@ export const ModuleCard = styled.div`
     display: flex;
     flex-direction: row;
     align-items: stretch;
+    min-height: 160px;
+  }
+
+  @media (max-width: 900px) {
     min-height: 140px;
   }
 
@@ -91,21 +98,12 @@ export const ModulePreview = styled.div`
 
   @media (max-width: 1200px) {
     flex-shrink: 0;
-    width: 160px;
+    width: 220px;
 
     img {
-      width: 160px;
+      width: 220px;
       height: 100%;
       min-height: 140px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    width: 120px;
-
-    img {
-      width: 120px;
-      min-height: 120px;
     }
   }
 `;
