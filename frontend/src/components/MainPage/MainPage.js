@@ -16,6 +16,12 @@ import {
   Level,
   TopGradient,
   BotGradient,
+  ModuleProgress,
+  ProgressBar,
+  ProgressText,
+  ModuleStatus,
+  ModulePreview,
+  ModuleNumber,
 } from './styled';
 import module1Preview from '../../assets/module1-preview.png';
 import Cookies from 'js-cookie';
@@ -82,9 +88,13 @@ export const MainPage = () => {
     />
   );
 
+  // Calculate progress for the module
+  const totalLevels = 22;
+  const progressPercentage = Math.round((completedLevelsCount / totalLevels) * 100);
+
   // Calculate map dimensions for the card
-  const maxMapWidth = 900;
-  const maxMapHeight = 600;
+  const maxMapWidth = 1200;
+  const maxMapHeight = 800;
   const mapRatio = 898 / 1863;
   
   const calculateMapWidthAndHeight = () => {
@@ -101,10 +111,31 @@ export const MainPage = () => {
     <Layout>
       <Container>
         <ModuleCard>
-          <img src={module1Preview} alt="Module 1 Preview" />
+          <ModulePreview>
+            <img src={module1Preview} alt="Лесной путь Preview" />
+            <ModuleNumber>Модуль 1</ModuleNumber>
+            <ModuleStatus>
+              {progressPercentage === 100 ? 'Завершен' : 'В процессе'}
+            </ModuleStatus>
+          </ModulePreview>
+          
           <ModuleInfo>
             <ModuleTitle>Лесной путь</ModuleTitle>
-            <LevelCount>21 уровень</LevelCount>
+            <LevelCount>{totalLevels} уровня</LevelCount>
+            
+            <ModuleProgress>
+              <ProgressText>
+                {completedLevelsCount} / {totalLevels} уровней завершено
+              </ProgressText>
+              <ProgressBar>
+                <div style={{ width: `${progressPercentage}%` }} />
+              </ProgressBar>
+            </ModuleProgress>
+
+            <Description>
+              Изучите основы программирования в увлекательном путешествии через лес
+            </Description>
+            
             <Tags>
               <Tag>знакомство с платформой</Tag>
               <Tag>основы синтаксиса</Tag>
@@ -113,7 +144,9 @@ export const MainPage = () => {
               <Tag>строки</Tag>
               <Tag>комментарии</Tag>
               <Tag>переменные</Tag>
+              <Tag>циклы</Tag>
               <Tag>if-выражения</Tag>
+              <Tag className="mobile-more-tags">+6 ещё</Tag>
             </Tags>
           </ModuleInfo>
         </ModuleCard>
