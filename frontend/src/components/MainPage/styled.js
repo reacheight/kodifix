@@ -238,10 +238,6 @@ export const GameMapContainer = styled.div`
   padding: 0;
   overflow: hidden;
   border-radius: 16px;
-
-  @media (max-width: 768px) {
-    border-radius: 0;
-  }
 `;
 
 export const Map = styled.div`
@@ -267,35 +263,13 @@ export const Map = styled.div`
   }
 `;
 
-export const TopGradient = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 20px;
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-  z-index: 1;
-  border-radius: 16px 16px 0 0;
-`;
-
-export const BotGradient = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 20px;
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
-  z-index: 1;
-  border-radius: 0 0 16px 16px;
-`;
-
 export const Level = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
   position: absolute;
-  width: 52px;
-  height: 65px;
+  width: 40px;
+  height: 40px;
   background: url(${({ current, completed }) =>
     current
       ? currentLevelIcon
@@ -327,8 +301,8 @@ export const Level = styled.button`
   }
 
   ${({ bottomPercent, leftPercent, current }) => css`
-    bottom: ${bottomPercent + (current ? 2 : 0)}%;
-    left: ${leftPercent + (current ? 0.5 : 0)}%;
+    bottom: ${bottomPercent + (current ? 0 : 0)}%;
+    left: ${leftPercent + (current ? 0 : 0)}%;
   `};
 
   transition: all 0.2s ease;
