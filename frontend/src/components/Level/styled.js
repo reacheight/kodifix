@@ -48,6 +48,19 @@ export const MainWrapper = styled.div`
   flex-grow: 1;
   z-index: 100;
   background-image: linear-gradient(#99C979, #5F9F6E);
+  overflow: hidden;
+`;
+
+export const DragWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transform: translate(${({ dragPosition }) => dragPosition.x}px, ${({ dragPosition }) => dragPosition.y}px);
+  cursor: ${({ isDragging }) => isDragging ? 'grabbing' : 'grab'};
+  user-select: none;
 `;
 
 export const MapWrapper = styled.div`
@@ -55,7 +68,6 @@ export const MapWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: 50ms linear;
   transform: scale(${({ scale }) => scale});
   margin-right: 100px;
 

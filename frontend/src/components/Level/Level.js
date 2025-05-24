@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
@@ -16,6 +16,7 @@ import {
   LoadingBackground,
   CellFilter,
   MenuButton,
+  DragWrapper,
 } from './styled';
 import { axios } from '../../api/axios';
 
@@ -107,6 +108,10 @@ export const Level = () => {
   const [codeErrors, setCodeErrors] = useState(null);
   const [scale, setScale] = useState(1.5);
   const [forceShowGoals, setForceShowGoals] = useState(false);
+  const [dragPosition, setDragPosition] = useRefState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useRefState(false);
+  const [dragStart, setDragStart] = useRefState({ x: 0, y: 0 });
+  const dragAnimationFrame = useRefState(null);
 
   const isSpedUp = () => currentVariant.current && currentVariant.current > 0;
   const getDelays = () => isSpedUp() ? fastSpeedDelays : normalSpeedDelays;
@@ -192,6 +197,15 @@ export const Level = () => {
       }
     })();
   }, [id]);
+
+  useEffect(() => {
+    return () => {
+      if (dragAnimationFrame.current) {
+        cancelAnimationFrame(dragAnimationFrame.current);
+        dragAnimationFrame.current = null;
+      }
+    };
+  }, []);
 
   const executeCommand = async (command, i) => {
     const updatedLevelData = copy(levelData.current);
@@ -599,6 +613,12 @@ export const Level = () => {
     setCodeErrors(null);
     setForceShowGoals(false);
     setIsLevelFinished(false);
+    setDragPosition({ x: 0, y: 0 });
+    setIsDragging(false);
+    if (dragAnimationFrame.current) {
+      cancelAnimationFrame(dragAnimationFrame.current);
+      dragAnimationFrame.current = null;
+    }
   };
 
   const startGame = async () => {
@@ -695,7 +715,7 @@ export const Level = () => {
 
   const SCALE_STEP = 0.1;
   const MAX_SCALE = 3.0;
-  const MIN_SCALE = 0.8;
+  const MIN_SCALE = 0.2;
 
   const increaseScale = (coefficient = 1) => {
     setScale((prevState) => {
@@ -730,6 +750,53 @@ export const Level = () => {
       increaseScale();
     } else if (deltaY > 0) {
       decreaseScale();
+    }
+  };
+
+  const handleMouseDown = (e) => {
+    if (e.button === 0) {
+      setIsDragging(true);
+      setDragStart({ x: e.clientX - dragPosition.current.x, y: e.clientY - dragPosition.current.y });
+      e.preventDefault();
+    }
+  };
+
+  const updateDragPosition = (clientX, clientY) => {
+    if (dragAnimationFrame.current) {
+      cancelAnimationFrame(dragAnimationFrame.current);
+    }
+    
+    dragAnimationFrame.current = requestAnimationFrame(() => {
+      if (isDragging.current) {
+        const newX = clientX - dragStart.current.x;
+        const newY = clientY - dragStart.current.y;
+        setDragPosition({ x: newX, y: newY });
+      }
+      dragAnimationFrame.current = null;
+    });
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging.current) {
+      updateDragPosition(e.clientX, e.clientY);
+    }
+  };
+
+  const handleMouseUp = (e) => {
+    if (e.button === 0) {
+      setIsDragging(false);
+      if (dragAnimationFrame.current) {
+        cancelAnimationFrame(dragAnimationFrame.current);
+        dragAnimationFrame.current = null;
+      }
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    if (dragAnimationFrame.current) {
+      cancelAnimationFrame(dragAnimationFrame.current);
+      dragAnimationFrame.current = null;
     }
   };
 
@@ -772,120 +839,132 @@ export const Level = () => {
         goalsResult={isNullish(currentVariant.current) ? [] : levelVariants.current[currentVariant.current].variantResult.goals}
       />
       <MainWrapper>
-        <MapWrapper scale={scale} onWheel={handleWheel}>
-          <MapField width={width} height={height}>
-            {cells.map((cell) => {
-              if (cell.type === 'sand') {
-                return (
-                  <Sand key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y}>
-                    <CellFilter x={cell.x} y={cell.y} />
-                  </Sand>
-                );
-              }
-              else {
-                return (
-                  <Lawn key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y}>
-                    <CellFilter x={cell.x} y={cell.y} />
-                  </Lawn>
-                )
-              }
-            })}
-            <Finish x={finish.x} y={finish.y} zIndex={finish.x} />
-            {water.map((water) => (
-              <Water
-                isTop={water.type === 'watert'}
-                key={`${water.x}${water.y}`}
-                x={water.x}
-                y={water.y}
-                heroX={hero.x}
-                heroY={hero.y}
-              >
-                <CellFilter x={water.x} y={water.y} />
-              </Water>
-            ))}
-            {rocks.map((rock) => (
-              <Rock
-                key={`${rock.x}${rock.y}`}
-                x={rock.x}
-                y={rock.y}
-                heroX={hero.x}
-                heroY={hero.y}
-                zIndex={rock.x}
-              />
-            ))}
-            {trees.map((tree) => (
-              <Tree
-                key={`${tree.x}${tree.y}`}
-                x={tree.x}
-                y={tree.y}
-                heroX={hero.x}
-                heroY={hero.y}
-                zIndex={tree.x}
-              />
-            ))}
-            {bridges.map((bridge) => (
-              <Bridge
-                key={`${bridge.id}`}
-                xStart={bridge.start.x}
-                xEnd={bridge.end.x}
-                yStart={bridge.start.y}
-                yEnd={bridge.end.y}
-                vertical={bridge.vertical}
-                activated={bridge.activated}
-                random={bridge.random}
-              />
-            ))}
-            {enemies.map((enemy) => (
-              <Enemy
-                key={`${enemy.x}${enemy.y}`}
-                x={enemy.x}
-                y={enemy.y}
-                heroX={hero.x}
-                heroY={hero.y}
-                zIndex={enemy.x}
-                name={enemy.name}
-                alive={enemy.alive}
-                nameHidden={enemy.hidden}
+        <DragWrapper
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onWheel={handleWheel}
+          dragPosition={dragPosition.current}
+          isDragging={isDragging.current}
+        >
+          <MapWrapper 
+            scale={scale}
+          >
+            <MapField width={width} height={height}>
+              {cells.map((cell) => {
+                if (cell.type === 'sand') {
+                  return (
+                    <Sand key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y}>
+                      <CellFilter x={cell.x} y={cell.y} />
+                    </Sand>
+                  );
+                }
+                else {
+                  return (
+                    <Lawn key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y}>
+                      <CellFilter x={cell.x} y={cell.y} />
+                    </Lawn>
+                  )
+                }
+              })}
+              <Finish x={finish.x} y={finish.y} zIndex={finish.x} />
+              {water.map((water) => (
+                <Water
+                  isTop={water.type === 'watert'}
+                  key={`${water.x}${water.y}`}
+                  x={water.x}
+                  y={water.y}
+                  heroX={hero.x}
+                  heroY={hero.y}
+                >
+                  <CellFilter x={water.x} y={water.y} />
+                </Water>
+              ))}
+              {rocks.map((rock) => (
+                <Rock
+                  key={`${rock.x}${rock.y}`}
+                  x={rock.x}
+                  y={rock.y}
+                  heroX={hero.x}
+                  heroY={hero.y}
+                  zIndex={rock.x}
+                />
+              ))}
+              {trees.map((tree) => (
+                <Tree
+                  key={`${tree.x}${tree.y}`}
+                  x={tree.x}
+                  y={tree.y}
+                  heroX={hero.x}
+                  heroY={hero.y}
+                  zIndex={tree.x}
+                />
+              ))}
+              {bridges.map((bridge) => (
+                <Bridge
+                  key={`${bridge.id}`}
+                  xStart={bridge.start.x}
+                  xEnd={bridge.end.x}
+                  yStart={bridge.start.y}
+                  yEnd={bridge.end.y}
+                  vertical={bridge.vertical}
+                  activated={bridge.activated}
+                  random={bridge.random}
+                />
+              ))}
+              {enemies.map((enemy) => (
+                <Enemy
+                  key={`${enemy.x}${enemy.y}`}
+                  x={enemy.x}
+                  y={enemy.y}
+                  heroX={hero.x}
+                  heroY={hero.y}
+                  zIndex={enemy.x}
+                  name={enemy.name}
+                  alive={enemy.alive}
+                  nameHidden={enemy.hidden}
+                  spedUp={isSpedUp()}
+                  isRandom={enemy.random}
+                  isBig={enemy.big}
+                  shift={enemyShifts.current[enemy.name] ?? { bottom: 0, right: 0 }}
+                />
+              ))}
+              <Hero
+                x={initialHero.x}
+                y={initialHero.y}
+                alive={hero.alive === false ? false : true}
+                zIndex={hero.x}
+                texts={heroTexts}
+                shift={heroShift.current}
+                animated={isMoving.current}
                 spedUp={isSpedUp()}
-                isRandom={enemy.random}
-                isBig={enemy.big}
-                shift={enemyShifts.current[enemy.name] ?? { bottom: 0, right: 0 }}
               />
-            ))}
-            <Hero
-              x={initialHero.x}
-              y={initialHero.y}
-              alive={hero.alive === false ? false : true}
-              zIndex={hero.x}
-              texts={heroTexts}
-              shift={heroShift.current}
-              animated={isMoving.current}
-              spedUp={isSpedUp()}
-            />
-            {levers.map((lever) => (
-              <Lever
-                key={`${lever.x}${lever.y}`}
-                x={lever.x}
-                y={lever.y}
-                name={lever.name}
-                zIndex={lever.x}
-                enabled={lever.enabled}
-                hidden={lever.hidden}
-              />
-            ))}
-            {gems.map((gem) => (
-              <Gem
-                key={`${gem.x}${gem.y}`}
-                x={gem.x}
-                y={gem.y}
-                heroX={hero.x}
-                heroY={hero.y}
-                zIndex={gem.x}
-                collected={gem.collected}
-              />
-            ))}
-          </MapField>
-        </MapWrapper>
+              {levers.map((lever) => (
+                <Lever
+                  key={`${lever.x}${lever.y}`}
+                  x={lever.x}
+                  y={lever.y}
+                  name={lever.name}
+                  zIndex={lever.x}
+                  enabled={lever.enabled}
+                  hidden={lever.hidden}
+                />
+              ))}
+              {gems.map((gem) => (
+                <Gem
+                  key={`${gem.x}${gem.y}`}
+                  x={gem.x}
+                  y={gem.y}
+                  heroX={hero.x}
+                  heroY={hero.y}
+                  zIndex={gem.x}
+                  collected={gem.collected}
+                />
+              ))}
+            </MapField>
+          </MapWrapper>
+        </DragWrapper>
       </MainWrapper>
       <Controls
           isRunning={isActuallyRunning.current}
