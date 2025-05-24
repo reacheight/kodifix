@@ -121,6 +121,7 @@ export const ModuleStatus = styled.div`
   font-size: 12px;
   font-weight: 600;
   backdrop-filter: blur(4px);
+  user-select: none;
 
   @media (max-width: 768px) {
     top: 8px;
@@ -411,7 +412,6 @@ export const Tag = styled.span`
   border-radius: 8px;
   font-size: 12px;
   font-weight: 500;
-  user-select: none;
 
   /* Hide mobile more tags indicator on desktop */
   &.mobile-more-tags {
@@ -454,6 +454,7 @@ export const ModuleNumber = styled.div`
   font-weight: 600;
   backdrop-filter: blur(4px);
   font-family: 'Inter', sans-serif;
+  user-select: none;
 
   @media (max-width: 768px) {
     top: 8px;
