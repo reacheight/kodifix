@@ -694,7 +694,7 @@ export const Level = () => {
   };
 
   const openMenu = () => {
-    navigate(`/${gameId}`);
+    navigate(`/`);
   };
 
   const openGuide = () => {
