@@ -268,8 +268,8 @@ export const Level = styled.button`
   padding: 0;
   cursor: pointer;
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background: url(${({ current, completed }) =>
     current
       ? currentLevelIcon

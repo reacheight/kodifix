@@ -25,6 +25,7 @@ const Spinner = styled.div`
 `;
 
 const LoadingText = styled.p`
+  font-family: 'Inter', sans-serif;
   color: #666;
   font-size: 16px;
   margin: 0;
