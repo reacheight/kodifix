@@ -26,7 +26,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const logout = () => {
-    Cookies.remove('yaToken', { path: '/', domain: '.kodifix.ru', secure: true, sameSite: 'Lax' });
+    Cookies.remove('yaToken', { path: '/', domain: '.codemagics.ru', secure: true, sameSite: 'Lax' });
     setUser(null);
   };
 

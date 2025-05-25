@@ -16,13 +16,13 @@ export const LoginModal = ({ onClose, onSuccess, title = 'Вход' }) => {
     const params = {
       client_id: '064dd0d0ea2d41bd8867928cd9704763',
       response_type: 'token',
-      redirect_uri: 'https://demo.kodifix.ru/ya_callback'
+      redirect_uri: 'https://codemagics.ru/ya_callback'
     };
 
     if (window.YaAuthSuggest) {
       window.YaAuthSuggest.init(
         params,
-        'https://demo.kodifix.ru',
+        'https://codemagics.ru',
         {
           view: 'button',
           parentId: "yaButtonContainerId",
@@ -35,7 +35,7 @@ export const LoginModal = ({ onClose, onSuccess, title = 'Вход' }) => {
       )
       .then(({handler}) => handler())
       .then(data => {
-        Cookies.set('yaToken', data.access_token, { path: '/', domain: '.kodifix.ru', secure: true, sameSite: 'Lax', expires: Math.floor(Number(data.expires_in) / 86400) })
+        Cookies.set('yaToken', data.access_token, { path: '/', domain: '.codemagics.ru', secure: true, sameSite: 'Lax', expires: Math.floor(Number(data.expires_in) / 86400) })
         axios.post(`/user`, {}, { withCredentials: true })
           .then(() => {
             if (onSuccess) {

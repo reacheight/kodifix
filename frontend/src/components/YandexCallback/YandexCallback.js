@@ -4,7 +4,7 @@ export const YandexCallback = () => {
   useEffect(() => {
     if (window.YaSendSuggestToken) {
       window.YaSendSuggestToken(
-        'https://demo.kodifix.ru', 
+        'https://codemagics.ru', 
         {
           flag: true
         }
