@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/logo.svg';
+import logo from '../../assets/logo.png';
 import { HeaderWrapper, HeaderContent, LoginLink } from './styled';
 import { MiniProfile } from '../MiniProfile/MiniProfile';
 import { LoginModal } from '../LoginModal/LoginModal';
