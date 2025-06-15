@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
-import newMap from '../../assets/map.png';
+import newMap from '../../assets/map.webp';
 import currentLevelIcon from '../../assets/current-level.svg';
 import unavailableLevelIcon from '../../assets/unavailable-level.svg';
 import completedLevelIcon from '../../assets/completed-level.svg';

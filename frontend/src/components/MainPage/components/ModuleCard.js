@@ -14,7 +14,7 @@ import {
   ModulePreview,
   ModuleNumber,
 } from '../styled';
-import module1Preview from '../../../assets/module1-preview.png';
+import module1Preview from '../../../assets/module1-preview.webp';
 import { MODULE_CONFIG, UI_TEXT } from '../constants';
 
 export const ModuleCard = ({ completedLevelsCount, progressPercentage }) => {

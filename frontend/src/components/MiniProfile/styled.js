@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import avatarPlaceholder from '../../assets/avatar-placeholder.png';
+import avatarPlaceholder from '../../assets/avatar-placeholder.webp';
 import logoutIcon from '../../assets/logout.svg';
 
 export const MiniProfileWrapper = styled.div`

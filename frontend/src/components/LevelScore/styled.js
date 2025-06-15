@@ -1,7 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
 
-import star from '../../assets/star.png';
-import emptyStar from '../../assets/star-empty.png';
+import star from '../../assets/star.webp';
+import emptyStar from '../../assets/star-empty.webp';
 
 const appearance = keyframes`
   0% {
