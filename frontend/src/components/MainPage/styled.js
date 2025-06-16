@@ -15,9 +15,7 @@ const currentLevelAnimation = keyframes`
 
 export const Container = styled.div`
   padding: 20px;
-  padding-top: 150px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -28,12 +26,10 @@ export const Container = styled.div`
     align-items: center;
     gap: 30px;
     padding: 20px;
-    padding-top: 120px;
   }
 
   @media (max-width: 768px) {
     padding: 15px;
-    padding-top: 100px;
     gap: 20px;
   }
 `;

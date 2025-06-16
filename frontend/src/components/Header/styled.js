@@ -5,11 +5,6 @@ export const HeaderWrapper = styled.div`
   justify-content: center;
   width: 100%;
   padding: 20px 15px;
-  background: transparent;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
 `
 
 export const HeaderContent = styled.div`
@@ -19,7 +14,7 @@ export const HeaderContent = styled.div`
   max-width: 1200px;
   width: 100%;
   padding: 12px 25px;
-  background: linear-gradient(to right, #1976D2, #2196F3);
+  background: linear-gradient(to right,rgba(25, 118, 210, 0.7),rgba(33, 149, 243, 0.8));
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
   position: relative;

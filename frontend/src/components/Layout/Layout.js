@@ -7,7 +7,7 @@ import { axios } from '../../api/axios';
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background: transparent;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 `
 
 export const Layout = ({ children }) => {
