@@ -23,10 +23,6 @@ export const Wrapper = styled.div`
   align-items: center;
   animation: 0ms ${appearance} linear forwards;
   padding-right: 540px;
-
-  @media only screen and (max-width: 1300px) {
-    padding-right: 0px;
-  }
 `;
 
 export const Modal = styled.div`

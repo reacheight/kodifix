@@ -60,8 +60,11 @@ export const CodeEditor = ({
     }),
     indentUnit.of("    "),
   ];
-  const width = windowWidth <= 1300 ? 480 : 529;
-  const height = `${innerHeight - (isCommandsOpen ? 268 : 65)}px`;
+  const width = windowWidth <= 1366 ? 480 : 529;
+
+  const [opennedCommandsHeight, closedCommandsHeight] =
+    windowWidth <= 1366 ? [200, 0] : [268, 65];
+  const height = `${innerHeight - (isCommandsOpen ? opennedCommandsHeight : closedCommandsHeight)}px`;
 
   const addCommand = (command) => onCodeChange(code + '\n' + command);
 
