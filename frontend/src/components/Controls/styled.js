@@ -4,9 +4,6 @@ export const Wrapper = styled.div`
   position: fixed;
   bottom: 20px;
   right: 529px;
-  @media only screen and (max-width: 1300px) {
-    right: 480px;
-  }
     
   background-color: #2a2623;
 

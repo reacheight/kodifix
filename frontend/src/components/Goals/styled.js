@@ -11,10 +11,6 @@ export const Wrapper = styled.div`
   top: 10px;
   right: 540px;
 
-  @media only screen and (max-width: 1300px) {
-    right: 489px;
-  }
-
   &:hover {
     opacity: 0.9;
   }

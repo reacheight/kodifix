@@ -60,7 +60,7 @@ export const CodeEditor = ({
     }),
     indentUnit.of("    "),
   ];
-  const width = windowWidth <= 1366 ? 480 : 529;
+  const width = 529;
 
   const [opennedCommandsHeight, closedCommandsHeight] =
     windowWidth <= 1366 ? [200, 0] : [268, 65];

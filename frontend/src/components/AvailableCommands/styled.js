@@ -2,9 +2,6 @@ import styled, { css } from 'styled-components';
 
 export const Collapse = styled.div`
   width: 529px;
-  @media only screen and (max-width: 1300px) {
-    width: 480px;
-  }
   padding: 20px;
   border-top: 3px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px 16px 0 0;
