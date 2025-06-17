@@ -43,7 +43,7 @@ export const CodeEditor = ({
   onCodeChange,
   onErrorsClear,
 }) => {
-  const [isCommandsOpen, setIsCommandsOpen] = useState(false);
+  const [isCommandsOpen, setIsCommandsOpen] = useState(instructions.newCommands && instructions.newCommands.length > 0);
   const { height: innerHeight, width: windowWidth } = useWindowSize();
 
   const commands = [...instructions.newCommands, ...instructions.prevCommands];
@@ -93,7 +93,8 @@ export const CodeEditor = ({
         {instructions && (
           <AvailableCommands
             isOpen={isCommandsOpen}
-            commands={commands}
+            newCommands={instructions.newCommands}
+            prevCommands={instructions.prevCommands}
             onAdd={addCommand}
             onToggle={toggleCommands}
           />

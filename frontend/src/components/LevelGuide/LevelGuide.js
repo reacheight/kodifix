@@ -37,6 +37,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { tags as t } from '@lezer/highlight';
 import { python } from '@codemirror/lang-python';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 const basicSetup = {
   highlightActiveLineGutter: false,
@@ -75,6 +76,7 @@ export const LevelGuide = ({ level, data, onClose }) => {
   const newCommandCode = extract(newCommand?.code);
   const navigate = useNavigate();
   const { gameId } = useParams();
+  const { width, height } = useWindowSize();
 
   const hasPrev = commandIndex > 0;
 
@@ -134,7 +136,7 @@ export const LevelGuide = ({ level, data, onClose }) => {
           </Block>
         ) : null}
 
-        {newCommand ? (
+        {height >= 709 && newCommand ? (
           <NewCommandsWrapper>
             <Subtitle>Новые команды</Subtitle>
             <Block>

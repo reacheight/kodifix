@@ -91,3 +91,7 @@ export const Command = styled.span`
     }
   }
 `;
+
+export const NewCommand = styled(Command)`
+  border-left: 3px solid #4CAF50;
+`;
