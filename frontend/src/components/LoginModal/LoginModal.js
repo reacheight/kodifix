@@ -4,7 +4,7 @@ import { axios } from '../../api/axios';
 import { Modal, Wrapper, Top, CloseButton, Title, YaLoginButton } from './styled';
 import close2Icon from '../../assets/close-2.svg';
 
-export const LoginModal = ({ onClose, onSuccess, title = 'Вход' }) => {
+export const LoginModal = ({ onClose, onSuccess, title = 'Вход', canClose = true }) => {
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = () => {
@@ -54,9 +54,9 @@ export const LoginModal = ({ onClose, onSuccess, title = 'Вход' }) => {
       <Modal>
         <Top>
           <Title>{title}</Title>
-          <CloseButton onClick={handleClose}>
+          {canClose && (<CloseButton onClick={handleClose}>
             ×
-          </CloseButton>
+          </CloseButton>)}
         </Top>
         <YaLoginButton id="yaButtonContainerId" />
       </Modal>

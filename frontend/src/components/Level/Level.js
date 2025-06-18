@@ -41,6 +41,8 @@ import { Goals } from '../Goals/Goals';
 import { Button } from '../Button/Button';
 import { Bridge } from '../Bridge/Bridge';
 import { useWindowSize } from '../../hooks/useWindowSize';
+import { useGameData } from '../MainPage/hooks/useGameData';
+import { LoginModal } from '../LoginModal/LoginModal';
 
 const getInitialCodeFromStorage = (game, level) =>
   localStorage.getItem(`code-${game}-${level}`);
@@ -115,6 +117,17 @@ export const Level = () => {
   const [isDragging, setIsDragging] = useRefState(false);
   const [dragStart, setDragStart] = useRefState({ x: 0, y: 0 });
   const dragAnimationFrame = useRefState(null);
+
+  const {
+    completedLevelsCount,
+    isLoading,
+    error,
+    isAuthenticated,
+    isLevelCompleted,
+    isLevelAvailable,
+    isLevelCurrent,
+    refetchData
+  } = useGameData();
 
   const isSpedUp = () => currentVariant.current && currentVariant.current > 0;
   const getDelays = () => isSpedUp() ? fastSpeedDelays : normalSpeedDelays;
@@ -1001,6 +1014,7 @@ export const Level = () => {
           onClose={closeScore}
         />
       )}
+      {!isAuthenticated && <LoginModal title='Войдите, чтобы начать' canClose={false} />}
     </Wrapper>
   );
 };
