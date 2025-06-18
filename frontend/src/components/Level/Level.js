@@ -85,6 +85,9 @@ export const Level = () => {
   const navigate = useNavigate();
   const { height: innerHeight } = useWindowSize();
 
+  if (id > 22)
+    return <>Уровень не найден</>;
+
   const [game, setGame] = useState(null);
   const [initialLevelData, setInitialLevelData] = useRefState(null);
   const [levelData, setLevelData] = useRefState(null);
