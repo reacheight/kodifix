@@ -124,6 +124,7 @@ export const Level = () => {
     completedLevelsCount,
     isLoading: isAuthDataLoading,
     isAuthenticated,
+    refetchData: refreshAuthData,
   } = useGameData();
 
   const { user } = useUser();
@@ -197,6 +198,7 @@ export const Level = () => {
     setCode(getInitialCodeFromStorage(gameId, id));
     setForceShowGoals(false);
     setIsLevelFinished(false);
+    refreshAuthData();
   };
 
   useEffect(() => {
