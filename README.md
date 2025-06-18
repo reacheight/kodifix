@@ -1,6 +1,6 @@
-# Kodifix
+# CodeMagics
 
-[Kodifix](https://kodifix.ru) is a [CodeCombat](https://codecombat.com)-like game to learn Python. Try it [here](https://demo.kodifix.ru) (in Russian).
+[CodeMagics](https://codemagics.ru) is a [CodeCombat](https://codecombat.com)-like game to learn Python. Try it [here](https://codemagics.ru) (in Russian).
 
 
 
