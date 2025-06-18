@@ -293,8 +293,8 @@ export default class LevelRunner {
 
   isGoalCompleted(goal, code) {
     switch (goal.type) {
-      case 'no-unnecessary-islands': // так можно, потому что выкидываем ошибку, когда зашли на лишний остров
       case 'finish':
+      case 'var bridges':
         return arePointsEqual(this.level.finish, this.level.hero);
       case 'lines':
         console.log(calculateCodeLines(code));
