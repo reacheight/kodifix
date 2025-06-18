@@ -274,13 +274,11 @@ export const Level = styled.button`
         : unavailableLevelIcon})
     no-repeat center;
   background-size: contain;
-  z-index: 10;
 
   ${({ current }) =>
     current &&
     css`
       animation: 1s ${currentLevelAnimation} linear infinite alternate;
-      z-index: 15;
     `};
 
   ${({ available }) =>
