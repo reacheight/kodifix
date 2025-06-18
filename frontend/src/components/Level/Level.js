@@ -43,6 +43,7 @@ import { Bridge } from '../Bridge/Bridge';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { useGameData } from '../MainPage/hooks/useGameData';
 import { LoginModal } from '../LoginModal/LoginModal';
+import { UnavailableLevelModal } from '../UnavailableLevelModal/UnavailableLevelModal';
 
 const getInitialCodeFromStorage = (game, level) =>
   localStorage.getItem(`code-${game}-${level}`);
@@ -1014,7 +1015,8 @@ export const Level = () => {
           onClose={closeScore}
         />
       )}
-      {!isAuthenticated && <LoginModal title='Войдите, чтобы начать' canClose={false} />}
+      {!isLoading && !isAuthenticated && <LoginModal title='Войдите, чтобы начать' canClose={false} />}
+      {(!isLoading && isAuthenticated && completedLevelsCount + 1 < id) && <UnavailableLevelModal />}
     </Wrapper>
   );
 };

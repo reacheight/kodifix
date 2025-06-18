@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { axios } from '../../api/axios';
 import { Modal, Wrapper, Top, CloseButton, Title, YaLoginButton } from './styled';
-import close2Icon from '../../assets/close-2.svg';
 
 export const LoginModal = ({ onClose, onSuccess, title = 'Вход', canClose = true }) => {
   const [isClosing, setIsClosing] = useState(false);

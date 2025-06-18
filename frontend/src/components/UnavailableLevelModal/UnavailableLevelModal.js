@@ -1,0 +1,27 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { Modal, Wrapper, Top, Title } from './styled';
+import { Button } from '../Button/Button';
+
+export const UnavailableLevelModal = () => {
+  const navigate = useNavigate();
+  
+  const openMenu = () => {
+    navigate(`/`);
+  };
+
+  return (
+    <Wrapper>
+      <Modal>
+        <Top>
+          <Title>Уровен недоступен</Title>
+        </Top>
+        Сначала пройдите предыдущие уровни
+        <Button frontColor="#BD3A0F" shadowColor="#8C2B0B" onClick={openMenu} height="50" width="100">
+          <span>Меню</span>
+        </Button>
+      </Modal>
+    </Wrapper>
+  );
+}
