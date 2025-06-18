@@ -44,6 +44,7 @@ import { useWindowSize } from '../../hooks/useWindowSize';
 import { useGameData } from '../MainPage/hooks/useGameData';
 import { LoginModal } from '../LoginModal/LoginModal';
 import { UnavailableLevelModal } from '../UnavailableLevelModal/UnavailableLevelModal';
+import { useUser } from '../../contexts/UserContext';
 
 const getInitialCodeFromStorage = (game, level) =>
   localStorage.getItem(`code-${game}-${level}`);
@@ -121,14 +122,15 @@ export const Level = () => {
 
   const {
     completedLevelsCount,
-    isLoading,
-    error,
+    isLoading: isAuthDataLoading,
     isAuthenticated,
-    isLevelCompleted,
-    isLevelAvailable,
-    isLevelCurrent,
-    refetchData
   } = useGameData();
+
+  const { user } = useUser();
+
+  const showLoginModal = !isAuthDataLoading && !isAuthenticated;
+  const showAccessModal = id > 6 && !!user && !user.hasAccess;
+  const showPreviousLevelsModal = !showAccessModal && !isAuthDataLoading && isAuthenticated && completedLevelsCount + 1 < id;
 
   const isSpedUp = () => currentVariant.current && currentVariant.current > 0;
   const getDelays = () => isSpedUp() ? fastSpeedDelays : normalSpeedDelays;
@@ -1015,8 +1017,9 @@ export const Level = () => {
           onClose={closeScore}
         />
       )}
-      {!isLoading && !isAuthenticated && <LoginModal title='Войдите, чтобы начать' canClose={false} />}
-      {(!isLoading && isAuthenticated && completedLevelsCount + 1 < id) && <UnavailableLevelModal />}
+      {showLoginModal && <LoginModal title='Войдите, чтобы начать' canClose={false} />}
+      {showPreviousLevelsModal && <UnavailableLevelModal />}
+      {showAccessModal && <UnavailableLevelModal dontHaveAccess />}
     </Wrapper>
   );
 };

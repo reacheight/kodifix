@@ -21,6 +21,17 @@ export default class Database {
     this.db.close();
   }
 
+  async getUser(userId) {
+    this.db = await open({ filename: dbFilename, driver: sqlite3.Database });
+
+    const result = await this.db.get("SELECT * FROM users where id = $userId", {
+      $userId: userId,
+    });
+
+    this.db.close();
+    return result;
+  }
+
   async getAllUserLevels(userId) {
     this.db = await open({ filename: dbFilename, driver: sqlite3.Database });
 

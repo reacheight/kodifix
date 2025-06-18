@@ -1,5 +1,6 @@
 import NodeCache from 'node-cache';
 import axios from 'axios';
+import Database from './db.js';
 
 export default class UserManager {
   constructor() {
@@ -14,7 +15,9 @@ export default class UserManager {
     try {
       const response = await axios.get('https://login.yandex.ru/info', { headers: {"Authorization" : `OAuth ${accessToken}` } })
       if (response.status === 200) {
-        const user = { id: response.data.id, email: response.data.default_email, name: response.data.real_name };
+        var db = new Database();
+        const dbUser = await db.getUser(response.data.id);
+        const user = { id: response.data.id, email: response.data.default_email, name: response.data.real_name, hasAccess: dbUser.hasAccess };
         this.cache.set(accessToken, user, 600);
         return user;
       }
