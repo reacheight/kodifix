@@ -14,7 +14,8 @@ const LevelButton = memo(({
   onClick, 
   completed, 
   current, 
-  available 
+  available,
+  scaleX
 }) => (
   <Level
     bottomPercent={bottom}
@@ -33,6 +34,7 @@ const LevelButton = memo(({
         onClick(level);
       }
     }}
+    scaleX={scaleX}
   />
 ));
 
@@ -49,7 +51,7 @@ export const GameMap = memo(({
   isLevelAvailable
 }) => {
   const renderLevel = (levelData) => {
-    const { level, bottom, left } = levelData;
+    const { level, bottom, left, scaleX } = levelData;
     const coordinates = convertCoordinates(bottom, left);
 
     return (
@@ -62,6 +64,7 @@ export const GameMap = memo(({
         completed={isLevelCompleted(level)}
         current={isLevelCurrent(level)}
         available={isLevelAvailable(level)}
+        scaleX={scaleX}
       />
     );
   };

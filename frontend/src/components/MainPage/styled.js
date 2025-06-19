@@ -1,15 +1,15 @@
 import styled, { css, keyframes } from 'styled-components';
 import newMap from '../../assets/map.webp';
-import currentLevelIcon from '../../assets/current-level.svg';
+import currentLevelIcon from '../../assets/wizard.svg';
 import unavailableLevelIcon from '../../assets/unavailable-level.svg';
 import completedLevelIcon from '../../assets/completed-level.svg';
 
 const currentLevelAnimation = keyframes`
   0% {
-    transform: scale(1);
+    transform: scale(1) scaleX(var(--scaleX));
   }
   100% {
-    transform: scale(1.3);
+    transform: scale(1.2) scaleX(var(--scaleX));
   }
 `;
 
@@ -275,10 +275,13 @@ export const Level = styled.button`
     no-repeat center;
   background-size: contain;
 
-  ${({ current }) =>
+  ${({ current, scaleX }) =>
     current &&
     css`
+      --scaleX: ${scaleX};
       animation: 1s ${currentLevelAnimation} linear infinite alternate;
+      width: 60px;
+      height: 60px;
     `};
 
   ${({ available }) =>
@@ -289,14 +292,16 @@ export const Level = styled.button`
       opacity: 0.5;
     `};
 
-  &:hover {
-    filter: brightness(1.1);
-    transform: scale(1.1);
-  }
+  ${({ current }) => !current && css`
+    &:hover {
+      filter: brightness(1.1);
+      transform: scale(1.1);
+    }
+  `}
 
   ${({ bottomPercent, leftPercent, current }) => css`
     bottom: ${bottomPercent + (current ? 0 : 0)}%;
-    left: ${leftPercent + (current ? 0 : 0)}%;
+    left: ${leftPercent + (current ? -1 : 0)}%;
   `};
 
   transition: all 0.2s ease;
