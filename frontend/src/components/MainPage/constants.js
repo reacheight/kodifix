@@ -52,16 +52,6 @@ export const LEVEL_POSITIONS = [
   // { level: 23, bottom: 40, left: 65 },
 ];
 
-export const API_ENDPOINTS = {
-  userLevels: '/user/forest/levels',
-  gameData: '/games/forest'
-};
-
-export const STORAGE_KEYS = {
-  currentLevel: 'current-level',
-  authToken: 'yaToken'
-};
-
 export const ROUTES = {
   levelPattern: '/forest/level/:level',
   getLevelPath: (level) => `/forest/level/${level}`

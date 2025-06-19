@@ -3,7 +3,7 @@ import { Layout } from '../Layout/Layout';
 import { LoginModal } from '../LoginModal/LoginModal';
 import { Container } from './styled';
 
-import { useGameData } from './hooks/useGameData';
+import { useGameData } from '../../hooks/useGameData';
 import { useMapLayout } from './hooks/useMapLayout';
 import { useNavigation } from './hooks/useNavigation';
 

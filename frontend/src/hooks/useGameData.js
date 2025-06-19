@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Cookies from 'js-cookie';
-import { axios } from '../../../api/axios';
-import { API_ENDPOINTS, STORAGE_KEYS } from '../constants';
+import { axios } from '../api/axios';
+import { API_ENDPOINTS, STORAGE_KEYS } from '../constants/game';
 
 export const useGameData = () => {
   const [userLevels, setUserLevels] = useState([]);

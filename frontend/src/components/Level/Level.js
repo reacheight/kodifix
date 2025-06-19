@@ -41,7 +41,7 @@ import { Goals } from '../Goals/Goals';
 import { Button } from '../Button/Button';
 import { Bridge } from '../Bridge/Bridge';
 import { useWindowSize } from '../../hooks/useWindowSize';
-import { useGameData } from '../MainPage/hooks/useGameData';
+import { useGameData } from '../../hooks/useGameData';
 import { LoginModal } from '../LoginModal/LoginModal';
 import { UnavailableLevelModal } from '../UnavailableLevelModal/UnavailableLevelModal';
 import { useUser } from '../../contexts/UserContext';
