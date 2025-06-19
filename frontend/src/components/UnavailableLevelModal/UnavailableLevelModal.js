@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Modal, Wrapper, Top, Title } from './styled';
+import { Modal, Wrapper, Top, Title, StyledLink } from './styled';
 import { Button } from '../Button/Button';
 
 export const UnavailableLevelModal = ({ dontHaveAccess = false }) => {
@@ -23,9 +23,9 @@ export const UnavailableLevelModal = ({ dontHaveAccess = false }) => {
             <span>Меню</span>
           </Button>
         </>)}
-        {dontHaveAccess && (<span>
+        {dontHaveAccess && (<StyledLink>
           Вы прошли все бесплатные уровни. Для получения доступа к остальным уровням пишите в телеграм <a href={"https://t.me/reacheight"}>@reacheight</a>.
-        </span>)}
+        </StyledLink>)}
       </Modal>
     </Wrapper>
   );

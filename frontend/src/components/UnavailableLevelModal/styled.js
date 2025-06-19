@@ -42,3 +42,10 @@ export const Title = styled.div`
   font-size: 24px;
   line-height: 35px;
 `;
+
+export const StyledLink = styled.span`
+  a {
+    color:rgb(46, 129, 223);
+    text-decoration: none;
+  }
+`;
