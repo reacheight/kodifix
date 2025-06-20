@@ -12,6 +12,7 @@ export const Button = ({
   width,
   height,
   shadowHeight,
+  imageRotation,
 }) => (
   <Wrapper disabled={disabled} onClick={onClick}>
     <ButtonFront
@@ -22,7 +23,11 @@ export const Button = ({
       shadowColor={disabled ? '#626763' : shadowColor}
       disabled={disabled}
     >
-      <img alt={alt} src={icon} />
+      <img 
+        alt={alt} 
+        src={icon} 
+        style={imageRotation ? { transform: `rotate(${imageRotation}deg)` } : undefined}
+      />
       {children}
     </ButtonFront>
   </Wrapper>

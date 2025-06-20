@@ -2,6 +2,7 @@ import React from 'react';
 import { ControlWrapper, ControlButtons, PlayButtonWrapper } from './styled';
 import playIcon from '../../assets/play.svg';
 import { Button } from '../Button/Button';
+import boldArrow from '../../assets/bold-arrow.svg';
 
 export const DemoControls = ({
   isRunning,
@@ -29,7 +30,8 @@ export const DemoControls = ({
       <Button
         shadowColor="#1B4B82"
         frontColor="#2D7CD4"
-        alt="⬅"
+        alt="left"
+        icon={boldArrow}
         onClick={onMoveLeft}
         width="50"
         height="40"
@@ -39,32 +41,38 @@ export const DemoControls = ({
       <Button
         shadowColor="#1B4B82"
         frontColor="#2D7CD4"
-        alt="⬆"
+        alt="up"
+        icon={boldArrow}
         onClick={onMoveUp}
         width="50"
         height="40"
         shadowHeight="10"
         disabled={isRunning}
+        imageRotation={90}
       />
       <Button
         shadowColor="#1B4B82"
         frontColor="#2D7CD4"
-        alt="⬇"
+        alt="down"
+        icon={boldArrow}
         onClick={onMoveDown}
         width="50"
         height="40"
         shadowHeight="10"
         disabled={isRunning}
+        imageRotation={-90}
       />
       <Button
         shadowColor="#1B4B82"
         frontColor="#2D7CD4"
-        alt="➡"
+        alt="right"
+        icon={boldArrow}
         onClick={onMoveRight}
         width="50"
         height="40"
         shadowHeight="10"
         disabled={isRunning}
+        imageRotation={180}
       />
     </ControlButtons>
   </ControlWrapper>

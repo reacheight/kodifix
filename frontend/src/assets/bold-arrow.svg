@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g filter="url(#filter0_d_arrow)">
+        <path d="M32 21H15.8284L22.4142 27.5858C23.1953 28.3668 23.1953 29.6332 22.4142 30.4142C21.6332 31.1953 20.3668 31.1953 19.5858 30.4142L9.58579 20.4142C8.80474 19.6332 8.80474 18.3668 9.58579 17.5858L19.5858 7.58579C20.3668 6.80474 21.6332 6.80474 22.4142 7.58579C23.1953 8.36683 23.1953 9.63316 22.4142 10.4142L15.8284 17H32C33.1046 17 34 17.8954 34 19C34 20.1046 33.1046 21 32 21Z" fill="white"/>
+    </g>
+    <defs>
+        <filter id="filter0_d_arrow" x="0" y="0.5" width="42" height="41" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+            <feOffset dy="2.9375"/>
+            <feComposite in2="hardAlpha" operator="out"/>
+            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_arrow"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_arrow" result="shape"/>
+        </filter>
+    </defs>
+</svg>

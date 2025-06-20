@@ -62,6 +62,7 @@ export const ControlWrapper = styled.div`
   transform-origin: right bottom;
   padding: 12px;
   width: 400px;
+  height: 60px;
 
   img {
     width: 20px;
@@ -76,7 +77,7 @@ export const PlayButtonWrapper = styled.div`
 export const ControlButtons = styled.div`
   display: flex;
   position: relative;
-  bottom: 18px;
+  bottom: 22px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
