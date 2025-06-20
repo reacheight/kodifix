@@ -1,17 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
-import Cookies from 'js-cookie';
 import { axios } from '../api/axios';
 import { API_ENDPOINTS, STORAGE_KEYS } from '../constants/game';
+import { useUser } from '../contexts/UserContext';
 
 export const useGameData = () => {
   const [userLevels, setUserLevels] = useState([]);
   const [game, setGame] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const isAuthenticated = useCallback(() => {
-    return !!Cookies.get(STORAGE_KEYS.authToken);
-  }, []);
+  const { isAuthenticated } = useUser();
 
   const fetchLevels = useCallback(async () => {
     try {
@@ -89,7 +86,7 @@ export const useGameData = () => {
     
     isLoading,
     error,
-    isAuthenticated: isAuthenticated(),
+    isAuthenticated,
     
     isLevelCompleted,
     isLevelAvailable,

@@ -1,16 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { axios } from '../api/axios';
+import { STORAGE_KEYS } from '../constants/game';
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const isAuthenticated = () => {
+    return !!Cookies.get(STORAGE_KEYS.authToken);
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
-      const isAuthorized = document.cookie.includes('yaToken');
-      if (isAuthorized) {
+      if (isAuthenticated()) {
         try {
           const response = await axios.get('/user', { withCredentials: true });
           setUser(response.data);
@@ -20,18 +25,25 @@ export const UserProvider = ({ children }) => {
       } else {
         setUser(null);
       }
+      setIsLoading(false);
     };
 
     fetchUser();
   }, []);
 
   const logout = () => {
-    Cookies.remove('yaToken', { path: '/', domain: '.codemagics.ru', secure: true, sameSite: 'Lax' });
+    Cookies.remove(STORAGE_KEYS.authToken, { path: '/', domain: '.codemagics.ru', secure: true, sameSite: 'Lax' });
     setUser(null);
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, logout }}>
+    <UserContext.Provider value={{ 
+      user, 
+      setUser, 
+      logout,
+      isLoading,
+      isAuthenticated: isAuthenticated()
+    }}>
       {children}
     </UserContext.Provider>
   );

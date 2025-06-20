@@ -6,6 +6,7 @@ import { Container } from './styled';
 import { useGameData } from '../../hooks/useGameData';
 import { useMapLayout } from './hooks/useMapLayout';
 import { useNavigation } from './hooks/useNavigation';
+import { useUser } from '../../contexts/UserContext';
 
 import { ModuleCard } from './components/ModuleCard';
 import { GameMap } from './components/GameMap';
@@ -17,14 +18,15 @@ import { MODULE_CONFIG, UI_TEXT } from './constants';
 export const MainPage = () => {
   const {
     completedLevelsCount,
-    isLoading,
+    isLoading: isGameDataLoading,
     error,
-    isAuthenticated,
     isLevelCompleted,
     isLevelAvailable,
     isLevelCurrent,
     refetchData
   } = useGameData();
+
+  const { isLoading: isUserLoading, isAuthenticated } = useUser();
 
   const {
     mapRef,
@@ -44,7 +46,7 @@ export const MainPage = () => {
     return Math.round((completedLevelsCount / MODULE_CONFIG.totalLevels) * 100);
   }, [completedLevelsCount]);
 
-  if (isLoading) {
+  if (isUserLoading || isGameDataLoading) {
     return (
       <Layout>
         <Container>

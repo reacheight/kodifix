@@ -122,16 +122,15 @@ export const Level = () => {
 
   const {
     completedLevelsCount,
-    isLoading: isAuthDataLoading,
-    isAuthenticated,
-    refetchData: refreshAuthData,
+    isLoading: isGameDataLoading,
+    refetchData: refreshGameData,
   } = useGameData();
 
-  const { user } = useUser();
+  const { user, isLoading: isUserLoading, isAuthenticated } = useUser();
 
-  const showLoginModal = !isAuthDataLoading && !isAuthenticated;
+  const showLoginModal = !isUserLoading && !isAuthenticated;
   const showAccessModal = id > 6 && !!user && !user.hasAccess;
-  const showPreviousLevelsModal = !showAccessModal && !isAuthDataLoading && isAuthenticated && completedLevelsCount + 1 < id;
+  const showPreviousLevelsModal = !showAccessModal && !isUserLoading && !isGameDataLoading && isAuthenticated && completedLevelsCount + 1 < id;
 
   const isSpedUp = () => currentVariant.current && currentVariant.current > 0;
   const getDelays = () => isSpedUp() ? fastSpeedDelays : normalSpeedDelays;
@@ -198,7 +197,7 @@ export const Level = () => {
     setCode(getInitialCodeFromStorage(gameId, id));
     setForceShowGoals(false);
     setIsLevelFinished(false);
-    refreshAuthData();
+    refreshGameData();
   };
 
   useEffect(() => {
