@@ -21,6 +21,14 @@ export const Container = styled.div`
   align-items: flex-start;
   gap: 40px;
 
+  @media (max-width: 1366px) {
+    transform: scale(0.9);
+    transform-origin: top left;
+    width: 111.111%;
+    height: 111.111%;
+    overflow-x: hidden;
+  }
+
   @media (max-width: 1200px) {
     flex-direction: column;
     align-items: center;

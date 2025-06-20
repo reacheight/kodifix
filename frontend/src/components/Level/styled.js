@@ -38,6 +38,13 @@ export const Wrapper = styled.div`
   background-color: #353736;
   display: flex;
   overflow: hidden;
+
+  @media (max-width: 1366px) {
+    transform: scale(0.9);
+    transform-origin: top left;
+    width: 111.111%;
+    height: 111.111%;
+  }
 `;
 
 export const MainWrapper = styled.div`
