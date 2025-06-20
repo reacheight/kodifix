@@ -19,10 +19,9 @@ import {
 
 export const LevelScore = ({ isLastLevel, score, onContinue, onClose }) => {
   const navigate = useNavigate();
-  const { gameId } = useParams();
 
   const openMenu = () => {
-    navigate(`/${gameId}`);
+    navigate(`/game`);
   };
 
   return createPortal(

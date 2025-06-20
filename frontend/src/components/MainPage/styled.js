@@ -15,19 +15,13 @@ const currentLevelAnimation = keyframes`
 
 export const Container = styled.div`
   padding: 20px;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: 40px;
-
-  @media (max-width: 1366px) {
-    transform: scale(0.9);
-    transform-origin: top left;
-    width: 111.111%;
-    height: 111.111%;
-    overflow-x: hidden;
-  }
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding-top: 150px;
+  min-height: 100vh;
 
   @media (max-width: 1200px) {
     flex-direction: column;

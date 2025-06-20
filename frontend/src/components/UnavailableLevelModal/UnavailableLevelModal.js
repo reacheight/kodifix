@@ -8,7 +8,7 @@ export const UnavailableLevelModal = ({ dontHaveAccess = false }) => {
   const navigate = useNavigate();
 
   const openMenu = () => {
-    navigate(`/`);
+    navigate(`/game`);
   };
 
   return (

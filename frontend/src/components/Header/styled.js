@@ -1,36 +1,33 @@
 import styled, { css } from 'styled-components';
 
-export const HeaderWrapper = styled.div`
+export const HeaderContent = styled.header`
   display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 20px 15px;
-`
-
-export const HeaderContent = styled.div`
-  display: flex;
+  position: fixed;
   align-items: center;
   justify-content: space-between;
+
   max-width: 1200px;
   width: 100%;
+
+  margin: 0 auto;
+  margin-top: 20px;
   padding: 12px 25px;
-  background: linear-gradient(to right,rgba(25, 118, 210, 0.7),rgba(33, 149, 243, 0.8));
+  
+  background: linear-gradient(to right,rgb(133, 182, 231),rgb(115, 186, 245));
+
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 10;
+`
+
+export const Logo = styled.img`
+  height: 45px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
   position: relative;
-  z-index: 1;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: inherit;
-    z-index: -1;
-  }
 `
 
 export const LoginLink = styled.button`

@@ -13,13 +13,38 @@
   src: local('Raleway'), url(assets/fonts/Raleway.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(assets/fonts/Montserrat.ttf) format('truetype');
+}
+
 * {
-    box-sizing:border-box;
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-
-html, body, #root {
+html, body {
     height: 100%;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font: inherit;
 }

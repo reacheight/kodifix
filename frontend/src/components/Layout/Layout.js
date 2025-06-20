@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Header } from '../Header/Header';
 import Cookies from 'js-cookie';
 import { axios } from '../../api/axios';
+import { LoginModal } from '../LoginModal/LoginModal';
 
 const LayoutWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 `
 
 export const Layout = ({ children }) => {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
   useEffect(() => {
     const params = {
       client_id: '064dd0d0ea2d41bd8867928cd9704763',
@@ -36,8 +36,9 @@ export const Layout = ({ children }) => {
 
   return (
     <LayoutWrapper>
-      <Header />
+      <Header onLoginClick={() => setShowLoginModal(true)} />
       {children}
+      {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)}/>}
     </LayoutWrapper>
   )
 }
