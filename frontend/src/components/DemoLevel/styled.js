@@ -16,7 +16,7 @@ export const DemoMapContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 70px;
+  margin-left: 8%;
 `;
 
 export const DemoEditorContainer = styled.div`

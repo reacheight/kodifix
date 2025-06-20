@@ -8,7 +8,7 @@ export const LandingContainer = styled.div`
 export const HeroContainer = styled.div`
   min-width: 100%;
   background: linear-gradient(to right,rgba(25, 118, 210, 0.4),rgba(33, 149, 243, 0.5));
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh);
   padding-top: 200px;
   padding-inline: 20px;
 `;
@@ -16,9 +16,9 @@ export const HeroContainer = styled.div`
 export const HeroSection = styled.div`
   display: flex;
   align-items: center;
-  width: 1600px;
+  width: 1300px;
   margin: 0 auto;
-  gap: 100px;
+  justify-content: space-between;
 `;
 
 export const LeftColumn = styled.div`
@@ -34,11 +34,12 @@ export const RightColumn = styled.div`
 export const Title = styled.h1`
   font-family: 'Montserrat', sans-serif;
   font-size: 56px;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.1;
   color: #fff;
   margin-bottom: 32px;
-  text-shadow: 0 2px 4px rgba(30, 58, 138, 0.1);
+  text-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);
+  max-width: 700px;
 
   @media (max-width: 768px) {
     font-size: 42px;
@@ -50,41 +51,19 @@ export const Title = styled.h1`
   }
 `;
 
-export const BulletList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0 0 48px 0;
+export const Subtitle = styled.h2`
   font-family: 'Montserrat', sans-serif;
-`;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #ffffff;
+  margin-bottom: 48px;
+  text-shadow: 0 1px 2px rgba(30, 58, 138, 0.1);
+  max-width: 600px;
 
-export const BulletItem = styled.li`
-  position: relative;
-  padding-left: 32px;
-  margin-bottom: 16px;
-  font-size: 18px;
-  line-height: 1.6;
-  color: #475569;
-  font-weight: 400;
-
-  &:before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: #3b82f6;
+  @media (max-width: 768px) {
     font-size: 20px;
-    font-weight: 600;
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @media (max-width: 1024px) {
-    text-align: left;
+    margin-bottom: 32px;
   }
 `;
 

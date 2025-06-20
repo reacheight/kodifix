@@ -11,8 +11,7 @@ import {
   LeftColumn,
   RightColumn,
   Title,
-  BulletList,
-  BulletItem,
+  Subtitle,
   Button
 } from './styled';
 
@@ -40,15 +39,10 @@ export const LandingPage = () => {
         <HeroContainer>
           <HeroSection>
             <LeftColumn>
-              <Title>Старт в освоении самого востребованного навыка 21 века</Title>
-              <BulletList>
-                <BulletItem>Для детей от 10 лет</BulletItem>
-                <BulletItem>Подходит полным новичкам</BulletItem>
-                <BulletItem>Python — один из самых популярных языков программирования</BulletItem>
-                <BulletItem>Самостоятельно и в любое время</BulletItem>
-              </BulletList>
+              <Title>Захватывающая игра для изучения программирования</Title>
+              <Subtitle>Откройте ребёнку мир компьютерных наук и помогите освоить самый востребованный навык 21 века.</Subtitle>
               <Button onClick={handleContinuePlaying}>
-                {isAuthenticated ? 'Продолжить игру' : 'Начать приключение'}
+                {isAuthenticated ? 'Продолжить обучение' : 'Начать программировать'}
               </Button>
             </LeftColumn>
             <RightColumn>
