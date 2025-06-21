@@ -4,6 +4,7 @@ import { useUser } from '../../contexts/UserContext';
 import { LoginModal } from '../LoginModal/LoginModal';
 import { Layout } from '../Layout/Layout';
 import { DemoLevel } from '../DemoLevel/DemoLevel';
+import { ActionButton } from '../ActionButton/ActionButton';
 import {
   LandingContainer,
   HeroContainer,
@@ -12,7 +13,6 @@ import {
   RightColumn,
   Title,
   Subtitle,
-  Button
 } from './styled';
 
 export const LandingPage = () => {
@@ -34,16 +34,16 @@ export const LandingPage = () => {
   };
 
   return (
-    <Layout>
+    <Layout isHeaderTransparent>
       <LandingContainer>
         <HeroContainer>
           <HeroSection>
             <LeftColumn>
               <Title>Захватывающая игра для изучения программирования</Title>
               <Subtitle>Откройте ребёнку мир компьютерных наук и помогите освоить самый востребованный навык 21 века.</Subtitle>
-              <Button onClick={handleContinuePlaying}>
+              <ActionButton onClick={handleContinuePlaying} size="large">
                 {isAuthenticated ? 'Продолжить обучение' : 'Начать программировать'}
-              </Button>
+              </ActionButton>
             </LeftColumn>
             <RightColumn>
               <DemoLevel />

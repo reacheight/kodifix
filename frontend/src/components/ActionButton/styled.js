@@ -1,0 +1,36 @@
+import styled, { css } from 'styled-components';
+
+export const StyledButton = styled.button`
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: all 0.2s;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  ${({ variant }) => variant === 'secondary' && css`
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+  `}
+
+  ${({ size }) => size === 'large' && css`
+    font-size: 20px;
+    padding: 12px 24px;
+    font-weight: 600;
+  `}
+`; 

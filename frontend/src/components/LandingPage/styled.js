@@ -7,7 +7,7 @@ export const LandingContainer = styled.div`
 
 export const HeroContainer = styled.div`
   min-width: 100%;
-  background: linear-gradient(to right,rgba(25, 118, 210, 0.4),rgba(33, 149, 243, 0.5));
+  background: linear-gradient(to right,rgba(25, 118, 210, 0.5),rgba(33, 149, 243, 0.6));
   min-height: calc(100vh);
   padding-top: 200px;
   padding-inline: 20px;
@@ -51,20 +51,13 @@ export const Title = styled.h1`
   }
 `;
 
-export const Subtitle = styled.h2`
-  font-family: 'Montserrat', sans-serif;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1.4;
-  color: #ffffff;
-  margin-bottom: 48px;
-  text-shadow: 0 1px 2px rgba(30, 58, 138, 0.1);
+export const Subtitle = styled.p`
+  font-size: 20px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  margin-bottom: 32px;
   max-width: 600px;
-
-  @media (max-width: 768px) {
-    font-size: 20px;
-    margin-bottom: 32px;
-  }
 `;
 
 export const VideoContainer = styled.div`

@@ -8,7 +8,7 @@ import { LoginModal } from '../LoginModal/LoginModal';
 const LayoutWrapper = styled.div`
 `
 
-export const Layout = ({ children }) => {
+export const Layout = ({ children, isHeaderTransparent = false }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export const Layout = ({ children }) => {
 
   return (
     <LayoutWrapper>
-      <Header onLoginClick={() => setShowLoginModal(true)} />
+      <Header onLoginClick={() => setShowLoginModal(true)} isTransparent={isHeaderTransparent} />
       {children}
       {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)}/>}
     </LayoutWrapper>
