@@ -8,8 +8,7 @@ export const LandingContainer = styled.div`
 export const HeroContainer = styled.div`
   min-width: 100%;
   background: linear-gradient(to right,rgba(25, 118, 210, 0.5),rgba(33, 149, 243, 0.6));
-  min-height: 100vh;
-  padding-top: 200px;
+  padding-block: 200px;
   padding-inline: 20px;
 `;
 
@@ -60,83 +59,62 @@ export const Subtitle = styled.p`
   max-width: 600px;
 `;
 
-export const VideoContainer = styled.div`
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  background: rgba(59, 130, 246, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(59, 130, 246, 0.1);
+export const FeaturesContainer = styled.div`
+  min-width: 100%;
+  background: #eaf4ff;
+`;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #3b82f6, #1d4ed8, #60a5fa, #2563eb);
-    border-radius: 22px;
-    z-index: -1;
-    animation: rotate 4s linear infinite;
+export const FeatureSection = styled.div`
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 80px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 
-  @keyframes rotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+  &:nth-child(even) {
+    flex-direction: row-reverse;
   }
 `;
 
-export const Video = styled.video`
-  width: 100%;
-  max-width: 700px;
-  border-radius: 18px;
-  display: block;
-  position: relative;
-  z-index: 1;
+export const FeatureContent = styled.div`
+  flex: 1;
 `;
 
-export const Button = styled.button`
+export const FeatureImage = styled.div`
+  flex: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+export const FeatureTitle = styled.h2`
   font-family: 'Montserrat', sans-serif;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  color: white;
-  border: none;
-  padding: 18px 36px;
-  font-size: 18px;
-  font-weight: 600;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-  position: relative;
-  overflow: hidden;
+  font-size: 42px;
+  font-weight: 700;
+  color: rgb(106, 193, 255);
+  margin-bottom: 24px;
+  line-height: 1.2;
+  text-shadow: 0 6px 30px rgb(255, 255, 255), 6px 0px 30px rgb(255, 255, 255), -6px 0 30px rgb(255, 255, 255), 0 -6px 30px rgb(255, 255, 255);
+`;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-  }
-
-  &:hover::before {
-    left: 100%;
-  }
-`; 
+export const FeatureDescription = styled.p`
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  line-height: 30px;
+  color: #3c4d65;
+  margin: 0;
+  max-width: 500px;
+`;
