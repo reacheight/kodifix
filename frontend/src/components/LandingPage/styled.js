@@ -8,7 +8,7 @@ export const LandingContainer = styled.div`
 export const HeroContainer = styled.div`
   min-width: 100%;
   background: linear-gradient(to right,rgba(25, 118, 210, 0.5),rgba(33, 149, 243, 0.6));
-  min-height: calc(100vh);
+  min-height: 100vh;
   padding-top: 200px;
   padding-inline: 20px;
 `;

@@ -54,7 +54,6 @@ export const LandingPage = () => {
           <LoginModal 
             onClose={() => setShowLoginModal(false)}
             onSuccess={handleLoginSuccess}
-            title="Начать приключение"
           />
         )}
       </LandingContainer>
