@@ -47,8 +47,8 @@ export const LandingPage = () => {
         <HeroContainer>
           <HeroSection>
             <LeftColumn>
-              <Title>Захватывающая игра для изучения программирования</Title>
-              <Subtitle>Откройте ребёнку мир компьютерных наук и помогите освоить самый востребованный навык 21 века.</Subtitle>
+              <Title>Увлекательная игра для изучения программирования</Title>
+              <Subtitle>Раскройте потенциал вашего ребёнка и заложите фундамент для успешного будущего с нашей образовательной платформой.</Subtitle>
               <ActionButton onClick={handleContinuePlaying} size="large">
                 {isAuthenticated ? 'Продолжить обучение' : 'Начать программировать'}
               </ActionButton>
@@ -62,9 +62,9 @@ export const LandingPage = () => {
         <FeaturesContainer>
           <FeatureSection>
             <FeatureContent>
-              <FeatureTitle>Обучение — в игровом формате</FeatureTitle>
+              <FeatureTitle>Обучение — в&nbsp;игровом формате</FeatureTitle>
               <FeatureDescription>
-                Пишите код, чтобы управлять персонажем и решать увлекательные задачи. Игровые механики превращают обучение в захватывающее приключение.
+                Управляйте персонажем и решайте увлекательные задачи с помощью кода. Игровые механики превратят обучение в захватывающее приключение.
               </FeatureDescription>
             </FeatureContent>
             <FeatureImage>
