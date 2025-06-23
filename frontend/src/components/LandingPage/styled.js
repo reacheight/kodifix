@@ -10,6 +10,11 @@ export const HeroContainer = styled.div`
   background: linear-gradient(to right,rgba(25, 118, 210, 0.5),rgba(33, 149, 243, 0.6));
   padding-block: 200px;
   padding-inline: 20px;
+
+  @media (max-width: 768px) {
+    padding-top: 150px;
+    padding-bottom: 100px;
+  }
 `;
 
 export const HeroSection = styled.div`
@@ -18,10 +23,26 @@ export const HeroSection = styled.div`
   width: 1300px;
   margin: 0 auto;
   justify-content: space-between;
+
+  @media (max-width: 1340px) {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 40px;
+  }
 `;
 
 export const LeftColumn = styled.div`
   flex: 1;
+
+  @media (max-width: 768px) {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const RightColumn = styled.div`
@@ -43,6 +64,7 @@ export const Title = styled.h1`
   @media (max-width: 768px) {
     font-size: 42px;
     margin-bottom: 24px;
+    max-width: 100%;
   }
 
   @media (max-width: 480px) {
@@ -57,6 +79,10 @@ export const Subtitle = styled.p`
   margin: 0;
   margin-bottom: 32px;
   max-width: 600px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 export const FeaturesContainer = styled.div`
@@ -80,10 +106,27 @@ export const FeatureSection = styled.div`
   &:nth-child(even) {
     flex-direction: row-reverse;
   }
+
+  @media (max-width: 1340px) {
+    max-width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column !important;
+    gap: 40px;
+    padding: 60px 20px;
+    text-align: center;
+  }
 `;
 
 export const FeatureContent = styled.div`
   flex: 1;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const FeatureImage = styled.div`
@@ -108,6 +151,10 @@ export const FeatureTitle = styled.h2`
   margin-bottom: 24px;
   line-height: 1.2;
   text-shadow: 0 6px 30px rgb(255, 255, 255), 6px 0px 30px rgb(255, 255, 255), -6px 0 30px rgb(255, 255, 255), 0 -6px 30px rgb(255, 255, 255);
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+  }
 `;
 
 export const FeatureDescription = styled.p`
@@ -117,4 +164,8 @@ export const FeatureDescription = styled.p`
   color: #3c4d65;
   margin: 0;
   max-width: 500px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
