@@ -13,7 +13,7 @@ export const HeroContainer = styled.div`
 
   @media (max-width: 768px) {
     padding-top: 150px;
-    padding-bottom: 100px;
+    padding-bottom: 10px;
   }
 `;
 
@@ -30,7 +30,7 @@ export const HeroSection = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 40px;
+    gap: 0;
   }
 `;
 
@@ -53,6 +53,7 @@ export const RightColumn = styled.div`
 
   @media (max-width: 768px) {
     transform: scale(0.7);
+    margin-right: 10%;
   }
 `;
 
@@ -119,7 +120,7 @@ export const FeatureSection = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column !important;
-    gap: 40px;
+    gap: 30px;
     padding: 60px 20px;
     text-align: center;
   }
@@ -174,5 +175,6 @@ export const FeatureDescription = styled.p`
   @media (max-width: 768px) {
     max-width: 100%;
     font-size: 16px;
+    line-height: 22px;
   }
 `;
