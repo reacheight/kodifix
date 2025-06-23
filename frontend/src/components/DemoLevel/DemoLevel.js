@@ -31,8 +31,6 @@ const DEMO_CELLS = Array(16).fill(null).map((_, index) => ({
   type: 'lawn'
 }));
 
-const getRandomLevelId = () => Math.floor(Math.random() * DEMO_LEVEL_COUNT);
-
 export const DemoLevel = () => {
   const [initialLevelData, setInitialLevelData] = useRefState(null);
   const [levelData, setLevelData] = useRefState(null);
@@ -47,17 +45,15 @@ export const DemoLevel = () => {
   const [heroTexts] = useState([]);
   const [currentLevelId, setCurrentLevelId] = useRefState(0);
 
-  const fetchNewRandomLevel = async () => {
-    const newLevelId = getRandomLevelId();
-    setCurrentLevelId(newLevelId);
-    const { data } = await axios.get(`/demo/level/${newLevelId}`);
+  const fetchCurrentLevel = async () => {
+    const { data } = await axios.get(`/demo/level/${currentLevelId.current}`);
     setInitialLevelData({ ...data });
     resetData();
     setCode(CODE_HINT + data.startCode);
   };
 
   useEffect(() => {
-    fetchNewRandomLevel();
+    fetchCurrentLevel();
   }, []);
 
   const executeCommand = async (command, i) => {
@@ -104,7 +100,8 @@ export const DemoLevel = () => {
       if (collectedGemIndex !== -1) {
         GEM_SOUND.play();
         
-        await fetchNewRandomLevel();
+        setCurrentLevelId((currentLevelId.current + 1) % DEMO_LEVEL_COUNT);
+        await fetchCurrentLevel();
         return;
       }
     }
