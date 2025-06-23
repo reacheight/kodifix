@@ -7,7 +7,7 @@ const float = keyframes`
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-4px);
+    transform: translateY(-10px);
   }
   100% {
     transform: translateY(0px);
@@ -18,7 +18,7 @@ const AnimatedWrapper = styled.div`
   ${({ isFloating, animationDelay }) =>
     isFloating &&
     css`
-      animation: ${float} 2s ease-in-out infinite;
+      animation: ${float} 1.5s ease-in-out infinite;
       animation-delay: ${animationDelay}s;
     `}
 `;

@@ -17,6 +17,10 @@ export const DemoMapContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 8%;
+
+  @media (max-width: 768px) {
+    margin-left: 5%;
+  }
 `;
 
 export const DemoEditorContainer = styled.div`

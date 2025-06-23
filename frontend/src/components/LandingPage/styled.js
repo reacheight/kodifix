@@ -52,7 +52,7 @@ export const RightColumn = styled.div`
 
 
   @media (max-width: 768px) {
-    transform: scale(0.7);
+    transform: scale(0.75);
     margin-right: 10%;
   }
 `;
@@ -147,6 +147,12 @@ export const FeatureImage = styled.div`
     height: auto;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    img {
+      border-radius: 10px;
+    }
   }
 `;
 
