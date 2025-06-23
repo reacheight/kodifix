@@ -30,4 +30,8 @@ export const Logo = styled.img`
   position: relative;
   left: 10px;
   top: 5px;
+
+  @media (max-width: 768px) {
+    height: 18px;
+  }
 `

@@ -49,6 +49,11 @@ export const RightColumn = styled.div`
   flex: 0.7;
   min-width: 0;
   height: 350px;
+
+
+  @media (max-width: 768px) {
+    transform: scale(0.7);
+  }
 `;
 
 export const Title = styled.h1`
@@ -62,13 +67,13 @@ export const Title = styled.h1`
   max-width: 700px;
 
   @media (max-width: 768px) {
-    font-size: 42px;
+    font-size: 36px;
     margin-bottom: 24px;
     max-width: 100%;
   }
 
   @media (max-width: 480px) {
-    font-size: 36px;
+    font-size: 32px;
   }
 `;
 
@@ -82,6 +87,7 @@ export const Subtitle = styled.p`
 
   @media (max-width: 768px) {
     max-width: 100%;
+    font-size: 16px;
   }
 `;
 
@@ -153,7 +159,7 @@ export const FeatureTitle = styled.h2`
   text-shadow: 0 6px 30px rgb(255, 255, 255), 6px 0px 30px rgb(255, 255, 255), -6px 0 30px rgb(255, 255, 255), 0 -6px 30px rgb(255, 255, 255);
 
   @media (max-width: 768px) {
-    font-size: 36px;
+    font-size: 30px;
   }
 `;
 
@@ -167,5 +173,6 @@ export const FeatureDescription = styled.p`
 
   @media (max-width: 768px) {
     max-width: 100%;
+    font-size: 16px;
   }
 `;

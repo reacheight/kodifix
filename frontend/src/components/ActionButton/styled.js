@@ -18,6 +18,11 @@ export const StyledButton = styled.button`
     background: rgba(255, 255, 255, 0.4);
   }
 
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
   ${({ variant }) => variant === 'secondary' && css`
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -32,5 +37,10 @@ export const StyledButton = styled.button`
     font-size: 20px;
     padding: 12px 24px;
     font-weight: 600;
+
+    @media (max-width: 768px) {
+      font-size: 16px;
+      padding: 8px 16px;
+    }
   `}
 `; 
