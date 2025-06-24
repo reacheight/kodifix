@@ -10,7 +10,7 @@ export const Wrapper = styled.button`
     !disabled &&
     css`
       &:hover {
-        transform: translateY(-2px);
+        transform: translateY(-4px);
       }
       &:active {
         transform: translateY(4px);
@@ -33,7 +33,7 @@ export const ButtonFront = styled.div`
       cursor: pointer;
       &:hover {
         filter: brightness(1.1);
-        box-shadow: 0 ${shadowHeight + 2}px ${({ shadowColor }) => shadowColor};
+        box-shadow: 0 ${shadowHeight + 4}px ${({ shadowColor }) => shadowColor};
       }
       &:active {
         filter: brightness(0.95);
@@ -46,7 +46,7 @@ export const ButtonFront = styled.div`
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-family: 'Nunito', sans-serif;
+  font-family: ${({ fontFamily }) => fontFamily}, sans-serif;
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;

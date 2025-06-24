@@ -13,6 +13,7 @@ export const Button = ({
   height,
   shadowHeight,
   imageRotation,
+  fontFamily = 'Nunito',
 }) => (
   <Wrapper disabled={disabled} onClick={onClick}>
     <ButtonFront
@@ -22,6 +23,7 @@ export const Button = ({
       color={disabled ? '#858A86' : frontColor}
       shadowColor={disabled ? '#626763' : shadowColor}
       disabled={disabled}
+      fontFamily={fontFamily}
     >
       <img 
         alt={alt} 

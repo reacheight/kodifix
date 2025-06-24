@@ -144,6 +144,7 @@ export const FeatureImage = styled.div`
 
   img {
     max-width: 100%;
+    max-height: 500px;
     height: auto;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -184,3 +185,185 @@ export const FeatureDescription = styled.p`
     line-height: 22px;
   }
 `;
+
+export const CurriculumContainer = styled.div`
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @media (max-width: 1340px) {
+    max-width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    padding: 60px 20px;
+  }
+`;
+
+
+
+export const CurriculumSection = styled.div`
+  display: flex;
+  gap: 60px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 40px;
+  }
+`;
+
+export const ModulesList = styled.div`
+  flex: 0 0 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    flex: none;
+  }
+`;
+
+export const ModuleCard = styled.div`
+  background: ${props => props.isActive ? 'linear-gradient(135deg, #4F8EF7 0%, #6AC1FF 100%)' : '#f8f9fa'};
+  border-radius: 16px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid ${props => props.isActive ? 'transparent' : '#e9ecef'};
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: ${props => props.isActive ? 'transparent' : '#6AC1FF'};
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
+`;
+
+export const ModuleTitle = styled.h3`
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: ${props => props.isActive ? '#fff' : '#1a202c'};
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+`;
+
+export const ModuleSubtitle = styled.p`
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: ${props => props.isActive ? 'rgba(255, 255, 255, 0.8)' : '#64748b'};
+  margin: 0;
+  line-height: 1.4;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
+export const CurriculumContent = styled.div`
+  flex: 1;
+  background: linear-gradient(to right,rgba(25, 118, 210, 0.5),rgba(33, 149, 243, 0.6));
+  border-radius: 20px;
+  padding: 30px;
+  border: 1px solid #e2e8f0;
+  height: fit-content;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
+`;
+
+export const CurriculumHeader = styled.div`
+  margin-bottom: 32px;
+`;
+
+export const CurriculumBody = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 24px;
+  }
+`;
+
+export const CurriculumLeftSection = styled.div`
+  flex: 1;
+`;
+
+export const CurriculumRightSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    width: 100%;
+  }
+`;
+
+export const CurriculumTitle = styled.h2`
+  font-family: 'Montserrat', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
+`;
+
+export const LevelsCount = styled.div`
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+`;
+
+export const TopicsGrid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  @media (max-width: 768px) {
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+`;
+
+export const TopicTag = styled.span`
+  background: #e2e8f0;
+  color: #475569;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+`;
+
