@@ -142,7 +142,8 @@ export const LandingPage = () => {
             <FeatureContent>
               <FeatureTitle>Обучение — в&nbsp;игровом формате</FeatureTitle>
               <FeatureDescription>
-                Управляйте персонажем и решайте увлекательные задачи с помощью кода. Игровые механики превратят обучение в захватывающее приключение.
+                Ребёнок пишет код, чтобы управлять персонажем, решать головоломки и собирать награды —
+                учебный процесс превращается в захватывающую игру.
               </FeatureDescription>
             </FeatureContent>
             <FeatureImage>
@@ -152,7 +153,7 @@ export const LandingPage = () => {
 
           <FeatureSection>
             <FeatureContent>
-              <FeatureTitle>Подходит полным новичкам</FeatureTitle>
+              <FeatureTitle>Идеально для первых шагов в программировании</FeatureTitle>
               <FeatureDescription>
               Каждый уровень начинается с необходимой теории — мы объясняем новые концепции простым языком и на наглядных примерах.
               </FeatureDescription>
@@ -170,7 +171,7 @@ export const LandingPage = () => {
               </FeatureDescription>
             </FeatureContent>
             <FeatureImage>
-              <img src={pythonImage} alt="python" />
+              <img src={pythonImage} alt="Python — язык программирования" />
             </FeatureImage>
           </FeatureSection>
 
