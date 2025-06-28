@@ -5,9 +5,9 @@ import { LoginModal } from '../LoginModal/LoginModal';
 import { Layout } from '../Layout/Layout';
 import { DemoLevel } from '../DemoLevel/DemoLevel';
 import { ActionButton } from '../ActionButton/ActionButton';
-import howItWorksImage from '../../assets/how-it-works.png';
-import theoryImage from '../../assets/theory.png';
-import pythonImage from '../../assets/python.png';
+import howItWorksImage from '../../assets/how-it-works.webp';
+import theoryImage from '../../assets/theory.webp';
+import pythonImage from '../../assets/python.webp';
 import {
   LandingContainer,
   HeroContainer,
