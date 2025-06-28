@@ -117,7 +117,7 @@ export const LandingPage = () => {
         <HeroContainer>
           <HeroSection>
             <LeftColumn>
-              <Title>Увлекательная игра для изучения программирования</Title>
+              <Title>Увлекательная игра для обучения детей программированию</Title>
               <Subtitle>Раскройте потенциал вашего ребёнка и заложите фундамент для успешного будущего с нашей образовательной платформой.</Subtitle>
               <Button
                 disabled={false}
@@ -146,7 +146,7 @@ export const LandingPage = () => {
               </FeatureDescription>
             </FeatureContent>
             <FeatureImage>
-              <img src={howItWorksImage} alt="как работает codemagics" />
+              <img src={howItWorksImage} alt="интерфейс игры для изучения программирования для детей" />
             </FeatureImage>
           </FeatureSection>
 
@@ -158,7 +158,7 @@ export const LandingPage = () => {
               </FeatureDescription>
             </FeatureContent>
             <FeatureImage>
-              <img src={theoryImage} alt="теоретические материалы" />
+              <img src={theoryImage} alt="пример теории темы для программирования для детей" />
             </FeatureImage>
           </FeatureSection>
 
