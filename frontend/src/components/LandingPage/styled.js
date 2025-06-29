@@ -367,3 +367,67 @@ export const TopicTag = styled.span`
   }
 `;
 
+// Lightweight DemoLevel Skeleton Components (independent of DemoLevel imports)
+export const DemoLevelSkeletonWrapper = styled.div`
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  background: linear-gradient(#99C979, #5F9F6E);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  min-height: 300px;
+  opacity: 0.7;
+`;
+
+export const SkeletonMapContainer = styled.div`
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8%;
+
+  @media (max-width: 768px) {
+    margin-left: 5%;
+  }
+`;
+
+export const SkeletonGameField = styled.div`
+  display: grid;
+  width: 200px;
+  height: 200px;
+  grid-template-columns: repeat(4, 50px);
+  grid-template-rows: repeat(4, 50px);
+  gap: 0;
+`;
+
+export const SkeletonCell = styled.div`
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  animation: pulse 1.5s ease-in-out infinite alternate;
+
+  @keyframes pulse {
+    0% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 0.3;
+    }
+  }
+`;
+
+export const SkeletonEditorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  max-width: 250px;
+  min-width: 250px;
+  padding: 20px;
+  justify-content: center;
+`;
+
+
+

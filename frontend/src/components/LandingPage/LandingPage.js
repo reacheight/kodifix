@@ -36,11 +36,30 @@ import {
   LevelsCount,
   TopicsGrid,
   TopicTag,
+  DemoLevelSkeletonWrapper,
+  SkeletonMapContainer,
+  SkeletonGameField,
+  SkeletonCell,
+  SkeletonEditorContainer,
 } from './styled';
 import { Button } from '../Button/Button';
 
 const DemoLevel = lazy(() =>
   import('../DemoLevel/DemoLevel').then((module) => ({ default: module.DemoLevel }))
+);
+
+const LandingPageDemoSkeleton = () => (
+  <DemoLevelSkeletonWrapper>
+    <SkeletonMapContainer>
+      <SkeletonGameField>
+        {Array(16).fill(null).map((_, index) => (
+          <SkeletonCell key={index} />
+        ))}
+      </SkeletonGameField>
+    </SkeletonMapContainer>
+    <SkeletonEditorContainer>
+    </SkeletonEditorContainer>
+  </DemoLevelSkeletonWrapper>
 );
 
 export const LandingPage = () => {
@@ -135,7 +154,7 @@ export const LandingPage = () => {
               />
             </LeftColumn>
             <RightColumn>
-              <React.Suspense fallback={null}>
+              <React.Suspense fallback={<LandingPageDemoSkeleton />}>
                 <DemoLevel />
               </React.Suspense>
             </RightColumn>

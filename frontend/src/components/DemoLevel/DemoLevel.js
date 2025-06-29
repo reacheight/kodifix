@@ -175,7 +175,32 @@ export const DemoLevel = () => {
   };
 
   if (!initialLevelData.current || !levelData.current) {
-    return null;
+    return (
+      <DemoLevelWrapper style={{ opacity: 0.7 }}>
+        <DemoMapContainer>
+          <div style={{
+            display: 'grid',
+            width: '200px',
+            height: '200px',
+            gridTemplateColumns: 'repeat(4, 50px)',
+            gridTemplateRows: 'repeat(4, 50px)',
+            gap: 0
+          }}>
+            {Array(16).fill(null).map((_, index) => (
+              <div key={index} style={{
+                width: '50px',
+                height: '50px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.05)',
+                animation: 'pulse 1.5s ease-in-out infinite alternate'
+              }} />
+            ))}
+          </div>
+        </DemoMapContainer>
+        <DemoEditorContainer style={{ minWidth: '250px' }}>
+        </DemoEditorContainer>
+      </DemoLevelWrapper>
+    );
   }
 
   const { hero } = levelData.current;
