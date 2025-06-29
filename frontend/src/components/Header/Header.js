@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../../assets/logo.webp';
 import { HeaderContent, Logo } from './styled';
 import { MiniProfile } from '../MiniProfile/MiniProfile';
 import { Link } from 'react-router-dom';
@@ -12,7 +11,7 @@ export const Header = ({ onLoginClick, isTransparent }) => {
   return (
     <HeaderContent isTransparent={isTransparent}>
       <Link to={user ? '/game' : '/'}>
-        <Logo src={logo} alt="App Logo" isTransparent={isTransparent} />
+        <Logo src={'/logo.webp'} alt="App Logo" isTransparent={isTransparent} />
       </Link>
       {!!user && (
         <MiniProfile user={user} onLogout={logout} />
