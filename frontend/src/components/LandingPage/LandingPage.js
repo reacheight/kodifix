@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
 import { LoginModal } from '../LoginModal/LoginModal';
 import { Layout } from '../Layout/Layout';
-import { DemoLevel } from '../DemoLevel/DemoLevel';
 import { ActionButton } from '../ActionButton/ActionButton';
 import howItWorksImage from '../../assets/how-it-works.webp';
 import theoryImage from '../../assets/theory.webp';
@@ -39,6 +38,10 @@ import {
   TopicTag,
 } from './styled';
 import { Button } from '../Button/Button';
+
+const DemoLevel = lazy(() =>
+  import('../DemoLevel/DemoLevel').then((module) => ({ default: module.DemoLevel }))
+);
 
 export const LandingPage = () => {
   const navigate = useNavigate();
@@ -132,7 +135,9 @@ export const LandingPage = () => {
               />
             </LeftColumn>
             <RightColumn>
-              <DemoLevel />
+              <React.Suspense fallback={null}>
+                <DemoLevel />
+              </React.Suspense>
             </RightColumn>
           </HeroSection>
         </HeroContainer>
