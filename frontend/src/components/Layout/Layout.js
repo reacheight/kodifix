@@ -8,10 +8,12 @@ import { LoginModal } from '../LoginModal/LoginModal';
 const LayoutWrapper = styled.div`
 `
 
-export const Layout = ({ children, isHeaderTransparent = false }) => {
+export const Layout = ({ children, isHeaderTransparent = false, showAutoLogin = true }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
+    if (!showAutoLogin) return;
+
     const params = {
       client_id: '064dd0d0ea2d41bd8867928cd9704763',
       response_type: 'token',
@@ -32,7 +34,7 @@ export const Layout = ({ children, isHeaderTransparent = false }) => {
       })
       .catch(error => console.log('Обработка ошибки', error));
     }
-  }, []);
+  }, [showAutoLogin]);
 
   return (
     <LayoutWrapper>
