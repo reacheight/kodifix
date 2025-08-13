@@ -179,97 +179,67 @@ export default class LevelRunner {
       language: 'python'
     });
 
-    this.variants = [{
-      enemies: this.initialLevel.enemies,
-      levers: this.initialLevel.levers,
-    }]
-
-    if (this.initialLevel.additionalVariants) {
-      this.variants = this.variants.concat(this.initialLevel.additionalVariants);
-    }
-
     this.engine.addGlobal('hero', this.hero);
   }
 
-  normalizeVariant(variant) {
-    return {
-      enemies: variant.enemies ?? [],
-      levers: variant.levers ?? [],
-    }
-  }
+
 
   run(code) {
-    const results = []
-    for (const variant of this.variants) {
-      this.gemsCollected = 0;
-      this.level = structuredClone(this.initialLevel);
-      if (variant.enemies)
-        this.level.enemies = structuredClone(variant.enemies);
+    this.gemsCollected = 0;
+    this.level = structuredClone(this.initialLevel);
 
-      if (variant.levers) {
-        this.level.levers = structuredClone(variant.levers);
-        this.level.bridges = this.level.bridges.map(bridge => {
-          const lever = this.level.levers.find(l => l.activatesId === bridge.id);
-          if (lever)
-            bridge.activated = lever.enabled;
-          return bridge;
-        })
-      }
+    // Filter gems based on guardedBy property
+    this.level.gems = this.level.gems.filter(gem => !gem.guardedBy || this.level.enemies.find(e => e.name === gem.guardedBy).alive);
 
-      this.level.gems = this.level.gems.filter(gem => !gem.guardedBy || this.level.enemies.find(e => e.name === gem.guardedBy).alive);
-
-      // только для уровня с охраняемыми гемами
-      if (this.level.id === 'if-guarded-gems') {
-        this.ifGuardedGemsInfo = {
-          canBeOnTopIsland: this.level.enemies.find(e => e.name === 'Hidden1').alive,
-          canBeOnBottomIsland: this.level.enemies.find(e => e.name === 'Hidden2').alive,
-          topIslandEnter: { x: 1, y: 6 },
-          bottomIslandEnter: { x: 5, y: 6 },
-        };
-      }
-
-      try {
-        this.engine.load(code);
-        let steps = 0;
-        let value = this.engine.evloop.next();
-        while (!value.done && !this.gameplayError) {
-          value = this.engine.evloop.next();
-          if ( value.value && value.value.then ) throw new Error('Can\'t deal with futures when running in sync mode');
-          if ( ++steps > this.engine.options.executionLimit ) throw new Error('Execution Limit Reached');
-
-          if (this.level.isWhileTrue && arePointsEqual(this.level.hero, this.level.finish))
-            break;
-
-          if (steps > 300) {
-            this.gameplayError = { type: GameplayErrorTypes.INFINITE_LOOP };
-            break;
-          }
-        }
-      } catch (e) {
-  
-        let message = ErrorMessageMapper.map(e.message);
-        let line = e.loc.line ?? e.loc.start.line;
-        return {
-          errors: [
-            {
-              message,
-              line,
-            }
-          ]
-        }
-      }
-  
-      const variantResult = {
-        goals: this.level.goals.map(goal => { return { type: goal.type, required: goal.required, completed: this.isGoalCompleted(goal, code) } }),
-        commands: this.commands,
-        gameplayError: this.gameplayError,
+    // только для уровня с охраняемыми гемами
+    if (this.level.id === 'if-guarded-gems') {
+      this.ifGuardedGemsInfo = {
+        canBeOnTopIsland: this.level.enemies.find(e => e.name === 'Hidden1').alive,
+        canBeOnBottomIsland: this.level.enemies.find(e => e.name === 'Hidden2').alive,
+        topIslandEnter: { x: 1, y: 6 },
+        bottomIslandEnter: { x: 5, y: 6 },
       };
-
-      results.push({ variant: variant, variantResult, score: this.calculateScore(variantResult.goals) });
-      this.commands = [];
     }
 
-    return results;
+    try {
+      this.engine.load(code);
+      let steps = 0;
+      let value = this.engine.evloop.next();
+      while (!value.done && !this.gameplayError) {
+        value = this.engine.evloop.next();
+        if ( value.value && value.value.then ) throw new Error('Can\'t deal with futures when running in sync mode');
+        if ( ++steps > this.engine.options.executionLimit ) throw new Error('Execution Limit Reached');
+
+        if (this.level.isWhileTrue && arePointsEqual(this.level.hero, this.level.finish))
+          break;
+
+        if (steps > 300) {
+          this.gameplayError = { type: GameplayErrorTypes.INFINITE_LOOP };
+          break;
+        }
+      }
+    } catch (e) {
+
+      let message = ErrorMessageMapper.map(e.message);
+      let line = e.loc.line ?? e.loc.start.line;
+      return {
+        errors: [
+          {
+            message,
+            line,
+          }
+        ]
+      }
+    }
+
+    const goals = this.level.goals.map(goal => { return { type: goal.type, required: goal.required, completed: this.isGoalCompleted(goal, code) } });
+    
+    return {
+      goals,
+      commands: this.commands,
+      gameplayError: this.gameplayError,
+      score: this.calculateScore(goals)
+    };
   }
 
   calculateScore(goals) {
