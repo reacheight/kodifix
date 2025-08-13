@@ -150,7 +150,7 @@ export default class LevelRunner {
     shoot: (direction, commandName) => {
       this.pushNewCommand(commandName);
 
-      const shootingRange = 3;
+      const shootingRange = 3; // TODO: Move to constants
       for (let i = 1; i < shootingRange + 1; i++) {
         const projectilePoint = structuredClone(this.level.hero);
         projectilePoint.x += direction.x * i;
@@ -213,7 +213,7 @@ export default class LevelRunner {
         if (this.level.isWhileTrue && arePointsEqual(this.level.hero, this.level.finish))
           break;
 
-        if (steps > 300) {
+        if (steps > 300) { // TODO: Move to constants
           this.gameplayError = { type: GameplayErrorTypes.INFINITE_LOOP };
           break;
         }
@@ -377,7 +377,8 @@ export default class LevelRunner {
   }
 
   isPointHitWall(point) {
-    return ['tree', 'rock', 'watert', 'water'].includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
+    const wallTypes = ['tree', 'rock', 'watert', 'water']; // TODO: Move to constants
+    return wallTypes.includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
   }
 
   isActiveBridgePoint(point) {

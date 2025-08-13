@@ -20,11 +20,9 @@ import {
 } from './styled';
 import { axios } from '../../api/axios';
 
-import gemSound from '../../assets/sounds/gem.mp3';
-import walkingSound from '../../assets/sounds/walking.mp3';
-import hitSound from '../../assets/sounds/hit.mp3';
-import victorySound from '../../assets/sounds/victory.mp3';
-import leverSound from '../../assets/sounds/lever.mp3';
+import { audioManager, SOUND_NAMES } from '../../utils/audioManager';
+import { GAME_CONFIG, STORAGE_KEYS, API_ENDPOINTS, COMMAND_NAMES } from '../../constants/gameConstants';
+import { useGameExecution } from '../../hooks/useGameExecution';
 import { useRefState } from '../../hooks/useRefState';
 import { Controls } from '../Controls/Controls';
 import { Hero } from '../Hero/Hero';
@@ -46,11 +44,11 @@ import { LoginModal } from '../LoginModal/LoginModal';
 import { UnavailableLevelModal } from '../UnavailableLevelModal/UnavailableLevelModal';
 import { useUser } from '../../contexts/UserContext';
 
-const getInitialCodeFromStorage = (game, level) =>
-  localStorage.getItem(`code-${game}-${level}`);
+const getInitialCodeFromStorage = (gameId, level) =>
+  localStorage.getItem(`${STORAGE_KEYS.CODE_PREFIX}${gameId}-${level}`);
 
-const setInitialCode = (game, level, code) =>
-  localStorage.setItem(`code-${game}-${level}`, code);
+const setInitialCode = (gameId, level, code) =>
+  localStorage.setItem(`${STORAGE_KEYS.CODE_PREFIX}${gameId}-${level}`, code);
 
 const prepareCells = (grid) => {
   const cells = [];
@@ -64,55 +62,29 @@ const prepareCells = (grid) => {
   return cells;
 };
 
-const normalSpeedDelays = {
-  walking: 300,
-  attacking: 500,
-  switching: 500,
-  findingEnemy: 500,
-  hasEnemyAround: 1000,
-  enemyWalk: 150,
-}
 
-const fastSpeedDelays = {
-  walking: 150,
-  attacking: 250,
-  switching: 250,
-  findingEnemy: 250,
-  hasEnemyAround: 500,
-  enemyWalk: 100,
-}
-
-const walkingAudio = new Audio(walkingSound);
 
 export const Level = () => {
   const { gameId, id } = useParams();
   const navigate = useNavigate();
   const { height: innerHeight } = useWindowSize();
 
-  if (id > 22)
+  if (id > GAME_CONFIG.LEVELS.MAX_LEVEL)
     return <>Уровень не найден</>;
 
+  // Game execution state and logic
+  const gameExecution = useGameExecution();
+
+  // Level and UI state
   const [game, setGame] = useState(null);
   const [initialLevelData, setInitialLevelData] = useRefState(null);
   const [levelData, setLevelData] = useRefState(null);
-  const [heroShift, setHeroShift] = useRefState({ right: 0, bottom: 0 });
-  const [enemyShifts, setEnemyShifts] = useRefState({});
-  const [isActuallyRunning, setIsActuallyRunning] = useRefState(false);
-  const [isPaused, setIsPaused] = useRefState(false);
-  const [isStopped, setIsStopped] = useRefState(false);
-  const [isMoving, setIsMoving] = useRefState(false);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isScoreOpen, setIsScoreOpen] = useState(false);
-  const [isLevelFinished, setIsLevelFinished] = useState(false);
-  const [levelResult, setLevelResult] = useRefState(null);
-  const [executingCommand, setExecutingCommand] = useRefState(null);
-  const [pausedCommand, setPausedCommand] = useRefState(null);
   const [instructions, setInstructions] = useState(null);
-  const [heroTexts, setHeroTexts] = useState([]);
-  const [code, setCode] = useRefState(getInitialCodeFromStorage(id));
+  const [code, setCode] = useRefState(getInitialCodeFromStorage(gameId, id));
   const [codeErrors, setCodeErrors] = useState(null);
-  const [scale, setScale] = useState(1.5);
-  const [forceShowGoals, setForceShowGoals] = useState(false);
+  const [scale, setScale] = useState(GAME_CONFIG.SCALE.DEFAULT);
   const [dragPosition, setDragPosition] = useRefState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useRefState(false);
   const [dragStart, setDragStart] = useRefState({ x: 0, y: 0 });
@@ -130,8 +102,6 @@ export const Level = () => {
   const showAccessModal = false && id > 6 && !!user && !user.hasAccess;
   const showPreviousLevelsModal = false && !showAccessModal && !isUserLoading && !isGameDataLoading && isAuthenticated && completedLevelsCount + 1 < id;
 
-  const getDelays = () => normalSpeedDelays;
-
   const hasGuid = (data) =>
     data.instructions || data.example || data.newCommands?.length;
 
@@ -139,25 +109,22 @@ export const Level = () => {
     const goals = initialLevelData.current.goals.filter((goal) => !!goal.heroText).map((goal) => ({
       value: goal.heroText,
     }));
-    setHeroTexts(goals);
+    gameExecution.setHeroTexts(goals);
   };
 
   const fetchGames = async () => {
-    const { data } = await axios.get(`/games/${gameId}`);
-
+    const { data } = await axios.get(`${API_ENDPOINTS.GAMES}/${gameId}`);
     setGame(data);
   };
 
   const fetchLevelData = async () => {
-    const { data } = await axios.get(`/${gameId}/level/${id}`);
-
+    const { data } = await axios.get(API_ENDPOINTS.LEVEL(gameId, id));
     setInitialLevelData({ ...data });
     setLevelData({ ...data });
   };
 
   const fetchInstructions = async () => {
-    const { data } = await axios.get(`/${gameId}/level/${id}/instructions`);
-
+    const { data } = await axios.get(API_ENDPOINTS.LEVEL_INSTRUCTIONS(gameId, id));
     setInstructions(data);
 
     if (hasGuid(data)) {
@@ -168,7 +135,7 @@ export const Level = () => {
   };
 
   const fetchInitialCode = async () => {
-    const { data } = await axios.get(`/${gameId}/level/${id}/startingCode`);
+    const { data } = await axios.get(API_ENDPOINTS.STARTING_CODE(gameId, id));
     if (isNullish(code.current)) {
       setCode(data);
     }
@@ -177,21 +144,17 @@ export const Level = () => {
   const resetAllData = () => {
     setInitialLevelData(null);
     setLevelData(null);
-    setHeroShift({ right: 0, bottom: 0 });
-    setEnemyShifts({});
-    setIsActuallyRunning(false);
-    setIsStopped(false);
-    setIsPaused(false);
-    setIsMoving(false);
     setIsScoreOpen(false);
-    setLevelResult(null);
-    setExecutingCommand(null);
-    setPausedCommand(null);
     setInstructions(null);
-    setHeroTexts([]);
     setCode(getInitialCodeFromStorage(gameId, id));
-    setForceShowGoals(false);
-    setIsLevelFinished(false);
+    
+    // Reset game execution state
+    gameExecution.setIsActuallyRunning(false);
+    gameExecution.setIsStopped(false);
+    gameExecution.setIsPaused(false);
+    gameExecution.setLevelResult(null);
+    gameExecution.resetExecutionState();
+    
     refreshGameData();
   };
 
@@ -200,13 +163,15 @@ export const Level = () => {
       resetAllData();
       await Promise.all([fetchGames(), fetchLevelData(), fetchInstructions(), fetchInitialCode()]);
       
-      if (innerHeight <= 720) {
+      if (innerHeight <= GAME_CONFIG.SCREEN.MOBILE_HEIGHT) {
         const { width, height } = initialLevelData.current;
-        if (width * height >= 90)
-          setScale(0.7)
-        else if (width * height >= 54)
+        const levelSize = width * height;
+        
+        if (levelSize >= GAME_CONFIG.SCREEN.SCALE_THRESHOLDS.LARGE_LEVEL)
+          setScale(0.7);
+        else if (levelSize >= GAME_CONFIG.SCREEN.SCALE_THRESHOLDS.MEDIUM_LEVEL)
           setScale(0.9);
-        else if (width * height >= 45 || height >= 8) {
+        else if (levelSize >= GAME_CONFIG.SCREEN.SCALE_THRESHOLDS.SMALL_LEVEL || height >= 8) {
           setScale(1);
         }
       }
@@ -222,244 +187,52 @@ export const Level = () => {
     };
   }, []);
 
-  const executeCommand = async (command, i) => {
-    const updatedLevelData = copy(levelData.current);
 
-    setExecutingCommand(i);
-
-    if (command.name === 'enemy_attack') {
-      const updatedHeroShift = copy(heroShift.current);
-      updatedHeroShift.direction = command.isEnemyToTheLeft ? 'left' : 'right';
-      setHeroShift(updatedHeroShift);
-      new Audio(hitSound).play();
-      updatedLevelData.hero.alive = false;
-    } else if (
-      ['move_up', 'move_down', 'move_right', 'move_left'].includes(command.name)
-    ) {
-      const updatedHeroShift = copy(heroShift.current);
-      const updatedHero = copy(levelData.current.hero);
-      const updatedGems = copy(levelData.current.gems);
-
-      switch (command.name) {
-        case 'move_up':
-          updatedHeroShift.bottom += 49;
-          updatedHero.x -= 1;
-          break;
-        case 'move_down':
-          updatedHeroShift.bottom -= 49;
-          updatedHero.x += 1;
-          break;
-        case 'move_right':
-          updatedHeroShift.right -= 49;
-          updatedHeroShift.direction = 'right';
-          updatedHero.y += 1;
-          break;
-        case 'move_left':
-          updatedHeroShift.right += 49;
-          updatedHeroShift.direction = 'left';
-          updatedHero.y -= 1;
-          break;
-      }
-
-      setIsMoving(true);
-      setHeroShift(updatedHeroShift);
-      walkingAudio.play();
-
-      await delay(getDelays().walking);
-
-      setIsMoving(false);
-      walkingAudio.pause();
-
-      const collectedGemIndex = updatedLevelData.gems.findIndex(
-        (gem) => gem.x === updatedHero.x && gem.y === updatedHero.y,
-      );
-
-      if (collectedGemIndex !== -1) {
-        updatedGems[collectedGemIndex].collected = true;
-        new Audio(gemSound).play();
-      }
-
-      updatedLevelData.hero = updatedHero;
-      updatedLevelData.gems = updatedGems;
-    } else if (command.name === 'attack') {
-      const updatedEnemies = copy(levelData.current.enemies);
-
-      const targetIndex = updatedEnemies.findIndex(
-        (enemy) => enemy.name === command.target,
-      );
-
-      updatedEnemies[targetIndex].alive = false;
-      await delay(getDelays().attacking);
-
-      updatedLevelData.enemies = updatedEnemies;
-    } else if (command.name === 'switch') {
-      const updatedLevers = copy(levelData.current.levers);
-      const updatedBridges = copy(levelData.current.bridges);
-      const updatedEnemies = copy(levelData.current.enemies);
-
-      const leverIndex = updatedLevers.findIndex(
-        (lever) => lever.activatesId === command.activatableId,
-      );
-      const bridgeIndex = updatedBridges.findIndex(
-        (bridge) => bridge.id === command.activatableId,
-      );
-
-      updatedLevers[leverIndex].enabled = !updatedLevers[leverIndex].enabled;
-      updatedBridges[bridgeIndex].activated =
-        !updatedBridges[bridgeIndex].activated;
-
-      const enemiesIndexes = command.enemiesOnBridge.map(enemyName => updatedEnemies.findIndex(e => e.name === enemyName));
-      if (!updatedBridges[bridgeIndex].activated) {
-        enemiesIndexes.forEach(index => {
-          updatedEnemies[index].alive = false;
-        })
-      }
-
-      if (enemiesIndexes.length !== 0)
-        await delay(getDelays().switching);
-
-      new Audio(leverSound).play();
-
-      updatedLevelData.levers = updatedLevers;
-      updatedLevelData.bridges = updatedBridges;
-      updatedLevelData.enemies = updatedEnemies;
-    } else if (command.name === 'find_nearest_enemy') {
-      if (command.hasEnemy) {
-        setHeroTexts([
-          {
-            value: 'find_nearest_enemy: Я тебя вижу!',
-            delay: 1000,
-          },
-        ]);
-      } else {
-        setHeroTexts([
-          {
-            value: 'find_nearest_enemy: На этом уровне нет врагов!',
-            delay: 1000,
-          },
-        ]);
-      }
-      await delay(getDelays().findingEnemy);
-    } else if (command.name === 'has_enemy_around') {
-      if (command.hasEnemy) {
-        setHeroTexts([
-          {
-            value: 'has_enemy_around: Рядом враг!',
-            delay: 1000,
-          },
-        ]);
-      } else {
-        setHeroTexts([
-          {
-            value: 'has_enemy_around: Рядом нет врагов!',
-            delay: 1000,
-          },
-        ]);
-      }
-      await delay(getDelays().hasEnemyAround);
-    } else if (command.name === 'enemy_move') {
-      const updatedEnemies = copy(updatedLevelData.enemies);
-      const updatedEnemyShifts = { ...enemyShifts.current };
-
-      const targetIndex = updatedEnemies.findIndex(
-        (enemy) => enemy.name === command.enemy,
-      );
-
-      const targetEnemy = updatedEnemies[targetIndex];
-      
-      if (!updatedEnemyShifts[targetEnemy.name]) {
-        updatedEnemyShifts[targetEnemy.name] = { bottom: 0, right: 0 };
-      }
-      
-      const currentShift = updatedEnemyShifts[targetEnemy.name];
-
-      switch (command.direction) {
-        case 'up':
-          currentShift.bottom += 49;
-          updatedEnemies[targetIndex].x -= 1;
-          break;
-        case 'down':
-          currentShift.bottom -= 49;
-          updatedEnemies[targetIndex].x += 1;
-          break;
-        case 'right':
-          currentShift.right -= 49;
-          updatedEnemies[targetIndex].y += 1;
-          break;
-        case 'left':
-          currentShift.right += 49;
-          updatedEnemies[targetIndex].y -= 1;
-          break;
-      }
-
-      setEnemyShifts(updatedEnemyShifts);
-      
-      await delay(getDelays().enemyWalk);
-
-      updatedEnemyShifts[targetEnemy.name] = { bottom: 0, right: 0 };
-      setEnemyShifts(updatedEnemyShifts);
-
-      updatedLevelData.enemies = updatedEnemies;
-    }
-
-    if (isStopped.current) {
-      return;
-    }
-
-    setLevelData(updatedLevelData);
-
-    if (command.name === 'switch')
-      await delay(getDelays().switching);
-    else if (command.name === 'attack') {
-      new Audio(hitSound).play();
-      await delay(getDelays().attacking);
-    }
-  };
 
   const execCommands = async () => {
-    const { commands, gameplayError, goals } = levelResult.current;
+    const { commands, gameplayError, goals } = gameExecution.levelResult.current;
     const allRequiredGoalsCompleted = goals.filter(g => g.required).every(g => g.completed);
 
     if (commands.length === 0) {
-      setHeroTextsForGameplayError(gameplayError);
+      gameExecution.setHeroTextsForGameplayError(gameplayError);
       stopGameWithoutResetting();
       return;
     }
 
-    for (let i = pausedCommand.current || 0; i < commands.length; i++) {
-      if (isPaused.current) {
-        setPausedCommand(i);
-        setIsActuallyRunning(false);
+    for (let i = gameExecution.pausedCommand.current || 0; i < commands.length; i++) {
+      if (gameExecution.isPaused.current) {
+        gameExecution.setPausedCommand(i);
+        gameExecution.setIsActuallyRunning(false);
         break;
       }
 
-      if (isStopped.current) {
-        setIsActuallyRunning(false);
+      if (gameExecution.isStopped.current) {
+        gameExecution.setIsActuallyRunning(false);
         break;
       }
 
-      await executeCommand(commands[i], i);
+      await gameExecution.executeCommand(commands[i], i, levelData, setLevelData);
 
       if (i === commands.length - 1) {
-        setIsActuallyRunning(false);
-        setIsStopped(false);
-        setIsPaused(false);
+        gameExecution.setIsActuallyRunning(false);
+        gameExecution.setIsStopped(false);
+        gameExecution.setIsPaused(false);
         
         if (!allRequiredGoalsCompleted) {
-          setForceShowGoals(true);
-          setHeroTextsForGameplayError(gameplayError);
+          gameExecution.setForceShowGoals(true);
+          gameExecution.setHeroTextsForGameplayError(gameplayError);
           stopGameWithoutResetting();
         } else {
-          setIsLevelFinished(true);
-          setForceShowGoals(true);
-          setHeroTexts([{ value: 'Отлично, мы можем идти дальше', delay: 1500 }]);
+          gameExecution.setIsLevelFinished(true);
+          gameExecution.setForceShowGoals(true);
+          gameExecution.setHeroTexts([{ value: 'Отлично, мы можем идти дальше', delay: 1500 }]);
           await delay(1500);
-          new Audio(victorySound).play();
+          audioManager.play(SOUND_NAMES.VICTORY);
           setIsGuideOpen(false);
           setIsScoreOpen(true);
 
-          axios.post(`/${gameId}/level/${id}/complete`, { score: levelResult.current.score }, { withCredentials: true })
-            .catch(_ => localStorage.setItem('current-level', Math.max(localStorage.getItem('current-level'), id)));
+          axios.post(API_ENDPOINTS.LEVEL_COMPLETE(gameId, id), { score: gameExecution.levelResult.current.score }, { withCredentials: true })
+            .catch(_ => localStorage.setItem(STORAGE_KEYS.CURRENT_LEVEL, Math.max(localStorage.getItem(STORAGE_KEYS.CURRENT_LEVEL), id)));
         }
       }
     }
@@ -467,117 +240,17 @@ export const Level = () => {
 
 
 
-  const setHeroTextsForGameplayError = (gameplayError) => {
-    if (gameplayError?.type === GameplayErrorTypes.HERO_RAN_IN_WALL) {
-      setHeroTexts([{ value: 'Ой, здесь я не могу пройти' }]);
-    }
 
-    if (gameplayError?.type === GameplayErrorTypes.HERO_KILLED_BY_ENEMY) {
-      setHeroTexts([
-        { value: 'С этим рыцарем надо быть аккуратнее..' },
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.HERO_RAN_IN_ENEMY) {
-      setHeroTexts([
-        { value: 'Я не могу туда идти,\nэтот злой рыцарь меня побьет' },
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.NO_ENEMIES_TO_ATTACK) {
-      setHeroTexts([
-        { value: 'На этом уровне нет врагов,\nмне некого атаковать' },
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.NO_ENEMY_WITH_GIVEN_NAME) {
-      setHeroTexts([
-        {
-          value: `На этом уровне\nнет врага по имени «${gameplayError.name}»,\nмне некого атаковать`,
-        },
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.ENEMY_TOO_FAR) {
-      setHeroTexts([
-        {
-          value: `Я не могу атаковать «${gameplayError.name}»,\nпотому что он слишком далеко`,
-        },
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.ENEMY_IS_BIG) {
-      setHeroTexts([
-        {
-          value: `Я не могу атаковать «${gameplayError.name}» — он слишком сильный`,
-        },
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.NO_LEVERS) {
-      setHeroTexts([
-        {
-          value: `На этом уровне нет рычагов,\nмне нечего переключать`,
-        },
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.NO_LEVER_WITH_GIVEN_NAME) {
-      setHeroTexts([
-        {
-          value: `На этом уровне нет рычага с названием «${gameplayError.name}»`,
-        },
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.LEVER_TOO_FAR) {
-      setHeroTexts([
-        {
-          value: `Рычаг с названием «${gameplayError.name}» слишком далеко,\nя не могу переключить его отсюда`,
-          delay: 3000,
-        },
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.CANT_BE_HERE) {
-      setHeroTexts([
-        {
-          value: 'Зачем мне сюда? Здесь нет алмаза',
-          delay: 3000,
-        }
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.ENEMY_SHOULD_NOT_BE_HERE) {
-      setHeroTexts([
-        {
-          value: 'Огромный рыцарь перешёл на наш берег, нам конец!',
-          delay: 3000,
-        }
-      ]);
-    }
-
-    if (gameplayError?.type === GameplayErrorTypes.INFINITE_LOOP) {
-      setHeroTexts([
-        {
-          value: 'Ой, кажется, я застрял в бесконечном цикле!',
-          delay: 3000,
-        }
-      ]);
-    }
-  };
 
   const resetData = () => {
-    setHeroTexts([]);
-    setHeroShift({ right: 0, bottom: 0 });
-    setEnemyShifts({});
     setLevelData({ ...initialLevelData.current });
-    setPausedCommand(null);
     setCodeErrors(null);
-    setForceShowGoals(false);
-    setIsLevelFinished(false);
     setDragPosition({ x: 0, y: 0 });
     setIsDragging(false);
+    
+    // Reset game execution state
+    gameExecution.resetExecutionState();
+    
     if (dragAnimationFrame.current) {
       cancelAnimationFrame(dragAnimationFrame.current);
       dragAnimationFrame.current = null;
@@ -586,61 +259,61 @@ export const Level = () => {
 
   const startGame = async () => {
     resetData();
-    setIsStopped(false);
+    gameExecution.setIsStopped(false);
     setInitialCode(gameId, id, code.current);
 
     try {
-      const { data } = await axios.post(`/${gameId}/level/${id}/run`, {
+      const { data } = await axios.post(API_ENDPOINTS.LEVEL_RUN(gameId, id), {
         code: code.current,
       });
 
-      setLevelResult(data);
-      setIsActuallyRunning(true);
+      gameExecution.setLevelResult(data);
+      gameExecution.setIsActuallyRunning(true);
       await execCommands();
     } catch (error) {
       console.log(error);
       setCodeErrors(error.response.data.errors);
     } finally {
-      setIsActuallyRunning(false);
+      gameExecution.setIsActuallyRunning(false);
     }
   };
 
   const continueGame = async () => {
-    if (isActuallyRunning.current) {
+    if (gameExecution.isActuallyRunning.current) {
       return;
     }
 
-    setIsPaused(false);
-    setIsStopped(false);
-    setForceShowGoals(false);
-    setIsActuallyRunning(true);
+    gameExecution.setIsPaused(false);
+    gameExecution.setIsStopped(false);
+    gameExecution.setForceShowGoals(false);
+    gameExecution.setIsActuallyRunning(true);
 
     await execCommands();
   };
 
   const pauseGame = () => {
-    if (!isActuallyRunning.current) {
+    if (!gameExecution.isActuallyRunning.current) {
       return;
     }
 
     // Don't pause on the last command
     const isLastCommandExecuting =
-      levelResult.current && executingCommand.current === levelResult.current.commands.length - 1;
+      gameExecution.levelResult.current && gameExecution.executingCommand.current === gameExecution.levelResult.current.commands.length - 1;
 
     if (!isLastCommandExecuting) {
-      setIsPaused(true);
+      gameExecution.setIsPaused(true);
     }
   };
 
   const stopGameWithoutResetting = () => {
-    if (!isActuallyRunning.current) {
+    if (!gameExecution.isActuallyRunning.current) {
       return;
     }
 
-    setIsStopped(true);
+    gameExecution.setIsStopped(true);
 
-    if (isPaused.current) {
-      setIsPaused(false);
+    if (gameExecution.isPaused.current) {
+      gameExecution.setIsPaused(false);
     }
   }
 
@@ -664,7 +337,7 @@ export const Level = () => {
 
   const openGuide = () => {
     setIsGuideOpen(true);
-    setHeroTexts([]);
+    gameExecution.setHeroTexts([]);
   };
 
   const closeGuide = () => {
@@ -673,21 +346,17 @@ export const Level = () => {
   };
 
   const closeScore = () => {
-    setIsLevelFinished(false);
+    gameExecution.setIsLevelFinished(false);
     setIsScoreOpen(false);
     resetData();
   }
 
-  const SCALE_STEP = 0.1;
-  const MAX_SCALE = 3.0;
-  const MIN_SCALE = 0.2;
-
   const increaseScale = (coefficient = 1) => {
     setScale((prevState) => {
-      if (prevState < MAX_SCALE) {
+      if (prevState < GAME_CONFIG.SCALE.MAX) {
         return Math.min(
-          Number((prevState + SCALE_STEP * coefficient).toFixed(2)),
-          MAX_SCALE,
+          Number((prevState + GAME_CONFIG.SCALE.STEP * coefficient).toFixed(2)),
+          GAME_CONFIG.SCALE.MAX,
         );
       }
 
@@ -697,10 +366,10 @@ export const Level = () => {
 
   const decreaseScale = (coefficient = 1) => {
     setScale((prevState) => {
-      if (prevState > MIN_SCALE) {
+      if (prevState > GAME_CONFIG.SCALE.MIN) {
         return Math.max(
-          Number((prevState - SCALE_STEP * coefficient).toFixed(2)),
-          MIN_SCALE,
+          Number((prevState - GAME_CONFIG.SCALE.STEP * coefficient).toFixed(2)),
+          GAME_CONFIG.SCALE.MIN,
         );
       }
 
@@ -783,12 +452,12 @@ export const Level = () => {
     finish,
   } = initialLevelData.current;
   const cells = prepareCells(grid);
-  const walls = cells.filter(cell => ['tree', 'rock', 'water', 'watert'].includes(cell.type));
-  const trees = walls.filter((wall) => wall.type === 'tree');
-  const rocks = walls.filter((wall) => wall.type === 'rock');
-  const water = walls.filter((wall) => wall.type === 'water' || wall.type === 'watert');
+  const walls = cells.filter(cell => GAME_CONFIG.WALL_TYPES.includes(cell.type));
+  const trees = walls.filter((wall) => wall.type === GAME_CONFIG.CELL_TYPES.TREE);
+  const rocks = walls.filter((wall) => wall.type === GAME_CONFIG.CELL_TYPES.ROCK);
+  const water = walls.filter((wall) => wall.type === GAME_CONFIG.CELL_TYPES.WATER || wall.type === GAME_CONFIG.CELL_TYPES.WATER_TOP);
   const executingLine =
-    levelResult.current?.commands[executingCommand.current]?.start.line;
+    gameExecution.levelResult.current?.commands[gameExecution.executingCommand.current]?.start.line;
   const isLastLevel = Number(id) === game.levels;
 
   return (
@@ -799,9 +468,9 @@ export const Level = () => {
         </Button> 
       </MenuButton>
       <Goals
-        forceOpen={forceShowGoals}
+        forceOpen={gameExecution.forceShowGoals}
         goals={initialLevelData.current.goals}
-        goalsResult={levelResult.current?.goals || []}
+        goalsResult={gameExecution.levelResult.current?.goals || []}
       />
       <MainWrapper>
         <DragWrapper
@@ -818,7 +487,7 @@ export const Level = () => {
           >
             <MapField width={width} height={height}>
               {cells.map((cell) => {
-                if (cell.type === 'sand') {
+                if (cell.type === GAME_CONFIG.CELL_TYPES.SAND) {
                   return (
                     <Sand key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y}>
                       <CellFilter x={cell.x} y={cell.y} />
@@ -836,7 +505,7 @@ export const Level = () => {
               <Finish x={finish.x} y={finish.y} zIndex={finish.x} />
               {water.map((water) => (
                 <Water
-                  isTop={water.type === 'watert'}
+                  isTop={water.type === GAME_CONFIG.CELL_TYPES.WATER_TOP}
                   key={`${water.x}${water.y}`}
                   x={water.x}
                   y={water.y}
@@ -892,7 +561,7 @@ export const Level = () => {
                   spedUp={false}
                   isRandom={enemy.random}
                   isBig={enemy.big}
-                  shift={enemyShifts.current[enemy.name] ?? { bottom: 0, right: 0 }}
+                  shift={gameExecution.enemyShifts.current[enemy.name] ?? { bottom: 0, right: 0 }}
                 />
               ))}
               <Hero
@@ -900,9 +569,9 @@ export const Level = () => {
                 y={initialHero.y}
                 alive={hero.alive === false ? false : true}
                 zIndex={hero.x}
-                texts={heroTexts}
-                shift={heroShift.current}
-                animated={isMoving.current}
+                texts={gameExecution.heroTexts}
+                shift={gameExecution.heroShift.current}
+                animated={gameExecution.isMoving.current}
                 spedUp={false}
               />
               {levers.map((lever) => (
@@ -932,9 +601,9 @@ export const Level = () => {
         </DragWrapper>
       </MainWrapper>
       <Controls
-          isRunning={isActuallyRunning.current}
-          isPaused={isPaused.current}
-          isLevelFinished={isLevelFinished}
+          isRunning={gameExecution.isActuallyRunning.current}
+          isPaused={gameExecution.isPaused.current}
+          isLevelFinished={gameExecution.isLevelFinished}
           hasGuide={hasGuid(instructions)}
           onStart={startGame}
           onPause={pauseGame}
@@ -945,8 +614,8 @@ export const Level = () => {
       <CodeEditor
         code={code.current}
         codeErrors={codeErrors}
-        isRunning={isActuallyRunning.current}
-        isPaused={isPaused.current}
+        isRunning={gameExecution.isActuallyRunning.current}
+        isPaused={gameExecution.isPaused.current}
         executingLine={executingLine}
         instructions={instructions}
         onCodeChange={changeCode}
@@ -958,7 +627,7 @@ export const Level = () => {
       {isScoreOpen && (
         <LevelScore
           isLastLevel={isLastLevel}
-          score={levelResult.current?.score || 0}
+          score={gameExecution.levelResult.current?.score || 0}
           onContinue={openNextLevel}
           onClose={closeScore}
         />
