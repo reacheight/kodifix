@@ -684,8 +684,8 @@ export const levels = {
       height: 9,
       width: 9,
       grid: [
-        ["lawn","lawn","lawn","lawn","rock","watert","watert","watert","watert"],
-        ["lawn","lawn","lawn","lawn","lawn","water","water","water","water"],
+        ["watert","watert","lawn","lawn","rock","watert","watert","watert","watert"],
+        ["water","lawn","lawn","lawn","lawn","water","water","water","water"],
         ["watert","watert","watert","lawn","lawn","water","water","water","water"],
         ["water","water","tree","lawn","lawn","water","water","water","water"],
         ["water","lawn","lawn","lawn","lawn","water","water","sand","lawn"],

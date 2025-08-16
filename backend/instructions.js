@@ -144,7 +144,7 @@ while True: # бесконечно повторять
     hero.move_right(3)
     hero.move_down(2)`,
       newCommands: [],
-      prevCommands: [ findNearestEnemy, attackCommand ].concat(longMovingCommands),
+      prevCommands: [ switchCommand, findNearestEnemy, attackCommand ].concat(longMovingCommands),
     },
     [21]: {
       instructions: 'На этом уровне тебе снова нужно использовать цикл `while True`, но теперь не при каждом повторе цикла тебе будет встречаться враг! Тебе нужно будет проверять это с помощью нового метода `has_enemy_around()`.\n\n' +
