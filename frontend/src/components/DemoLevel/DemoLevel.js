@@ -17,10 +17,9 @@ import { Hero } from '../Hero/Hero';
 import { DemoCodeEditor } from './DemoCodeEditor';
 import { delay } from '../../utils/delay';
 import { copy } from '../../utils/copy';
-import gemSound from '../../assets/sounds/gem.mp3';
+import { audioManager, SOUND_NAMES } from '../../utils/audioManager';
+import { GAME_CONFIG, COMMAND_NAMES } from '../../constants/gameConstants';
 
-const WALKING_DELAY = 300;
-const GEM_SOUND = new Audio(gemSound);
 const DEMO_LEVEL_COUNT = 5;
 
 const CODE_HINT = '# пиши код,\n# чтобы управлять волшебником\n\n';
@@ -28,7 +27,7 @@ const CODE_HINT = '# пиши код,\n# чтобы управлять волш�
 const DEMO_CELLS = Array(16).fill(null).map((_, index) => ({
   x: Math.floor(index / 4),
   y: index % 4,
-  type: 'lawn'
+  type: GAME_CONFIG.CELL_TYPES.LAWN
 }));
 
 export const DemoLevel = () => {
@@ -37,8 +36,7 @@ export const DemoLevel = () => {
   const [heroShift, setHeroShift] = useRefState({ right: 0, bottom: 0 });
   const [isActuallyRunning, setIsActuallyRunning] = useRefState(false);
   const [isMoving, setIsMoving] = useRefState(false);
-  const [levelVariants, setLevelVariants] = useRefState(null);
-  const [currentVariant, setCurrentVariant] = useRefState(null);
+  const [levelResult, setLevelResult] = useRefState(null);
   const [executingCommand, setExecutingCommand] = useRefState(null);
   const [code, setCode] = useRefState(CODE_HINT);
   const [codeErrors, setCodeErrors] = useState(null);
@@ -60,27 +58,29 @@ export const DemoLevel = () => {
     const updatedLevelData = copy(levelData.current);
     setExecutingCommand(i);
 
-    if (['move_up', 'move_down', 'move_right', 'move_left'].includes(command.name)) {
+    const moveCommands = [COMMAND_NAMES.MOVE_UP, COMMAND_NAMES.MOVE_DOWN, COMMAND_NAMES.MOVE_LEFT, COMMAND_NAMES.MOVE_RIGHT];
+    
+    if (moveCommands.includes(command.name)) {
       const updatedHeroShift = copy(heroShift.current);
       const updatedHero = copy(levelData.current.hero);
       const updatedGems = copy(levelData.current.gems);
 
       switch (command.name) {
-        case 'move_up':
-          updatedHeroShift.bottom += 49;
+        case COMMAND_NAMES.MOVE_UP:
+          updatedHeroShift.bottom += GAME_CONFIG.CELL_SIZE;
           updatedHero.x -= 1;
           break;
-        case 'move_down':
-          updatedHeroShift.bottom -= 49;
+        case COMMAND_NAMES.MOVE_DOWN:
+          updatedHeroShift.bottom -= GAME_CONFIG.CELL_SIZE;
           updatedHero.x += 1;
           break;
-        case 'move_right':
-          updatedHeroShift.right -= 49;
+        case COMMAND_NAMES.MOVE_RIGHT:
+          updatedHeroShift.right -= GAME_CONFIG.CELL_SIZE;
           updatedHeroShift.direction = 'right';
           updatedHero.y += 1;
           break;
-        case 'move_left':
-          updatedHeroShift.right += 49;
+        case COMMAND_NAMES.MOVE_LEFT:
+          updatedHeroShift.right += GAME_CONFIG.CELL_SIZE;
           updatedHeroShift.direction = 'left';
           updatedHero.y -= 1;
           break;
@@ -88,7 +88,7 @@ export const DemoLevel = () => {
 
       setIsMoving(true);
       setHeroShift(updatedHeroShift);
-      await delay(WALKING_DELAY);
+      await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.walking);
       setIsMoving(false);
 
       updatedLevelData.hero = updatedHero;
@@ -98,7 +98,7 @@ export const DemoLevel = () => {
       );
 
       if (collectedGemIndex !== -1) {
-        GEM_SOUND.play();
+        audioManager.play(SOUND_NAMES.GEM);
         
         setCurrentLevelId((currentLevelId.current + 1) % DEMO_LEVEL_COUNT);
         await fetchCurrentLevel();
@@ -110,7 +110,11 @@ export const DemoLevel = () => {
   };
 
   const execCommands = async () => {
-    const { commands } = levelVariants.current[currentVariant.current].variantResult;
+    if (!levelResult.current?.commands) return;
+    
+    const { commands } = levelResult.current;
+
+    setIsActuallyRunning(true);
 
     for (let i = 0; i < commands.length; i++) {
       await executeCommand(commands[i], i);
@@ -119,27 +123,9 @@ export const DemoLevel = () => {
     setIsActuallyRunning(false);
   };
 
-  const execVariants = async () => {
-    if (!levelVariants.current || levelVariants.current.length === 0) return;
-
-    setIsActuallyRunning(true);
-
-    for (let i = 0; i < levelVariants.current.length; i++) {
-      setCurrentVariant(i);
-
-      const newLevelData = copy(levelData.current);
-      setLevelData(newLevelData);
-
-      await execCommands();
-    }
-
-    setIsActuallyRunning(false);
-  };
-
   const resetData = () => {
     setHeroShift({ right: 0, bottom: 0 });
     setLevelData({ ...initialLevelData.current });
-    setCurrentVariant(null);
     setCodeErrors(null);
   };
 
@@ -151,8 +137,8 @@ export const DemoLevel = () => {
         code: code.current,
       });
 
-      setLevelVariants(data);
-      await execVariants();
+      setLevelResult(data);
+      await execCommands();
     } catch (error) {
       console.log(error);
       setCodeErrors(error.response.data.errors);
@@ -205,7 +191,7 @@ export const DemoLevel = () => {
 
   const { hero } = levelData.current;
   const { hero: initialHero, gems } = initialLevelData.current;
-  const executingLine = levelVariants.current?.[currentVariant.current]?.variantResult.commands[executingCommand.current]?.start.line;
+  const executingLine = levelResult.current?.commands[executingCommand.current]?.start.line;
 
   return (
     <DemoLevelWrapper>
