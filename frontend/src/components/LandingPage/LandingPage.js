@@ -134,7 +134,7 @@ export const LandingPage = () => {
   const selectedModuleData = modules.find(module => module.id === selectedModule);
 
   return (
-    <Layout isHeaderTransparent showAutoLogin={true}>
+    <Layout isHeaderTransparent showAutoLogin={false}>
       <LandingContainer>
         <HeroContainer>
           <HeroSection>
