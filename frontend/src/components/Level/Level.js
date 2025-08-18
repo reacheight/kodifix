@@ -245,8 +245,6 @@ export const Level = () => {
   const resetData = () => {
     setLevelData({ ...initialLevelData.current });
     setCodeErrors(null);
-    setDragPosition({ x: 0, y: 0 });
-    setIsDragging(false);
     
     // Reset game execution state
     gameExecution.resetExecutionState();
@@ -328,6 +326,7 @@ export const Level = () => {
   };
 
   const openNextLevel = () => {
+    setDragPosition({ x: 0, y: 0 });
     navigate(`/${gameId}/level/${Number(id) + 1}`);
   };
 
