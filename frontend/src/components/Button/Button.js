@@ -25,11 +25,13 @@ export const Button = ({
       disabled={disabled}
       fontFamily={fontFamily}
     >
-      <img 
-        alt={alt} 
-        src={icon} 
-        style={imageRotation ? { transform: `rotate(${imageRotation}deg)` } : undefined}
-      />
+      {icon ? (
+        <img 
+          alt={alt} 
+          src={icon} 
+          style={imageRotation ? { transform: `rotate(${imageRotation}deg)` } : undefined}
+        />
+      ) : alt}
       {children}
     </ButtonFront>
   </Wrapper>
