@@ -17,7 +17,7 @@ export default class UserManager {
       if (response.status === 200) {
         var db = new Database();
         const dbUser = await db.getUser(response.data.id);
-        const user = { id: response.data.id, email: response.data.default_email, name: response.data.real_name, hasAccess: dbUser.hasAccess };
+        const user = { id: response.data.id, email: response.data.default_email, name: response.data.real_name, hasAccess: dbUser?.hasAccess ?? 0 };
         this.cache.set(accessToken, user, 600);
         return user;
       }
