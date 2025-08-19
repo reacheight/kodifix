@@ -91,6 +91,8 @@ export const useGameExecution = () => {
     } else if (command.name === COMMAND_NAMES.ATTACK) {
       audioManager.play(SOUND_NAMES.HIT);
       await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.attacking);
+    } else if (command.name === COMMAND_NAMES.FIREBALL_UP || command.name === COMMAND_NAMES.FIREBALL_DOWN || command.name === COMMAND_NAMES.FIREBALL_LEFT || command.name === COMMAND_NAMES.FIREBALL_RIGHT) {
+      await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.fireball);
     }
   }, [isStopped]);
 
@@ -310,8 +312,7 @@ export const useGameExecution = () => {
       range: command.range,
     });
 
-    // TODO: Добавить звук запуска фаерболла
-    
+    audioManager.play(SOUND_NAMES.FIREBALL);
     await delay(GAME_CONFIG.FIREBALL_ONE_CELL_DELAY * command.range);
     setActiveFireball(null);
 
@@ -330,8 +331,6 @@ export const useGameExecution = () => {
       
       // TODO: Добавить звук попадания
     }
-
-    await delay(100);
   };
 
   /**

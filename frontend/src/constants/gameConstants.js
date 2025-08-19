@@ -10,6 +10,7 @@ export const GAME_CONFIG = {
       findingEnemy: 500,
       hasEnemyAround: 1000,
       enemyWalk: 150,
+      fireball: 500,
     },
     FAST: {
       walking: 150,
@@ -18,6 +19,7 @@ export const GAME_CONFIG = {
       findingEnemy: 250,
       hasEnemyAround: 500,
       enemyWalk: 100,
+      fireball: 250,
     }
   },
   FIREBALL_ONE_CELL_DELAY: 150,

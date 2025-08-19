@@ -3,6 +3,7 @@ import walkingSound from '../assets/sounds/walking.mp3';
 import hitSound from '../assets/sounds/hit.mp3';
 import victorySound from '../assets/sounds/victory.mp3';
 import leverSound from '../assets/sounds/lever.mp3';
+import fireballSound from '../assets/sounds/fireball.mp3';
 
 /**
  * Centralized audio manager for game sounds
@@ -20,6 +21,7 @@ class AudioManager {
       hit: new Audio(hitSound),
       victory: new Audio(victorySound),
       lever: new Audio(leverSound),
+      fireball: new Audio(fireballSound),
     };
 
     // Configure walking sound for looping
@@ -126,15 +128,17 @@ class AudioManager {
   }
 }
 
-// Export a singleton instance
-export const audioManager = new AudioManager();
-audioManager.setMasterVolume(0.5);
-
-// Export sound names as constants for better IDE support
 export const SOUND_NAMES = {
   GEM: 'gem',
   WALKING: 'walking',
   HIT: 'hit',
   VICTORY: 'victory',
   LEVER: 'lever',
+  FIREBALL: 'fireball',
 };
+
+
+// Export a singleton instance
+export const audioManager = new AudioManager();
+audioManager.setMasterVolume(0.5);
+audioManager.setVolume(SOUND_NAMES.FIREBALL, 0.3);
