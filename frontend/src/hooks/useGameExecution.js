@@ -69,6 +69,13 @@ export const useGameExecution = () => {
       case COMMAND_NAMES.ENEMY_MOVE:
         await handleEnemyMovement(command, updatedLevelData);
         break;
+        
+      case COMMAND_NAMES.FIREBALL_UP:
+      case COMMAND_NAMES.FIREBALL_DOWN:
+      case COMMAND_NAMES.FIREBALL_LEFT:
+      case COMMAND_NAMES.FIREBALL_RIGHT:
+        await handleFireball(command, updatedLevelData);
+        break;
     }
 
     if (!isStopped.current) {
@@ -286,6 +293,29 @@ export const useGameExecution = () => {
     setEnemyShifts(updatedEnemyShifts);
 
     updatedLevelData.enemies = updatedEnemies;
+  };
+
+  /**
+   * Handle fireball animation and effects
+   */
+  const handleFireball = async (command, updatedLevelData) => {
+    // TODO: Здесь будет анимация фаерболла
+    
+    if (command.hitTarget && command.hitTarget.type === 'enemy') {
+      const updatedEnemies = copy(updatedLevelData.enemies);
+      const targetIndex = updatedEnemies.findIndex(
+        (enemy) => enemy.name === command.hitTarget.name,
+      );
+
+      if (targetIndex !== -1) {
+        updatedEnemies[targetIndex].alive = false;
+      }
+      
+      updatedLevelData.enemies = updatedEnemies;
+    }
+
+    // TODO: Добавить звуковые эффекты
+    await delay(1000); // Пока что простая задержка
   };
 
   /**

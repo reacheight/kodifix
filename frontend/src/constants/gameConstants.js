@@ -92,8 +92,8 @@ export const COMMAND_NAMES = {
   HAS_ENEMY_AROUND: 'has_enemy_around',
   ENEMY_MOVE: 'enemy_move',
   ENEMY_ATTACK: 'enemy_attack',
-  SHOOT_UP: 'shoot_up',
-  SHOOT_DOWN: 'shoot_down',
-  SHOOT_LEFT: 'shoot_left',
-  SHOOT_RIGHT: 'shoot_right',
+  FIREBALL_UP: 'fireball_up',
+  FIREBALL_DOWN: 'fireball_down',
+  FIREBALL_LEFT: 'fireball_left',
+  FIREBALL_RIGHT: 'fireball_right',
 };

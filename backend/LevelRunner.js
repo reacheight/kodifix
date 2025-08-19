@@ -10,10 +10,10 @@ export default class LevelRunner {
     move_right: (steps = 1) => this.hero.move(Direction.RIGHT, steps, 'move_right'),
     move_left: (steps = 1) => this.hero.move(Direction.LEFT, steps, 'move_left'),
 
-    shoot_up: () => this.hero.shoot(Direction.UP, 'shoot_up'),
-    shoot_down: () => this.hero.shoot(Direction.DOWN, 'shoot_down'),
-    shoot_right: () => this.hero.shoot(Direction.RIGHT, 'shoot_right'),
-    shoot_left: () => this.hero.shoot(Direction.LEFT, 'shoot_left'),
+    fireball_up: () => this.hero.fireball(Direction.UP, 'fireball_up'),
+    fireball_down: () => this.hero.fireball(Direction.DOWN, 'fireball_down'),
+    fireball_right: () => this.hero.fireball(Direction.RIGHT, 'fireball_right'),
+    fireball_left: () => this.hero.fireball(Direction.LEFT, 'fireball_left'),
 
     attack: (targetName) => {
       if (!this.level.enemies || this.level.enemies.filter(e => e.alive).length === 0) {
@@ -147,24 +147,46 @@ export default class LevelRunner {
       this.updateHeroPos(newHeroPos, methodName);
     },
 
-    shoot: (direction, commandName) => {
-      this.pushNewCommand(commandName);
+    fireball: (direction, commandName) => {
+      const fireballRange = 3; // TODO: Move to constants
+      let hitTarget = null;
+      let finalPosition = null;
 
-      const shootingRange = 3; // TODO: Move to constants
-      for (let i = 1; i < shootingRange + 1; i++) {
+      for (let i = 1; i < fireballRange + 1; i++) {
         const projectilePoint = structuredClone(this.level.hero);
         projectilePoint.x += direction.x * i;
         projectilePoint.y += direction.y * i;
 
-        if (this.isPointOutOfMap(projectilePoint) || this.isPointHitWall(projectilePoint))
+        if (this.isPointOutOfMap(projectilePoint) || this.isPointHitWallForFireball(projectilePoint)) {
+          finalPosition = { 
+            x: projectilePoint.x - direction.x, 
+            y: projectilePoint.y - direction.y 
+          };
+          hitTarget = 'wall';
           break;
+        }
 
         let hitEnemy = this.getAliveEnemyAtPoint(projectilePoint);
         if (hitEnemy) {
           hitEnemy.alive = false;
+          finalPosition = projectilePoint;
+          hitTarget = { type: 'enemy', name: hitEnemy.name };
           break;
         }
+
+        if (i === fireballRange) {
+          finalPosition = projectilePoint;
+          hitTarget = 'max_range';
+        }
       }
+
+      this.pushNewCommand(commandName, {
+        direction,
+        startPosition: { x: this.level.hero.x, y: this.level.hero.y },
+        finalPosition,
+        hitTarget,
+        range: fireballRange
+      });
     },
   };
 
@@ -379,6 +401,12 @@ export default class LevelRunner {
   isPointHitWall(point) {
     const wallTypes = ['tree', 'rock', 'watert', 'water']; // TODO: Move to constants
     return wallTypes.includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
+  }
+
+  isPointHitWallForFireball(point) {
+    // Фаерболлы останавливаются только при попадании в твердые препятствия
+    const solidWallTypes = ['tree', 'rock']; // TODO: Move to constants
+    return solidWallTypes.includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
   }
 
   isActiveBridgePoint(point) {
