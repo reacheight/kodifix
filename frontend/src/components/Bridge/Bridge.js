@@ -1,7 +1,7 @@
 import React from 'react';
 import { ClosedBridge, OpenBridge } from "./styled";
 
-export const Bridge = ({ key, xStart, xEnd, yStart, yEnd, vertical, activated, random }) => {
+export const Bridge = ({ key, xStart, xEnd, yStart, yEnd, vertical, activated }) => {
   return activated
     ? <OpenBridge
         key={`${key}`}
@@ -10,7 +10,6 @@ export const Bridge = ({ key, xStart, xEnd, yStart, yEnd, vertical, activated, r
         yStart={yStart}
         yEnd={yEnd}
         vertical={vertical}
-        random={random}
       />
     : <ClosedBridge
         key={`${key}`}
@@ -19,7 +18,6 @@ export const Bridge = ({ key, xStart, xEnd, yStart, yEnd, vertical, activated, r
         yStart={yStart}
         yEnd={yEnd}
         vertical={vertical}
-        random={random}
       >
       </ClosedBridge>
 };

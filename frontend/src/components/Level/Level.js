@@ -543,7 +543,7 @@ export const Level = () => {
                   yEnd={bridge.end.y}
                   vertical={bridge.vertical}
                   activated={bridge.activated}
-                  random={bridge.random}
+
                 />
               ))}
               {enemies.map((enemy) => (
@@ -558,7 +558,7 @@ export const Level = () => {
                   alive={enemy.alive}
                   nameHidden={enemy.hidden}
                   spedUp={false}
-                  isRandom={enemy.random}
+
                   isBig={enemy.big}
                   shift={gameExecution.enemyShifts.current[enemy.name] ?? { bottom: 0, right: 0 }}
                 />

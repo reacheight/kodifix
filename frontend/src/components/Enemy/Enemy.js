@@ -13,7 +13,6 @@ export const Enemy = ({
   alive, 
   nameHidden, 
   spedUp, 
-  isRandom, 
   isBig,
   shift
 }) => {
@@ -41,7 +40,7 @@ export const Enemy = ({
       spedUp={spedUp} 
     >
       {!nameHidden && <Name fade={!alive}>{name}</Name>}
-      <Image x={x} y={y} heroX={heroX} heroY={heroY} direction={direction} alive={alive} spedUp={spedUp} isRandom={isRandom} />
+      <Image x={x} y={y} heroX={heroX} heroY={heroY} direction={direction} alive={alive} spedUp={spedUp} />
     </Wrapper>
   );
 };

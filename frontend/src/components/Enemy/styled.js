@@ -32,15 +32,7 @@ const fadeAnimation = keyframes`
   }
 `;
 
-const randomEnemyAnimation = keyframes`
-  0% {
-    opacity:  1;
-  }
 
-  100% {
-    opacity: 0.5;
-  }
-`
 
 export const Wrapper = styled.div`
   width: 57px;
@@ -95,17 +87,13 @@ export const Image = styled.div`
   opacity: ${({ x, y, heroX, heroY }) =>
     x - heroX === 1 && y === heroY ? 0.7 : 1};
 
-   ${({ alive, direction, spedUp, isRandom }) => {
+   ${({ alive, direction, spedUp }) => {
     if (!alive)
       return css`
         animation:
           ${direction === 'right' ? leftFallAnimation : rightFallAnimation} ${spedUp ? 500 : 1000}ms ease-out
             forwards,
           ${fadeAnimation} 2s ease-out forwards;
-      `;
-    else if (isRandom)
-      return css`
-        animation: ${randomEnemyAnimation} 1s infinite alternate;
       `;
    }}
 `;

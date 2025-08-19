@@ -1,14 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
-
-const randomBridgeAnimation = keyframes`
-  0%, 30% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0.5;
-  }
-`;
+import styled, { css } from 'styled-components';
 
 export const OpenBridge = styled.div`
   z-index: 1;
@@ -42,16 +32,11 @@ export const OpenBridge = styled.div`
 
   background-size: 20px 20px; /* Размер полосок */
 
-
   ${({ xStart, yStart, xEnd, yEnd }) => css`
     grid-row-start: ${xStart + 1};
     grid-row-end: ${xEnd + 2};
     grid-column-start: ${yStart + 1};
     grid-column-end: ${yEnd + 2};
-  `}
-
-  ${({ random }) => random && css`
-    animation: ${randomBridgeAnimation} 1s infinite alternate;
   `}
 `;
 
@@ -114,9 +99,5 @@ export const ClosedBridge = styled.div`
     grid-row-end: ${xEnd + 2};
     grid-column-start: ${yStart + 1};
     grid-column-end: ${yEnd + 2};
-  `}
-
-  ${({ random }) => random && css`
-    animation: ${randomBridgeAnimation} 1s infinite alternate;
   `}
 `
