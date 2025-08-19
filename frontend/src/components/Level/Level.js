@@ -602,6 +602,7 @@ export const Level = () => {
                   startY={gameExecution.activeFireball.startY}
                   endX={gameExecution.activeFireball.endX}
                   endY={gameExecution.activeFireball.endY}
+                  range={gameExecution.activeFireball.range}
                 />
               )}
             </MapField>

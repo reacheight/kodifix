@@ -20,11 +20,11 @@ export const GAME_CONFIG = {
       enemyWalk: 100,
     }
   },
+  FIREBALL_ONE_CELL_DELAY: 150,
 
   // Execution limits
   EXECUTION: {
     INFINITE_LOOP_LIMIT: 300,
-    SHOOTING_RANGE: 3,
   },
 
   // UI scaling

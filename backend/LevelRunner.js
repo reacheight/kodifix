@@ -148,14 +148,14 @@ export default class LevelRunner {
     },
 
     fireball: (direction, commandName) => {
-      const fireballRange = 3; // TODO: Move to constants
       let hitTarget = null;
       let finalPosition = null;
 
-      for (let i = 1; i < fireballRange + 1; i++) {
-        const projectilePoint = structuredClone(this.level.hero);
-        projectilePoint.x += direction.x * i;
-        projectilePoint.y += direction.y * i;
+      const projectilePoint = structuredClone(this.level.hero);
+
+      while (true) {
+        projectilePoint.x += direction.x * 1;
+        projectilePoint.y += direction.y * 1;
 
         if (this.isPointOutOfMap(projectilePoint) || this.isPointHitWallForFireball(projectilePoint)) {
           finalPosition = { 
@@ -173,19 +173,15 @@ export default class LevelRunner {
           hitTarget = { type: 'enemy', name: hitEnemy.name };
           break;
         }
-
-        if (i === fireballRange) {
-          finalPosition = projectilePoint;
-          hitTarget = 'max_range';
-        }
       }
 
+      const range = getDistance(this.level.hero, finalPosition);
       this.pushNewCommand(commandName, {
         direction,
         startPosition: { x: this.level.hero.x, y: this.level.hero.y },
         finalPosition,
         hitTarget,
-        range: fireballRange
+        range,
       });
     },
   };

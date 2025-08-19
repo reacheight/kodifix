@@ -50,7 +50,7 @@ export const FireballProjectile = styled.div`
   `}
 
   /* Анимация полета с движением */
-  ${({ startX, startY, endX, endY }) => {
+  ${({ startX, startY, endX, endY, range }) => {
     const deltaX = (endX - startX) * GAME_CONFIG.CELL_SIZE;
     const deltaY = (endY - startY) * GAME_CONFIG.CELL_SIZE;
     
@@ -59,22 +59,7 @@ export const FireballProjectile = styled.div`
       --deltaY: ${deltaY}px;
       animation: 
         ${flicker} 0.2s infinite alternate,
-        ${fireballFlight} 800ms ease-out forwards;
+        ${fireballFlight} ${GAME_CONFIG.FIREBALL_ONE_CELL_DELAY * range}ms ease-out forwards;
     `;
   }}
-
-  /* Хвост частиц */
-  &::after {
-    content: '';
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #ff6500, transparent);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.7);
-    animation: ${flicker} 0.3s infinite alternate;
-    opacity: 0.7;
-  }
 `;

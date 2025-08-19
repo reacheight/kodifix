@@ -307,11 +307,12 @@ export const useGameExecution = () => {
       startY: command.startPosition.y,
       endX: command.finalPosition.x,
       endY: command.finalPosition.y,
+      range: command.range,
     });
 
     // TODO: Добавить звук запуска фаерболла
     
-    await delay(800);
+    await delay(GAME_CONFIG.FIREBALL_ONE_CELL_DELAY * command.range);
     setActiveFireball(null);
 
     

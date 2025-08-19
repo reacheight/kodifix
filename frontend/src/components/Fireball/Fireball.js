@@ -5,7 +5,8 @@ export const Fireball = ({
   startX, 
   startY, 
   endX, 
-  endY
+  endY,
+  range
 }) => {
   return (
     <FireballProjectile
@@ -13,6 +14,7 @@ export const Fireball = ({
       startY={startY}
       endX={endX}
       endY={endY}
+      range={range}
     />
   );
 };
