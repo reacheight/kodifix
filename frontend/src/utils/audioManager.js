@@ -4,6 +4,7 @@ import hitSound from '../assets/sounds/hit.mp3';
 import victorySound from '../assets/sounds/victory.mp3';
 import leverSound from '../assets/sounds/lever.mp3';
 import fireballSound from '../assets/sounds/fireball.mp3';
+import fireballImpactSound from '../assets/sounds/fireball_impact.mp3';
 
 /**
  * Centralized audio manager for game sounds
@@ -22,6 +23,7 @@ class AudioManager {
       victory: new Audio(victorySound),
       lever: new Audio(leverSound),
       fireball: new Audio(fireballSound),
+      fireballImpact: new Audio(fireballImpactSound),
     };
 
     // Configure walking sound for looping
@@ -135,6 +137,7 @@ export const SOUND_NAMES = {
   VICTORY: 'victory',
   LEVER: 'lever',
   FIREBALL: 'fireball',
+  FIREBALL_IMPACT: 'fireballImpact',
 };
 
 
@@ -142,3 +145,4 @@ export const SOUND_NAMES = {
 export const audioManager = new AudioManager();
 audioManager.setMasterVolume(0.5);
 audioManager.setVolume(SOUND_NAMES.FIREBALL, 0.3);
+audioManager.setVolume(SOUND_NAMES.FIREBALL_IMPACT, 0.3);

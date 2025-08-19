@@ -304,6 +304,14 @@ export const useGameExecution = () => {
    * Handle fireball animation and effects
    */
   const handleFireball = async (command, updatedLevelData) => {
+    const updatedHeroShift = copy(heroShift.current);
+
+    if (command.direction === 'left' || command.direction === 'right') {
+      updatedHeroShift.direction = command.direction;
+
+      setHeroShift(updatedHeroShift);
+    }
+
     setActiveFireball({
       startX: command.startPosition.x,
       startY: command.startPosition.y,
@@ -329,7 +337,7 @@ export const useGameExecution = () => {
       
       updatedLevelData.enemies = updatedEnemies;
       
-      // TODO: Добавить звук попадания
+      audioManager.play(SOUND_NAMES.FIREBALL_IMPACT);
     }
   };
 
