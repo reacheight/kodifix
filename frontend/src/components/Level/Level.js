@@ -28,6 +28,7 @@ import { Controls } from '../Controls/Controls';
 import { Hero } from '../Hero/Hero';
 import { Enemy } from '../Enemy/Enemy';
 import { Lever } from '../Lever/Lever';
+import { Fireball } from '../Fireball/Fireball';
 import { CodeEditor } from '../CodeEditor/CodeEditor';
 import { delay } from '../../utils/delay';
 import { copy } from '../../utils/copy';
@@ -595,6 +596,14 @@ export const Level = () => {
                   collected={gem.collected}
                 />
               ))}
+              {gameExecution.activeFireball && (
+                <Fireball
+                  startX={gameExecution.activeFireball.startX}
+                  startY={gameExecution.activeFireball.startY}
+                  endX={gameExecution.activeFireball.endX}
+                  endY={gameExecution.activeFireball.endY}
+                />
+              )}
             </MapField>
           </MapWrapper>
         </DragWrapper>

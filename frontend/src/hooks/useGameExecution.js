@@ -27,6 +27,9 @@ export const useGameExecution = () => {
   const [heroShift, setHeroShift] = useRefState({ right: 0, bottom: 0 });
   const [enemyShifts, setEnemyShifts] = useRefState({});
   
+  // Fireball state
+  const [activeFireball, setActiveFireball] = useState(null);
+  
   // UI state
   const [heroTexts, setHeroTexts] = useState([]);
   const [forceShowGoals, setForceShowGoals] = useState(false);
@@ -299,7 +302,18 @@ export const useGameExecution = () => {
    * Handle fireball animation and effects
    */
   const handleFireball = async (command, updatedLevelData) => {
-    // TODO: Здесь будет анимация фаерболла
+    setActiveFireball({
+      startX: command.startPosition.x,
+      startY: command.startPosition.y,
+      endX: command.finalPosition.x,
+      endY: command.finalPosition.y,
+    });
+
+    // TODO: Добавить звук запуска фаерболла
+    
+    await delay(800);
+    setActiveFireball(null);
+
     
     if (command.hitTarget && command.hitTarget.type === 'enemy') {
       const updatedEnemies = copy(updatedLevelData.enemies);
@@ -312,10 +326,11 @@ export const useGameExecution = () => {
       }
       
       updatedLevelData.enemies = updatedEnemies;
+      
+      // TODO: Добавить звук попадания
     }
 
-    // TODO: Добавить звуковые эффекты
-    await delay(1000); // Пока что простая задержка
+    await delay(100);
   };
 
   /**
@@ -336,6 +351,7 @@ export const useGameExecution = () => {
     setPausedCommand(null);
     setForceShowGoals(false);
     setIsLevelFinished(false);
+    setActiveFireball(null);
   }, []);
 
   return {
@@ -352,6 +368,7 @@ export const useGameExecution = () => {
     enemyShifts,
     heroTexts,
     forceShowGoals,
+    activeFireball,
 
     // Actions
     setIsActuallyRunning,
