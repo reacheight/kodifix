@@ -21,7 +21,7 @@ import {
 import { axios } from '../../api/axios';
 
 import { audioManager, SOUND_NAMES } from '../../utils/audioManager';
-import { GAME_CONFIG, STORAGE_KEYS, API_ENDPOINTS, COMMAND_NAMES } from '../../constants/gameConstants';
+import { GAME_CONFIG, STORAGE_KEYS, API_ENDPOINTS } from '../../constants/gameConstants';
 import { useGameExecution } from '../../hooks/useGameExecution';
 import { useRefState } from '../../hooks/useRefState';
 import { Controls } from '../Controls/Controls';
@@ -31,10 +31,8 @@ import { Lever } from '../Lever/Lever';
 import { Fireball } from '../Fireball/Fireball';
 import { CodeEditor } from '../CodeEditor/CodeEditor';
 import { delay } from '../../utils/delay';
-import { copy } from '../../utils/copy';
 import { isNullish } from '../../utils/isNullish';
 import { LevelScore } from '../LevelScore/LevelScore';
-import GameplayErrorTypes from '../../utils/GameplayErrorTypes';
 import { LevelGuide } from '../LevelGuide/LevelGuide';
 import { Goals } from '../Goals/Goals';
 import { Button } from '../Button/Button';
@@ -99,9 +97,9 @@ export const Level = () => {
 
   const { user, isLoading: isUserLoading, isAuthenticated } = useUser();
 
-  const showLoginModal = false && !isUserLoading && !isAuthenticated;
+  const showLoginModal = !isUserLoading && !isAuthenticated;
   const showAccessModal = false && id > 6 && !!user && !user.hasAccess;
-  const showPreviousLevelsModal = false && !showAccessModal && !isUserLoading && !isGameDataLoading && isAuthenticated && completedLevelsCount + 1 < id;
+  const showPreviousLevelsModal = !showAccessModal && !isUserLoading && !isGameDataLoading && isAuthenticated && completedLevelsCount + 1 < id;
 
   const hasGuid = (data) =>
     data.instructions || data.example || data.newCommands?.length;
