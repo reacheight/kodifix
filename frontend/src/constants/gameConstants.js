@@ -22,7 +22,7 @@ export const GAME_CONFIG = {
       fireball: 250,
     }
   },
-  FIREBALL_ONE_CELL_DELAY: 150,
+  FIREBALL_ONE_CELL_DELAY: 120,
 
   // Execution limits
   EXECUTION: {
