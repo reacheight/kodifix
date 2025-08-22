@@ -452,6 +452,7 @@ export const CloudImage = styled.img`
   opacity: ${props => props.opacity || 0.7};
   animation: ${props => `float-${props.direction || 'horizontal'} ${props.duration || 15}s ease-in-out infinite`};
   animation-delay: ${props => props.delay || '0s'};
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.05)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.13));
 
   @keyframes float-horizontal {
     0%, 100% {
