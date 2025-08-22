@@ -7,6 +7,7 @@ import { ActionButton } from '../ActionButton/ActionButton';
 import howItWorksImage from '../../assets/how-it-works.webp';
 import theoryImage from '../../assets/theory.webp';
 import pythonImage from '../../assets/python.webp';
+import cloudImage from '../../assets/cloud.webp';
 import {
   LandingContainer,
   HeroContainer,
@@ -41,6 +42,8 @@ import {
   SkeletonGameField,
   SkeletonCell,
   SkeletonEditorContainer,
+  CloudsContainer,
+  CloudImage,
 } from './styled';
 import { Button } from '../Button/Button';
 
@@ -137,6 +140,30 @@ export const LandingPage = () => {
     <Layout isHeaderTransparent showAutoLogin={true}>
       <LandingContainer>
         <HeroContainer>
+          <CloudsContainer>
+            <CloudImage 
+              src={cloudImage}
+              alt="облако"
+              size={250}
+              top="2%"
+              left="7%"
+              opacity={0.7}
+              direction="horizontal"
+              duration={12}
+              delay="0s"
+            />
+            <CloudImage 
+              src={cloudImage}
+              alt="облако"
+              size={500}
+              top="50%"
+              left="55%"
+              opacity={0.7}
+              direction="vertical"
+              duration={8}
+              delay="2s"
+            />
+          </CloudsContainer>
           <HeroSection>
             <LeftColumn>
               <Title>Увлекательная игра для обучения детей программированию</Title>

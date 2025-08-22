@@ -10,7 +10,9 @@ export const HeroContainer = styled.div`
   background: linear-gradient(to right,rgba(25, 118, 210, 0.5),rgba(33, 149, 243, 0.6));
   padding-block: 200px;
   padding-inline: 20px;
-
+  position: relative;
+  overflow: hidden;
+  
   @media (max-width: 768px) {
     padding-top: 150px;
     padding-bottom: 10px;
@@ -427,6 +429,60 @@ export const SkeletonEditorContainer = styled.div`
   min-width: 250px;
   padding: 20px;
   justify-content: center;
+`;
+
+/* Контейнер для облаков */
+export const CloudsContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+`;
+
+/* Отдельное облако */
+export const CloudImage = styled.img`
+  position: absolute;
+  width: ${props => props.size || 80}px;
+  height: auto;
+  top: ${props => props.top || '20%'};
+  left: ${props => props.left || '10%'};
+  opacity: ${props => props.opacity || 0.7};
+  animation: ${props => `float-${props.direction || 'horizontal'} ${props.duration || 15}s ease-in-out infinite`};
+  animation-delay: ${props => props.delay || '0s'};
+
+  @keyframes float-horizontal {
+    0%, 100% {
+      transform: translateX(0px) translateY(0px);
+    }
+    50% {
+      transform: translateX(30px) translateY(-10px);
+    }
+  }
+
+  @keyframes float-vertical {
+    0%, 100% {
+      transform: translateX(0px) translateY(0px);
+    }
+    50% {
+      transform: translateX(10px) translateY(-20px);
+    }
+  }
+
+  @keyframes float-diagonal {
+    0%, 100% {
+      transform: translateX(0px) translateY(0px);
+    }
+    50% {
+      transform: translateX(25px) translateY(-15px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: ${props => (props.size || 80) * 0.6}px;
+  }
 `;
 
 
