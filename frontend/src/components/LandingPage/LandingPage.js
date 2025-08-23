@@ -168,7 +168,7 @@ export const LandingPage = () => {
               alt="облако"
               size={500}
               top="50%"
-              left="50%"
+              left="40%"
               opacity={0.7}
               direction="vertical"
               duration={8}
