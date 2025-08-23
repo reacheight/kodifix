@@ -25,6 +25,8 @@ export const HeroSection = styled.div`
   width: 1300px;
   margin: 0 auto;
   justify-content: space-between;
+  padding-top: 100px;
+  padding-bottom: 100px;
 
   @media (max-width: 1340px) {
     width: 100%;
@@ -51,6 +53,7 @@ export const RightColumn = styled.div`
   flex: 0.7;
   min-width: 0;
   height: 350px;
+  padding-top: 50px;
 
 
   @media (max-width: 768px) {
@@ -65,7 +68,7 @@ export const Title = styled.h1`
   font-weight: 800;
   line-height: 1.1;
   color: #fff;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
   text-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);
   max-width: 700px;
 
@@ -85,7 +88,7 @@ export const Subtitle = styled.p`
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
   max-width: 600px;
 
   @media (max-width: 768px) {

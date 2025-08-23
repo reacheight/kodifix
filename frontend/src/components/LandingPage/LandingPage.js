@@ -160,7 +160,7 @@ export const LandingPage = () => {
               left="75%"
               opacity={0.7}
               direction="horizontal"
-              duration={10}
+              duration={14}
               delay="4s"
             />
             <CloudImage 
