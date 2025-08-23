@@ -34,6 +34,8 @@ export const HeroSection = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
+    padding-top: 0px;
+    padding-bottom: 0px;
     gap: 0;
   }
 `;
@@ -59,6 +61,7 @@ export const RightColumn = styled.div`
   @media (max-width: 768px) {
     transform: scale(0.75);
     margin-right: 10%;
+    padding-top: 0px;
   }
 `;
 
