@@ -17,7 +17,7 @@ export const Header = ({ onLoginClick, isTransparent }) => {
         <MiniProfile user={user} onLogout={logout} />
       )}
       {!user && (
-        <ActionButton onClick={onLoginClick} variant="secondary">
+        <ActionButton onClick={onLoginClick}>
           Начать программировать
         </ActionButton>
       )}
