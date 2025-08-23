@@ -155,9 +155,20 @@ export const LandingPage = () => {
             <CloudImage 
               src={cloudImage}
               alt="облако"
+              size={350}
+              top="12%"
+              left="75%"
+              opacity={0.7}
+              direction="horizontal"
+              duration={10}
+              delay="4s"
+            />
+            <CloudImage 
+              src={cloudImage}
+              alt="облако"
               size={500}
               top="50%"
-              left="55%"
+              left="50%"
               opacity={0.7}
               direction="vertical"
               duration={8}
