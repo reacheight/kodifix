@@ -8,6 +8,7 @@ import howItWorksImage from '../../assets/how-it-works.webp';
 import theoryImage from '../../assets/theory.webp';
 import pythonImage from '../../assets/python.webp';
 import cloudImage from '../../assets/cloud.webp';
+import { ReactComponent as TelegramIcon } from '../../assets/telegram.svg';
 import {
   LandingContainer,
   HeroContainer,
@@ -177,6 +178,7 @@ export const LandingPage = () => {
           </CloudsContainer>
           <HeroSection>
             <LeftColumn>
+              <ActionButton onClick={() => window.open('https://t.me/codemagics', '_blank')} variant="secondary" icon={<TelegramIcon />}>Наш Telegram канал</ActionButton>
               <Title>Увлекательная игра для обучения детей программированию</Title>
               <Subtitle>От первых строк кода до сложных программ в захватывающем путешествии с волшебством и головоломками — прямо в браузере, без установки и сложных настроек.</Subtitle>
               <Button

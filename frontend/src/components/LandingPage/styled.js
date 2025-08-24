@@ -25,7 +25,7 @@ export const HeroSection = styled.div`
   width: 1300px;
   margin: 0 auto;
   justify-content: space-between;
-  padding-top: 100px;
+  padding-top: 80px;
   padding-bottom: 100px;
 
   @media (max-width: 1340px) {

@@ -1,6 +1,22 @@
 import styled, { css } from 'styled-components';
 
+export const IconWrapper = styled.span`
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 export const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.3);
   border: none;
   border-radius: 8px;
